@@ -7,6 +7,7 @@ import {
   RefObject,
   SetStateAction,
   forwardRef,
+  useEffect,
 } from 'react';
 import { Todo } from '@/types/Todo';
 
@@ -16,10 +17,11 @@ type Props = {
   todos: Todo[];
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
+  updateIndexedDB: () => void;
 };
 
 export default forwardRef(function SortableItem(props: Props) {
-  const { id, name, todos, setTodos, editableRef } = props;
+  const { id, name, todos, setTodos, editableRef, updateIndexedDB } = props;
   const {
     isDragging,
     attributes,
@@ -44,6 +46,9 @@ export default forwardRef(function SortableItem(props: Props) {
       )
     );
   };
+  useEffect(() => {
+    updateIndexedDB();
+  }, [todos, updateIndexedDB]);
 
   return (
     <li

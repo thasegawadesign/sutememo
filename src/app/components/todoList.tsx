@@ -26,10 +26,11 @@ type Props = {
   todos: Todo[];
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
+  updateIndexedDB: () => void;
 };
 
 export default function TodoList(props: Props) {
-  const { todos, setTodos, editableRef } = props;
+  const { todos, setTodos, editableRef, updateIndexedDB } = props;
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -88,6 +89,7 @@ export default function TodoList(props: Props) {
               todos={todos}
               setTodos={setTodos}
               editableRef={editableRef}
+              updateIndexedDB={updateIndexedDB}
             />
           ))}
         </ul>
@@ -105,6 +107,7 @@ export default function TodoList(props: Props) {
             todos={todos}
             setTodos={setTodos}
             editableRef={editableRef}
+            updateIndexedDB={updateIndexedDB}
           ></SortableItem>
         ) : null}
       </DragOverlay>
