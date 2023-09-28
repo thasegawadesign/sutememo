@@ -1,7 +1,13 @@
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { PiDotsSixVerticalBold } from 'react-icons/pi';
-import { Dispatch, RefObject, SetStateAction, forwardRef } from 'react';
+import {
+  Dispatch,
+  FocusEvent,
+  RefObject,
+  SetStateAction,
+  forwardRef,
+} from 'react';
 import { Todo } from '@/types/Todo';
 
 type Props = {
@@ -27,9 +33,9 @@ export default forwardRef(function SortableItem(props: Props) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-  const handleBlur = function () {
+  const handleBlur = function (event: FocusEvent) {
     const targetId = id;
-    const updatedTextContent = editableRef.current?.textContent;
+    const updatedTextContent = event.target.textContent;
     setTodos(
       todos.map((todo) =>
         targetId === todo.id
