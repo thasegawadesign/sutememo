@@ -22,7 +22,7 @@ type Props = {
   updateDisplayOrder: (todos: Todo[]) => void;
 };
 
-export default forwardRef(function SortableItem(props: Props) {
+export default forwardRef(function SortableItem(props: Props, _ref) {
   const {
     id,
     displayOrder,
