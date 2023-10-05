@@ -93,6 +93,7 @@ export default function TodoList(props: Props) {
   const handleDragEnd = function (event: DragEndEvent) {
     const { active, over } = event;
     setActiveId(null);
+    if (!over) return;
     if (active.id !== over?.id) {
       setTodos((todos) => {
         const oldIndex = findIndex(active.id as string);
