@@ -53,7 +53,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" className="overscroll-none">
-      <Analytics />
+      <head>
+        <Analytics />
+      </head>
       <body
         className={`overscroll-none ${notoSansJP.className}`}
         role="application"
