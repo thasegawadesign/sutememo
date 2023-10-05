@@ -49,13 +49,7 @@ export default function TodoList(props: Props) {
   const keyboardSensor = useSensor(KeyboardSensor, {
     coordinateGetter: sortableKeyboardCoordinates,
   });
-  const touchSensor = useSensor(TouchSensor, {
-    activationConstraint: {
-      distance: 10,
-      delay: 250,
-      tolerance: 5,
-    },
-  });
+  const touchSensor = useSensor(TouchSensor);
   const sensors = useSensors(
     mouseSenser,
     pointerSenser,
@@ -113,23 +107,25 @@ export default function TodoList(props: Props) {
       id={useId()}
     >
       <SortableContext items={todos} strategy={verticalListSortingStrategy}>
-        <ul className="px-3 grid gap-2 mb-24">
-          {todos.map((todo) => (
-            <SortableItem
-              key={todo.id}
-              id={todo.id}
-              displayOrder={todo.displayOrder}
-              name={todo.name}
-              todos={todos}
-              setTodos={setTodos}
-              editableRef={editableRef}
-              readIndexedDB={readIndexedDB}
-              updateIndexedDB={updateIndexedDB}
-              deleteIndexedDB={deleteIndexedDB}
-              setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
-            />
-          ))}
-        </ul>
+        <div className="px-[22px]">
+          <ul className="grid gap-3 mb-24 touch-none">
+            {todos.map((todo) => (
+              <SortableItem
+                key={todo.id}
+                id={todo.id}
+                displayOrder={todo.displayOrder}
+                name={todo.name}
+                todos={todos}
+                setTodos={setTodos}
+                editableRef={editableRef}
+                readIndexedDB={readIndexedDB}
+                updateIndexedDB={updateIndexedDB}
+                deleteIndexedDB={deleteIndexedDB}
+                setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
+              />
+            ))}
+          </ul>
+        </div>
       </SortableContext>
       <DragOverlay
         wrapperElement="ul"

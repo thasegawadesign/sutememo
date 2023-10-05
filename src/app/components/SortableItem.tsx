@@ -97,7 +97,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     <li
       ref={setNodeRef}
       style={style}
-      className={`py-2 px-1.5 border flex gap-1 items-center justify-between border-gray-100 rounded-md bg-white ${
+      className={`py-2 px-1 border flex gap-1 items-center justify-between border-gray-100 rounded-md bg-white ${
         isDragging && 'opacity-30'
       }`}
     >
@@ -116,7 +116,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           contentEditable
           suppressContentEditableWarning
-          className="grid place-items-center text-2xl text-gray-700 py-0.5 px-1 leading-snug max-w-[calc(100vw-136px)]"
+          className="grid place-items-center text-2xl text-gray-700 py-0.5 px-1 leading-snug max-w-[calc(100vw-148px)]"
         >
           {name}
         </span>

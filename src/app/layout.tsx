@@ -47,8 +47,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className="overflow-hidden overscroll-none">
-      <body className={notoSansJP.className}>{children}</body>
+    <html lang="ja" className="overscroll-none">
+      <body className={`overscroll-none ${notoSansJP.className}`}>
+        {children}
+      </body>
     </html>
   );
 }
