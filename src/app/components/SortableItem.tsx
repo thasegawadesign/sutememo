@@ -1,6 +1,7 @@
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
+import { isMobile } from 'react-device-detect';
 import {
   Dispatch,
   FocusEvent,
@@ -100,12 +101,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         isDragging && 'opacity-30'
       }`}
     >
-      <div className="flex items-center gap-1">
+      <div className="flex gap-1 flex-1 items-streachr">
         <button
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          className="text-2xl px-3 py-4 text-gray-500 hover:cursor-grab hover:bg-gray-100 transition-colors rounded"
+          className="text-2xl px-3 py-4 hover:cursor-grab text-gray-500 hover:bg-gray-100 transition-colors rounded"
         >
           <PiDotsSixVerticalBold />
         </button>
@@ -115,10 +116,17 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           contentEditable
           suppressContentEditableWarning
-          className="text-2xl text-gray-700 py-0.5 px-1 max-w-[calc(100vw-136px)]"
+          className="grid place-items-center text-2xl text-gray-700 py-0.5 px-1 leading-snug max-w-[calc(100vw-136px)]"
         >
           {name}
         </span>
+        {isMobile && (
+          <button
+            className="flex-1 bg-transparent"
+            ref={setActivatorNodeRef}
+            {...listeners}
+          />
+        )}
       </div>
       <button
         onClick={handleDeleteBtnClick}

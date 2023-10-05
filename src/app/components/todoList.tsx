@@ -7,7 +7,9 @@ import {
   DragOverlay,
   DragStartEvent,
   KeyboardSensor,
+  MouseSensor,
   PointerSensor,
+  TouchSensor,
   closestCenter,
   useSensor,
   useSensors,
@@ -42,11 +44,23 @@ export default function TodoList(props: Props) {
     deleteIndexedDB,
     setTodosOrderByDisplayOrder,
   } = props;
+  const mouseSenser = useSensor(MouseSensor);
+  const pointerSenser = useSensor(PointerSensor);
+  const keyboardSensor = useSensor(KeyboardSensor, {
+    coordinateGetter: sortableKeyboardCoordinates,
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      distance: 10,
+      delay: 250,
+      tolerance: 5,
+    },
+  });
   const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
+    mouseSenser,
+    pointerSenser,
+    keyboardSensor,
+    touchSensor
   );
   const [activeId, setActiveId] = useState<string | null>(null);
 
