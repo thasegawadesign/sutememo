@@ -117,7 +117,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           contentEditable
           suppressContentEditableWarning
-          className="grid place-items-center text-2xl text-gray-700 py-0.5 px-1 leading-snug max-w-[calc(100vw-148px)]"
+          className="text-2xl text-gray-700 py-0.5 px-1 leading-snug max-w-[calc(100vw-148px)]"
         >
           {name}
         </span>
