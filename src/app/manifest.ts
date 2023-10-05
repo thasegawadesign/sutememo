@@ -1,11 +1,13 @@
 import { MetadataRoute } from 'next';
+import { env } from 'process';
 
 export default function manifest(): MetadataRoute.Manifest {
+  const baseURL = env.BASE_URL;
   return {
     name: 'Todoify',
     short_name: 'Todoify',
     description: 'Todoアプリケーション',
-    start_url: '/',
+    start_url: baseURL,
     display: 'standalone',
     background_color: '#208cd8',
     theme_color: '#208cd8',
