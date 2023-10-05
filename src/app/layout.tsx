@@ -17,17 +17,16 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
   },
   icons: {
-    icon: '',
-    apple: '',
+    icon: '/favicon.ico',
+    apple: '/icons/icon-192x192.png',
   },
   twitter: {
     card: 'summary',
     creator: '@565683i',
-    images: '',
   },
   openGraph: {
     type: 'website',
-    url: '',
+    url: baseURL,
     title: 'Todoify',
     description: 'Todoアプリケーション',
     siteName: 'Todoify',
