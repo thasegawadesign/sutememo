@@ -3,9 +3,11 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
 
+const baseURL = env.BASE_URL;
+
 export const metadata: Metadata = {
-  metadataBase: new URL(`http://localhost:${env.PORT}`),
-  manifest: `http://localhost:${env.PORT}/manifest.webmanifest`,
+  metadataBase: new URL(baseURL as string),
+  manifest: `${baseURL}/manifest.webmanifest`,
   title: 'Todoify',
   description: 'Todoアプリケーション',
   applicationName: 'Todoify',
