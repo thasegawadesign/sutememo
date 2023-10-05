@@ -4,6 +4,7 @@ import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
 import {
   Dispatch,
   FocusEvent,
+  MouseEvent,
   RefObject,
   SetStateAction,
   forwardRef,
@@ -52,6 +53,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
+
+  const handleDeleteBtnClick = useCallback((event: MouseEvent) => {
+    const targetTodoId = id;
+    deleteIndexedDB(targetTodoId);
+    readIndexedDB();
+  }, []);
 
   const handleBlur = useCallback((event: FocusEvent) => {
     const targetTodoId = id;
@@ -113,7 +120,10 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           {name}
         </span>
       </div>
-      <button className="text-xl text-gray-500 px-3 py-4 hover:cursor-pointer hover:bg-gray-100 transition-colors rounded">
+      <button
+        onClick={handleDeleteBtnClick}
+        className="text-xl text-gray-500 px-3 py-4 hover:cursor-pointer hover:bg-gray-100 transition-colors rounded"
+      >
         <PiXBold />
       </button>
     </li>
