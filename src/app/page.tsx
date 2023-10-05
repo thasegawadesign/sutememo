@@ -28,6 +28,18 @@ export default function Home() {
   const dbStore = 'todos';
   const dbKeyPath = 'id';
 
+  const setTodosOrderByDisplayOrder = useCallback((todos: Todo[]) => {
+    const tmpArr: Todo[] = [];
+    todos.map((todo, index) => {
+      tmpArr.push({ id: todo.id, displayOrder: index, name: todo.name });
+    });
+    const sortedTodos = tmpArr.toSorted(
+      (a, b) => a.displayOrder - b.displayOrder
+    );
+    setTodos(sortedTodos);
+    console.log('setTodosOrderByDisplayOrder called');
+  }, []);
+
   const createIndexedDB = useCallback(() => {
     if (!globalThis.window) return;
     const request = window.indexedDB.open(dbName, dbVer);
@@ -189,18 +201,6 @@ export default function Home() {
     request.onerror = (event) => {
       console.error(event);
     };
-  }, []);
-
-  const setTodosOrderByDisplayOrder = useCallback((todos: Todo[]) => {
-    const tmpArr: Todo[] = [];
-    todos.map((todo, index) => {
-      tmpArr.push({ id: todo.id, displayOrder: index, name: todo.name });
-    });
-    const sortedTodos = tmpArr.toSorted(
-      (a, b) => a.displayOrder - b.displayOrder
-    );
-    setTodos(sortedTodos);
-    console.log('setTodosOrderByDisplayOrder called');
   }, []);
 
   useEffect(() => {
