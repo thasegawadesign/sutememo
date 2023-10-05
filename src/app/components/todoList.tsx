@@ -26,11 +26,13 @@ type Props = {
   todos: Todo[];
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
-  updateIndexedDB: () => void;
+  updateIndexedDB: (todos: Todo[]) => void;
+  updateDisplayOrder: (todos: Todo[]) => void;
 };
 
 export default function TodoList(props: Props) {
-  const { todos, setTodos, editableRef, updateIndexedDB } = props;
+  const { todos, setTodos, editableRef, updateIndexedDB, updateDisplayOrder } =
+    props;
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -40,18 +42,25 @@ export default function TodoList(props: Props) {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const findIndex = function (id: string) {
-    let index = -1;
+    let targetIndex = -1;
     todos.forEach((todo, i) => {
-      if (id === todo.id) index = i;
+      if (id === todo.id) targetIndex = i;
     });
-    return index;
+    return targetIndex;
   };
   const findName = function (id: string) {
-    let name = '';
+    let targetName = '';
     todos.forEach((todo) => {
-      if (id === todo.id) name = todo.name;
+      if (id === todo.id) targetName = todo.name;
     });
-    return name;
+    return targetName;
+  };
+  const findDisplayOrder = function (id: string) {
+    let targetOrder = -1;
+    todos.forEach((todo, i) => {
+      if (id === todo.id) targetOrder = todo.displayOrder;
+    });
+    return targetOrder;
   };
   const handleDragStart = function (event: DragStartEvent) {
     const { active } = event;
@@ -85,11 +94,13 @@ export default function TodoList(props: Props) {
             <SortableItem
               key={todo.id}
               id={todo.id}
+              displayOrder={todo.displayOrder}
               name={todo.name}
               todos={todos}
               setTodos={setTodos}
               editableRef={editableRef}
               updateIndexedDB={updateIndexedDB}
+              updateDisplayOrder={updateDisplayOrder}
             />
           ))}
         </ul>
@@ -103,11 +114,13 @@ export default function TodoList(props: Props) {
           <SortableItem
             key={activeId}
             id={activeId}
+            displayOrder={findDisplayOrder(activeId)}
             name={findName(activeId)}
             todos={todos}
             setTodos={setTodos}
             editableRef={editableRef}
             updateIndexedDB={updateIndexedDB}
+            updateDisplayOrder={updateDisplayOrder}
           ></SortableItem>
         ) : null}
       </DragOverlay>

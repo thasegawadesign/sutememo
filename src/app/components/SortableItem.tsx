@@ -13,17 +13,29 @@ import { Todo } from '@/types/Todo';
 
 type Props = {
   id: string;
+  displayOrder: number;
   name: string;
   todos: Todo[];
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
-  updateIndexedDB: () => void;
+  updateIndexedDB: (todos: Todo[]) => void;
+  updateDisplayOrder: (todos: Todo[]) => void;
 };
 
 export default forwardRef(function SortableItem(props: Props) {
-  const { id, name, todos, setTodos, editableRef, updateIndexedDB } = props;
+  const {
+    id,
+    displayOrder,
+    name,
+    todos,
+    setTodos,
+    editableRef,
+    updateIndexedDB,
+    updateDisplayOrder,
+  } = props;
   const {
     isDragging,
+    isSorting,
     attributes,
     listeners,
     setNodeRef,
@@ -41,14 +53,23 @@ export default forwardRef(function SortableItem(props: Props) {
     setTodos(
       todos.map((todo) =>
         targetId === todo.id
-          ? { id: id, name: updatedTextContent as string }
+          ? {
+              id: id,
+              displayOrder: displayOrder,
+              name: updatedTextContent as string,
+            }
           : todo
       )
     );
   };
+
   useEffect(() => {
-    updateIndexedDB();
-  }, [todos, updateIndexedDB]);
+    updateIndexedDB(todos);
+  }, [todos]);
+
+  useEffect(() => {
+    if (!isSorting) updateDisplayOrder(todos);
+  }, [isSorting]);
 
   return (
     <li

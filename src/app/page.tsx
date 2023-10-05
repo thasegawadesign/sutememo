@@ -13,9 +13,13 @@ export default function Home() {
   const scrollToBottom = function () {
     scrollBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
   const handleBtnClick = async function () {
     scrollToBottom();
-    await setTodos([...todos, { id: uuidv4(), name: '' }]);
+    await setTodos([
+      ...todos,
+      { id: uuidv4(), displayOrder: todos.length, name: '' },
+    ]);
     editableRef.current?.focus();
   };
 
@@ -24,7 +28,7 @@ export default function Home() {
   const dbStore = 'todos';
   const dbKeyPath = 'id';
 
-  const createIndexedDB = function () {
+  const createIndexedDB = useCallback(() => {
     if (!globalThis.window) return;
     const request = window.indexedDB.open(dbName, dbVer);
     request.onupgradeneeded = (event) => {
@@ -34,6 +38,7 @@ export default function Home() {
           keyPath: dbKeyPath,
         });
         objectStore.createIndex('name', 'name', { unique: false });
+        objectStore.createIndex('order', 'order', { unique: true });
         objectStore.createIndex('id', 'id', { unique: true });
         objectStore.transaction.oncomplete = (event) => {
           const todoObjectStore = db
@@ -61,7 +66,10 @@ export default function Home() {
           tmpArr.push(cursor.value);
           cursor.continue();
         } else {
-          setTodos(tmpArr);
+          const sortedTodos = tmpArr.toSorted(
+            (a, b) => a.displayOrder - b.displayOrder
+          );
+          setTodos(sortedTodos);
           console.log(`Got all todos`);
         }
       };
@@ -73,11 +81,11 @@ export default function Home() {
     request.onerror = (event) => {
       console.error(event);
     };
-  };
-  const readIndexedDB = function () {
+  }, []);
+  const readIndexedDB = useCallback(() => {
     if (!globalThis.window) return;
-  };
-  const updateIndexedDB = function () {
+  }, []);
+  const updateIndexedDB = useCallback((todos: Todo[]) => {
     if (!globalThis.window) return;
     const request = window.indexedDB.open(dbName, dbVer);
     request.onsuccess = (event) => {
@@ -93,19 +101,51 @@ export default function Home() {
       });
       console.log('updateIndexedDB called');
     };
-    request.onerror = (event) => {};
-  };
-  const deleteIndexedDB = function () {
+    request.onerror = (event) => {
+      console.error(event);
+    };
+  }, []);
+  const deleteIndexedDB = useCallback((id: string) => {
     if (!globalThis.window) return;
     const request = window.indexedDB.open(dbName, dbVer);
     request.onsuccess = (event) => {};
     request.onerror = (event) => {
       console.log(event);
     };
-  };
-  const clearIndexedDB = function () {
+  }, []);
+  const clearIndexedDB = useCallback(() => {
     if (!globalThis.window) return;
-  };
+    const request = window.indexedDB.open(dbName, dbVer);
+    request.onsuccess = (event) => {
+      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+      const transaction = db.transaction([dbStore], 'readwrite');
+      const objectStore = transaction.objectStore(dbStore);
+      const request = objectStore.clear();
+      request.onsuccess = (event) => {};
+      transaction.oncomplete = (event) => {
+        console.log('clearIndexedDB called');
+      };
+      transaction.onerror = (event) => {
+        console.error(event);
+      };
+      request.onerror = (event) => {
+        console.error(event);
+      };
+    };
+    request.onerror = (event) => {
+      console.error(event);
+    };
+  }, []);
+
+  const updateDisplayOrder = useCallback((todos: Todo[]) => {
+    const tmpArr: Todo[] = [];
+    todos.map((todo, index) => {
+      tmpArr.push({ id: todo.id, displayOrder: index, name: todo.name });
+    });
+    setTodos(tmpArr);
+    console.log('updateDisplayOrder called');
+  }, []);
+
   useEffect(() => {
     createIndexedDB();
   }, []);
@@ -123,6 +163,7 @@ export default function Home() {
         setTodos={setTodos}
         editableRef={editableRef}
         updateIndexedDB={updateIndexedDB}
+        updateDisplayOrder={updateDisplayOrder}
       />
       <div ref={scrollBottomRef} className="h-24"></div>
       <Button handleBtnClick={handleBtnClick} />
