@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
     apple: '/icons/icon-192x192.png',
   },
+  themeColor: {
+    color: '#208cd8',
+  },
   twitter: {
     card: 'summary',
     creator: '@565683i',
@@ -49,7 +52,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" className="overscroll-none">
-      <body className={`overscroll-none ${notoSansJP.className}`}>
+      <body
+        className={`overscroll-none ${notoSansJP.className}`}
+        role="application"
+      >
         {children}
       </body>
     </html>

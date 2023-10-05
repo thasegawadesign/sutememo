@@ -97,11 +97,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     <li
       ref={setNodeRef}
       style={style}
+      role="listitem"
       className={`py-2 px-1 border flex gap-1 items-center justify-between border-gray-100 rounded-md bg-white ${
         isDragging && 'opacity-30'
       }`}
     >
-      <div className="flex gap-1 flex-1 items-streachr">
+      <div className="flex gap-1 flex-1 items-center">
         <button
           ref={setActivatorNodeRef}
           {...attributes}
@@ -122,13 +123,15 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         </span>
         {isMobile && (
           <button
-            className="flex-1 bg-transparent"
+            className="flex-1 bg-transparent py-6"
             ref={setActivatorNodeRef}
             {...listeners}
+            {...attributes}
           />
         )}
       </div>
       <button
+        aria-label={'Delete'}
         onClick={handleDeleteBtnClick}
         className="text-xl text-gray-500 px-3 py-4 hover:cursor-pointer hover:bg-gray-100 transition-colors rounded"
       >
