@@ -101,7 +101,7 @@ export default function Home() {
           const sortedTodos = tmpArr.toSorted(
             (a, b) => a.displayOrder - b.displayOrder
           );
-          setTodos(sortedTodos);
+          setTodosOrderByDisplayOrder(sortedTodos);
           console.log(`Got all todos`);
         }
       };
@@ -183,13 +183,16 @@ export default function Home() {
     };
   }, []);
 
-  const updateDisplayOrder = useCallback((todos: Todo[]) => {
+  const setTodosOrderByDisplayOrder = useCallback((todos: Todo[]) => {
     const tmpArr: Todo[] = [];
     todos.map((todo, index) => {
       tmpArr.push({ id: todo.id, displayOrder: index, name: todo.name });
     });
-    setTodos(tmpArr);
-    console.log('updateDisplayOrder called');
+    const sortedTodos = tmpArr.toSorted(
+      (a, b) => a.displayOrder - b.displayOrder
+    );
+    setTodos(sortedTodos);
+    console.log('setTodosOrderByDisplayOrder called');
   }, []);
 
   useEffect(() => {
@@ -211,7 +214,7 @@ export default function Home() {
         readIndexedDB={readIndexedDB}
         updateIndexedDB={updateIndexedDB}
         deleteIndexedDB={deleteIndexedDB}
-        updateDisplayOrder={updateDisplayOrder}
+        setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
       />
       <div ref={scrollBottomRef} className="h-24"></div>
       <Button handleBtnClick={handleBtnClick} />

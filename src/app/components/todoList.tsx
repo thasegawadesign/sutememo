@@ -29,7 +29,7 @@ type Props = {
   readIndexedDB: () => void;
   updateIndexedDB: (todos: Todo[]) => void;
   deleteIndexedDB: (id: string) => void;
-  updateDisplayOrder: (todos: Todo[]) => void;
+  setTodosOrderByDisplayOrder: (todos: Todo[]) => void;
 };
 
 export default function TodoList(props: Props) {
@@ -40,7 +40,7 @@ export default function TodoList(props: Props) {
     readIndexedDB,
     updateIndexedDB,
     deleteIndexedDB,
-    updateDisplayOrder,
+    setTodosOrderByDisplayOrder,
   } = props;
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -111,7 +111,7 @@ export default function TodoList(props: Props) {
               readIndexedDB={readIndexedDB}
               updateIndexedDB={updateIndexedDB}
               deleteIndexedDB={deleteIndexedDB}
-              updateDisplayOrder={updateDisplayOrder}
+              setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
             />
           ))}
         </ul>
@@ -133,7 +133,7 @@ export default function TodoList(props: Props) {
             readIndexedDB={readIndexedDB}
             updateIndexedDB={updateIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
-            updateDisplayOrder={updateDisplayOrder}
+            setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
           ></SortableItem>
         ) : null}
       </DragOverlay>

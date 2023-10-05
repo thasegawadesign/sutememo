@@ -1,6 +1,6 @@
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
-import { PiDotsSixVerticalBold } from 'react-icons/pi';
+import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
 import {
   Dispatch,
   FocusEvent,
@@ -22,7 +22,7 @@ type Props = {
   readIndexedDB: () => void;
   updateIndexedDB: (todos: Todo[]) => void;
   deleteIndexedDB: (id: string) => void;
-  updateDisplayOrder: (todos: Todo[]) => void;
+  setTodosOrderByDisplayOrder: (todos: Todo[]) => void;
 };
 
 export default forwardRef(function SortableItem(props: Props, _ref) {
@@ -36,7 +36,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     readIndexedDB,
     updateIndexedDB,
     deleteIndexedDB,
-    updateDisplayOrder,
+    setTodosOrderByDisplayOrder,
   } = props;
   const {
     isDragging,
@@ -79,33 +79,39 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   }, [todos]);
 
   useEffect(() => {
-    if (!isSorting) updateDisplayOrder(todos);
+    if (!isSorting) setTodosOrderByDisplayOrder(todos);
   }, [isSorting]);
 
   return (
     <li
       ref={setNodeRef}
       style={style}
-      className={`py-2 px-1.5 border border-gray-100 rounded-md flex items-center justify-between bg-white ${
+      className={`py-2 px-1.5 border flex gap-1 items-center justify-between border-gray-100 rounded-md bg-white ${
         isDragging && 'opacity-30'
       }`}
     >
-      <span
-        ref={editableRef}
-        onBlur={handleBlur}
-        contentEditable
-        suppressContentEditableWarning
-        className="text-2xl text-gray-700"
-      >
-        {name}
-      </span>
-      <button
-        ref={setActivatorNodeRef}
-        {...attributes}
-        {...listeners}
-        className="text-2xl px-3 py-4 text-gray-500 hover:cursor-grab hover:bg-gray-100 transition-colors rounded"
-      >
-        <PiDotsSixVerticalBold />
+      <div className="flex items-center gap-1">
+        <button
+          ref={setActivatorNodeRef}
+          {...attributes}
+          {...listeners}
+          className="text-2xl px-3 py-4 text-gray-500 hover:cursor-grab hover:bg-gray-100 transition-colors rounded"
+        >
+          <PiDotsSixVerticalBold />
+        </button>
+        <span
+          ref={editableRef}
+          onBlur={handleBlur}
+          role="textbox"
+          contentEditable
+          suppressContentEditableWarning
+          className="text-2xl text-gray-700 py-0.5 px-1 max-w-[calc(100vw-136px)]"
+        >
+          {name}
+        </span>
+      </div>
+      <button className="text-xl text-gray-500 px-3 py-4 hover:cursor-pointer hover:bg-gray-100 transition-colors rounded">
+        <PiXBold />
       </button>
     </li>
   );
