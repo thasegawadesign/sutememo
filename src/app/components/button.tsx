@@ -10,7 +10,7 @@ export default forwardRef(function Button(props: Props) {
   return (
     <button
       onClick={handleBtnClick}
-      className="text-white bg-main rounded-lg p-2 text-5xl w-[calc(100%-24px)] transition filter hover:brightness-95 fixed bottom-3 left-0 right-0 mx-auto"
+      className="text-white bg-main rounded-lg p-2 text-5xl w-[calc(100%-40px)] transition filter hover:brightness-95 fixed bottom-3 left-0 right-0 mx-auto"
     >
       <div className="grid place-items-center">
         <IoIosAdd />
