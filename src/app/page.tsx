@@ -39,7 +39,7 @@ export default function Home() {
         });
         objectStore.createIndex('name', 'name', { unique: false });
         objectStore.createIndex('displayOrder', 'displayOrder', {
-          unique: true,
+          unique: false,
         });
         objectStore.createIndex('id', 'id', { unique: true });
         objectStore.transaction.oncomplete = (event) => {
@@ -86,6 +86,35 @@ export default function Home() {
   }, []);
   const readIndexedDB = useCallback(() => {
     if (!globalThis.window) return;
+    const request = window.indexedDB.open(dbName, dbVer);
+    request.onsuccess = (event) => {
+      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+      const transaction = db.transaction([dbStore], 'readwrite');
+      const objectStore = transaction.objectStore(dbStore);
+      const tmpArr: Todo[] = [];
+      objectStore.openCursor().onsuccess = (event) => {
+        const cursor = (event.target as IDBRequest).result;
+        if (cursor) {
+          tmpArr.push(cursor.value);
+          cursor.continue();
+        } else {
+          const sortedTodos = tmpArr.toSorted(
+            (a, b) => a.displayOrder - b.displayOrder
+          );
+          setTodos(sortedTodos);
+          console.log(`Got all todos`);
+        }
+      };
+      transaction.oncomplete = (event) => {
+        console.log('readIndexedDB called');
+      };
+      transaction.onerror = (event) => {
+        console.error(event);
+      };
+    };
+    request.onerror = (event) => {
+      console.error(event);
+    };
   }, []);
   const updateIndexedDB = useCallback((todos: Todo[]) => {
     if (!globalThis.window) return;
@@ -110,7 +139,22 @@ export default function Home() {
   const deleteIndexedDB = useCallback((id: string) => {
     if (!globalThis.window) return;
     const request = window.indexedDB.open(dbName, dbVer);
-    request.onsuccess = (event) => {};
+    request.onsuccess = (event) => {
+      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+      const transaction = db.transaction([dbStore], 'readwrite');
+      const objectStore = transaction.objectStore(dbStore);
+      const deleteRequest = objectStore.delete(id);
+      deleteRequest.onsuccess = (event) => {};
+      deleteRequest.onerror = (event) => {
+        console.error(event);
+      };
+      transaction.oncomplete = (event) => {
+        console.log('deleteIndexedDB called');
+      };
+      transaction.onerror = (event) => {
+        console.error(event);
+      };
+    };
     request.onerror = (event) => {
       console.log(event);
     };
@@ -164,7 +208,9 @@ export default function Home() {
         todos={todos}
         setTodos={setTodos}
         editableRef={editableRef}
+        readIndexedDB={readIndexedDB}
         updateIndexedDB={updateIndexedDB}
+        deleteIndexedDB={deleteIndexedDB}
         updateDisplayOrder={updateDisplayOrder}
       />
       <div ref={scrollBottomRef} className="h-24"></div>

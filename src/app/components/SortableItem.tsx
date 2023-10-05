@@ -18,7 +18,9 @@ type Props = {
   todos: Todo[];
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
+  readIndexedDB: () => void;
   updateIndexedDB: (todos: Todo[]) => void;
+  deleteIndexedDB: (id: string) => void;
   updateDisplayOrder: (todos: Todo[]) => void;
 };
 
@@ -30,7 +32,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     todos,
     setTodos,
     editableRef,
+    readIndexedDB,
     updateIndexedDB,
+    deleteIndexedDB,
     updateDisplayOrder,
   } = props;
   const {
@@ -50,17 +54,22 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   const handleBlur = function (event: FocusEvent) {
     const targetId = id;
     const updatedTextContent = event.target.textContent;
-    setTodos(
-      todos.map((todo) =>
-        targetId === todo.id
-          ? {
-              id: id,
-              displayOrder: displayOrder,
-              name: updatedTextContent as string,
-            }
-          : todo
-      )
-    );
+    if (updatedTextContent) {
+      setTodos(
+        todos.map((todo) =>
+          targetId === todo.id
+            ? {
+                id: id,
+                displayOrder: displayOrder,
+                name: updatedTextContent as string,
+              }
+            : todo
+        )
+      );
+    } else {
+      deleteIndexedDB(targetId);
+      readIndexedDB();
+    }
   };
 
   useEffect(() => {

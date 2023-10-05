@@ -26,13 +26,22 @@ type Props = {
   todos: Todo[];
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
+  readIndexedDB: () => void;
   updateIndexedDB: (todos: Todo[]) => void;
+  deleteIndexedDB: (id: string) => void;
   updateDisplayOrder: (todos: Todo[]) => void;
 };
 
 export default function TodoList(props: Props) {
-  const { todos, setTodos, editableRef, updateIndexedDB, updateDisplayOrder } =
-    props;
+  const {
+    todos,
+    setTodos,
+    editableRef,
+    readIndexedDB,
+    updateIndexedDB,
+    deleteIndexedDB,
+    updateDisplayOrder,
+  } = props;
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -99,7 +108,9 @@ export default function TodoList(props: Props) {
               todos={todos}
               setTodos={setTodos}
               editableRef={editableRef}
+              readIndexedDB={readIndexedDB}
               updateIndexedDB={updateIndexedDB}
+              deleteIndexedDB={deleteIndexedDB}
               updateDisplayOrder={updateDisplayOrder}
             />
           ))}
@@ -119,7 +130,9 @@ export default function TodoList(props: Props) {
             todos={todos}
             setTodos={setTodos}
             editableRef={editableRef}
+            readIndexedDB={readIndexedDB}
             updateIndexedDB={updateIndexedDB}
+            deleteIndexedDB={deleteIndexedDB}
             updateDisplayOrder={updateDisplayOrder}
           ></SortableItem>
         ) : null}
