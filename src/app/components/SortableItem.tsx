@@ -7,6 +7,7 @@ import {
   RefObject,
   SetStateAction,
   forwardRef,
+  useCallback,
   useEffect,
 } from 'react';
 import { Todo } from '@/types/Todo';
@@ -51,7 +52,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-  const handleBlur = function (event: FocusEvent) {
+
+  const handleBlur = useCallback((event: FocusEvent) => {
     const targetId = id;
     const updatedTextContent = event.target.textContent;
     if (updatedTextContent) {
@@ -70,7 +72,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       deleteIndexedDB(targetId);
       readIndexedDB();
     }
-  };
+  }, []);
 
   useEffect(() => {
     updateIndexedDB(todos);
