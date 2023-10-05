@@ -23,6 +23,7 @@ import {
 import type { Todo } from '@/types/Todo';
 import { Dispatch, RefObject, SetStateAction, useId, useState } from 'react';
 import SortableItem from './SortableItem';
+import { isMobile } from 'react-device-detect';
 
 type Props = {
   todos: Todo[];
@@ -130,7 +131,7 @@ export default function TodoList(props: Props) {
       <DragOverlay
         wrapperElement="ul"
         className="shadow-sm"
-        style={{ scale: 1.03 }}
+        style={{ scale: isMobile ? 1.032 : 1.016 }}
       >
         {activeId ? (
           <SortableItem
