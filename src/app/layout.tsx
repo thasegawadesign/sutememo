@@ -2,6 +2,7 @@ import { env } from 'process';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
+import Analytics from './components/Analytics';
 
 const baseURL = env.BASE_URL;
 
@@ -52,6 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" className="overscroll-none">
+      <Analytics />
       <body
         className={`overscroll-none ${notoSansJP.className}`}
         role="application"
