@@ -38,7 +38,9 @@ export default function Home() {
           keyPath: dbKeyPath,
         });
         objectStore.createIndex('name', 'name', { unique: false });
-        objectStore.createIndex('order', 'order', { unique: true });
+        objectStore.createIndex('displayOrder', 'displayOrder', {
+          unique: true,
+        });
         objectStore.createIndex('id', 'id', { unique: true });
         objectStore.transaction.oncomplete = (event) => {
           const todoObjectStore = db
