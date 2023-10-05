@@ -54,12 +54,15 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   };
 
   const handleBlur = useCallback((event: FocusEvent) => {
-    const targetId = id;
+    const targetTodoId = id;
+    const targetTodoName = name;
     const updatedTextContent = event.target.textContent;
+    const isEdited = !(targetTodoName === updatedTextContent);
     if (updatedTextContent) {
+      if (!isEdited) return;
       setTodos(
         todos.map((todo) =>
-          targetId === todo.id
+          targetTodoId === todo.id
             ? {
                 id: id,
                 displayOrder: displayOrder,
@@ -69,7 +72,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         )
       );
     } else {
-      deleteIndexedDB(targetId);
+      deleteIndexedDB(targetTodoId);
       readIndexedDB();
     }
   }, []);
