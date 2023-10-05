@@ -105,6 +105,9 @@ export default function Home() {
           console.log(`Got all todos`);
         }
       };
+      objectStore.openCursor().onerror = (event) => {
+        console.error(event);
+      };
       transaction.oncomplete = (event) => {
         console.log('readIndexedDB called');
       };
@@ -124,13 +127,18 @@ export default function Home() {
       const transaction = db.transaction([dbStore], 'readwrite');
       const objectStore = transaction.objectStore(dbStore);
       todos.forEach((todo) => {
-        const request = objectStore.put(todo);
-        request.onsuccess = (event) => {};
-        request.onerror = (event) => {
+        const putRequest = objectStore.put(todo);
+        putRequest.onsuccess = (event) => {};
+        putRequest.onerror = (event) => {
           console.error(event);
         };
       });
-      console.log('updateIndexedDB called');
+      transaction.oncomplete = (event) => {
+        console.log('updateIndexedDB called');
+      };
+      transaction.onerror = (event) => {
+        console.error(event);
+      };
     };
     request.onerror = (event) => {
       console.error(event);
@@ -166,15 +174,15 @@ export default function Home() {
       const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
       const transaction = db.transaction([dbStore], 'readwrite');
       const objectStore = transaction.objectStore(dbStore);
-      const request = objectStore.clear();
-      request.onsuccess = (event) => {};
+      const clearRequest = objectStore.clear();
+      clearRequest.onsuccess = (event) => {};
+      clearRequest.onerror = (event) => {
+        console.error(event);
+      };
       transaction.oncomplete = (event) => {
         console.log('clearIndexedDB called');
       };
       transaction.onerror = (event) => {
-        console.error(event);
-      };
-      request.onerror = (event) => {
         console.error(event);
       };
     };
