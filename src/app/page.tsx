@@ -11,8 +11,27 @@ export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const editableRef = useRef<HTMLSpanElement>(null);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
-  const scrollToBottom = function () {
+  const scrollToBottom = useCallback(() => {
     scrollBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  const handleKeyUp = async function (event: KeyboardEvent) {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
+    if (event.key === 'Enter') {
+      editableRef.current?.focus();
+    }
+  };
+  const handleKeyDown = async function (event: KeyboardEvent) {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
+    if (event.key === 'Enter') {
+      const target = event.target as HTMLElement;
+      if (target.nodeName !== 'BODY') return;
+      scrollToBottom();
+      await setTodos([
+        ...todos,
+        { id: uuidv4(), displayOrder: todos.length, name: '' },
+      ]);
+    }
   };
 
   const handleBtnClick = async function () {
@@ -23,6 +42,18 @@ export default function Home() {
     ]);
     editableRef.current?.focus();
   };
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    window.addEventListener('keyup', handleKeyUp);
+    return () => window.removeEventListener('keyup', handleKeyUp);
+  }, [handleKeyUp]);
 
   const dbVer = 1;
   const dbName = 'TodoDB';
