@@ -30,7 +30,8 @@ type Props = {
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
   readIndexedDB: () => void;
-  updateIndexedDB: (todos: Todo[]) => void;
+  updateIndexedDB: (id: string, updatedText: string) => void;
+  updateAllIndexedDB: (todos: Todo[]) => void;
   deleteIndexedDB: (id: string) => void;
   setTodosOrderByDisplayOrder: (todos: Todo[]) => void;
 };
@@ -42,6 +43,7 @@ export default function TodoList(props: Props) {
     editableRef,
     readIndexedDB,
     updateIndexedDB,
+    updateAllIndexedDB,
     deleteIndexedDB,
     setTodosOrderByDisplayOrder,
   } = props;
@@ -121,6 +123,7 @@ export default function TodoList(props: Props) {
                 editableRef={editableRef}
                 readIndexedDB={readIndexedDB}
                 updateIndexedDB={updateIndexedDB}
+                updateAllIndexedDB={updateAllIndexedDB}
                 deleteIndexedDB={deleteIndexedDB}
                 setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
               />
@@ -144,6 +147,7 @@ export default function TodoList(props: Props) {
             editableRef={editableRef}
             readIndexedDB={readIndexedDB}
             updateIndexedDB={updateIndexedDB}
+            updateAllIndexedDB={updateAllIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
             setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
           ></SortableItem>
