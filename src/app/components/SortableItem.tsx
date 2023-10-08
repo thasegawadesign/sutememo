@@ -5,6 +5,7 @@ import { isMobile } from 'react-device-detect';
 import {
   Dispatch,
   FocusEvent,
+  KeyboardEvent,
   MouseEvent,
   RefObject,
   SetStateAction,
@@ -71,6 +72,13 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     }
   }, []);
 
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+      const targetElement = event.target as HTMLElement;
+      targetElement.blur();
+    }
+  }, []);
+
   return (
     <li
       ref={setNodeRef}
@@ -92,6 +100,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         <span
           ref={editableRef}
           onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
           role="textbox"
           contentEditable
           suppressContentEditableWarning
