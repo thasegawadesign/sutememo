@@ -24,6 +24,12 @@ export default function Analytics() {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${ANALYTICS_ID}');
+            window.addEventListener('appinstalled', (event) => {
+              gtag('event', 'install_pwa', {
+                event_category: 'PWA',
+                event_label: 'Install',
+              });
+            });
           `,
         }}
       />
