@@ -5,4 +5,8 @@ const withPWA = require('next-pwa')({
   dest: 'public',
 });
 
-module.exports = withPWA();
+module.exports = withPWA({
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+});
