@@ -10,7 +10,6 @@ import {
   SetStateAction,
   forwardRef,
   useCallback,
-  useEffect,
 } from 'react';
 import { Todo } from '@/types/Todo';
 
@@ -22,7 +21,8 @@ type Props = {
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
   readIndexedDB: () => void;
-  updateIndexedDB: (todos: Todo[]) => void;
+  updateIndexedDB: (id: string, updatedText: string) => void;
+  updateAllIndexedDB: (todos: Todo[]) => void;
   deleteIndexedDB: (id: string) => void;
   setTodosOrderByDisplayOrder: (todos: Todo[]) => void;
 };
@@ -30,19 +30,14 @@ type Props = {
 export default forwardRef(function SortableItem(props: Props, _ref) {
   const {
     id,
-    displayOrder,
     name,
-    todos,
-    setTodos,
     editableRef,
     readIndexedDB,
     updateIndexedDB,
     deleteIndexedDB,
-    setTodosOrderByDisplayOrder,
   } = props;
   const {
     isDragging,
-    isSorting,
     attributes,
     listeners,
     setNodeRef,
@@ -56,42 +51,25 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   };
 
   const handleDeleteBtnClick = useCallback((event: MouseEvent) => {
-    const targetTodoId = id;
-    deleteIndexedDB(targetTodoId);
+    const targetId = id;
+    deleteIndexedDB(targetId);
     readIndexedDB();
   }, []);
 
   const handleBlur = useCallback((event: FocusEvent) => {
-    const targetTodoId = id;
-    const targetTodoName = name;
+    const targetId = id;
+    const targetName = name;
     const updatedTextContent = event.target.textContent;
-    const isEdited = !(targetTodoName === updatedTextContent);
+    const isEdited = targetName !== updatedTextContent;
     if (updatedTextContent) {
       if (!isEdited) return;
-      setTodos(
-        todos.map((todo) =>
-          targetTodoId === todo.id
-            ? {
-                id: id,
-                displayOrder: displayOrder,
-                name: updatedTextContent as string,
-              }
-            : todo
-        )
-      );
+      updateIndexedDB(targetId, updatedTextContent);
+      readIndexedDB();
     } else {
-      deleteIndexedDB(targetTodoId);
+      deleteIndexedDB(targetId);
       readIndexedDB();
     }
   }, []);
-
-  useEffect(() => {
-    updateIndexedDB(todos);
-  }, [todos]);
-
-  useEffect(() => {
-    if (!isSorting) setTodosOrderByDisplayOrder(todos);
-  }, [isSorting]);
 
   return (
     <li
