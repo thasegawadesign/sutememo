@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Todoify',
     short_name: 'Todoify',
     description: 'Todoアプリケーション',
-    start_url: baseURL,
+    start_url: `${baseURL}/?utm_source=homescreen`,
     display: 'standalone',
     background_color: '#208cd8',
     theme_color: '#208cd8',
