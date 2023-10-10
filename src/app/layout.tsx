@@ -6,6 +6,8 @@ import Analytics from './components/Analytics';
 
 const baseURL = env.BASE_URL;
 const creator = env.CREATOR;
+const authorName = env.ATHOR_NAME;
+const authorURL = env.ATHOR_URL;
 
 export const metadata: Metadata = {
   title: 'Todoify',
@@ -26,6 +28,12 @@ export const metadata: Metadata = {
   themeColor: {
     color: '#208cd8',
   },
+  authors: [
+    {
+      name: `${authorName}`,
+      url: `${authorURL}`,
+    },
+  ],
   twitter: {
     card: 'summary',
     creator: `${creator}`,
