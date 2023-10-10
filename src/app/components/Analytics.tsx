@@ -26,7 +26,21 @@ export default function Analytics() {
             gtag('js', new Date());
             gtag('config', '${ANALYTICS_ID}');
             document.querySelector('[aria-label="Add"]')?.addEventListener('click', (event) => {
-              gtag('event', 'add_todo');
+              gtag('event', 'add_todo', {
+                event_category: 'Add',
+                event_label: 'Click',
+              });
+            });
+            window.addEventListener('keydown', (event) => {
+              if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
+              if (event.key === 'Enter') {
+                const target = event.target;
+                if (target?.nodeName !== 'BODY') return;
+                gtag('event', 'add_todo', {
+                  event_category: 'Add',
+                  event_label: 'Keydown',
+                });
+              }
             });
             document.addEventListener('click', (event) => {
               if (!event.target) return;
