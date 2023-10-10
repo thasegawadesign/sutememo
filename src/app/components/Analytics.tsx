@@ -25,6 +25,17 @@ export default function Analytics() {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${ANALYTICS_ID}');
+            document.addEventListener(
+              'blur',
+              (event) => {
+                if (!event.target) return;
+                const isTextbox = event.target.role === 'textbox';
+                if (isTextbox) {
+                  gtag('event', 'edit_todo');
+                }
+              },
+              true,
+            );
             document.querySelector('[aria-label="Add"]')?.addEventListener('click', (event) => {
               gtag('event', 'add_todo', {
                 event_category: 'Add',
