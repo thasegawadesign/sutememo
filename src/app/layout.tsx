@@ -8,7 +8,7 @@ const baseURL = env.BASE_URL;
 
 export const metadata: Metadata = {
   title: 'Todoify',
-  description: 'Todoify - Todoアプリケーション',
+  description: 'Todoアプリケーション',
   viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
   metadataBase: new URL(baseURL as string),
   manifest: `${baseURL}/manifest.webmanifest`,
