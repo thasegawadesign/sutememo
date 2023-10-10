@@ -9,6 +9,7 @@ export default function Analytics() {
     console.warn('Analytics測定IDが定義されていません');
     return <></>;
   }
+
   return (
     <>
       <Script
@@ -24,7 +25,7 @@ export default function Analytics() {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${ANALYTICS_ID}');
-            document.querySelector('.add-button')?.addEventListener('click', (event) => {
+            document.querySelector('[aria-label="Add"]')?.addEventListener('click', (event) => {
               gtag('event', 'add_todo');
             });
             document.addEventListener('click', (event) => {
