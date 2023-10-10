@@ -57,7 +57,7 @@ export default function TodoList(props: Props) {
     mouseSenser,
     pointerSenser,
     keyboardSensor,
-    touchSensor
+    touchSensor,
   );
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -111,7 +111,7 @@ export default function TodoList(props: Props) {
     >
       <SortableContext items={todos} strategy={verticalListSortingStrategy}>
         <div className="px-[22px]">
-          <ul className="grid gap-3 mb-24 touch-none">
+          <ul className="grid touch-none gap-3">
             {todos.map((todo) => (
               <SortableItem
                 key={todo.id}
@@ -150,7 +150,7 @@ export default function TodoList(props: Props) {
             updateAllIndexedDB={updateAllIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
             setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
-          ></SortableItem>
+          />
         ) : null}
       </DragOverlay>
     </DndContext>
