@@ -84,16 +84,16 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       ref={setNodeRef}
       style={style}
       role="listitem"
-      className={`py-2 px-1 border flex gap-1 items-center justify-between border-gray-100 rounded-md bg-white ${
+      className={`flex items-center justify-between gap-1 rounded-md border border-gray-100 bg-white px-1 py-2 ${
         isDragging && 'opacity-30'
       }`}
     >
-      <div className="flex gap-1 flex-1 items-center">
+      <div className="flex flex-1 items-center gap-1">
         <button
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          className="text-2xl px-3 py-4 hover:cursor-grab text-gray-500 hover:bg-gray-100 transition-colors rounded"
+          className="rounded px-3 py-4 text-2xl text-gray-500 transition-colors hover:cursor-grab hover:bg-gray-100"
         >
           <PiDotsSixVerticalBold />
         </button>
@@ -104,7 +104,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           contentEditable
           suppressContentEditableWarning
-          className="text-2xl text-gray-700 py-0.5 px-1 leading-snug max-w-[calc(100vw-148px)]"
+          className="max-w-[calc(100vw-148px)] px-1 py-0.5 text-2xl leading-snug text-gray-700"
         >
           {name}
         </span>
@@ -120,7 +120,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       <button
         aria-label={'Delete'}
         onClick={handleDeleteBtnClick}
-        className="text-xl text-gray-500 px-3 py-4 hover:cursor-pointer hover:bg-gray-100 transition-colors rounded"
+        className="rounded px-3 py-4 text-xl text-gray-500 transition-colors hover:cursor-pointer hover:bg-gray-100"
       >
         <PiXBold />
       </button>
