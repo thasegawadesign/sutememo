@@ -6,7 +6,7 @@ export const sortTodosOrderByDisplayOrder = (todos: Todo[]) => {
     tmpArr.push({ id: todo.id, displayOrder: index, name: todo.name });
   });
   const sortedTodos = tmpArr.toSorted(
-    (a, b) => a.displayOrder - b.displayOrder
+    (a, b) => a.displayOrder - b.displayOrder,
   );
   return sortedTodos;
 };

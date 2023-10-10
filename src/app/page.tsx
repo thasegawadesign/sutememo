@@ -12,36 +12,42 @@ export default function Home() {
   const editableRef = useRef<HTMLSpanElement>(null);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
   const scrollToBottom = useCallback(() => {
-    scrollBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    scrollBottomRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+    });
   }, []);
 
-  const handleKeyUp = async function (event: KeyboardEvent) {
+  const handleKeyUp = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
     if (event.key === 'Enter') {
+      scrollToBottom();
       editableRef.current?.focus();
     }
-  };
-  const handleKeyDown = async function (event: KeyboardEvent) {
-    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
-    if (event.key === 'Enter') {
-      const target = event.target as HTMLElement;
-      if (target.nodeName !== 'BODY') return;
-      scrollToBottom();
-      await setTodos([
-        ...todos,
-        { id: uuidv4(), displayOrder: todos.length, name: '' },
-      ]);
-    }
-  };
+  }, []);
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
+      if (event.key === 'Enter') {
+        const target = event.target as HTMLElement;
+        if (target.nodeName !== 'BODY') return;
+        setTodos([
+          ...todos,
+          { id: uuidv4(), displayOrder: todos.length, name: '' },
+        ]);
+      }
+    },
+    [todos],
+  );
 
-  const handleBtnClick = async function () {
-    scrollToBottom();
+  const handleBtnClick = useCallback(async () => {
     await setTodos([
       ...todos,
       { id: uuidv4(), displayOrder: todos.length, name: '' },
     ]);
+    scrollToBottom();
     editableRef.current?.focus();
-  };
+  }, [todos]);
 
   useEffect(() => {
     if (!globalThis.window) return;
@@ -66,7 +72,7 @@ export default function Home() {
       tmpArr.push({ id: todo.id, displayOrder: index, name: todo.name });
     });
     const sortedTodos = tmpArr.toSorted(
-      (a, b) => a.displayOrder - b.displayOrder
+      (a, b) => a.displayOrder - b.displayOrder,
     );
     setTodos(sortedTodos);
     console.log('setTodosOrderByDisplayOrder called');
@@ -123,7 +129,7 @@ export default function Home() {
           cursor.continue();
         } else {
           const sortedTodos = tmpArr.toSorted(
-            (a, b) => a.displayOrder - b.displayOrder
+            (a, b) => a.displayOrder - b.displayOrder,
           );
           setTodosOrderByDisplayOrder(sortedTodos);
           console.log(`Got all todos`);
@@ -269,22 +275,31 @@ export default function Home() {
     <main>
       <h1
         style={{ fontWeight: 800 }}
-        className="text-main text-4xl px-[22px] pt-3 pb-5"
+        className="px-[22px] pb-5 pt-3 text-4xl text-main"
       >
         ToDo
       </h1>
-      <TodoList
-        todos={todos}
-        setTodos={setTodos}
-        editableRef={editableRef}
-        readIndexedDB={readIndexedDB}
-        updateIndexedDB={updateIndexedDB}
-        updateAllIndexedDB={updateAllIndexedDB}
-        deleteIndexedDB={deleteIndexedDB}
-        setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
-      />
-      <div ref={scrollBottomRef} className="h-24"></div>
+      {todos.length > 0 && (
+        <>
+          <TodoList
+            todos={todos}
+            setTodos={setTodos}
+            editableRef={editableRef}
+            readIndexedDB={readIndexedDB}
+            updateIndexedDB={updateIndexedDB}
+            updateAllIndexedDB={updateAllIndexedDB}
+            deleteIndexedDB={deleteIndexedDB}
+            setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
+          />
+        </>
+      )}
       <Button handleBtnClick={handleBtnClick} />
+      {todos.length > 0 && (
+        <div
+          ref={scrollBottomRef}
+          className="h-[calc(env(safe-area-inset-bottom)+104px)] pwa:h-[calc(env(safe-area-inset-bottom)+84px)]"
+        />
+      )}
     </main>
   );
 }
