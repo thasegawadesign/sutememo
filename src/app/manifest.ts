@@ -3,12 +3,18 @@ import { env } from 'process';
 
 export default function manifest(): MetadataRoute.Manifest {
   const baseURL = env.BASE_URL;
+  const id = '?utm_source=homescreen';
   return {
     name: 'Todoify',
     short_name: 'Todoify',
     description: 'Todoアプリケーション',
-    start_url: `${baseURL}/?utm_source=homescreen`,
+    lang: 'ja',
+    dir: 'ltr',
+    start_url: `${baseURL}/?${id}`,
+    id: `${id}`,
+    scope: `${baseURL}`,
     display: 'standalone',
+    orientation: 'landscape',
     background_color: '#208cd8',
     theme_color: '#208cd8',
     icons: [
@@ -37,5 +43,6 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: 'any',
       },
     ],
+    prefer_related_applications: false,
   };
 }
