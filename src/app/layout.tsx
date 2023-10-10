@@ -7,10 +7,11 @@ import Analytics from './components/Analytics';
 const baseURL = env.BASE_URL;
 
 export const metadata: Metadata = {
+  title: 'Todoify',
+  description: 'Todoify - Todoアプリケーション',
+  viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
   metadataBase: new URL(baseURL as string),
   manifest: `${baseURL}/manifest.webmanifest`,
-  title: 'Todoify',
-  description: 'Todoアプリケーション',
   applicationName: 'Todoify',
   appleWebApp: {
     capable: true,
@@ -57,7 +58,7 @@ export default function RootLayout({
         <Analytics />
       </head>
       <body
-        className={`overscroll-none ${notoSansJP.className}`}
+        className={`min-h-[100svh] overscroll-none pt-[env(safe-area-inset-top)] pwa:min-h-screen ${notoSansJP.className}`}
         role="application"
       >
         {children}

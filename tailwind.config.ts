@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        pwa: { raw: '(display-mode: standalone)' },
+      },
       colors: {
         main: '#208cd8',
       },
