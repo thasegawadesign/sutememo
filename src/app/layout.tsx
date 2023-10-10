@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: 'Todoify',
     images: [
       {
-        url: '',
+        url: `${baseURL}/api/og`,
       },
     ],
   },
