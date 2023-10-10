@@ -9,6 +9,7 @@ export default function Analytics() {
     console.warn('Analytics測定IDが定義されていません');
     return <></>;
   }
+
   return (
     <>
       <Script
@@ -24,6 +25,44 @@ export default function Analytics() {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${ANALYTICS_ID}');
+            document.querySelector('[aria-label="Add"]')?.addEventListener('click', (event) => {
+              gtag('event', 'add_todo');
+            });
+            document.addEventListener('click', (event) => {
+              if (!event.target) return;
+              const isSVG = event.target.localName === 'svg';
+              const isButton = event.target.localName === 'button';
+              const target =
+                (isSVG && event.target.parentElement) || (isButton && event.target);
+              const isDeleteButton = target.ariaLabel === 'Delete';
+              if (isDeleteButton) gtag('event', 'delete_todo');
+            });
+            document.addEventListener('mouseup', (event) => {
+              if (!event.target) return;
+              const isSVG = event.target.localName === 'svg';
+              const isButton = event.target.localName === 'button';
+              const target =
+                (isSVG && event.target.parentElement) || (isButton && event.target);
+              const isDraggableButton = target.ariaRoleDescription === 'sortable';
+              if (isDraggableButton)
+                gtag('event', 'sort_todo', {
+                  event_category: 'Sort',
+                  event_label: 'MouseUp',
+                });
+            });
+            document.addEventListener('touchend', (event) => {
+              if (!event.target) return;
+              const isSVG = event.target.localName === 'svg';
+              const isButton = event.target.localName === 'button';
+              const target =
+                (isSVG && event.target.parentElement) || (isButton && event.target);
+              const isDraggableButton = target.ariaRoleDescription === 'sortable';
+              if (isDraggableButton)
+                gtag('event', 'sort_todo', {
+                  event_category: 'Sort',
+                  event_label: 'TouchEnd',
+                });
+            });
             window.addEventListener('appinstalled', (event) => {
               gtag('event', 'install_pwa', {
                 event_category: 'PWA',
