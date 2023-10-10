@@ -1,5 +1,4 @@
 import { forwardRef } from 'react';
-import { isIOS } from 'react-device-detect';
 import { IoIosAdd } from 'react-icons/io';
 
 type Props = {
@@ -14,9 +13,7 @@ export default forwardRef(function Button(props: Props, _ref) {
       aria-label="Add"
       role="button"
       tabIndex={0}
-      className={`text-white bg-main rounded-lg p-2 text-5xl w-[calc(100%-40px)] transition filter hover:brightness-95 fixed bottom-5 left-0 right-0 mx-auto ${
-        isIOS && 'bottom-[calc(0.68vh+20px)]'
-      }`}
+      className="fixed bottom-5 left-0 right-0 mx-auto w-[calc(100%-40px)] rounded-lg bg-main p-2 text-5xl text-white filter transition hover:brightness-95 pwa:bottom-[env(safe-area-inset-bottom)]"
     >
       <div className="grid place-items-center">
         <IoIosAdd />
