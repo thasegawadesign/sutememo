@@ -10,7 +10,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Todoアプリケーション',
     lang: 'ja',
     dir: 'ltr',
-    start_url: `${baseURL}/?${id}`,
+    start_url: `${baseURL}/${id}`,
     id: `${id}`,
     scope: `${baseURL}`,
     display: 'standalone',
