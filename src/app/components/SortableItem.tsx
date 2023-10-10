@@ -84,7 +84,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       ref={setNodeRef}
       style={style}
       role="listitem"
-      className={`flex items-center justify-between gap-1 rounded-md border border-gray-100 bg-white px-1.5 py-2 sm:px-2 ${
+      className={`flex items-center justify-between gap-1 rounded-md border border-gray-100 bg-white px-1.5 py-2 sm:gap-2 sm:px-2 ${
         isDragging && 'opacity-30'
       }`}
     >
@@ -104,7 +104,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           contentEditable
           suppressContentEditableWarning
-          className="max-w-[calc(100vw-148px)] px-1 py-0.5 text-2xl leading-snug text-gray-700 focus:w-full"
+          className="max-w-full px-1 py-0.5 text-2xl leading-snug text-gray-700 focus:w-full"
         >
           {name}
         </span>
