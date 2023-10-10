@@ -9,60 +9,6 @@ export default function Analytics() {
     console.warn('Analytics測定IDが定義されていません');
     return <></>;
   }
-  // const deleteButtons = document.querySelectorAll('.delete-button');
-  // if (deleteButtons.length > 0) {
-  //   deleteButtons.forEach((deleteButton) => {
-  //     deleteButton.addEventListener('click', (event) => {
-  //       gtag('event', 'delete_todo');
-  //     });
-  //   });
-  // }
-
-  // document.addEventListener('mouseup', (event) => {
-  //   if (!event.target) return;
-  //   const isSVG = event.target.localName === 'svg';
-  //   const isButton = event.target.localName === 'button';
-  //   console.log(event);
-  // });
-
-  // document.addEventListener('click', (event) => {
-  //   if (!event.target) return;
-  //   const isSVG = event.target.localName === 'svg';
-  //   const isButton = event.target.localName === 'button';
-  //   const target =
-  //     (isSVG && event.target.parentElement) || (isButton && event.target);
-  //   const isDeleteButton = target.ariaLabel === 'Delete';
-  //   if (isDeleteButton) gtag('event', 'delete_todo');
-  // });
-
-  // document.addEventListener('mouseup', (event) => {
-  //   if (!event.target) return;
-  //   const isSVG = event.target.localName === 'svg';
-  //   const isButton = event.target.localName === 'button';
-  //   const target =
-  //     (isSVG && event.target.parentElement) || (isButton && event.target);
-  //   const isDraggableButton = target.ariaRoleDescription === 'sortable';
-  //   if (isDraggableButton)
-  //     gtag('event', 'sort_todo', {
-  //       event_category: 'Sort',
-  //       event_label: 'MouseUp',
-  //     });
-  // });
-
-  // document.addEventListener('touchend', (event) => {
-  //   if (!event.target) return;
-  //   const isSVG = event.target.localName === 'svg';
-  //   const isButton = event.target.localName === 'button';
-  //   const target =
-  //     (isSVG && event.target.parentElement) || (isButton && event.target);
-  //   const isDraggableButton = target.ariaRoleDescription === 'sortable';
-  //   if (isDraggableButton)
-  //     gtag('event', 'sort_todo', {
-  //       event_category: 'Sort',
-  //       event_label: 'TouchEnd',
-  //     });
-  // });
-
   return (
     <>
       <Script
