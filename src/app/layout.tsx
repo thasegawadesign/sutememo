@@ -5,6 +5,7 @@ import { Noto_Sans_JP } from 'next/font/google';
 import Analytics from './components/Analytics';
 
 const baseURL = env.BASE_URL;
+const creator = env.CREATOR;
 
 export const metadata: Metadata = {
   title: 'Todoify',
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    creator: '@565683i',
+    creator: `${creator}`,
   },
   openGraph: {
     type: 'website',
