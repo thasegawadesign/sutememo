@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import Button from './components/button';
 import TodoList from './components/todoList';
 import { Todo } from '@/types/Todo';
-import { sortTodosOrderByDisplayOrder } from './features/sortTodosOrderByDisplayOrder';
+import { sortTodosOrderByDisplayOrder } from './utils/sortTodosOrderByDisplayOrder';
+import { registerServiceWorker } from './utils/registerServiceWorker';
 
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -263,6 +264,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    registerServiceWorker();
     createIndexedDB();
     readIndexedDB();
   }, []);
