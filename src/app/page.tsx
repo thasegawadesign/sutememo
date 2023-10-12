@@ -7,9 +7,28 @@ import TodoList from './components/todoList';
 import { Todo } from '@/types/Todo';
 import { sortTodosOrderByDisplayOrder } from './utils/sortTodosOrderByDisplayOrder';
 import { registerServiceWorker } from './utils/registerServiceWorker';
+import AppInstallButton from './components/AppInstallButton';
+import IconSvg from './components/IconSvg';
+
+declare global {
+  interface Window {
+    deferredPrompt: BeforeInstallPromptEvent | null;
+  }
+}
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: Array<string>;
+  readonly userChoice: Promise<{
+    outcome: 'accepted' | 'dismissed';
+    platform: string;
+  }>;
+  deferredPrompt: BeforeInstallPromptEvent | null;
+  prompt(): Promise<void>;
+}
 
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const editableRef = useRef<HTMLSpanElement>(null);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +61,7 @@ export default function Home() {
     [todos],
   );
 
-  const handleBtnClick = useCallback(async () => {
+  const handleAddButtonClick = useCallback(async () => {
     await setTodos([
       ...todos,
       { id: uuidv4(), displayOrder: todos.length, name: '' },
@@ -50,6 +69,44 @@ export default function Home() {
     scrollToBottom();
     editableRef.current?.focus();
   }, [todos]);
+
+  const handleAppInstallButtonClick = useCallback(async () => {
+    if (!globalThis.window) return;
+    const displayMode = window.matchMedia('(display-mode: standalone)').matches
+      ? 'standalone'
+      : 'browser tab';
+    await setDeferredPrompt(window.deferredPrompt);
+    if (displayMode === 'standalone') return;
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    try {
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt');
+      } else {
+        console.log('User dismissed the A2HS prompt');
+        setDeferredPrompt(null);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [deferredPrompt]);
+
+  const handleAppInstalled = useCallback(() => {
+    if (!globalThis.window) return;
+    setDeferredPrompt(null);
+    console.log('PWA was installed');
+  }, [setDeferredPrompt]);
+
+  const handleBeforeInstallPrompt = useCallback(
+    (event: Event) => {
+      if (!globalThis.window) return;
+      const beforeInstallPromptEvent = event as BeforeInstallPromptEvent;
+      beforeInstallPromptEvent.preventDefault();
+      setDeferredPrompt(beforeInstallPromptEvent);
+    },
+    [deferredPrompt],
+  );
 
   const handleVisibilityChange = useCallback(() => {
     if (document.visibilityState === 'visible') readIndexedDB();
@@ -292,17 +349,47 @@ export default function Home() {
   }, [handleWindowFocus]);
 
   useEffect(() => {
+    if (!globalThis.window) return;
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () =>
+      window.removeEventListener(
+        'beforeinstallprompt',
+        handleBeforeInstallPrompt,
+      );
+  }, [handleBeforeInstallPrompt]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    window.addEventListener('appinstalled', handleAppInstalled);
+    return () => window.removeEventListener('appinstalled', handleAppInstalled);
+  }, [handleAppInstalled]);
+
+  useEffect(() => {
     updateAllIndexedDB(todos);
   }, [todos]);
 
+  useEffect(() => {
+    console.log(`deferredPrompt: ${deferredPrompt}`);
+  }, [deferredPrompt]);
+
   return (
     <main>
-      <h1
-        style={{ fontWeight: 800 }}
-        className="select-none px-[22px] pb-5 pt-3 text-4xl text-main"
-      >
-        ToDo
-      </h1>
+      <div className="flex items-center justify-between px-[22px] pb-5 pt-3">
+        <div className="flex items-center gap-2">
+          <div className="flex h-12 w-12 items-center justify-center rounded-[24%] border border-gray-200 bg-white p-2 text-center">
+            <IconSvg />
+          </div>
+          <h1
+            style={{ fontWeight: 800 }}
+            className="select-none text-4xl text-main"
+          >
+            ToDo
+          </h1>
+        </div>
+        <AppInstallButton
+          handleAppInstallButtonClick={handleAppInstallButtonClick}
+        />
+      </div>
       {todos.length > 0 && (
         <>
           <TodoList
@@ -317,7 +404,7 @@ export default function Home() {
           />
         </>
       )}
-      <Button handleBtnClick={handleBtnClick} />
+      <Button handleAddButtonClick={handleAddButtonClick} />
       {todos.length > 0 && (
         <div
           ref={scrollBottomRef}

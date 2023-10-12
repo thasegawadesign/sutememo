@@ -2,14 +2,14 @@ import { forwardRef } from 'react';
 import { IoIosAdd } from 'react-icons/io';
 
 type Props = {
-  handleBtnClick: () => void;
+  handleAddButtonClick: () => void;
 };
 
 export default forwardRef(function Button(props: Props, _ref) {
-  const { handleBtnClick } = props;
+  const { handleAddButtonClick } = props;
   return (
     <button
-      onClick={handleBtnClick}
+      onClick={handleAddButtonClick}
       aria-label="Add"
       role="button"
       tabIndex={0}
