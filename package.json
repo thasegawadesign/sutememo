@@ -1,6 +1,6 @@
 {
   "name": "todoify",
-  "version": "1.0.0",
+  "version": "1.0.9",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -27,9 +27,9 @@
     "autoprefixer": "10.4.16",
     "eslint": "8.50.0",
     "eslint-config-next": "13.5.2",
-    "next": "13.5.2",
+    "next": "^13.5.4",
     "next-pwa": "^5.6.0",
-    "postcss": "8.4.30",
+    "postcss": "^8.4.31",
     "react": "18.2.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "18.2.0",
