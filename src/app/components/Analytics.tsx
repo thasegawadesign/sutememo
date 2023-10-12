@@ -2,7 +2,7 @@ import Script from 'next/script';
 import { env } from 'process';
 
 export default function Analytics() {
-  const baseURL = env.BASE_URL;
+  const cookieDomain = env.COOKIE_DOMAIN;
   const ANALYTICS_ID = process.env.NEXT_PUBLIC_ANALYTICS_ID;
   if (process.env.NODE_ENV !== 'production') {
     return <></>;
@@ -27,7 +27,7 @@ export default function Analytics() {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('set', {
-              cookie_domain: '${baseURL}',
+              cookie_domain: '${cookieDomain}',
               cookie_flags: 'SameSite=None;Secure',
             });
             gtag('config', '${ANALYTICS_ID}');
