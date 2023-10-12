@@ -1,6 +1,8 @@
 import Script from 'next/script';
+import { env } from 'process';
 
 export default function Analytics() {
+  const baseURL = env.BASE_URL;
   const ANALYTICS_ID = process.env.NEXT_PUBLIC_ANALYTICS_ID;
   if (process.env.NODE_ENV !== 'production') {
     return <></>;
@@ -24,8 +26,11 @@ export default function Analytics() {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            gtag('set', {
+              cookie_domain: '${baseURL}',
+              cookie_flags: 'SameSite=None;Secure',
+            });
             gtag('config', '${ANALYTICS_ID}');
-            gtag('set', { cookie_flags: 'SameSite=None;Secure' });
             document.addEventListener(
               'blur',
               (event) => {
