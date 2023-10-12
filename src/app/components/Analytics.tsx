@@ -3,8 +3,8 @@ import { env } from 'process';
 
 export default function Analytics() {
   const cookieDomain = env.COOKIE_DOMAIN;
-  const ANALYTICS_ID = process.env.NEXT_PUBLIC_ANALYTICS_ID;
-  if (process.env.NODE_ENV !== 'production') {
+  const ANALYTICS_ID = env.NEXT_PUBLIC_ANALYTICS_ID;
+  if (env.NODE_ENV !== 'production') {
     return <></>;
   }
   if (!ANALYTICS_ID) {
