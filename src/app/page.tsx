@@ -12,6 +12,7 @@ export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const editableRef = useRef<HTMLSpanElement>(null);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
+
   const scrollToBottom = useCallback(() => {
     scrollBottomRef.current?.scrollIntoView({
       behavior: 'smooth',
@@ -50,17 +51,9 @@ export default function Home() {
     editableRef.current?.focus();
   }, [todos]);
 
-  useEffect(() => {
-    if (!globalThis.window) return;
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
-
-  useEffect(() => {
-    if (!globalThis.window) return;
-    window.addEventListener('keyup', handleKeyUp);
-    return () => window.removeEventListener('keyup', handleKeyUp);
-  }, [handleKeyUp]);
+  const handleVisibilityChange = useCallback(() => {
+    if (document.visibilityState === 'visible') readIndexedDB();
+  }, []);
 
   const dbVer = 1;
   const dbName = 'TodoDB';
@@ -268,6 +261,25 @@ export default function Home() {
     createIndexedDB();
     readIndexedDB();
   }, []);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    window.addEventListener('keyup', handleKeyUp);
+    return () => window.removeEventListener('keyup', handleKeyUp);
+  }, [handleKeyUp]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [handleVisibilityChange]);
 
   useEffect(() => {
     updateAllIndexedDB(todos);
