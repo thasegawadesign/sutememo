@@ -93,7 +93,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          className="rounded px-3 py-4 text-2xl text-gray-500 transition-colors hover:cursor-grab hover:bg-gray-100"
+          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 transition-colors hover:cursor-grab hover:bg-gray-100"
         >
           <PiDotsSixVerticalBold />
         </button>
@@ -104,13 +104,13 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           contentEditable
           suppressContentEditableWarning
-          className="max-w-full px-1 py-0.5 text-2xl leading-snug text-gray-700 focus:w-full"
+          className="max-w-[calc(100svw-158px)] grow whitespace-break-spaces px-1 py-0.5 text-2xl leading-snug text-gray-700 focus:w-full sm:max-w-[calc(100svw-170px)]"
         >
           {name}
         </span>
         {isMobile && (
           <button
-            className="flex-1 bg-transparent py-6"
+            className="flex-1 self-stretch bg-transparent"
             ref={setActivatorNodeRef}
             {...listeners}
             {...attributes}
