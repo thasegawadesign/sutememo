@@ -1,7 +1,7 @@
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
-import { isMobile } from 'react-device-detect';
+import { isMobile, isTablet } from 'react-device-detect';
 import {
   Dispatch,
   FocusEvent,
@@ -59,12 +59,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
 
   const handleBlur = useCallback((event: FocusEvent) => {
     const targetId = id;
-    const targetName = name;
-    const updatedTextContent = event.target.textContent;
-    const isEdited = targetName !== updatedTextContent;
-    if (updatedTextContent) {
+    const targetText = name;
+    const updatedText = (event.target as HTMLElement).innerText;
+    const isEdited = targetText !== updatedText;
+    if (updatedText) {
       if (!isEdited) return;
-      updateIndexedDB(targetId, updatedTextContent);
+      updateIndexedDB(targetId, updatedText);
       readIndexedDB();
     } else {
       deleteIndexedDB(targetId);
@@ -93,7 +93,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          className="rounded px-3 py-4 text-2xl text-gray-500 transition-colors hover:cursor-grab hover:bg-gray-100"
+          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 transition-colors hover:cursor-grab hover:bg-gray-100"
         >
           <PiDotsSixVerticalBold />
         </button>
@@ -104,18 +104,19 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           contentEditable
           suppressContentEditableWarning
-          className="max-w-full px-1 py-0.5 text-2xl leading-snug text-gray-700 focus:w-full"
+          className="max-w-[calc(100svw-158px)] whitespace-break-spaces px-1 py-0.5 text-2xl leading-snug text-gray-700 focus:w-full sm:max-w-[calc(100svw-170px)]"
         >
           {name}
         </span>
-        {isMobile && (
-          <button
-            className="flex-1 bg-transparent py-6"
-            ref={setActivatorNodeRef}
-            {...listeners}
-            {...attributes}
-          />
-        )}
+        {isMobile ||
+          (isTablet && (
+            <button
+              className="flex-1 self-stretch bg-transparent"
+              ref={setActivatorNodeRef}
+              {...listeners}
+              {...attributes}
+            />
+          ))}
       </div>
       <button
         aria-label={'Delete'}
