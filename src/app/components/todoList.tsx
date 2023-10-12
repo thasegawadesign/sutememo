@@ -85,11 +85,17 @@ export default function TodoList(props: Props) {
   const handleDragStart = function (event: DragStartEvent) {
     const { active } = event;
     setActiveId(active.id as string);
+    if (document.getElementById('cursor-style')) return;
+    const cursorStyle = document.createElement('style');
+    cursorStyle.innerHTML = '*{cursor: grabbing!important}';
+    cursorStyle.id = 'cursor-style';
+    document.head.appendChild(cursorStyle);
   };
   const handleDragMove = function (event: DragMoveEvent) {};
   const handleDragEnd = function (event: DragEndEvent) {
     const { active, over } = event;
     setActiveId(null);
+    document.getElementById('cursor-style')?.remove();
     if (!over) return;
     if (active.id !== over?.id) {
       setTodos((todos) => {
