@@ -277,7 +277,7 @@ export default function Home() {
     <main>
       <h1
         style={{ fontWeight: 800 }}
-        className="px-[22px] pb-5 pt-3 text-4xl text-main"
+        className="select-none px-[22px] pb-5 pt-3 text-4xl text-main"
       >
         ToDo
       </h1>
