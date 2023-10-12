@@ -104,7 +104,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           contentEditable
           suppressContentEditableWarning
-          className="max-w-[calc(100svw-158px)] whitespace-break-spaces px-1 py-0.5 text-2xl leading-snug text-gray-700 focus:w-full sm:max-w-[calc(100svw-170px)]"
+          className="max-w-[calc(100svw-158px)] whitespace-break-spaces break-words px-1 py-0.5 text-2xl leading-snug text-gray-700 focus:w-full sm:max-w-[calc(100svw-170px)]"
         >
           {name}
         </span>
