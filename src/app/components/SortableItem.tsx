@@ -84,7 +84,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       ref={setNodeRef}
       style={style}
       role="listitem"
-      className={`flex items-center justify-between gap-1.5 rounded-md border border-gray-100 bg-white px-1.5 py-2 sm:gap-2.5 sm:px-2 sm:py-3 ${
+      className={`flex items-center justify-between gap-1.5 rounded-md border border-gray-100 bg-white px-1.5 py-2 sm:gap-2.5 sm:px-2 ${
         isDragging && 'opacity-30'
       }`}
     >
@@ -93,7 +93,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 transition-colors hover:cursor-grab hover:bg-gray-100 sm:px-4"
+          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 transition-colors hover:cursor-grab hover:bg-gray-100 sm:px-4 sm:py-5"
         >
           <PiDotsSixVerticalBold />
         </button>
@@ -120,7 +120,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       <button
         aria-label={'Delete'}
         onClick={handleDeleteBtnClick}
-        className={`rounded px-3 py-4 text-xl text-gray-500 transition-colors hover:cursor-pointer hover:bg-gray-100 sm:px-4 ${
+        className={`rounded px-3 py-4 text-xl text-gray-500 transition-colors hover:cursor-pointer hover:bg-gray-100 sm:px-4 sm:py-5 ${
           isDesktop && 'self-stretch'
         }`}
       >
