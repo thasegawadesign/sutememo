@@ -25,6 +25,7 @@ export default function Analytics() {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${ANALYTICS_ID}');
+            gtag('set', { cookie_flags: 'SameSite=None;Secure' });
             document.addEventListener(
               'blur',
               (event) => {
