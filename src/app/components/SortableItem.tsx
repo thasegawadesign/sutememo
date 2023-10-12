@@ -1,7 +1,7 @@
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
-import { isMobile } from 'react-device-detect';
+import { isMobile, isTablet } from 'react-device-detect';
 import {
   Dispatch,
   FocusEvent,
@@ -59,12 +59,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
 
   const handleBlur = useCallback((event: FocusEvent) => {
     const targetId = id;
-    const targetName = name;
-    const updatedTextContent = event.target.textContent;
-    const isEdited = targetName !== updatedTextContent;
-    if (updatedTextContent) {
+    const targetText = name;
+    const updatedText = (event.target as HTMLElement).innerText;
+    const isEdited = targetText !== updatedText;
+    if (updatedText) {
       if (!isEdited) return;
-      updateIndexedDB(targetId, updatedTextContent);
+      updateIndexedDB(targetId, updatedText);
       readIndexedDB();
     } else {
       deleteIndexedDB(targetId);
@@ -108,14 +108,15 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         >
           {name}
         </span>
-        {isMobile && (
-          <button
-            className="flex-1 self-stretch bg-transparent"
-            ref={setActivatorNodeRef}
-            {...listeners}
-            {...attributes}
-          />
-        )}
+        {isMobile ||
+          (isTablet && (
+            <button
+              className="flex-1 self-stretch bg-transparent"
+              ref={setActivatorNodeRef}
+              {...listeners}
+              {...attributes}
+            />
+          ))}
       </div>
       <button
         aria-label={'Delete'}
