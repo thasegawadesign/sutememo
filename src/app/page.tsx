@@ -29,8 +29,10 @@ export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
+  const [showAppInstallButton, setShowAppInstallButton] = useState(false);
   const editableRef = useRef<HTMLSpanElement>(null);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
+  const appInstallButtonRef = useRef<HTMLButtonElement>(null);
 
   const scrollToBottom = useCallback(() => {
     scrollBottomRef.current?.scrollIntoView({
@@ -75,7 +77,6 @@ export default function Home() {
     const displayMode = window.matchMedia('(display-mode: standalone)').matches
       ? 'standalone'
       : 'browser tab';
-    await setDeferredPrompt(window.deferredPrompt);
     if (displayMode === 'standalone') return;
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
@@ -89,21 +90,26 @@ export default function Home() {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setShowAppInstallButton(false);
     }
   }, [deferredPrompt]);
 
   const handleAppInstalled = useCallback(() => {
     if (!globalThis.window) return;
-    setDeferredPrompt(null);
     console.log('PWA was installed');
+    setDeferredPrompt(null);
+    setShowAppInstallButton(false);
   }, [setDeferredPrompt]);
 
   const handleBeforeInstallPrompt = useCallback(
     (event: Event) => {
       if (!globalThis.window) return;
+      event.preventDefault();
       const beforeInstallPromptEvent = event as BeforeInstallPromptEvent;
-      beforeInstallPromptEvent.preventDefault();
+      console.log('beforeInstallPromptEvent: ', beforeInstallPromptEvent);
       setDeferredPrompt(beforeInstallPromptEvent);
+      setShowAppInstallButton(true);
     },
     [deferredPrompt],
   );
@@ -368,10 +374,6 @@ export default function Home() {
     updateAllIndexedDB(todos);
   }, [todos]);
 
-  useEffect(() => {
-    console.log(`deferredPrompt: ${deferredPrompt}`);
-  }, [deferredPrompt]);
-
   return (
     <main>
       <div className="flex items-center justify-between px-[22px] pb-5 pt-3">
@@ -386,9 +388,12 @@ export default function Home() {
             ToDo
           </h1>
         </div>
-        <AppInstallButton
-          handleAppInstallButtonClick={handleAppInstallButtonClick}
-        />
+        {showAppInstallButton && (
+          <AppInstallButton
+            handleAppInstallButtonClick={handleAppInstallButtonClick}
+            appInstallButtonRef={appInstallButtonRef}
+          />
+        )}
       </div>
       {todos.length > 0 && (
         <>
