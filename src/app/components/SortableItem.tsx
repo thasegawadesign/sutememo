@@ -1,7 +1,7 @@
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
-import { isMobile, isTablet } from 'react-device-detect';
+import { isMobile, isTablet, isDesktop } from 'react-device-detect';
 import {
   Dispatch,
   FocusEvent,
@@ -84,16 +84,16 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       ref={setNodeRef}
       style={style}
       role="listitem"
-      className={`flex items-center justify-between gap-1 rounded-md border border-gray-100 bg-white px-1.5 py-2 sm:gap-2 sm:px-2 ${
+      className={`flex items-center justify-between gap-1.5 rounded-md border border-gray-100 bg-white px-1.5 py-2 sm:gap-2.5 sm:px-2 sm:py-3 ${
         isDragging && 'opacity-30'
       }`}
     >
-      <div className="flex flex-1 items-center gap-1 sm:gap-2">
+      <div className="flex flex-1 items-center gap-1.5 sm:gap-2.5">
         <button
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 transition-colors hover:cursor-grab hover:bg-gray-100"
+          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 transition-colors hover:cursor-grab hover:bg-gray-100 sm:px-4"
         >
           <PiDotsSixVerticalBold />
         </button>
@@ -104,24 +104,25 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           contentEditable
           suppressContentEditableWarning
-          className="max-w-[calc(100svw-158px)] whitespace-break-spaces break-words px-1 py-0.5 text-2xl leading-snug text-gray-700 focus:w-full sm:max-w-[calc(100svw-170px)]"
+          className="max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-2xl leading-snug text-gray-700 focus:w-full sm:max-w-[calc(100svw-190px)] sm:rounded"
         >
           {name}
         </span>
-        {isMobile ||
-          (isTablet && (
-            <button
-              className="flex-1 self-stretch bg-transparent"
-              ref={setActivatorNodeRef}
-              {...listeners}
-              {...attributes}
-            />
-          ))}
+        {(isMobile || isTablet) && (
+          <button
+            className="flex-1 self-stretch bg-transparent"
+            ref={setActivatorNodeRef}
+            {...listeners}
+            {...attributes}
+          />
+        )}
       </div>
       <button
         aria-label={'Delete'}
         onClick={handleDeleteBtnClick}
-        className="rounded px-3 py-4 text-xl text-gray-500 transition-colors hover:cursor-pointer hover:bg-gray-100"
+        className={`rounded px-3 py-4 text-xl text-gray-500 transition-colors hover:cursor-pointer hover:bg-gray-100 sm:px-4 ${
+          isDesktop && 'self-stretch'
+        }`}
       >
         <PiXBold />
       </button>
