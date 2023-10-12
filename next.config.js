@@ -1,8 +1,9 @@
+const { env } = require('process');
 /** @type {import('next').NextConfig} */
 
 const runtimeCaching = require('next-pwa/cache');
 const withPWA = require('next-pwa')({
-  disable: process.env.NODE_ENV === 'development',
+  disable: env.NODE_ENV === 'development',
   register: true,
   dest: 'public',
   runtimeCaching,

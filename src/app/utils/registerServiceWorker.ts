@@ -1,5 +1,7 @@
+import { env } from 'process';
+
 export const registerServiceWorker = async () => {
-  if (process.env.NODE_ENV === 'development') return;
+  if (env.NODE_ENV === 'development') return;
   if ('serviceWorker' in navigator) {
     try {
       await navigator.serviceWorker.register('/sw.js');
