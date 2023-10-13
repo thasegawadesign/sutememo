@@ -4,6 +4,7 @@ import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
 import { isMobile, isTablet, isDesktop } from 'react-device-detect';
 import {
   Dispatch,
+  TouchEvent,
   FocusEvent,
   KeyboardEvent,
   MouseEvent,
@@ -79,6 +80,10 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     }
   }, []);
 
+  const handleTransparentButtonTouchEnd = useCallback((event: TouchEvent) => {
+    event.preventDefault();
+  }, []);
+
   return (
     <li
       ref={setNodeRef}
@@ -112,6 +117,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           <button
             className="flex-1 self-stretch bg-transparent"
             ref={setActivatorNodeRef}
+            onTouchEnd={handleTransparentButtonTouchEnd}
             {...listeners}
             {...attributes}
           />
