@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       screens: {
         pwa: { raw: '(display-mode: standalone)' },
+        minimum: '300px',
       },
       colors: {
         main: '#208cd8',
