@@ -4,6 +4,7 @@ import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
 import { isMobile, isTablet, isDesktop } from 'react-device-detect';
 import {
   Dispatch,
+  TouchEvent,
   FocusEvent,
   KeyboardEvent,
   MouseEvent,
@@ -51,13 +52,13 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     transition,
   };
 
-  const handleDeleteBtnClick = useCallback((event: MouseEvent) => {
+  const handleDeleteButtonClick = useCallback((event: MouseEvent) => {
     const targetId = id;
     deleteIndexedDB(targetId);
     readIndexedDB();
   }, []);
 
-  const handleBlur = useCallback((event: FocusEvent) => {
+  const handleBlurContentEditable = useCallback((event: FocusEvent) => {
     const targetId = id;
     const targetText = name;
     const updatedText = (event.target as HTMLElement).innerText;
@@ -72,11 +73,15 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     }
   }, []);
 
-  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+  const handleKeyDownContentEditable = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
       const targetElement = event.target as HTMLElement;
       targetElement.blur();
     }
+  }, []);
+
+  const handleTransparentButtonTouchEnd = useCallback((event: TouchEvent) => {
+    event.preventDefault();
   }, []);
 
   return (
@@ -99,8 +104,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         </button>
         <span
           ref={editableRef}
-          onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
+          onBlur={handleBlurContentEditable}
+          onKeyDown={handleKeyDownContentEditable}
           role="textbox"
           contentEditable
           suppressContentEditableWarning
@@ -112,6 +117,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           <button
             className="flex-1 self-stretch bg-transparent"
             ref={setActivatorNodeRef}
+            onTouchEnd={handleTransparentButtonTouchEnd}
             {...listeners}
             {...attributes}
           />
@@ -119,7 +125,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       </div>
       <button
         aria-label={'Delete'}
-        onClick={handleDeleteBtnClick}
+        onClick={handleDeleteButtonClick}
         className={`rounded px-3 py-4 text-xl text-gray-500 transition-colors hover:cursor-pointer hover:bg-gray-100 sm:px-4 sm:py-5 ${
           isDesktop && 'self-stretch'
         }`}
