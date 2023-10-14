@@ -115,12 +115,16 @@ export default function Home() {
     [deferredPrompt],
   );
 
-  const handleVisibilityChange = useCallback(() => {
-    if (document.visibilityState === 'visible') readIndexedDB();
+  const handleVisibilityChange = useCallback(async () => {
+    if (document.visibilityState === 'visible') {
+      const fetchData = await fetchIndexedDB();
+      setTodos(fetchData);
+    }
   }, []);
 
-  const handleWindowFocus = useCallback(() => {
-    readIndexedDB();
+  const handleWindowFocus = useCallback(async () => {
+    const fetchData = await fetchIndexedDB();
+    setTodos(fetchData);
   }, []);
 
   const dbVer = 1;
@@ -129,18 +133,6 @@ export default function Home() {
   const dbKeyPath = 'id';
   const dbToDoNameKey = 'name';
   const dbToDoDisplayOrderKey = 'displayOrder';
-
-  const setTodosOrderByDisplayOrder = useCallback((todos: Todo[]) => {
-    const tmpArr: Todo[] = [];
-    todos.map((todo, index) => {
-      tmpArr.push({ id: todo.id, displayOrder: index, name: todo.name });
-    });
-    const sortedTodos = tmpArr.toSorted(
-      (a, b) => a.displayOrder - b.displayOrder,
-    );
-    setTodos(sortedTodos);
-    console.log('setTodosOrderByDisplayOrder called');
-  }, []);
 
   const createIndexedDB: () => Promise<IndexedDBResult> =
     useCallback(async () => {
@@ -197,50 +189,48 @@ export default function Home() {
         };
       });
     }, []);
-  const readIndexedDB: () => Promise<IndexedDBResult> =
-    useCallback(async () => {
-      return new Promise((resolve, reject) => {
-        if (!globalThis.window) {
-          reject('IndexedDB is not working this environment');
-          return;
-        }
-        const request = window.indexedDB.open(dbName, dbVer);
-        request.onsuccess = (event) => {
-          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-          const transaction = db.transaction([dbStore], 'readonly');
-          const objectStore = transaction.objectStore(dbStore);
-          const tmpArr: Todo[] = [];
-          objectStore.openCursor().onsuccess = (event) => {
-            const cursor = (event.target as IDBRequest).result;
-            if (cursor) {
-              tmpArr.push(cursor.value);
-              cursor.continue();
-            } else {
-              const sortedTodos = tmpArr.toSorted(
-                (a, b) => a.displayOrder - b.displayOrder,
-              );
-              setTodosOrderByDisplayOrder(sortedTodos);
-              console.log('Got all todos');
-            }
-          };
-          objectStore.openCursor().onerror = (event) => {
-            console.error(event);
-          };
-          transaction.oncomplete = () => {
-            console.log('readIndexedDB called');
-            resolve({
-              complete: true,
-            });
-          };
-          transaction.onerror = (event) => {
-            reject('Transaction Error, readIndexedDB ->' + event);
-          };
+  const fetchIndexedDB: () => Promise<Todo[]> = useCallback(async () => {
+    return new Promise((resolve, reject) => {
+      if (!globalThis.window) {
+        reject('IndexedDB is not working this environment');
+        return;
+      }
+      let result: Todo[];
+      const request = window.indexedDB.open(dbName, dbVer);
+      request.onsuccess = (event) => {
+        const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+        const transaction = db.transaction([dbStore], 'readonly');
+        const objectStore = transaction.objectStore(dbStore);
+        const tmpArr: Todo[] = [];
+        objectStore.openCursor().onsuccess = (event) => {
+          const cursor = (event.target as IDBRequest).result;
+          if (cursor) {
+            tmpArr.push(cursor.value);
+            cursor.continue();
+          } else {
+            const sortedTodos = tmpArr.toSorted(
+              (a, b) => a.displayOrder - b.displayOrder,
+            );
+            result = sortTodosOrderByDisplayOrder(sortedTodos);
+            console.log('Got all todos ->' + result);
+          }
         };
-        request.onerror = (event) => {
-          reject('Request Error, readIndexedDB ->' + event);
+        objectStore.openCursor().onerror = (event) => {
+          console.error(event);
         };
-      });
-    }, []);
+        transaction.oncomplete = () => {
+          console.log('readIndexedDB called');
+          resolve(result);
+        };
+        transaction.onerror = (event) => {
+          reject('Transaction Error, readIndexedDB ->' + event);
+        };
+      };
+      request.onerror = (event) => {
+        reject('Request Error, readIndexedDB ->' + event);
+      };
+    });
+  }, []);
   const updateIndexedDB: (
     id: string,
     updatedText: string,
@@ -372,12 +362,6 @@ export default function Home() {
   );
 
   useEffect(() => {
-    registerServiceWorker();
-    createIndexedDB();
-    readIndexedDB();
-  }, []);
-
-  useEffect(() => {
     if (!globalThis.window) return;
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -419,8 +403,18 @@ export default function Home() {
   }, [handleAppInstalled]);
 
   useEffect(() => {
-    updateAllIndexedDB(todos);
+    updateAllIndexedDB(sortTodosOrderByDisplayOrder(todos));
   }, [todos]);
+
+  useEffect(() => {
+    const init = async () => {
+      createIndexedDB();
+      const fetchData = await fetchIndexedDB();
+      setTodos(fetchData);
+    };
+    registerServiceWorker();
+    init();
+  }, []);
 
   return (
     <main>
@@ -449,11 +443,9 @@ export default function Home() {
             todos={todos}
             setTodos={setTodos}
             editableRef={editableRef}
-            readIndexedDB={readIndexedDB}
             updateIndexedDB={updateIndexedDB}
             updateAllIndexedDB={updateAllIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
-            setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
           />
         </>
       )}
