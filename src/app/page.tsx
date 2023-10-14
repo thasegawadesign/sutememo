@@ -297,32 +297,43 @@ export default function Home() {
     },
     [],
   );
-  const updateAllIndexedDB = useCallback((todos: Todo[]) => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readwrite');
-      const objectStore = transaction.objectStore(dbStore);
-      const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(todos);
-      sortedTodos.forEach((todo) => {
-        const putRequest = objectStore.put(todo);
-        putRequest.onsuccess = (event) => {};
-        putRequest.onerror = (event) => {
-          console.error(event);
+  const updateAllIndexedDB: (todos: Todo[]) => Promise<IndexedDBResult> =
+    useCallback(async (todos: Todo[]) => {
+      return new Promise((resolve, reject) => {
+        if (!globalThis.window) {
+          reject('IndexedDB is not working this environment');
+          return;
+        }
+        const request = window.indexedDB.open(dbName, dbVer);
+        request.onsuccess = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          const transaction = db.transaction([dbStore], 'readwrite');
+          const objectStore = transaction.objectStore(dbStore);
+          const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(todos);
+          sortedTodos.forEach((todo) => {
+            const putRequest = objectStore.put(todo);
+            putRequest.onsuccess = () => {
+              console.log('PutRequest success, updateAllIndexedDB');
+            };
+            putRequest.onerror = (event) => {
+              reject('PutRequest Error, updateAllIndexedDB ->' + event);
+            };
+          });
+          transaction.oncomplete = () => {
+            console.log('updateAllIndexedDB called');
+            resolve({
+              complete: true,
+            });
+          };
+          transaction.onerror = (event) => {
+            reject('Transaction Error, updateAllIndexedDB ->' + event);
+          };
+        };
+        request.onerror = (event) => {
+          reject('Request Error, updateAllIndexedDB ->' + event);
         };
       });
-      transaction.oncomplete = (event) => {
-        console.log('updateAllIndexedDB called');
-      };
-      transaction.onerror = (event) => {
-        console.error(event);
-      };
-    };
-    request.onerror = (event) => {
-      console.error(event);
-    };
-  }, []);
+    }, []);
   const deleteIndexedDB = useCallback((id: string) => {
     if (!globalThis.window) return;
     const request = window.indexedDB.open(dbName, dbVer);
