@@ -22,22 +22,13 @@ type Props = {
   todos: Todo[];
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
-  readIndexedDB: () => void;
   updateIndexedDB: (id: string, updatedText: string) => void;
-  updateAllIndexedDB: (todos: Todo[]) => void;
   deleteIndexedDB: (id: string) => void;
-  setTodosOrderByDisplayOrder: (todos: Todo[]) => void;
 };
 
 export default forwardRef(function SortableItem(props: Props, _ref) {
-  const {
-    id,
-    name,
-    editableRef,
-    readIndexedDB,
-    updateIndexedDB,
-    deleteIndexedDB,
-  } = props;
+  const { id, name, setTodos, editableRef, updateIndexedDB, deleteIndexedDB } =
+    props;
   const {
     isDragging,
     attributes,
@@ -55,7 +46,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   const handleDeleteButtonClick = useCallback((event: MouseEvent) => {
     const targetId = id;
     deleteIndexedDB(targetId);
-    readIndexedDB();
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== targetId));
   }, []);
 
   const handleBlurContentEditable = useCallback((event: FocusEvent) => {
@@ -66,10 +57,20 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     if (updatedText) {
       if (!isEdited) return;
       updateIndexedDB(targetId, updatedText);
-      readIndexedDB();
+      setTodos((prevTodos) =>
+        prevTodos.map((todo) =>
+          todo.id === targetId
+            ? {
+                id: todo.id,
+                displayOrder: todo.displayOrder,
+                name: updatedText,
+              }
+            : todo,
+        ),
+      );
     } else {
       deleteIndexedDB(targetId);
-      readIndexedDB();
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== targetId));
     }
   }, []);
 
