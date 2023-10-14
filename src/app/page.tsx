@@ -334,52 +334,42 @@ export default function Home() {
         };
       });
     }, []);
-  const deleteIndexedDB = useCallback((id: string) => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readwrite');
-      const objectStore = transaction.objectStore(dbStore);
-      const deleteRequest = objectStore.delete(id);
-      deleteRequest.onsuccess = (event) => {};
-      deleteRequest.onerror = (event) => {
-        console.error(event);
-      };
-      transaction.oncomplete = (event) => {
-        console.log('deleteIndexedDB called');
-      };
-      transaction.onerror = (event) => {
-        console.error(event);
-      };
-    };
-    request.onerror = (event) => {
-      console.log(event);
-    };
-  }, []);
-  const clearIndexedDB = useCallback(() => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readwrite');
-      const objectStore = transaction.objectStore(dbStore);
-      const clearRequest = objectStore.clear();
-      clearRequest.onsuccess = (event) => {};
-      clearRequest.onerror = (event) => {
-        console.error(event);
-      };
-      transaction.oncomplete = (event) => {
-        console.log('clearIndexedDB called');
-      };
-      transaction.onerror = (event) => {
-        console.error(event);
-      };
-    };
-    request.onerror = (event) => {
-      console.error(event);
-    };
-  }, []);
+  const deleteIndexedDB: (id: string) => Promise<IndexedDBResult> = useCallback(
+    async (id: string) => {
+      return new Promise((resolve, reject) => {
+        if (!globalThis.window) {
+          reject('IndexedDB is not working this environment');
+          return;
+        }
+        const request = window.indexedDB.open(dbName, dbVer);
+        request.onsuccess = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          const transaction = db.transaction([dbStore], 'readwrite');
+          const objectStore = transaction.objectStore(dbStore);
+          const deleteRequest = objectStore.delete(id);
+          deleteRequest.onsuccess = () => {
+            console.log('DeleteRequest success, deleteIndexedDB');
+          };
+          deleteRequest.onerror = (event) => {
+            reject('DeleteRequest Error, deleteIndexedDB ->' + event);
+          };
+          transaction.oncomplete = (event) => {
+            console.log('deleteIndexedDB called');
+            resolve({
+              complete: true,
+            });
+          };
+          transaction.onerror = (event) => {
+            reject('Transaction Error, deleteIndexedDB ->' + event);
+          };
+        };
+        request.onerror = (event) => {
+          reject('Request Error, deleteIndexedDB ->' + event);
+        };
+      });
+    },
+    [],
+  );
 
   useEffect(() => {
     registerServiceWorker();
