@@ -9,6 +9,7 @@ import { sortTodosOrderByDisplayOrder } from './utils/sortTodosOrderByDisplayOrd
 import { registerServiceWorker } from './utils/registerServiceWorker';
 import AppInstallButton from './components/AppInstallButton';
 import IconSvg from './components/IconSvg';
+import { IndexedDBResult } from '@/types/IndexedDBResult';
 
 declare global {
   interface Window {
@@ -141,44 +142,61 @@ export default function Home() {
     console.log('setTodosOrderByDisplayOrder called');
   }, []);
 
-  const createIndexedDB = useCallback(() => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onupgradeneeded = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      if (!db.objectStoreNames.contains(dbStore)) {
-        const objectStore = db.createObjectStore(dbStore, {
-          keyPath: dbKeyPath,
-        });
-        objectStore.createIndex(dbToDoNameKey, dbToDoNameKey, {
-          unique: false,
-        });
-        objectStore.createIndex(dbToDoDisplayOrderKey, dbToDoDisplayOrderKey, {
-          unique: false,
-        });
-        objectStore.createIndex(dbKeyPath, dbKeyPath, { unique: true });
-        objectStore.transaction.oncomplete = (event) => {
-          console.log('createIndexedDB onupgradeneeded called');
+  const createIndexedDB: () => Promise<IndexedDBResult> =
+    useCallback(async () => {
+      return new Promise((resolve, reject) => {
+        if (!globalThis.window) {
+          reject('IndexedDB is not working this environment');
+          return;
+        }
+        const request = window.indexedDB.open(dbName, dbVer);
+        request.onupgradeneeded = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          if (!db.objectStoreNames.contains(dbStore)) {
+            const objectStore = db.createObjectStore(dbStore, {
+              keyPath: dbKeyPath,
+            });
+            objectStore.createIndex(dbToDoNameKey, dbToDoNameKey, {
+              unique: false,
+            });
+            objectStore.createIndex(
+              dbToDoDisplayOrderKey,
+              dbToDoDisplayOrderKey,
+              {
+                unique: false,
+              },
+            );
+            objectStore.createIndex(dbKeyPath, dbKeyPath, { unique: true });
+            objectStore.transaction.oncomplete = () => {
+              console.log('createIndexedDB onupgradeneeded called');
+              resolve({
+                complete: true,
+              });
+            };
+            objectStore.transaction.onerror = (event) => {
+              reject('Transaction Error, createIndexedDB ->' + event);
+            };
+          }
         };
-        objectStore.transaction.onerror = (event) => {
+        request.onsuccess = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          const transaction = db.transaction([dbStore], 'readwrite');
+          transaction.oncomplete = () => {
+            console.log('createIndexedDB onupgradeneeded called');
+            resolve({
+              complete: true,
+            });
+          };
+          transaction.onerror = (event) => {
+            reject('Transaction Error, createIndexedDB ->' + event);
+          };
+        };
+        request.onerror = (event) => {
           console.error(event);
+          reject('Request Error, createIndexedDB ->' + event);
         };
-      }
-    };
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readwrite');
-      transaction.oncomplete = (event) => {
-        console.log('createIndexedDB onupgradeneeded called');
-      };
-      transaction.onerror = (event) => {
-        console.error('Transaction error');
-      };
-    };
-    request.onerror = (event) => {
-      console.error(event);
-    };
-  }, []);
+      });
+    }, []);
   const readIndexedDB = useCallback(() => {
     if (!globalThis.window) return;
     const request = window.indexedDB.open(dbName, dbVer);
