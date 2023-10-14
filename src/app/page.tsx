@@ -197,41 +197,50 @@ export default function Home() {
         };
       });
     }, []);
-  const readIndexedDB = useCallback(() => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readonly');
-      const objectStore = transaction.objectStore(dbStore);
-      const tmpArr: Todo[] = [];
-      objectStore.openCursor().onsuccess = (event) => {
-        const cursor = (event.target as IDBRequest).result;
-        if (cursor) {
-          tmpArr.push(cursor.value);
-          cursor.continue();
-        } else {
-          const sortedTodos = tmpArr.toSorted(
-            (a, b) => a.displayOrder - b.displayOrder,
-          );
-          setTodosOrderByDisplayOrder(sortedTodos);
-          console.log(`Got all todos`);
+  const readIndexedDB: () => Promise<IndexedDBResult> =
+    useCallback(async () => {
+      return new Promise((resolve, reject) => {
+        if (!globalThis.window) {
+          reject('IndexedDB is not working this environment');
+          return;
         }
-      };
-      objectStore.openCursor().onerror = (event) => {
-        console.error(event);
-      };
-      transaction.oncomplete = (event) => {
-        console.log('readIndexedDB called');
-      };
-      transaction.onerror = (event) => {
-        console.error(event);
-      };
-    };
-    request.onerror = (event) => {
-      console.error(event);
-    };
-  }, []);
+        const request = window.indexedDB.open(dbName, dbVer);
+        request.onsuccess = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          const transaction = db.transaction([dbStore], 'readonly');
+          const objectStore = transaction.objectStore(dbStore);
+          const tmpArr: Todo[] = [];
+          objectStore.openCursor().onsuccess = (event) => {
+            const cursor = (event.target as IDBRequest).result;
+            if (cursor) {
+              tmpArr.push(cursor.value);
+              cursor.continue();
+            } else {
+              const sortedTodos = tmpArr.toSorted(
+                (a, b) => a.displayOrder - b.displayOrder,
+              );
+              setTodosOrderByDisplayOrder(sortedTodos);
+              console.log('Got all todos');
+            }
+          };
+          objectStore.openCursor().onerror = (event) => {
+            console.error(event);
+          };
+          transaction.oncomplete = () => {
+            console.log('readIndexedDB called');
+            resolve({
+              complete: true,
+            });
+          };
+          transaction.onerror = (event) => {
+            reject('Transaction Error, readIndexedDB' + event);
+          };
+        };
+        request.onerror = (event) => {
+          reject('Request Error, readIndexedDB' + event);
+        };
+      });
+    }, []);
   const updateIndexedDB = useCallback((id: string, updatedText: string) => {
     if (!globalThis.window) return;
     const request = window.indexedDB.open(dbName, dbVer);
