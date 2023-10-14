@@ -126,6 +126,8 @@ export default function Home() {
   const dbName = 'TodoDB';
   const dbStore = 'todos';
   const dbKeyPath = 'id';
+  const dbToDoNameKey = 'name';
+  const dbToDoDisplayOrderKey = 'displayOrder';
 
   const setTodosOrderByDisplayOrder = useCallback((todos: Todo[]) => {
     const tmpArr: Todo[] = [];
@@ -148,11 +150,13 @@ export default function Home() {
         const objectStore = db.createObjectStore(dbStore, {
           keyPath: dbKeyPath,
         });
-        objectStore.createIndex('name', 'name', { unique: false });
-        objectStore.createIndex('displayOrder', 'displayOrder', {
+        objectStore.createIndex(dbToDoNameKey, dbToDoNameKey, {
           unique: false,
         });
-        objectStore.createIndex('id', 'id', { unique: true });
+        objectStore.createIndex(dbToDoDisplayOrderKey, dbToDoDisplayOrderKey, {
+          unique: false,
+        });
+        objectStore.createIndex(dbKeyPath, dbKeyPath, { unique: true });
         objectStore.transaction.oncomplete = (event) => {
           console.log('createIndexedDB onupgradeneeded called');
         };
@@ -378,7 +382,7 @@ export default function Home() {
     <main>
       <div className="flex items-center justify-between px-[22px] pb-5 pt-3">
         <div className="flex items-center gap-2">
-          <div className="minimum:flex hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border border-gray-200 bg-white p-2 text-center">
+          <div className="hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border border-gray-200 bg-white p-2 text-center minimum:flex">
             <IconSvg />
           </div>
           <h1
