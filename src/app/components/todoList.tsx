@@ -29,24 +29,14 @@ type Props = {
   todos: Todo[];
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
-  readIndexedDB: () => void;
   updateIndexedDB: (id: string, updatedText: string) => void;
   updateAllIndexedDB: (todos: Todo[]) => void;
   deleteIndexedDB: (id: string) => void;
-  setTodosOrderByDisplayOrder: (todos: Todo[]) => void;
 };
 
 export default function TodoList(props: Props) {
-  const {
-    todos,
-    setTodos,
-    editableRef,
-    readIndexedDB,
-    updateIndexedDB,
-    updateAllIndexedDB,
-    deleteIndexedDB,
-    setTodosOrderByDisplayOrder,
-  } = props;
+  const { todos, setTodos, editableRef, updateIndexedDB, deleteIndexedDB } =
+    props;
   const mouseSenser = useSensor(MouseSensor);
   const pointerSenser = useSensor(PointerSensor);
   const keyboardSensor = useSensor(KeyboardSensor, {
@@ -127,11 +117,8 @@ export default function TodoList(props: Props) {
                 todos={todos}
                 setTodos={setTodos}
                 editableRef={editableRef}
-                readIndexedDB={readIndexedDB}
                 updateIndexedDB={updateIndexedDB}
-                updateAllIndexedDB={updateAllIndexedDB}
                 deleteIndexedDB={deleteIndexedDB}
-                setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
               />
             ))}
           </ul>
@@ -151,11 +138,8 @@ export default function TodoList(props: Props) {
             todos={todos}
             setTodos={setTodos}
             editableRef={editableRef}
-            readIndexedDB={readIndexedDB}
             updateIndexedDB={updateIndexedDB}
-            updateAllIndexedDB={updateAllIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
-            setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
           />
         ) : null}
       </DragOverlay>
