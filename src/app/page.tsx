@@ -9,6 +9,7 @@ import { sortTodosOrderByDisplayOrder } from './utils/sortTodosOrderByDisplayOrd
 import { registerServiceWorker } from './utils/registerServiceWorker';
 import AppInstallButton from './components/AppInstallButton';
 import IconSvg from './components/IconSvg';
+import { IndexedDBResult } from '@/types/IndexedDBResult';
 
 declare global {
   interface Window {
@@ -27,6 +28,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [loading, setLoading] = useState(true);
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [showAppInstallButton, setShowAppInstallButton] = useState(false);
@@ -114,220 +116,252 @@ export default function Home() {
     [deferredPrompt],
   );
 
-  const handleVisibilityChange = useCallback(() => {
-    if (document.visibilityState === 'visible') readIndexedDB();
+  const handleVisibilityChange = useCallback(async () => {
+    if (document.visibilityState === 'visible') {
+      const fetchData = await fetchIndexedDB();
+      setTodos(fetchData);
+    }
   }, []);
 
-  const handleWindowFocus = useCallback(() => {
-    readIndexedDB();
+  const handleWindowFocus = useCallback(async () => {
+    const fetchData = await fetchIndexedDB();
+    setTodos(fetchData);
   }, []);
 
   const dbVer = 1;
   const dbName = 'TodoDB';
   const dbStore = 'todos';
   const dbKeyPath = 'id';
+  const dbToDoNameKey = 'name';
+  const dbToDoDisplayOrderKey = 'displayOrder';
 
-  const setTodosOrderByDisplayOrder = useCallback((todos: Todo[]) => {
-    const tmpArr: Todo[] = [];
-    todos.map((todo, index) => {
-      tmpArr.push({ id: todo.id, displayOrder: index, name: todo.name });
-    });
-    const sortedTodos = tmpArr.toSorted(
-      (a, b) => a.displayOrder - b.displayOrder,
-    );
-    setTodos(sortedTodos);
-    console.log('setTodosOrderByDisplayOrder called');
-  }, []);
-
-  const createIndexedDB = useCallback(() => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onupgradeneeded = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      if (!db.objectStoreNames.contains(dbStore)) {
-        const objectStore = db.createObjectStore(dbStore, {
-          keyPath: dbKeyPath,
-        });
-        objectStore.createIndex('name', 'name', { unique: false });
-        objectStore.createIndex('displayOrder', 'displayOrder', {
-          unique: false,
-        });
-        objectStore.createIndex('id', 'id', { unique: true });
-        objectStore.transaction.oncomplete = (event) => {
-          console.log('createIndexedDB onupgradeneeded called');
-        };
-        objectStore.transaction.onerror = (event) => {
-          console.error(event);
-        };
-      }
-    };
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readwrite');
-      transaction.oncomplete = (event) => {
-        console.log('createIndexedDB onupgradeneeded called');
-      };
-      transaction.onerror = (event) => {
-        console.error('Transaction error');
-      };
-    };
-    request.onerror = (event) => {
-      console.error(event);
-    };
-  }, []);
-  const readIndexedDB = useCallback(() => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readonly');
-      const objectStore = transaction.objectStore(dbStore);
-      const tmpArr: Todo[] = [];
-      objectStore.openCursor().onsuccess = (event) => {
-        const cursor = (event.target as IDBRequest).result;
-        if (cursor) {
-          tmpArr.push(cursor.value);
-          cursor.continue();
-        } else {
-          const sortedTodos = tmpArr.toSorted(
-            (a, b) => a.displayOrder - b.displayOrder,
-          );
-          setTodosOrderByDisplayOrder(sortedTodos);
-          console.log(`Got all todos`);
+  const createIndexedDB: () => Promise<IndexedDBResult> =
+    useCallback(async () => {
+      return new Promise((resolve, reject) => {
+        if (!globalThis.window) {
+          reject('IndexedDB is not working this environment');
+          return;
         }
-      };
-      objectStore.openCursor().onerror = (event) => {
-        console.error(event);
-      };
-      transaction.oncomplete = (event) => {
-        console.log('readIndexedDB called');
-      };
-      transaction.onerror = (event) => {
-        console.error(event);
-      };
-    };
-    request.onerror = (event) => {
-      console.error(event);
-    };
-  }, []);
-  const updateIndexedDB = useCallback((id: string, updatedText: string) => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readwrite');
-      const objectStore = transaction.objectStore(dbStore);
-      const getResult: Todo = { id: '', displayOrder: -1, name: '' };
-      const getRequest = objectStore.get(id);
-      getRequest.onsuccess = (event) => {
-        const { id, displayOrder, name } = (event.target as IDBRequest)
-          .result as Todo;
-        getResult.id = id;
-        getResult.displayOrder = displayOrder;
-        getResult.name = name;
-        const updatedTodo: Todo = {
-          id: getResult.id,
-          displayOrder: getResult.displayOrder,
-          name: updatedText,
+        const request = window.indexedDB.open(dbName, dbVer);
+        request.onupgradeneeded = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          if (!db.objectStoreNames.contains(dbStore)) {
+            const objectStore = db.createObjectStore(dbStore, {
+              keyPath: dbKeyPath,
+            });
+            objectStore.createIndex(dbToDoNameKey, dbToDoNameKey, {
+              unique: false,
+            });
+            objectStore.createIndex(
+              dbToDoDisplayOrderKey,
+              dbToDoDisplayOrderKey,
+              {
+                unique: false,
+              },
+            );
+            objectStore.createIndex(dbKeyPath, dbKeyPath, { unique: true });
+            objectStore.transaction.oncomplete = () => {
+              console.log('createIndexedDB onupgradeneeded called');
+              resolve({
+                complete: true,
+              });
+            };
+            objectStore.transaction.onerror = (event) => {
+              reject('Transaction Error, createIndexedDB ->' + event);
+            };
+          }
         };
-        const putRequest = objectStore.put(updatedTodo);
-        putRequest.onsuccess = (event) => {};
-        putRequest.onerror = (event) => {
-          console.error(event);
+        request.onsuccess = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          const transaction = db.transaction([dbStore], 'readwrite');
+          transaction.oncomplete = () => {
+            console.log('createIndexedDB onupgradeneeded called');
+            resolve({
+              complete: true,
+            });
+          };
+          transaction.onerror = (event) => {
+            reject('Transaction Error, createIndexedDB ->' + event);
+          };
         };
-      };
-      getRequest.onerror = (event) => {
-        console.error(event);
-      };
-      transaction.oncomplete = (event) => {
-        console.log('updateIndexedDB called');
-      };
-      transaction.onerror = (event) => {
-        console.error(event);
-      };
-    };
-    request.onerror = (event) => {
-      console.error(event);
-    };
-  }, []);
-  const updateAllIndexedDB = useCallback((todos: Todo[]) => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readwrite');
-      const objectStore = transaction.objectStore(dbStore);
-      const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(todos);
-      sortedTodos.forEach((todo) => {
-        const putRequest = objectStore.put(todo);
-        putRequest.onsuccess = (event) => {};
-        putRequest.onerror = (event) => {
+        request.onerror = (event) => {
           console.error(event);
+          reject('Request Error, createIndexedDB ->' + event);
         };
       });
-      transaction.oncomplete = (event) => {
-        console.log('updateAllIndexedDB called');
+    }, []);
+  const fetchIndexedDB: () => Promise<Todo[]> = useCallback(async () => {
+    return new Promise((resolve, reject) => {
+      if (!globalThis.window) {
+        reject('IndexedDB is not working this environment');
+        return;
+      }
+      let result: Todo[];
+      const request = window.indexedDB.open(dbName, dbVer);
+      request.onsuccess = (event) => {
+        const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+        const transaction = db.transaction([dbStore], 'readonly');
+        const objectStore = transaction.objectStore(dbStore);
+        const tmpArr: Todo[] = [];
+        objectStore.openCursor().onsuccess = (event) => {
+          const cursor = (event.target as IDBRequest).result;
+          if (cursor) {
+            tmpArr.push(cursor.value);
+            cursor.continue();
+          } else {
+            const sortedTodos = tmpArr.toSorted(
+              (a, b) => a.displayOrder - b.displayOrder,
+            );
+            result = sortTodosOrderByDisplayOrder(sortedTodos);
+            console.log('Got all todos');
+            console.log(result);
+          }
+        };
+        objectStore.openCursor().onerror = (event) => {
+          console.error(event);
+        };
+        transaction.oncomplete = () => {
+          console.log('fetchIndexedDB called');
+          resolve(result);
+        };
+        transaction.onerror = (event) => {
+          reject('Transaction Error, fetchIndexedDB ->' + event);
+        };
       };
-      transaction.onerror = (event) => {
-        console.error(event);
+      request.onerror = (event) => {
+        reject('Request Error, fetchIndexedDB ->' + event);
       };
-    };
-    request.onerror = (event) => {
-      console.error(event);
-    };
+    });
   }, []);
-  const deleteIndexedDB = useCallback((id: string) => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readwrite');
-      const objectStore = transaction.objectStore(dbStore);
-      const deleteRequest = objectStore.delete(id);
-      deleteRequest.onsuccess = (event) => {};
-      deleteRequest.onerror = (event) => {
-        console.error(event);
-      };
-      transaction.oncomplete = (event) => {
-        console.log('deleteIndexedDB called');
-      };
-      transaction.onerror = (event) => {
-        console.error(event);
-      };
-    };
-    request.onerror = (event) => {
-      console.log(event);
-    };
-  }, []);
-  const clearIndexedDB = useCallback(() => {
-    if (!globalThis.window) return;
-    const request = window.indexedDB.open(dbName, dbVer);
-    request.onsuccess = (event) => {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
-      const transaction = db.transaction([dbStore], 'readwrite');
-      const objectStore = transaction.objectStore(dbStore);
-      const clearRequest = objectStore.clear();
-      clearRequest.onsuccess = (event) => {};
-      clearRequest.onerror = (event) => {
-        console.error(event);
-      };
-      transaction.oncomplete = (event) => {
-        console.log('clearIndexedDB called');
-      };
-      transaction.onerror = (event) => {
-        console.error(event);
-      };
-    };
-    request.onerror = (event) => {
-      console.error(event);
-    };
-  }, []);
-
-  useEffect(() => {
-    registerServiceWorker();
-    createIndexedDB();
-    readIndexedDB();
-  }, []);
+  const updateIndexedDB: (
+    id: string,
+    updatedText: string,
+  ) => Promise<IndexedDBResult> = useCallback(
+    async (id: string, updatedText: string) => {
+      return new Promise((resolve, reject) => {
+        if (!globalThis.window) {
+          reject('IndexedDB is not working this environment');
+          return;
+        }
+        const request = window.indexedDB.open(dbName, dbVer);
+        request.onsuccess = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          const transaction = db.transaction([dbStore], 'readwrite');
+          const objectStore = transaction.objectStore(dbStore);
+          const getResult: Todo = { id: '', displayOrder: -1, name: '' };
+          const getRequest = objectStore.get(id);
+          getRequest.onsuccess = (event) => {
+            const { id, displayOrder, name } = (event.target as IDBRequest)
+              .result as Todo;
+            getResult.id = id;
+            getResult.displayOrder = displayOrder;
+            getResult.name = name;
+            const updatedTodo: Todo = {
+              id: getResult.id,
+              displayOrder: getResult.displayOrder,
+              name: updatedText,
+            };
+            const putRequest = objectStore.put(updatedTodo);
+            putRequest.onsuccess = () => {
+              console.log('PutRequest success');
+            };
+            putRequest.onerror = (event) => {
+              reject('PutRequest Error, updateIndexedDB ->' + event);
+            };
+          };
+          getRequest.onerror = (event) => {
+            reject('GetRequest Error, updateIndexedDB ->' + event);
+          };
+          transaction.oncomplete = () => {
+            console.log('updateIndexedDB called');
+            resolve({
+              complete: true,
+            });
+          };
+          transaction.onerror = (event) => {
+            reject('Transaction Error, updateIndexedDB ->' + event);
+          };
+        };
+        request.onerror = (event) => {
+          reject('Request Error, updateIndexedDB ->' + event);
+        };
+      });
+    },
+    [],
+  );
+  const updateAllIndexedDB: (todos: Todo[]) => Promise<IndexedDBResult> =
+    useCallback(async (todos: Todo[]) => {
+      return new Promise((resolve, reject) => {
+        if (!globalThis.window) {
+          reject('IndexedDB is not working this environment');
+          return;
+        }
+        const request = window.indexedDB.open(dbName, dbVer);
+        request.onsuccess = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          const transaction = db.transaction([dbStore], 'readwrite');
+          const objectStore = transaction.objectStore(dbStore);
+          const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(todos);
+          sortedTodos.forEach((todo) => {
+            const putRequest = objectStore.put(todo);
+            putRequest.onsuccess = () => {
+              console.log('PutRequest success, updateAllIndexedDB');
+            };
+            putRequest.onerror = (event) => {
+              reject('PutRequest Error, updateAllIndexedDB ->' + event);
+            };
+          });
+          transaction.oncomplete = () => {
+            console.log('updateAllIndexedDB called');
+            resolve({
+              complete: true,
+            });
+          };
+          transaction.onerror = (event) => {
+            reject('Transaction Error, updateAllIndexedDB ->' + event);
+          };
+        };
+        request.onerror = (event) => {
+          reject('Request Error, updateAllIndexedDB ->' + event);
+        };
+      });
+    }, []);
+  const deleteIndexedDB: (id: string) => Promise<IndexedDBResult> = useCallback(
+    async (id: string) => {
+      return new Promise((resolve, reject) => {
+        if (!globalThis.window) {
+          reject('IndexedDB is not working this environment');
+          return;
+        }
+        const request = window.indexedDB.open(dbName, dbVer);
+        request.onsuccess = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          const transaction = db.transaction([dbStore], 'readwrite');
+          const objectStore = transaction.objectStore(dbStore);
+          const deleteRequest = objectStore.delete(id);
+          deleteRequest.onsuccess = () => {
+            console.log('DeleteRequest success, deleteIndexedDB');
+          };
+          deleteRequest.onerror = (event) => {
+            reject('DeleteRequest Error, deleteIndexedDB ->' + event);
+          };
+          transaction.oncomplete = (event) => {
+            console.log('deleteIndexedDB called');
+            resolve({
+              complete: true,
+            });
+          };
+          transaction.onerror = (event) => {
+            reject('Transaction Error, deleteIndexedDB ->' + event);
+          };
+        };
+        request.onerror = (event) => {
+          reject('Request Error, deleteIndexedDB ->' + event);
+        };
+      });
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!globalThis.window) return;
@@ -371,14 +405,25 @@ export default function Home() {
   }, [handleAppInstalled]);
 
   useEffect(() => {
-    updateAllIndexedDB(todos);
+    updateAllIndexedDB(sortTodosOrderByDisplayOrder(todos));
   }, [todos]);
+
+  useEffect(() => {
+    const init = async () => {
+      createIndexedDB();
+      const fetchData = await fetchIndexedDB();
+      setTodos(fetchData);
+      setLoading(false);
+    };
+    registerServiceWorker();
+    init();
+  }, []);
 
   return (
     <main>
       <div className="flex items-center justify-between px-[22px] pb-5 pt-3">
         <div className="flex items-center gap-2">
-          <div className="minimum:flex hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border border-gray-200 bg-white p-2 text-center">
+          <div className="hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border border-gray-200 bg-white p-2 text-center minimum:flex">
             <IconSvg />
           </div>
           <h1
@@ -401,11 +446,9 @@ export default function Home() {
             todos={todos}
             setTodos={setTodos}
             editableRef={editableRef}
-            readIndexedDB={readIndexedDB}
             updateIndexedDB={updateIndexedDB}
             updateAllIndexedDB={updateAllIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
-            setTodosOrderByDisplayOrder={setTodosOrderByDisplayOrder}
           />
         </>
       )}
