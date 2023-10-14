@@ -405,6 +405,7 @@ export default function Home() {
   }, [handleAppInstalled]);
 
   useEffect(() => {
+    if (loading) return;
     updateAllIndexedDB(sortTodosOrderByDisplayOrder(todos));
   }, [todos]);
 
