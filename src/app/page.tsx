@@ -28,6 +28,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [loading, setLoading] = useState(true);
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [showAppInstallButton, setShowAppInstallButton] = useState(false);
@@ -212,22 +213,23 @@ export default function Home() {
               (a, b) => a.displayOrder - b.displayOrder,
             );
             result = sortTodosOrderByDisplayOrder(sortedTodos);
-            console.log('Got all todos ->' + result);
+            console.log('Got all todos');
+            console.log(result);
           }
         };
         objectStore.openCursor().onerror = (event) => {
           console.error(event);
         };
         transaction.oncomplete = () => {
-          console.log('readIndexedDB called');
+          console.log('fetchIndexedDB called');
           resolve(result);
         };
         transaction.onerror = (event) => {
-          reject('Transaction Error, readIndexedDB ->' + event);
+          reject('Transaction Error, fetchIndexedDB ->' + event);
         };
       };
       request.onerror = (event) => {
-        reject('Request Error, readIndexedDB ->' + event);
+        reject('Request Error, fetchIndexedDB ->' + event);
       };
     });
   }, []);
@@ -411,6 +413,7 @@ export default function Home() {
       createIndexedDB();
       const fetchData = await fetchIndexedDB();
       setTodos(fetchData);
+      setLoading(false);
     };
     registerServiceWorker();
     init();
