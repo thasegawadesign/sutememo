@@ -74,6 +74,7 @@ export default function Home() {
     if (canUndo) {
       await clearIndexedDB();
       updateAllIndexedDB(prevTodos);
+      scrollToBottom();
     }
   };
 
@@ -96,6 +97,7 @@ export default function Home() {
     if (canRedo) {
       await clearIndexedDB();
       updateAllIndexedDB(nextTodos);
+      scrollToBottom();
     }
   };
 
@@ -275,8 +277,8 @@ export default function Home() {
           />
         </>
       )}
-      <Undo handleUndoClick={handleUndoClick} />
-      <Redo handleRedoClick={handleRedoClick} />
+      <Undo handleUndoClick={handleUndoClick} canUndo={canUndo} />
+      <Redo handleRedoClick={handleRedoClick} canRedo={canRedo} />
       <Button
         handleAddButtonClick={handleAddButtonClick}
         handleAddButtonMouseUp={handleAddButtonMouseUp}
@@ -284,7 +286,7 @@ export default function Home() {
       {todos.length > 0 && (
         <div
           ref={scrollBottomRef}
-          className="h-[calc(env(safe-area-inset-bottom)+104px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+84px),104px)]"
+          className="h-[calc(env(safe-area-inset-bottom)+248px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+228px),248px)]"
         />
       )}
     </main>
