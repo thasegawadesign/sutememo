@@ -1,7 +1,11 @@
 import { ImUndo } from 'react-icons/im';
 
-export default function Undo() {
-  const handleUndoClick = function () {};
+type Props = {
+  handleUndoClick: () => void;
+};
+
+export default function Undo(props: Props) {
+  const { handleUndoClick } = props;
   return (
     <>
       <button

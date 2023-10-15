@@ -1,7 +1,11 @@
 import { ImRedo } from 'react-icons/im';
 
-export default function Redo() {
-  const handleRedoClick = function () {};
+type Props = {
+  handleRedoClick: () => void;
+};
+
+export default function Redo(props: Props) {
+  const { handleRedoClick } = props;
   return (
     <>
       <button

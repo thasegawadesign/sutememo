@@ -9,6 +9,7 @@ import { registerServiceWorker } from './utils/registerServiceWorker';
 import AppInstallButton from './components/AppInstallButton';
 import IconSvg from './components/IconSvg';
 import {
+  clearIndexedDB,
   createIndexedDB,
   deleteIndexedDB,
   fetchIndexedDB,
@@ -36,7 +37,6 @@ interface BeforeInstallPromptEvent extends Event {
 
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [loading, setLoading] = useState(true);
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [showAppInstallButton, setShowAppInstallButton] = useState(false);
@@ -44,11 +44,59 @@ export default function Home() {
   const scrollBottomRef = useRef<HTMLDivElement>(null);
   const appInstallButtonRef = useRef<HTMLButtonElement>(null);
 
+  const [canUndo, setCanUndo] = useState(false);
+  const [canRedo, setCanRedo] = useState(false);
+  const todosHistoryRef = useRef<Todo[][]>([]);
+  const todosHistoryCurrentIndex = useRef(0);
+
   const scrollToBottom = function () {
     scrollBottomRef.current?.scrollIntoView({
       behavior: 'smooth',
       block: 'end',
     });
+  };
+
+  const handleUndoClick = async function () {
+    const isLessThanZero = todosHistoryCurrentIndex.current - 1 < 0;
+    todosHistoryCurrentIndex.current = isLessThanZero
+      ? 0
+      : todosHistoryCurrentIndex.current - 1;
+    setCanUndo(
+      todosHistoryCurrentIndex.current > 0 &&
+        todosHistoryRef.current.length >= 2,
+    );
+    setCanRedo(
+      todosHistoryCurrentIndex.current < todosHistoryRef.current.length - 1 &&
+        todosHistoryRef.current.length >= 2,
+    );
+    const prevTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
+    setTodos(prevTodos);
+    if (canUndo) {
+      await clearIndexedDB();
+      updateAllIndexedDB(prevTodos);
+    }
+  };
+
+  const handleRedoClick = async function () {
+    const isMoreThanLength =
+      todosHistoryCurrentIndex.current + 1 >= todosHistoryRef.current.length;
+    todosHistoryCurrentIndex.current = isMoreThanLength
+      ? todosHistoryCurrentIndex.current
+      : todosHistoryCurrentIndex.current + 1;
+    setCanUndo(
+      todosHistoryCurrentIndex.current > 0 &&
+        todosHistoryRef.current.length >= 2,
+    );
+    setCanRedo(
+      todosHistoryCurrentIndex.current < todosHistoryRef.current.length - 1 &&
+        todosHistoryRef.current.length >= 2,
+    );
+    const nextTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
+    setTodos(nextTodos);
+    if (canRedo) {
+      await clearIndexedDB();
+      updateAllIndexedDB(nextTodos);
+    }
   };
 
   const handleKeyDown = useCallback(
@@ -79,6 +127,13 @@ export default function Home() {
       { id: insertID, displayOrder: prevTodos.length, name: '' },
     ]);
     insertIndexedDB(insertID, prevTodos.length, '');
+    todosHistoryRef.current.push([
+      ...prevTodos,
+      { id: insertID, displayOrder: prevTodos.length, name: '' },
+    ]);
+    todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+    setCanRedo(false);
+    setCanUndo(true);
   }, [todos]);
 
   const handleAddButtonClick = useCallback(() => {
@@ -177,7 +232,7 @@ export default function Home() {
       createIndexedDB();
       const fetchData = await fetchIndexedDB();
       setTodos(fetchData);
-      setLoading(false);
+      todosHistoryRef.current = [fetchData];
     };
     registerServiceWorker();
     init();
@@ -209,6 +264,10 @@ export default function Home() {
           <TodoList
             todos={todos}
             editableRef={editableRef}
+            todosHistoryRef={todosHistoryRef}
+            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
+            setCanUndo={setCanUndo}
+            setCanRedo={setCanRedo}
             setTodos={setTodos}
             updatePartialIndexedDB={updatePartialIndexedDB}
             updateAllIndexedDB={updateAllIndexedDB}
@@ -216,8 +275,8 @@ export default function Home() {
           />
         </>
       )}
-      <Undo />
-      <Redo />
+      <Undo handleUndoClick={handleUndoClick} />
+      <Redo handleRedoClick={handleRedoClick} />
       <Button
         handleAddButtonClick={handleAddButtonClick}
         handleAddButtonMouseUp={handleAddButtonMouseUp}
