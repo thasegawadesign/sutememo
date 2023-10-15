@@ -20,7 +20,14 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import type { Todo } from '@/types/Todo';
-import { Dispatch, RefObject, SetStateAction, useId, useState } from 'react';
+import {
+  Dispatch,
+  MutableRefObject,
+  RefObject,
+  SetStateAction,
+  useId,
+  useState,
+} from 'react';
 import SortableItem from './SortableItem';
 import { isMobile } from 'react-device-detect';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
@@ -29,6 +36,10 @@ import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOr
 type Props = {
   todos: Todo[];
   editableRef: RefObject<HTMLSpanElement>;
+  todosHistoryRef: MutableRefObject<Todo[][]>;
+  todosHistoryCurrentIndex: MutableRefObject<number>;
+  setCanUndo: Dispatch<SetStateAction<boolean>>;
+  setCanRedo: Dispatch<SetStateAction<boolean>>;
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   updatePartialIndexedDB: (
     id: string,
@@ -42,6 +53,10 @@ export default function TodoList(props: Props) {
   const {
     todos,
     editableRef,
+    todosHistoryRef,
+    todosHistoryCurrentIndex,
+    setCanUndo,
+    setCanRedo,
     setTodos,
     updatePartialIndexedDB,
     updateAllIndexedDB,
@@ -105,6 +120,10 @@ export default function TodoList(props: Props) {
       );
       setTodos(sortedTodos);
       updateAllIndexedDB(sortedTodos);
+      todosHistoryRef.current.push(sortedTodos);
+      todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+      setCanUndo(true);
+      setCanRedo(false);
     }
   };
 
@@ -128,6 +147,10 @@ export default function TodoList(props: Props) {
                 name={todo.name}
                 todos={todos}
                 editableRef={editableRef}
+                todosHistoryRef={todosHistoryRef}
+                todosHistoryCurrentIndex={todosHistoryCurrentIndex}
+                setCanUndo={setCanUndo}
+                setCanRedo={setCanRedo}
                 setTodos={setTodos}
                 updatePartialIndexedDB={updatePartialIndexedDB}
                 updateAllIndexedDB={updateAllIndexedDB}
@@ -150,6 +173,10 @@ export default function TodoList(props: Props) {
             name={findName(activeId)}
             todos={todos}
             editableRef={editableRef}
+            todosHistoryRef={todosHistoryRef}
+            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
+            setCanUndo={setCanUndo}
+            setCanRedo={setCanRedo}
             setTodos={setTodos}
             updateAllIndexedDB={updateAllIndexedDB}
             updatePartialIndexedDB={updatePartialIndexedDB}
