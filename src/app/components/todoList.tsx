@@ -21,22 +21,45 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import type { Todo } from '@/types/Todo';
-import { Dispatch, RefObject, SetStateAction, useId, useState } from 'react';
+import {
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useEffect,
+  useId,
+  useState,
+} from 'react';
 import SortableItem from './SortableItem';
 import { isMobile } from 'react-device-detect';
+import { ProcessTypeIDB } from '@/types/ProcessTypeIDB';
+import { IndexedDBResult } from '@/types/IndexedDBResult';
 
 type Props = {
   todos: Todo[];
-  setTodos: Dispatch<SetStateAction<Todo[]>>;
+  sortObsever: boolean;
   editableRef: RefObject<HTMLSpanElement>;
-  updateIndexedDB: (id: string, updatedText: string) => void;
-  updateAllIndexedDB: (todos: Todo[]) => void;
-  deleteIndexedDB: (id: string) => void;
+  setTodos: Dispatch<SetStateAction<Todo[]>>;
+  setProcessTypeIDB: Dispatch<SetStateAction<ProcessTypeIDB | undefined>>;
+  setSortObserver: Dispatch<SetStateAction<boolean>>;
+  updatePartialIndexedDB: (
+    id: string,
+    updatedText: string,
+  ) => Promise<IndexedDBResult>;
+  updateAllIndexedDB: (todos: Todo[]) => Promise<IndexedDBResult>;
+  deleteIndexedDB: (id: string) => Promise<IndexedDBResult>;
 };
 
 export default function TodoList(props: Props) {
-  const { todos, setTodos, editableRef, updateIndexedDB, deleteIndexedDB } =
-    props;
+  const {
+    todos,
+    sortObsever,
+    editableRef,
+    setTodos,
+    setProcessTypeIDB,
+    setSortObserver,
+    updatePartialIndexedDB,
+    deleteIndexedDB,
+  } = props;
   const mouseSenser = useSensor(MouseSensor);
   const pointerSenser = useSensor(PointerSensor);
   const keyboardSensor = useSensor(KeyboardSensor, {
@@ -93,8 +116,15 @@ export default function TodoList(props: Props) {
         const newIndex = findIndex(over?.id as string);
         return arrayMove(todos, oldIndex, newIndex);
       });
+      setSortObserver(true);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      setSortObserver(false);
+    };
+  }, [sortObsever]);
 
   return (
     <DndContext
@@ -115,9 +145,10 @@ export default function TodoList(props: Props) {
                 displayOrder={todo.displayOrder}
                 name={todo.name}
                 todos={todos}
-                setTodos={setTodos}
                 editableRef={editableRef}
-                updateIndexedDB={updateIndexedDB}
+                setProcessTypeIDB={setProcessTypeIDB}
+                setTodos={setTodos}
+                updatePartialIndexedDB={updatePartialIndexedDB}
                 deleteIndexedDB={deleteIndexedDB}
               />
             ))}
@@ -136,9 +167,10 @@ export default function TodoList(props: Props) {
             displayOrder={findDisplayOrder(activeId)}
             name={findName(activeId)}
             todos={todos}
-            setTodos={setTodos}
             editableRef={editableRef}
-            updateIndexedDB={updateIndexedDB}
+            setTodos={setTodos}
+            setProcessTypeIDB={setProcessTypeIDB}
+            updatePartialIndexedDB={updatePartialIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
           />
         ) : null}
