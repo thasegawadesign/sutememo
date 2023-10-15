@@ -3,7 +3,6 @@
 import {
   DndContext,
   DragEndEvent,
-  DragMoveEvent,
   DragOverlay,
   DragStartEvent,
   KeyboardSensor,
@@ -24,19 +23,30 @@ import type { Todo } from '@/types/Todo';
 import { Dispatch, RefObject, SetStateAction, useId, useState } from 'react';
 import SortableItem from './SortableItem';
 import { isMobile } from 'react-device-detect';
+import { IndexedDBResult } from '@/types/IndexedDBResult';
+import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOrder';
 
 type Props = {
   todos: Todo[];
-  setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
-  updateIndexedDB: (id: string, updatedText: string) => void;
-  updateAllIndexedDB: (todos: Todo[]) => void;
-  deleteIndexedDB: (id: string) => void;
+  setTodos: Dispatch<SetStateAction<Todo[]>>;
+  updatePartialIndexedDB: (
+    id: string,
+    updatedText: string,
+  ) => Promise<IndexedDBResult>;
+  updateAllIndexedDB: (todos: Todo[]) => Promise<IndexedDBResult>;
+  deleteIndexedDB: (id: string) => Promise<IndexedDBResult>;
 };
 
 export default function TodoList(props: Props) {
-  const { todos, setTodos, editableRef, updateIndexedDB, deleteIndexedDB } =
-    props;
+  const {
+    todos,
+    editableRef,
+    setTodos,
+    updatePartialIndexedDB,
+    updateAllIndexedDB,
+    deleteIndexedDB,
+  } = props;
   const mouseSenser = useSensor(MouseSensor);
   const pointerSenser = useSensor(PointerSensor);
   const keyboardSensor = useSensor(KeyboardSensor, {
@@ -81,18 +91,20 @@ export default function TodoList(props: Props) {
     cursorStyle.id = 'cursor-style';
     document.head.appendChild(cursorStyle);
   };
-  const handleDragMove = function (event: DragMoveEvent) {};
+  const handleDragMove = function () {};
   const handleDragEnd = function (event: DragEndEvent) {
     const { active, over } = event;
     setActiveId(null);
     document.getElementById('cursor-style')?.remove();
     if (!over) return;
     if (active.id !== over?.id) {
-      setTodos((todos) => {
-        const oldIndex = findIndex(active.id as string);
-        const newIndex = findIndex(over?.id as string);
-        return arrayMove(todos, oldIndex, newIndex);
-      });
+      const oldIndex = findIndex(active.id as string);
+      const newIndex = findIndex(over?.id as string);
+      const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(
+        arrayMove(todos, oldIndex, newIndex),
+      );
+      setTodos(sortedTodos);
+      updateAllIndexedDB(sortedTodos);
     }
   };
 
@@ -115,9 +127,10 @@ export default function TodoList(props: Props) {
                 displayOrder={todo.displayOrder}
                 name={todo.name}
                 todos={todos}
-                setTodos={setTodos}
                 editableRef={editableRef}
-                updateIndexedDB={updateIndexedDB}
+                setTodos={setTodos}
+                updatePartialIndexedDB={updatePartialIndexedDB}
+                updateAllIndexedDB={updateAllIndexedDB}
                 deleteIndexedDB={deleteIndexedDB}
               />
             ))}
@@ -136,9 +149,10 @@ export default function TodoList(props: Props) {
             displayOrder={findDisplayOrder(activeId)}
             name={findName(activeId)}
             todos={todos}
-            setTodos={setTodos}
             editableRef={editableRef}
-            updateIndexedDB={updateIndexedDB}
+            setTodos={setTodos}
+            updateAllIndexedDB={updateAllIndexedDB}
+            updatePartialIndexedDB={updatePartialIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
           />
         ) : null}

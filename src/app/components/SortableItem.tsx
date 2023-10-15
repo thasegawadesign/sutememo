@@ -7,28 +7,41 @@ import {
   TouchEvent,
   FocusEvent,
   KeyboardEvent,
-  MouseEvent,
   RefObject,
   SetStateAction,
   forwardRef,
   useCallback,
 } from 'react';
 import { Todo } from '@/types/Todo';
+import { IndexedDBResult } from '@/types/IndexedDBResult';
+import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOrder';
 
 type Props = {
   id: string;
   displayOrder: number;
   name: string;
   todos: Todo[];
-  setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
-  updateIndexedDB: (id: string, updatedText: string) => void;
-  deleteIndexedDB: (id: string) => void;
+  setTodos: Dispatch<SetStateAction<Todo[]>>;
+  updatePartialIndexedDB: (
+    id: string,
+    updatedText: string,
+  ) => Promise<IndexedDBResult>;
+  updateAllIndexedDB: (todos: Todo[]) => Promise<IndexedDBResult>;
+  deleteIndexedDB: (id: string) => Promise<IndexedDBResult>;
 };
 
 export default forwardRef(function SortableItem(props: Props, _ref) {
-  const { id, name, setTodos, editableRef, updateIndexedDB, deleteIndexedDB } =
-    props;
+  const {
+    id,
+    name,
+    todos,
+    editableRef,
+    setTodos,
+    updatePartialIndexedDB,
+    updateAllIndexedDB,
+    deleteIndexedDB,
+  } = props;
   const {
     isDragging,
     attributes,
@@ -43,36 +56,41 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     transition,
   };
 
-  const handleDeleteButtonClick = useCallback((event: MouseEvent) => {
+  const handleDeleteButtonClick = function () {
     const targetId = id;
     deleteIndexedDB(targetId);
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== targetId));
-  }, []);
+    const filterdTodos: Todo[] = todos.filter((todo) => todo.id !== targetId);
+    const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
+    setTodos(sortedTodos);
+    updateAllIndexedDB(sortedTodos);
+  };
 
-  const handleBlurContentEditable = useCallback((event: FocusEvent) => {
+  const handleBlurContentEditable = function (event: FocusEvent) {
     const targetId = id;
     const targetText = name;
     const updatedText = (event.target as HTMLElement).innerText;
     const isEdited = targetText !== updatedText;
     if (updatedText) {
       if (!isEdited) return;
-      updateIndexedDB(targetId, updatedText);
-      setTodos((prevTodos) =>
-        prevTodos.map((todo) =>
-          todo.id === targetId
-            ? {
-                id: todo.id,
-                displayOrder: todo.displayOrder,
-                name: updatedText,
-              }
-            : todo,
-        ),
+      updatePartialIndexedDB(targetId, updatedText);
+      const updatedTodos: Todo[] = todos.map((todo) =>
+        todo.id === targetId
+          ? {
+              id: todo.id,
+              displayOrder: todo.displayOrder,
+              name: updatedText,
+            }
+          : todo,
       );
+      setTodos(updatedTodos);
     } else {
       deleteIndexedDB(targetId);
-      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== targetId));
+      const filterdTodos: Todo[] = todos.filter((todo) => todo.id !== targetId);
+      const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
+      setTodos(sortedTodos);
+      updateAllIndexedDB(sortedTodos);
     }
-  }, []);
+  };
 
   const handleKeyDownContentEditable = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
