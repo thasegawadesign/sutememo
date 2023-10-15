@@ -49,26 +49,21 @@ export default function Home() {
     });
   };
 
-  const handleKeyUp = useCallback((event: KeyboardEvent) => {
-    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
-    if (event.key === 'Enter') {
-      scrollToBottom();
-      editableRef.current?.focus();
-    }
-  }, []);
   const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
+    async (event: KeyboardEvent) => {
       if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
       if (event.key === 'Enter') {
         const target = event.target as HTMLElement;
         const insertID = uuidv4();
         const prevTodos: Todo[] = todos.map((todo) => todo);
         if (target.nodeName !== 'BODY') return;
-        insertIndexedDB(insertID, prevTodos.length, '');
         setTodos([
           ...prevTodos,
           { id: insertID, displayOrder: prevTodos.length, name: '' },
         ]);
+        await insertIndexedDB(insertID, prevTodos.length, '');
+        scrollToBottom();
+        editableRef.current?.focus();
       }
     },
     [todos],
@@ -145,12 +140,6 @@ export default function Home() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
-
-  useEffect(() => {
-    if (!globalThis.window) return;
-    window.addEventListener('keyup', handleKeyUp);
-    return () => window.removeEventListener('keyup', handleKeyUp);
-  }, [handleKeyUp]);
 
   useEffect(() => {
     if (!globalThis.window) return;
