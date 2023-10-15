@@ -12,23 +12,37 @@ import {
   SetStateAction,
   forwardRef,
   useCallback,
+  useEffect,
 } from 'react';
 import { Todo } from '@/types/Todo';
+import { ProcessTypeIDB } from '@/types/ProcessTypeIDB';
+import { IndexedDBResult } from '@/types/IndexedDBResult';
 
 type Props = {
   id: string;
   displayOrder: number;
   name: string;
   todos: Todo[];
-  setTodos: Dispatch<SetStateAction<Todo[]>>;
   editableRef: RefObject<HTMLSpanElement>;
-  updateIndexedDB: (id: string, updatedText: string) => void;
-  deleteIndexedDB: (id: string) => void;
+  setTodos: Dispatch<SetStateAction<Todo[]>>;
+  setProcessTypeIDB: Dispatch<SetStateAction<ProcessTypeIDB | undefined>>;
+  updatePartialIndexedDB: (
+    id: string,
+    updatedText: string,
+  ) => Promise<IndexedDBResult>;
+  deleteIndexedDB: (id: string) => Promise<IndexedDBResult>;
 };
 
 export default forwardRef(function SortableItem(props: Props, _ref) {
-  const { id, name, setTodos, editableRef, updateIndexedDB, deleteIndexedDB } =
-    props;
+  const {
+    id,
+    name,
+    editableRef,
+    setTodos,
+    setProcessTypeIDB,
+    updatePartialIndexedDB,
+    deleteIndexedDB,
+  } = props;
   const {
     isDragging,
     attributes,
@@ -46,6 +60,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   const handleDeleteButtonClick = useCallback((event: MouseEvent) => {
     const targetId = id;
     deleteIndexedDB(targetId);
+    setProcessTypeIDB('deleteIndexedDB');
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== targetId));
   }, []);
 
@@ -56,7 +71,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     const isEdited = targetText !== updatedText;
     if (updatedText) {
       if (!isEdited) return;
-      updateIndexedDB(targetId, updatedText);
+      updatePartialIndexedDB(targetId, updatedText);
+      setProcessTypeIDB('updatePartialIndexedDB');
       setTodos((prevTodos) =>
         prevTodos.map((todo) =>
           todo.id === targetId
@@ -70,6 +86,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       );
     } else {
       deleteIndexedDB(targetId);
+      setProcessTypeIDB('deleteIndexedDB');
       setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== targetId));
     }
   }, []);
@@ -83,6 +100,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
 
   const handleTransparentButtonTouchEnd = useCallback((event: TouchEvent) => {
     event.preventDefault();
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      setProcessTypeIDB(undefined);
+    };
   }, []);
 
   return (

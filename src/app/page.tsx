@@ -10,6 +10,7 @@ import { registerServiceWorker } from './utils/registerServiceWorker';
 import AppInstallButton from './components/AppInstallButton';
 import IconSvg from './components/IconSvg';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
+import { ProcessTypeIDB } from '@/types/ProcessTypeIDB';
 
 declare global {
   interface Window {
@@ -29,6 +30,8 @@ interface BeforeInstallPromptEvent extends Event {
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [processTypeIDB, setProcessTypeIDB] = useState<ProcessTypeIDB>();
+  const [sortObsever, setSortObserver] = useState(false);
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [showAppInstallButton, setShowAppInstallButton] = useState(false);
@@ -55,10 +58,13 @@ export default function Home() {
       if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
       if (event.key === 'Enter') {
         const target = event.target as HTMLElement;
+        const insertID = uuidv4();
         if (target.nodeName !== 'BODY') return;
+        insertIndexedDB(insertID, todos.length, '');
+        setProcessTypeIDB('insertIndexedDB');
         setTodos([
           ...todos,
-          { id: uuidv4(), displayOrder: todos.length, name: '' },
+          { id: insertID, displayOrder: todos.length, name: '' },
         ]);
       }
     },
@@ -66,9 +72,12 @@ export default function Home() {
   );
 
   const handleAddButtonClick = useCallback(async () => {
+    const insertID = uuidv4();
+    insertIndexedDB(insertID, todos.length, '');
+    setProcessTypeIDB('insertIndexedDB');
     await setTodos([
       ...todos,
-      { id: uuidv4(), displayOrder: todos.length, name: '' },
+      { id: insertID, displayOrder: todos.length, name: '' },
     ]);
     scrollToBottom();
     editableRef.current?.focus();
@@ -119,12 +128,14 @@ export default function Home() {
   const handleVisibilityChange = useCallback(async () => {
     if (document.visibilityState === 'visible') {
       const fetchData = await fetchIndexedDB();
+      setProcessTypeIDB('fetchIndexedDB');
       setTodos(fetchData);
     }
   }, []);
 
   const handleWindowFocus = useCallback(async () => {
     const fetchData = await fetchIndexedDB();
+    setProcessTypeIDB('fetchIndexedDB');
     setTodos(fetchData);
   }, []);
 
@@ -233,7 +244,7 @@ export default function Home() {
       };
     });
   }, []);
-  const updateIndexedDB: (
+  const updatePartialIndexedDB: (
     id: string,
     updatedText: string,
   ) => Promise<IndexedDBResult> = useCallback(
@@ -263,27 +274,27 @@ export default function Home() {
             };
             const putRequest = objectStore.put(updatedTodo);
             putRequest.onsuccess = () => {
-              console.log('PutRequest success');
+              console.log('PutRequest success, updatePartialIndexedDB');
             };
             putRequest.onerror = (event) => {
-              reject('PutRequest Error, updateIndexedDB ->' + event);
+              reject('PutRequest Error, updatePartialIndexedDB ->' + event);
             };
           };
           getRequest.onerror = (event) => {
-            reject('GetRequest Error, updateIndexedDB ->' + event);
+            reject('GetRequest Error, updatePartialIndexedDB ->' + event);
           };
           transaction.oncomplete = () => {
-            console.log('updateIndexedDB called');
+            console.log('updatePartialIndexedDB called');
             resolve({
               complete: true,
             });
           };
           transaction.onerror = (event) => {
-            reject('Transaction Error, updateIndexedDB ->' + event);
+            reject('Transaction Error, updatePartialIndexedDB ->' + event);
           };
         };
         request.onerror = (event) => {
-          reject('Request Error, updateIndexedDB ->' + event);
+          reject('Request Error, updatePartialIndexedDB ->' + event);
         };
       });
     },
@@ -326,6 +337,51 @@ export default function Home() {
         };
       });
     }, []);
+  const insertIndexedDB: (
+    id: string,
+    displayOrder: number,
+    name: string,
+  ) => Promise<IndexedDBResult> = useCallback(
+    async (id: string, displayOrder: number, name: string) => {
+      return new Promise((resolve, reject) => {
+        if (!globalThis.window) {
+          reject('IndexedDB is not working this environment');
+          return;
+        }
+        const newTodo: Todo = {
+          id,
+          displayOrder,
+          name,
+        };
+        const request = window.indexedDB.open(dbName, dbVer);
+        request.onsuccess = (event) => {
+          const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+          const transaction = db.transaction([dbStore], 'readwrite');
+          const objectStore = transaction.objectStore(dbStore);
+          const addRequest = objectStore.add(newTodo);
+          addRequest.onsuccess = () => {
+            console.log('AddRequest success, insertIndexedDB');
+          };
+          addRequest.onerror = (event) => {
+            reject('AddRequest Error, insertIndexedDB ->' + event);
+          };
+          transaction.oncomplete = () => {
+            console.log('insertIndexedDB called');
+            resolve({
+              complete: true,
+            });
+          };
+          transaction.onerror = (event) => {
+            reject('Transaction Error, insertIndexedDB ->' + event);
+          };
+        };
+        request.onerror = (event) => {
+          reject('Request Error, insertIndexedDB ->' + event);
+        };
+      });
+    },
+    [],
+  );
   const deleteIndexedDB: (id: string) => Promise<IndexedDBResult> = useCallback(
     async (id: string) => {
       return new Promise((resolve, reject) => {
@@ -405,14 +461,24 @@ export default function Home() {
   }, [handleAppInstalled]);
 
   useEffect(() => {
-    if (loading) return;
-    updateAllIndexedDB(sortTodosOrderByDisplayOrder(todos));
-  }, [todos]);
+    const sortedTodos = sortTodosOrderByDisplayOrder(todos);
+    if (sortObsever) {
+      setTodos(sortedTodos);
+      updateAllIndexedDB(sortedTodos);
+    }
+    if (processTypeIDB === 'deleteIndexedDB') {
+      updateAllIndexedDB(sortedTodos);
+    }
+    return () => {
+      setProcessTypeIDB(undefined);
+    };
+  }, [sortObsever, processTypeIDB]);
 
   useEffect(() => {
     const init = async () => {
       createIndexedDB();
       const fetchData = await fetchIndexedDB();
+      setProcessTypeIDB('fetchIndexedDB');
       setTodos(fetchData);
       setLoading(false);
     };
@@ -445,9 +511,12 @@ export default function Home() {
         <>
           <TodoList
             todos={todos}
-            setTodos={setTodos}
+            sortObsever={sortObsever}
             editableRef={editableRef}
-            updateIndexedDB={updateIndexedDB}
+            setTodos={setTodos}
+            setProcessTypeIDB={setProcessTypeIDB}
+            setSortObserver={setSortObserver}
+            updatePartialIndexedDB={updatePartialIndexedDB}
             updateAllIndexedDB={updateAllIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
           />
