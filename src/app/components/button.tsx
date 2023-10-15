@@ -3,13 +3,15 @@ import { IoIosAdd } from 'react-icons/io';
 
 type Props = {
   handleAddButtonClick: () => void;
+  handleAddButtonMouseUp: () => void;
 };
 
 export default forwardRef(function Button(props: Props, _ref) {
-  const { handleAddButtonClick } = props;
+  const { handleAddButtonClick, handleAddButtonMouseUp } = props;
   return (
     <button
       onClick={handleAddButtonClick}
+      onMouseUp={handleAddButtonMouseUp}
       aria-label="Add"
       role="button"
       tabIndex={0}
