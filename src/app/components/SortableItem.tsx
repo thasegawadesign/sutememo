@@ -11,6 +11,7 @@ import {
   SetStateAction,
   forwardRef,
   useCallback,
+  MutableRefObject,
 } from 'react';
 import { Todo } from '@/types/Todo';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
@@ -22,6 +23,10 @@ type Props = {
   name: string;
   todos: Todo[];
   editableRef: RefObject<HTMLSpanElement>;
+  todosHistoryRef: MutableRefObject<Todo[][]>;
+  todosHistoryCurrentIndex: MutableRefObject<number>;
+  setCanUndo: Dispatch<SetStateAction<boolean>>;
+  setCanRedo: Dispatch<SetStateAction<boolean>>;
   setTodos: Dispatch<SetStateAction<Todo[]>>;
   updatePartialIndexedDB: (
     id: string,
@@ -37,6 +42,10 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     name,
     todos,
     editableRef,
+    todosHistoryRef,
+    todosHistoryCurrentIndex,
+    setCanUndo,
+    setCanRedo,
     setTodos,
     updatePartialIndexedDB,
     updateAllIndexedDB,
@@ -63,6 +72,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
     setTodos(sortedTodos);
     updateAllIndexedDB(sortedTodos);
+    todosHistoryRef.current.push(sortedTodos);
+    todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+    setCanUndo(true);
   };
 
   const handleBlurContentEditable = function (event: FocusEvent) {
@@ -83,12 +95,20 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           : todo,
       );
       setTodos(updatedTodos);
+      todosHistoryRef.current.push(updatedTodos);
+      todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+      setCanUndo(true);
+      setCanRedo(false);
     } else {
       deleteIndexedDB(targetId);
       const filterdTodos: Todo[] = todos.filter((todo) => todo.id !== targetId);
       const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
       setTodos(sortedTodos);
       updateAllIndexedDB(sortedTodos);
+      todosHistoryRef.current.push(sortedTodos);
+      todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+      setCanUndo(true);
+      setCanRedo(false);
     }
   };
 
