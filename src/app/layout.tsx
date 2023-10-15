@@ -62,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className="overscroll-none">
+    <html lang="ja">
       <head>
         <Analytics />
       </head>
