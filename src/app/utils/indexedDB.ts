@@ -1,6 +1,6 @@
-import { IndexedDBResult } from "@/types/IndexedDBResult";
-import { Todo } from "@/types/Todo";
-import { sortTodosOrderByDisplayOrder } from "./sortTodosOrderByDisplayOrder";
+import { IndexedDBResult } from '@/types/IndexedDBResult';
+import { Todo } from '@/types/Todo';
+import { sortTodosOrderByDisplayOrder } from './sortTodosOrderByDisplayOrder';
 
 const dbVer = 1;
 const dbName = 'TodoDB';
@@ -158,9 +158,9 @@ export const updatePartialIndexedDB: (
   });
 };
 
-export const updateAllIndexedDB: (todos: Todo[]) => Promise<IndexedDBResult> = async (
+export const updateAllIndexedDB: (
   todos: Todo[],
-) => {
+) => Promise<IndexedDBResult> = async (todos: Todo[]) => {
   return new Promise((resolve, reject) => {
     if (!globalThis.window) {
       reject('IndexedDB is not working this environment');
@@ -276,6 +276,39 @@ export const deleteIndexedDB: (id: string) => Promise<IndexedDBResult> = async (
     };
     request.onerror = (event) => {
       reject('Request Error, deleteIndexedDB ->' + event);
+    };
+  });
+};
+export const clearIndexedDB: () => Promise<IndexedDBResult> = async () => {
+  return new Promise((resolve, reject) => {
+    if (!globalThis.window) {
+      reject('IndexedDB is not working this environment');
+      return;
+    }
+    const request = window.indexedDB.open(dbName, dbVer);
+    request.onsuccess = (event) => {
+      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+      const transaction = db.transaction([dbStore], 'readwrite');
+      const objectStore = transaction.objectStore(dbStore);
+      const deleteRequest = objectStore.clear();
+      deleteRequest.onsuccess = () => {
+        console.log('DeleteRequest success, clearIndexedDB');
+      };
+      deleteRequest.onerror = (event) => {
+        reject('DeleteRequest Error, clearIndexedDB ->' + event);
+      };
+      transaction.oncomplete = (event) => {
+        console.log('clearIndexedDB called');
+        resolve({
+          complete: true,
+        });
+      };
+      transaction.onerror = (event) => {
+        reject('Transaction Error, clearIndexedDB ->' + event);
+      };
+    };
+    request.onerror = (event) => {
+      reject('Request Error, clearIndexedDB ->' + event);
     };
   });
 };

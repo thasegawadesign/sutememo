@@ -4,4 +4,5 @@ export type ProcessTypeIDB =
   | 'updatePartialIndexedDB'
   | 'updateAllIndexedDB'
   | 'insertIndexedDB'
-  | 'deleteIndexedDB';
+  | 'deleteIndexedDB'
+  | 'clearIndexedDB';

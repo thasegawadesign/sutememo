@@ -2,13 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Button from './components/button';
-import TodoList from './components/todoList';
+import Button from './components/Button';
+import TodoList from './components/TodoList';
 import { Todo } from '@/types/Todo';
 import { registerServiceWorker } from './utils/registerServiceWorker';
 import AppInstallButton from './components/AppInstallButton';
 import IconSvg from './components/IconSvg';
 import {
+  clearIndexedDB,
   createIndexedDB,
   deleteIndexedDB,
   fetchIndexedDB,
@@ -16,6 +17,8 @@ import {
   updateAllIndexedDB,
   updatePartialIndexedDB,
 } from './utils/indexedDB';
+import Undo from './components/Undo';
+import Redo from './components/Redo';
 
 declare global {
   interface Window {
@@ -34,7 +37,6 @@ interface BeforeInstallPromptEvent extends Event {
 
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [loading, setLoading] = useState(true);
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [showAppInstallButton, setShowAppInstallButton] = useState(false);
@@ -42,11 +44,61 @@ export default function Home() {
   const scrollBottomRef = useRef<HTMLDivElement>(null);
   const appInstallButtonRef = useRef<HTMLButtonElement>(null);
 
+  const [canUndo, setCanUndo] = useState(false);
+  const [canRedo, setCanRedo] = useState(false);
+  const todosHistoryRef = useRef<Todo[][]>([]);
+  const todosHistoryCurrentIndex = useRef(0);
+
   const scrollToBottom = function () {
     scrollBottomRef.current?.scrollIntoView({
       behavior: 'smooth',
       block: 'end',
     });
+  };
+
+  const handleUndoClick = async function () {
+    const isLessThanZero = todosHistoryCurrentIndex.current - 1 < 0;
+    todosHistoryCurrentIndex.current = isLessThanZero
+      ? 0
+      : todosHistoryCurrentIndex.current - 1;
+    setCanUndo(
+      todosHistoryCurrentIndex.current > 0 &&
+        todosHistoryRef.current.length >= 2,
+    );
+    setCanRedo(
+      todosHistoryCurrentIndex.current < todosHistoryRef.current.length - 1 &&
+        todosHistoryRef.current.length >= 2,
+    );
+    const prevTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
+    setTodos(prevTodos);
+    if (canUndo) {
+      await clearIndexedDB();
+      updateAllIndexedDB(prevTodos);
+      scrollToBottom();
+    }
+  };
+
+  const handleRedoClick = async function () {
+    const isMoreThanLength =
+      todosHistoryCurrentIndex.current + 1 >= todosHistoryRef.current.length;
+    todosHistoryCurrentIndex.current = isMoreThanLength
+      ? todosHistoryCurrentIndex.current
+      : todosHistoryCurrentIndex.current + 1;
+    setCanUndo(
+      todosHistoryCurrentIndex.current > 0 &&
+        todosHistoryRef.current.length >= 2,
+    );
+    setCanRedo(
+      todosHistoryCurrentIndex.current < todosHistoryRef.current.length - 1 &&
+        todosHistoryRef.current.length >= 2,
+    );
+    const nextTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
+    setTodos(nextTodos);
+    if (canRedo) {
+      await clearIndexedDB();
+      updateAllIndexedDB(nextTodos);
+      scrollToBottom();
+    }
   };
 
   const handleKeyDown = useCallback(
@@ -77,6 +129,13 @@ export default function Home() {
       { id: insertID, displayOrder: prevTodos.length, name: '' },
     ]);
     insertIndexedDB(insertID, prevTodos.length, '');
+    todosHistoryRef.current.push([
+      ...prevTodos,
+      { id: insertID, displayOrder: prevTodos.length, name: '' },
+    ]);
+    todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+    setCanRedo(false);
+    setCanUndo(true);
   }, [todos]);
 
   const handleAddButtonClick = useCallback(() => {
@@ -175,7 +234,7 @@ export default function Home() {
       createIndexedDB();
       const fetchData = await fetchIndexedDB();
       setTodos(fetchData);
-      setLoading(false);
+      todosHistoryRef.current = [fetchData];
     };
     registerServiceWorker();
     init();
@@ -207,6 +266,10 @@ export default function Home() {
           <TodoList
             todos={todos}
             editableRef={editableRef}
+            todosHistoryRef={todosHistoryRef}
+            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
+            setCanUndo={setCanUndo}
+            setCanRedo={setCanRedo}
             setTodos={setTodos}
             updatePartialIndexedDB={updatePartialIndexedDB}
             updateAllIndexedDB={updateAllIndexedDB}
@@ -214,6 +277,8 @@ export default function Home() {
           />
         </>
       )}
+      <Undo handleUndoClick={handleUndoClick} canUndo={canUndo} />
+      <Redo handleRedoClick={handleRedoClick} canRedo={canRedo} />
       <Button
         handleAddButtonClick={handleAddButtonClick}
         handleAddButtonMouseUp={handleAddButtonMouseUp}
@@ -221,7 +286,7 @@ export default function Home() {
       {todos.length > 0 && (
         <div
           ref={scrollBottomRef}
-          className="h-[calc(env(safe-area-inset-bottom)+104px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+84px),104px)]"
+          className="h-[calc(env(safe-area-inset-bottom)+248px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+228px),248px)]"
         />
       )}
     </main>
