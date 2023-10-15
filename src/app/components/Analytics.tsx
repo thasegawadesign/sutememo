@@ -48,6 +48,18 @@ export default function Analytics() {
                 event_label: 'Click',
               });
             });
+            document.querySelector('[aria-label="Undo"]')?.addEventListener('click', (event) => {
+              gtag('event', 'undo', {
+                event_category: 'Undo',
+                event_label: 'Click',
+              });
+            });
+            document.querySelector('[aria-label="Redo"]')?.addEventListener('click', (event) => {
+              gtag('event', 'redo', {
+                event_category: 'Redo',
+                event_label: 'Click',
+              });
+            });
             window.addEventListener('keydown', (event) => {
               if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
               if (event.key === 'Enter') {
