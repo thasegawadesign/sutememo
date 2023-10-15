@@ -7,16 +7,14 @@ import {
   TouchEvent,
   FocusEvent,
   KeyboardEvent,
-  MouseEvent,
   RefObject,
   SetStateAction,
   forwardRef,
   useCallback,
-  useEffect,
 } from 'react';
 import { Todo } from '@/types/Todo';
-import { ProcessTypeIDB } from '@/types/ProcessTypeIDB';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
+import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOrder';
 
 type Props = {
   id: string;
@@ -25,11 +23,11 @@ type Props = {
   todos: Todo[];
   editableRef: RefObject<HTMLSpanElement>;
   setTodos: Dispatch<SetStateAction<Todo[]>>;
-  setProcessTypeIDB: Dispatch<SetStateAction<ProcessTypeIDB | undefined>>;
   updatePartialIndexedDB: (
     id: string,
     updatedText: string,
   ) => Promise<IndexedDBResult>;
+  updateAllIndexedDB: (todos: Todo[]) => Promise<IndexedDBResult>;
   deleteIndexedDB: (id: string) => Promise<IndexedDBResult>;
 };
 
@@ -37,10 +35,11 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   const {
     id,
     name,
+    todos,
     editableRef,
     setTodos,
-    setProcessTypeIDB,
     updatePartialIndexedDB,
+    updateAllIndexedDB,
     deleteIndexedDB,
   } = props;
   const {
@@ -57,14 +56,16 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     transition,
   };
 
-  const handleDeleteButtonClick = useCallback((event: MouseEvent) => {
+  const handleDeleteButtonClick = function () {
     const targetId = id;
     deleteIndexedDB(targetId);
-    setProcessTypeIDB('deleteIndexedDB');
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== targetId));
-  }, []);
+    const filterdTodos: Todo[] = todos.filter((todo) => todo.id !== targetId);
+    const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
+    setTodos(sortedTodos);
+    updateAllIndexedDB(sortedTodos);
+  };
 
-  const handleBlurContentEditable = useCallback((event: FocusEvent) => {
+  const handleBlurContentEditable = function (event: FocusEvent) {
     const targetId = id;
     const targetText = name;
     const updatedText = (event.target as HTMLElement).innerText;
@@ -72,24 +73,24 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     if (updatedText) {
       if (!isEdited) return;
       updatePartialIndexedDB(targetId, updatedText);
-      setProcessTypeIDB('updatePartialIndexedDB');
-      setTodos((prevTodos) =>
-        prevTodos.map((todo) =>
-          todo.id === targetId
-            ? {
-                id: todo.id,
-                displayOrder: todo.displayOrder,
-                name: updatedText,
-              }
-            : todo,
-        ),
+      const updatedTodos: Todo[] = todos.map((todo) =>
+        todo.id === targetId
+          ? {
+              id: todo.id,
+              displayOrder: todo.displayOrder,
+              name: updatedText,
+            }
+          : todo,
       );
+      setTodos(updatedTodos);
     } else {
       deleteIndexedDB(targetId);
-      setProcessTypeIDB('deleteIndexedDB');
-      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== targetId));
+      const filterdTodos: Todo[] = todos.filter((todo) => todo.id !== targetId);
+      const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
+      setTodos(sortedTodos);
+      updateAllIndexedDB(sortedTodos);
     }
-  }, []);
+  };
 
   const handleKeyDownContentEditable = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
@@ -100,12 +101,6 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
 
   const handleTransparentButtonTouchEnd = useCallback((event: TouchEvent) => {
     event.preventDefault();
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      setProcessTypeIDB(undefined);
-    };
   }, []);
 
   return (

@@ -3,7 +3,6 @@
 import {
   DndContext,
   DragEndEvent,
-  DragMoveEvent,
   DragOverlay,
   DragStartEvent,
   KeyboardSensor,
@@ -21,26 +20,16 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import type { Todo } from '@/types/Todo';
-import {
-  Dispatch,
-  RefObject,
-  SetStateAction,
-  useEffect,
-  useId,
-  useState,
-} from 'react';
+import { Dispatch, RefObject, SetStateAction, useId, useState } from 'react';
 import SortableItem from './SortableItem';
 import { isMobile } from 'react-device-detect';
-import { ProcessTypeIDB } from '@/types/ProcessTypeIDB';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
+import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOrder';
 
 type Props = {
   todos: Todo[];
-  sortObsever: boolean;
   editableRef: RefObject<HTMLSpanElement>;
   setTodos: Dispatch<SetStateAction<Todo[]>>;
-  setProcessTypeIDB: Dispatch<SetStateAction<ProcessTypeIDB | undefined>>;
-  setSortObserver: Dispatch<SetStateAction<boolean>>;
   updatePartialIndexedDB: (
     id: string,
     updatedText: string,
@@ -52,12 +41,10 @@ type Props = {
 export default function TodoList(props: Props) {
   const {
     todos,
-    sortObsever,
     editableRef,
     setTodos,
-    setProcessTypeIDB,
-    setSortObserver,
     updatePartialIndexedDB,
+    updateAllIndexedDB,
     deleteIndexedDB,
   } = props;
   const mouseSenser = useSensor(MouseSensor);
@@ -104,27 +91,22 @@ export default function TodoList(props: Props) {
     cursorStyle.id = 'cursor-style';
     document.head.appendChild(cursorStyle);
   };
-  const handleDragMove = function (event: DragMoveEvent) {};
+  const handleDragMove = function () {};
   const handleDragEnd = function (event: DragEndEvent) {
     const { active, over } = event;
     setActiveId(null);
     document.getElementById('cursor-style')?.remove();
     if (!over) return;
     if (active.id !== over?.id) {
-      setTodos((todos) => {
-        const oldIndex = findIndex(active.id as string);
-        const newIndex = findIndex(over?.id as string);
-        return arrayMove(todos, oldIndex, newIndex);
-      });
-      setSortObserver(true);
+      const oldIndex = findIndex(active.id as string);
+      const newIndex = findIndex(over?.id as string);
+      const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(
+        arrayMove(todos, oldIndex, newIndex),
+      );
+      setTodos(sortedTodos);
+      updateAllIndexedDB(sortedTodos);
     }
   };
-
-  useEffect(() => {
-    return () => {
-      setSortObserver(false);
-    };
-  }, [sortObsever]);
 
   return (
     <DndContext
@@ -146,9 +128,9 @@ export default function TodoList(props: Props) {
                 name={todo.name}
                 todos={todos}
                 editableRef={editableRef}
-                setProcessTypeIDB={setProcessTypeIDB}
                 setTodos={setTodos}
                 updatePartialIndexedDB={updatePartialIndexedDB}
+                updateAllIndexedDB={updateAllIndexedDB}
                 deleteIndexedDB={deleteIndexedDB}
               />
             ))}
@@ -169,7 +151,7 @@ export default function TodoList(props: Props) {
             todos={todos}
             editableRef={editableRef}
             setTodos={setTodos}
-            setProcessTypeIDB={setProcessTypeIDB}
+            updateAllIndexedDB={updateAllIndexedDB}
             updatePartialIndexedDB={updatePartialIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
           />
