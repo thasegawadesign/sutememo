@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import AddButton from './components/AddButton';
-import TodoList from './components/TodoList';
+import AddButton from './components/add-button';
+import TodoList from './components/todo-list';
 import { Todo } from '@/types/Todo';
 import { registerServiceWorker } from './utils/registerServiceWorker';
-import AppInstallButton from './components/AppInstallButton';
-import IconSvg from './components/IconSvg';
+import AppInstallButton from './components/app-install-button';
+import IconSvg from './components/icon-svg';
 import {
   clearIndexedDB,
   createIndexedDB,
