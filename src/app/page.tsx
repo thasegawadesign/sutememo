@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Button from './components/Button';
+import AddButton from './components/AddButton';
 import TodoList from './components/TodoList';
 import { Todo } from '@/types/Todo';
 import { registerServiceWorker } from './utils/registerServiceWorker';
@@ -279,7 +279,7 @@ export default function Home() {
       )}
       <Undo handleUndoClick={handleUndoClick} canUndo={canUndo} />
       <Redo handleRedoClick={handleRedoClick} canRedo={canRedo} />
-      <Button
+      <AddButton
         handleAddButtonClick={handleAddButtonClick}
         handleAddButtonMouseUp={handleAddButtonMouseUp}
       />
