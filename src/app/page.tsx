@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Button from './components/Button';
+import AddButton from './components/AddButton';
 import TodoList from './components/TodoList';
 import { Todo } from '@/types/Todo';
 import { registerServiceWorker } from './utils/registerServiceWorker';
@@ -279,14 +279,14 @@ export default function Home() {
       )}
       <Undo handleUndoClick={handleUndoClick} canUndo={canUndo} />
       <Redo handleRedoClick={handleRedoClick} canRedo={canRedo} />
-      <Button
+      <AddButton
         handleAddButtonClick={handleAddButtonClick}
         handleAddButtonMouseUp={handleAddButtonMouseUp}
       />
       {todos.length > 0 && (
         <div
           ref={scrollBottomRef}
-          className="h-[calc(env(safe-area-inset-bottom)+232px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+212px),232px)]"
+          className="h-[calc(env(safe-area-inset-bottom)+224px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+204px),224px)]"
         />
       )}
     </main>
