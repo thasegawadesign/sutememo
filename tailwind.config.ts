@@ -11,6 +11,7 @@ const config: Config = {
       screens: {
         pwa: { raw: '(display-mode: standalone)' },
         minimum: '300px',
+        xs: '480px',
       },
       colors: {
         main: '#208cd8',
