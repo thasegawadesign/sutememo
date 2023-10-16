@@ -1,5 +1,5 @@
 import { ImRedo } from 'react-icons/im';
-import { Button } from '../theme-providers';
+import { Button } from '../context/theme-providers';
 
 type Props = {
   canRedo: boolean;
