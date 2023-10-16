@@ -2,6 +2,8 @@ import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
 import { isMobile, isTablet, isDesktop } from 'react-device-detect';
+import { Button } from '../context/theme-providers';
+
 import {
   Dispatch,
   TouchEvent,
@@ -133,14 +135,16 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       }`}
     >
       <div className="flex flex-1 items-center gap-1.5 sm:gap-2.5">
-        <button
+        <Button
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 transition-colors hover:cursor-grab hover:bg-gray-100 sm:px-4 sm:py-5"
+          color="white"
+          variant="text"
+          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 hover:cursor-grab hover:bg-gray-100 sm:px-4 sm:py-5"
         >
           <PiDotsSixVerticalBold />
-        </button>
+        </Button>
         <span
           ref={editableRef}
           onBlur={handleBlurContentEditable}
@@ -162,15 +166,17 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           />
         )}
       </div>
-      <button
+      <Button
         aria-label={'Delete'}
         onClick={handleDeleteButtonClick}
-        className={`rounded px-3 py-4 text-xl text-gray-500 transition-colors hover:cursor-pointer hover:bg-gray-100 sm:px-4 sm:py-5 ${
+        variant="text"
+        color="white"
+        className={`rounded px-3 py-4 text-xl text-gray-500 hover:cursor-pointer hover:bg-gray-100 sm:px-4 sm:py-5 ${
           isDesktop && 'self-stretch'
         }`}
       >
         <PiXBold />
-      </button>
+      </Button>
     </li>
   );
 });

@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Button from './components/Button';
-import TodoList from './components/TodoList';
+import AddButton from './components/add-button';
+import TodoList from './components/todo-list';
 import { Todo } from '@/types/Todo';
 import { registerServiceWorker } from './utils/registerServiceWorker';
-import AppInstallButton from './components/AppInstallButton';
-import IconSvg from './components/IconSvg';
+import AppInstallButton from './components/app-install-button';
+import IconSvg from './components/icon-svg';
 import {
   clearIndexedDB,
   createIndexedDB,
@@ -17,8 +17,8 @@ import {
   updateAllIndexedDB,
   updatePartialIndexedDB,
 } from './utils/indexedDB';
-import Undo from './components/Undo';
-import Redo from './components/Redo';
+import Undo from './components/undo';
+import Redo from './components/redo';
 
 declare global {
   interface Window {
@@ -279,14 +279,14 @@ export default function Home() {
       )}
       <Undo handleUndoClick={handleUndoClick} canUndo={canUndo} />
       <Redo handleRedoClick={handleRedoClick} canRedo={canRedo} />
-      <Button
+      <AddButton
         handleAddButtonClick={handleAddButtonClick}
         handleAddButtonMouseUp={handleAddButtonMouseUp}
       />
       {todos.length > 0 && (
         <div
           ref={scrollBottomRef}
-          className="h-[calc(env(safe-area-inset-bottom)+232px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+212px),232px)]"
+          className="h-[calc(env(safe-area-inset-bottom)+224px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+204px),224px)]"
         />
       )}
     </main>
