@@ -15,9 +15,8 @@ export default function Undo(props: Props) {
         aria-label="Undo"
         role="button"
         color="white"
-        variant="text"
-        className={`xs:text-xl xs:p-7 !fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] left-[22px] rounded-full p-[26px] text-lg ${
-          canUndo ? 'text-gray-500' : 'text-gray-300'
+        className={`xs:text-xl xs:p-7 !fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] left-[22px] rounded-full p-[26px] text-lg !shadow-none ${
+          canUndo ? 'hover:bg-blue-gray-50 text-gray-500' : 'text-gray-300'
         }`}
         ripple={true}
         onClick={handleUndoClick}
