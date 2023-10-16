@@ -70,15 +70,16 @@ export default function Home() {
         todosHistoryRef.current.length >= 2,
     );
     const prevTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
-    setTodos(prevTodos);
     if (canUndo) {
       try {
         clearIndexedDB();
         updateAllIndexedDB(prevTodos);
       } catch (error) {
         console.error(error);
+      } finally {
+        setTodos(prevTodos);
+        scrollToBottom();
       }
-      scrollToBottom();
     }
   };
 
@@ -97,15 +98,16 @@ export default function Home() {
         todosHistoryRef.current.length >= 2,
     );
     const nextTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
-    setTodos(nextTodos);
     if (canRedo) {
       try {
         clearIndexedDB();
         updateAllIndexedDB(nextTodos);
       } catch (error) {
         console.error(error);
+      } finally {
+        setTodos(nextTodos);
+        scrollToBottom();
       }
-      scrollToBottom();
     }
   };
 
