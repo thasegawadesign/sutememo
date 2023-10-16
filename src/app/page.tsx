@@ -56,9 +56,9 @@ export default function Home() {
     });
   };
 
-  const handleUndoClick = async function () {
-    const isLessThanZero = todosHistoryCurrentIndex.current - 1 < 0;
-    todosHistoryCurrentIndex.current = isLessThanZero
+  const handleUndoClick = function () {
+    const isOldest = todosHistoryCurrentIndex.current - 1 < 0;
+    todosHistoryCurrentIndex.current = isOldest
       ? 0
       : todosHistoryCurrentIndex.current - 1;
     setCanUndo(
@@ -73,7 +73,7 @@ export default function Home() {
     setTodos(prevTodos);
     if (canUndo) {
       try {
-        await clearIndexedDB();
+        clearIndexedDB();
         updateAllIndexedDB(prevTodos);
       } catch (error) {
         console.error(error);
@@ -82,10 +82,10 @@ export default function Home() {
     }
   };
 
-  const handleRedoClick = async function () {
-    const isMoreThanLength =
+  const handleRedoClick = function () {
+    const isLatest =
       todosHistoryCurrentIndex.current + 1 >= todosHistoryRef.current.length;
-    todosHistoryCurrentIndex.current = isMoreThanLength
+    todosHistoryCurrentIndex.current = isLatest
       ? todosHistoryCurrentIndex.current
       : todosHistoryCurrentIndex.current + 1;
     setCanUndo(
@@ -100,7 +100,7 @@ export default function Home() {
     setTodos(nextTodos);
     if (canRedo) {
       try {
-        await clearIndexedDB();
+        clearIndexedDB();
         updateAllIndexedDB(nextTodos);
       } catch (error) {
         console.error(error);
@@ -201,7 +201,8 @@ export default function Home() {
   const handleVisibilityChange = useCallback(async () => {
     if (document.visibilityState === 'visible') {
       try {
-        setTodos(await fetchIndexedDB());
+        const fetchData = await fetchIndexedDB();
+        setTodos(fetchData);
       } catch (error) {
         console.error(error);
       }
@@ -210,7 +211,8 @@ export default function Home() {
 
   const handleWindowFocus = useCallback(async () => {
     try {
-      setTodos(await fetchIndexedDB());
+      const fetchData = await fetchIndexedDB();
+      setTodos(fetchData);
     } catch (error) {
       console.error(error);
     }
@@ -265,6 +267,8 @@ export default function Home() {
     registerServiceWorker();
     init();
   }, []);
+
+  console.log(todos);
 
   return (
     <main>
