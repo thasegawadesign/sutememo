@@ -72,8 +72,12 @@ export default function Home() {
     const prevTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
     setTodos(prevTodos);
     if (canUndo) {
-      await clearIndexedDB();
-      updateAllIndexedDB(prevTodos);
+      try {
+        await clearIndexedDB();
+        updateAllIndexedDB(prevTodos);
+      } catch (error) {
+        console.error(error);
+      }
       scrollToBottom();
     }
   };
@@ -95,8 +99,12 @@ export default function Home() {
     const nextTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
     setTodos(nextTodos);
     if (canRedo) {
-      await clearIndexedDB();
-      updateAllIndexedDB(nextTodos);
+      try {
+        await clearIndexedDB();
+        updateAllIndexedDB(nextTodos);
+      } catch (error) {
+        console.error(error);
+      }
       scrollToBottom();
     }
   };
@@ -113,7 +121,11 @@ export default function Home() {
           ...prevTodos,
           { id: insertID, displayOrder: prevTodos.length, name: '' },
         ]);
-        await insertIndexedDB(insertID, prevTodos.length, '');
+        try {
+          await insertIndexedDB(insertID, prevTodos.length, '');
+        } catch (error) {
+          console.error(error);
+        }
         scrollToBottom();
         editableRef.current?.focus();
       }
@@ -121,14 +133,13 @@ export default function Home() {
     [todos],
   );
 
-  const handleAddButtonMouseUp = useCallback(() => {
+  const handleAddButtonMouseUp = useCallback(async () => {
     const insertID = uuidv4();
     const prevTodos: Todo[] = todos.map((todo) => todo);
     setTodos([
       ...prevTodos,
       { id: insertID, displayOrder: prevTodos.length, name: '' },
     ]);
-    insertIndexedDB(insertID, prevTodos.length, '');
     todosHistoryRef.current.push([
       ...prevTodos,
       { id: insertID, displayOrder: prevTodos.length, name: '' },
@@ -136,6 +147,11 @@ export default function Home() {
     todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
     setCanRedo(false);
     setCanUndo(true);
+    try {
+      insertIndexedDB(insertID, prevTodos.length, '');
+    } catch (error) {
+      console.error(error);
+    }
   }, [todos]);
 
   const handleAddButtonClick = useCallback(() => {
@@ -184,14 +200,20 @@ export default function Home() {
 
   const handleVisibilityChange = useCallback(async () => {
     if (document.visibilityState === 'visible') {
-      const fetchData = await fetchIndexedDB();
-      setTodos(fetchData);
+      try {
+        setTodos(await fetchIndexedDB());
+      } catch (error) {
+        console.error(error);
+      }
     }
   }, []);
 
   const handleWindowFocus = useCallback(async () => {
-    const fetchData = await fetchIndexedDB();
-    setTodos(fetchData);
+    try {
+      setTodos(await fetchIndexedDB());
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
   useEffect(() => {
@@ -231,10 +253,14 @@ export default function Home() {
 
   useEffect(() => {
     const init = async () => {
-      createIndexedDB();
-      const fetchData = await fetchIndexedDB();
-      setTodos(fetchData);
-      todosHistoryRef.current = [fetchData];
+      try {
+        await createIndexedDB();
+        const fetchData = await fetchIndexedDB();
+        setTodos(fetchData);
+        todosHistoryRef.current = [fetchData];
+      } catch (error) {
+        console.error(error);
+      }
     };
     registerServiceWorker();
     init();
