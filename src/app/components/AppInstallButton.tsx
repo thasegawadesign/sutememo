@@ -1,5 +1,5 @@
 import { MouseEvent, RefObject } from 'react';
-import { Button } from '../context/theme-providers';
+import { Button } from '../theme-providers';
 
 type Props = {
   handleAppInstallButtonClick: (event: MouseEvent) => void;
