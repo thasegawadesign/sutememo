@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
 import Analytics from './components/Analytics';
+import Providers from './context/Providers';
 
 const baseURL = env.BASE_URL;
 const creator = env.CREATOR;
@@ -70,7 +71,7 @@ export default function RootLayout({
         className={`min-h-[100svh] overscroll-none pt-[env(safe-area-inset-top)] pwa:min-h-screen ${notoSansJP.className}`}
         role="application"
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
