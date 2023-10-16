@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { IoIosAdd } from 'react-icons/io';
-import { Button } from '@material-tailwind/react';
+import { Button } from '../context/theme-providers';
 
 type Props = {
   handleAddButtonClick: () => void;
