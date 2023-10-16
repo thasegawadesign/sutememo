@@ -286,7 +286,7 @@ export default function Home() {
       {todos.length > 0 && (
         <div
           ref={scrollBottomRef}
-          className="h-[calc(env(safe-area-inset-bottom)+248px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+228px),248px)]"
+          className="h-[calc(env(safe-area-inset-bottom)+232px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+212px),232px)]"
         />
       )}
     </main>
