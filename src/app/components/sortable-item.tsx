@@ -121,10 +121,6 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     }
   }, []);
 
-  const handleTransparentButtonTouchEnd = useCallback((event: TouchEvent) => {
-    event.preventDefault();
-  }, []);
-
   return (
     <li
       ref={setNodeRef}
@@ -161,9 +157,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           <button
             className="flex-1 self-stretch bg-transparent"
             ref={setActivatorNodeRef}
-            onTouchEnd={handleTransparentButtonTouchEnd}
             {...listeners}
             {...attributes}
+            disabled
           />
         )}
       </div>
