@@ -2,7 +2,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
 import { isMobile, isTablet, isDesktop } from 'react-device-detect';
-import { Button } from '../theme-providers';
+import { Button } from '../context/theme-providers';
 
 import {
   Dispatch,
