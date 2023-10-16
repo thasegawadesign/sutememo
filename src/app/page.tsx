@@ -17,8 +17,8 @@ import {
   updateAllIndexedDB,
   updatePartialIndexedDB,
 } from './utils/indexedDB';
-import Undo from './components/Undo';
-import Redo from './components/Redo';
+import Undo from './components/undo';
+import Redo from './components/redo';
 
 declare global {
   interface Window {
