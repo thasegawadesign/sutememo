@@ -170,7 +170,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         aria-label={'Delete'}
         onClick={handleDeleteButtonClick}
         variant="text"
-        className={`rounded px-3 py-4 text-xl text-gray-500 hover:cursor-pointer sm:px-4 sm:py-5 ${
+        color="white"
+        className={`rounded px-3 py-4 text-xl text-gray-500 hover:cursor-pointer hover:bg-gray-100 sm:px-4 sm:py-5 ${
           isDesktop && 'self-stretch'
         }`}
       >
