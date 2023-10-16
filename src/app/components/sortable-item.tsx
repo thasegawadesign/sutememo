@@ -141,6 +141,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           {...listeners}
           variant="text"
           color="white"
+          ripple={false}
           className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 hover:cursor-grab hover:bg-blue-gray-50 sm:px-4 sm:py-5"
         >
           <PiDotsSixVerticalBold />
@@ -171,7 +172,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         onClick={handleDeleteButtonClick}
         variant="text"
         color="white"
-        className={`rounded px-3 py-4 text-xl text-gray-500 hover:cursor-pointer hover:bg-blue-gray-50 sm:px-4 sm:py-5 ${
+        ripple={false}
+        className={`rounded px-3 py-4 text-xl text-gray-500 hover:cursor-pointer hover:bg-blue-gray-50 active:bg-blue-gray-50 active:brightness-95 sm:px-4 sm:py-5 ${
           isDesktop && 'self-stretch'
         }`}
       >
