@@ -268,8 +268,6 @@ export default function Home() {
     init();
   }, []);
 
-  console.log(todos);
-
   return (
     <main>
       <div className="flex items-center justify-between px-[22px] pb-5 pt-3">
