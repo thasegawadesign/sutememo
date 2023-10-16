@@ -3,7 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
 import Analytics from './components/Analytics';
-import Providers from './context/Providers';
+import Providers from './context/providers';
 
 const baseURL = env.BASE_URL;
 const creator = env.CREATOR;
