@@ -139,9 +139,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          color="white"
           variant="text"
-          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 hover:cursor-grab hover:bg-gray-100 sm:px-4 sm:py-5"
+          color="white"
+          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 hover:cursor-grab hover:bg-blue-gray-50 sm:px-4 sm:py-5"
         >
           <PiDotsSixVerticalBold />
         </Button>
@@ -171,7 +171,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         onClick={handleDeleteButtonClick}
         variant="text"
         color="white"
-        className={`rounded px-3 py-4 text-xl text-gray-500 hover:cursor-pointer hover:bg-gray-100 sm:px-4 sm:py-5 ${
+        className={`rounded px-3 py-4 text-xl text-gray-500 hover:cursor-pointer hover:bg-blue-gray-50 sm:px-4 sm:py-5 ${
           isDesktop && 'self-stretch'
         }`}
       >
