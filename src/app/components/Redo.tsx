@@ -1,5 +1,5 @@
 import { ImRedo } from 'react-icons/im';
-import { Button } from '@material-tailwind/react';
+import { Button } from '../context/theme-providers';
 
 type Props = {
   canRedo: boolean;
@@ -16,8 +16,8 @@ export default function Redo(props: Props) {
         aria-label="Undo"
         role="button"
         color="white"
-        className={`xs:text-xl xs:p-7 !fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] right-[22px] rounded-full p-[26px] text-lg !shadow-none ${
-          canRedo ? 'hover:bg-blue-gray-50 text-gray-500' : 'text-gray-300'
+        className={`!fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] right-[22px] rounded-full p-[26px] text-lg !shadow-none xs:p-7 xs:text-xl ${
+          canRedo ? 'text-gray-500 hover:bg-blue-gray-50' : 'text-gray-300'
         }`}
         ripple={true}
         onClick={handleRedoClick}

@@ -1,5 +1,5 @@
 import { MouseEvent, RefObject } from 'react';
-import { Button } from '@material-tailwind/react';
+import { Button } from '../context/theme-providers';
 
 type Props = {
   handleAppInstallButtonClick: (event: MouseEvent) => void;
