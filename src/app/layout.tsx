@@ -2,7 +2,7 @@ import { env } from 'process';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
-import Analytics from './components/Analytics';
+import Analytics from './components/analytics';
 import { ThemeProvider } from './theme-providers';
 
 const baseURL = env.BASE_URL;
