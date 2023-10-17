@@ -128,7 +128,7 @@ export default function Home() {
     [todos],
   );
 
-  const handleAddButtonClick = useCallback(async () => {
+  const handleAddButtonMouseUp = useCallback(async () => {
     const insertID = uuidv4();
     const prevTodos: Todo[] = todos.map((todo) => todo);
     todosHistoryRef.current.push([
@@ -143,14 +143,17 @@ export default function Home() {
       { id: insertID, displayOrder: prevTodos.length, name: '' },
     ]);
     try {
-      await insertIndexedDB(insertID, prevTodos.length, '');
+      insertIndexedDB(insertID, prevTodos.length, '');
     } catch (error) {
       console.error(error);
       setTodos(prevTodos);
     }
+  }, [todos]);
+
+  const handleAddButtonClick = useCallback(async () => {
     scrollToBottom();
     editableRef.current?.focus();
-  }, [todos]);
+  }, []);
 
   const handleAppInstallButtonClick = useCallback(async () => {
     if (!globalThis.window) return;
@@ -300,7 +303,10 @@ export default function Home() {
       )}
       <Undo handleUndoClick={handleUndoClick} canUndo={canUndo} />
       <Redo handleRedoClick={handleRedoClick} canRedo={canRedo} />
-      <AddButton handleAddButtonClick={handleAddButtonClick} />
+      <AddButton
+        handleAddButtonClick={handleAddButtonClick}
+        handleAddButtonMouseUp={handleAddButtonMouseUp}
+      />
       {todos.length > 0 && (
         <div
           ref={scrollBottomRef}

@@ -168,6 +168,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           onKeyDown={handleKeyDownContentEditable}
           role="textbox"
           contentEditable
+          inputMode="text"
           suppressContentEditableWarning
           className="max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-2xl leading-snug text-gray-700 focus:w-full sm:max-w-[calc(100svw-190px)] sm:rounded"
         >
