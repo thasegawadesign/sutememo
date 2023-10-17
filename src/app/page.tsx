@@ -118,18 +118,25 @@ export default function Home() {
         const target = event.target as HTMLElement;
         const insertID = uuidv4();
         const prevTodos: Todo[] = todos.map((todo) => todo);
-        if (target.nodeName !== 'BODY') return;
-        setTodos([
-          ...prevTodos,
-          { id: insertID, displayOrder: prevTodos.length, name: '' },
-        ]);
-        try {
-          await insertIndexedDB(insertID, prevTodos.length, '');
-        } catch (error) {
-          console.error(error);
+        const isEditing = target.contentEditable === 'true';
+        const selection = window.getSelection();
+        if (isEditing && selection?.anchorOffset === 0) {
+          scrollToBottom();
         }
-        scrollToBottom();
-        editableRef.current?.focus();
+        if (target.nodeName === 'BODY') {
+          setTodos([
+            ...prevTodos,
+            { id: insertID, displayOrder: prevTodos.length, name: '' },
+          ]);
+          try {
+            await insertIndexedDB(insertID, prevTodos.length, '');
+          } catch (error) {
+            console.error(error);
+            setTodos(prevTodos);
+          }
+          scrollToBottom();
+          editableRef.current?.focus();
+        }
       }
     },
     [todos],
@@ -138,10 +145,6 @@ export default function Home() {
   const handleAddButtonMouseUp = useCallback(async () => {
     const insertID = uuidv4();
     const prevTodos: Todo[] = todos.map((todo) => todo);
-    setTodos([
-      ...prevTodos,
-      { id: insertID, displayOrder: prevTodos.length, name: '' },
-    ]);
     todosHistoryRef.current.push([
       ...prevTodos,
       { id: insertID, displayOrder: prevTodos.length, name: '' },
@@ -149,10 +152,15 @@ export default function Home() {
     todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
     setCanRedo(false);
     setCanUndo(true);
+    setTodos([
+      ...prevTodos,
+      { id: insertID, displayOrder: prevTodos.length, name: '' },
+    ]);
     try {
       insertIndexedDB(insertID, prevTodos.length, '');
     } catch (error) {
       console.error(error);
+      setTodos(prevTodos);
     }
   }, [todos]);
 
