@@ -66,9 +66,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     transition,
   };
 
-  const handleDeleteButtonClick = function () {
+  const handleDeleteButtonClick = async function () {
     const targetId = id;
-    const prevTodos = todos;
+    const prevTodos = todos.map((todo) => todo);
     const filterdTodos: Todo[] = prevTodos.filter(
       (todo) => todo.id !== targetId,
     );
@@ -78,7 +78,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
     setCanUndo(true);
     try {
-      deleteIndexedDB(targetId);
+      await deleteIndexedDB(targetId);
       updateAllIndexedDB(sortedTodos);
     } catch (error) {
       console.error(error);
@@ -86,10 +86,10 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     }
   };
 
-  const handleBlurContentEditable = function (event: FocusEvent) {
+  const handleBlurContentEditable = async function (event: FocusEvent) {
     const targetId = id;
     const targetText = name;
-    const prevTodos = todos;
+    const prevTodos = todos.map((todo) => todo);
     const updatedText = (event.target as HTMLElement).innerText;
     const isEdited = targetText !== updatedText;
     if (updatedText) {
@@ -125,7 +125,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       setCanUndo(true);
       setCanRedo(false);
       try {
-        deleteIndexedDB(targetId);
+        await deleteIndexedDB(targetId);
         updateAllIndexedDB(sortedTodos);
       } catch (error) {
         console.error(error);
