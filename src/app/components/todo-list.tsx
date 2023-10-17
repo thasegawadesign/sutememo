@@ -119,11 +119,15 @@ export default function TodoList(props: Props) {
         arrayMove(todos, oldIndex, newIndex),
       );
       setTodos(sortedTodos);
-      updateAllIndexedDB(sortedTodos);
       todosHistoryRef.current.push(sortedTodos);
       todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
       setCanUndo(true);
       setCanRedo(false);
+      try {
+        updateAllIndexedDB(sortedTodos);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 

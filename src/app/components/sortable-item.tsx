@@ -6,7 +6,6 @@ import { Button } from '../context/theme-providers';
 
 import {
   Dispatch,
-  TouchEvent,
   FocusEvent,
   KeyboardEvent,
   RefObject,
@@ -69,14 +68,18 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
 
   const handleDeleteButtonClick = function () {
     const targetId = id;
-    deleteIndexedDB(targetId);
     const filterdTodos: Todo[] = todos.filter((todo) => todo.id !== targetId);
     const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
     setTodos(sortedTodos);
-    updateAllIndexedDB(sortedTodos);
     todosHistoryRef.current.push(sortedTodos);
     todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
     setCanUndo(true);
+    try {
+      deleteIndexedDB(targetId);
+      updateAllIndexedDB(sortedTodos);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleBlurContentEditable = function (event: FocusEvent) {
@@ -86,7 +89,6 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     const isEdited = targetText !== updatedText;
     if (updatedText) {
       if (!isEdited) return;
-      updatePartialIndexedDB(targetId, updatedText);
       const updatedTodos: Todo[] = todos.map((todo) =>
         todo.id === targetId
           ? {
@@ -101,16 +103,25 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
       setCanUndo(true);
       setCanRedo(false);
+      try {
+        updatePartialIndexedDB(targetId, updatedText);
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      deleteIndexedDB(targetId);
       const filterdTodos: Todo[] = todos.filter((todo) => todo.id !== targetId);
       const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
       setTodos(sortedTodos);
-      updateAllIndexedDB(sortedTodos);
       todosHistoryRef.current.push(sortedTodos);
       todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
       setCanUndo(true);
       setCanRedo(false);
+      try {
+        deleteIndexedDB(targetId);
+        updateAllIndexedDB(sortedTodos);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
