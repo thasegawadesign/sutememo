@@ -280,9 +280,9 @@ export default function Home() {
 
   return (
     <main>
-      <div className="flex items-center justify-between px-[22px] pb-5 pt-3">
+      <header className="flex items-center justify-between px-[22px] pb-5 pt-3">
         <div className="flex items-center gap-2">
-          <div className="hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border border-gray-200 bg-white p-2 text-center minimum:flex">
+          <div className="hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border border-gray-200 bg-white p-3 text-center minimum:flex">
             <IconSvg />
           </div>
           <h1
@@ -298,7 +298,7 @@ export default function Home() {
             appInstallButtonRef={appInstallButtonRef}
           />
         )}
-      </div>
+      </header>
       {todos.length > 0 && (
         <>
           <TodoList
