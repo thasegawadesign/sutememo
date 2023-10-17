@@ -56,7 +56,7 @@ export default function Home() {
     });
   };
 
-  const handleUndoClick = function () {
+  const handleUndoClick = async function () {
     const isOldest = todosHistoryCurrentIndex.current - 1 < 0;
     todosHistoryCurrentIndex.current = isOldest
       ? 0
@@ -72,7 +72,7 @@ export default function Home() {
     const prevTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
     if (canUndo) {
       try {
-        clearIndexedDB();
+        await clearIndexedDB();
         updateAllIndexedDB(prevTodos);
       } catch (error) {
         console.error(error);
@@ -83,7 +83,7 @@ export default function Home() {
     }
   };
 
-  const handleRedoClick = function () {
+  const handleRedoClick = async function () {
     const isLatest =
       todosHistoryCurrentIndex.current + 1 >= todosHistoryRef.current.length;
     todosHistoryCurrentIndex.current = isLatest
@@ -100,7 +100,7 @@ export default function Home() {
     const nextTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
     if (canRedo) {
       try {
-        clearIndexedDB();
+        await clearIndexedDB();
         updateAllIndexedDB(nextTodos);
       } catch (error) {
         console.error(error);
@@ -142,7 +142,7 @@ export default function Home() {
     [todos],
   );
 
-  const handleAddButtonMouseUp = useCallback(async () => {
+  const handleAddButtonClick = useCallback(async () => {
     const insertID = uuidv4();
     const prevTodos: Todo[] = todos.map((todo) => todo);
     todosHistoryRef.current.push([
@@ -157,17 +157,14 @@ export default function Home() {
       { id: insertID, displayOrder: prevTodos.length, name: '' },
     ]);
     try {
-      insertIndexedDB(insertID, prevTodos.length, '');
+      await insertIndexedDB(insertID, prevTodos.length, '');
     } catch (error) {
       console.error(error);
       setTodos(prevTodos);
     }
-  }, [todos]);
-
-  const handleAddButtonClick = useCallback(() => {
     scrollToBottom();
     editableRef.current?.focus();
-  }, []);
+  }, [todos]);
 
   const handleAppInstallButtonClick = useCallback(async () => {
     if (!globalThis.window) return;
@@ -317,10 +314,7 @@ export default function Home() {
       )}
       <Undo handleUndoClick={handleUndoClick} canUndo={canUndo} />
       <Redo handleRedoClick={handleRedoClick} canRedo={canRedo} />
-      <AddButton
-        handleAddButtonClick={handleAddButtonClick}
-        handleAddButtonMouseUp={handleAddButtonMouseUp}
-      />
+      <AddButton handleAddButtonClick={handleAddButtonClick} />
       {todos.length > 0 && (
         <div
           ref={scrollBottomRef}

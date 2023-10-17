@@ -4,16 +4,14 @@ import { Button } from '../context/theme-providers';
 
 type Props = {
   handleAddButtonClick: () => void;
-  handleAddButtonMouseUp: () => void;
 };
 
 export default forwardRef(function AddButton(props: Props, _ref) {
-  const { handleAddButtonClick, handleAddButtonMouseUp } = props;
+  const { handleAddButtonClick } = props;
   return (
     <>
       <Button
         onClick={handleAddButtonClick}
-        onMouseUp={handleAddButtonMouseUp}
         aria-label="Add"
         role="button"
         tabIndex={0}
