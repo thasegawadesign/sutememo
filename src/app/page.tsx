@@ -19,21 +19,7 @@ import {
 } from './utils/indexedDB';
 import Undo from './components/undo';
 import Redo from './components/redo';
-
-declare global {
-  interface Window {
-    deferredPrompt: BeforeInstallPromptEvent | null;
-  }
-}
-interface BeforeInstallPromptEvent extends Event {
-  readonly platforms: Array<string>;
-  readonly userChoice: Promise<{
-    outcome: 'accepted' | 'dismissed';
-    platform: string;
-  }>;
-  deferredPrompt: BeforeInstallPromptEvent | null;
-  prompt(): Promise<void>;
-}
+import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
 
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
