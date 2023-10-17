@@ -56,9 +56,9 @@ export default function Home() {
     });
   };
 
-  const handleUndoClick = async function () {
-    const isLessThanZero = todosHistoryCurrentIndex.current - 1 < 0;
-    todosHistoryCurrentIndex.current = isLessThanZero
+  const handleUndoClick = function () {
+    const isOldest = todosHistoryCurrentIndex.current - 1 < 0;
+    todosHistoryCurrentIndex.current = isOldest
       ? 0
       : todosHistoryCurrentIndex.current - 1;
     setCanUndo(
@@ -70,18 +70,23 @@ export default function Home() {
         todosHistoryRef.current.length >= 2,
     );
     const prevTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
-    setTodos(prevTodos);
     if (canUndo) {
-      await clearIndexedDB();
-      updateAllIndexedDB(prevTodos);
-      scrollToBottom();
+      try {
+        clearIndexedDB();
+        updateAllIndexedDB(prevTodos);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setTodos(prevTodos);
+        scrollToBottom();
+      }
     }
   };
 
-  const handleRedoClick = async function () {
-    const isMoreThanLength =
+  const handleRedoClick = function () {
+    const isLatest =
       todosHistoryCurrentIndex.current + 1 >= todosHistoryRef.current.length;
-    todosHistoryCurrentIndex.current = isMoreThanLength
+    todosHistoryCurrentIndex.current = isLatest
       ? todosHistoryCurrentIndex.current
       : todosHistoryCurrentIndex.current + 1;
     setCanUndo(
@@ -93,11 +98,16 @@ export default function Home() {
         todosHistoryRef.current.length >= 2,
     );
     const nextTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
-    setTodos(nextTodos);
     if (canRedo) {
-      await clearIndexedDB();
-      updateAllIndexedDB(nextTodos);
-      scrollToBottom();
+      try {
+        clearIndexedDB();
+        updateAllIndexedDB(nextTodos);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setTodos(nextTodos);
+        scrollToBottom();
+      }
     }
   };
 
@@ -113,7 +123,11 @@ export default function Home() {
           ...prevTodos,
           { id: insertID, displayOrder: prevTodos.length, name: '' },
         ]);
-        await insertIndexedDB(insertID, prevTodos.length, '');
+        try {
+          await insertIndexedDB(insertID, prevTodos.length, '');
+        } catch (error) {
+          console.error(error);
+        }
         scrollToBottom();
         editableRef.current?.focus();
       }
@@ -121,14 +135,13 @@ export default function Home() {
     [todos],
   );
 
-  const handleAddButtonMouseUp = useCallback(() => {
+  const handleAddButtonMouseUp = useCallback(async () => {
     const insertID = uuidv4();
     const prevTodos: Todo[] = todos.map((todo) => todo);
     setTodos([
       ...prevTodos,
       { id: insertID, displayOrder: prevTodos.length, name: '' },
     ]);
-    insertIndexedDB(insertID, prevTodos.length, '');
     todosHistoryRef.current.push([
       ...prevTodos,
       { id: insertID, displayOrder: prevTodos.length, name: '' },
@@ -136,6 +149,11 @@ export default function Home() {
     todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
     setCanRedo(false);
     setCanUndo(true);
+    try {
+      insertIndexedDB(insertID, prevTodos.length, '');
+    } catch (error) {
+      console.error(error);
+    }
   }, [todos]);
 
   const handleAddButtonClick = useCallback(() => {
@@ -184,14 +202,22 @@ export default function Home() {
 
   const handleVisibilityChange = useCallback(async () => {
     if (document.visibilityState === 'visible') {
-      const fetchData = await fetchIndexedDB();
-      setTodos(fetchData);
+      try {
+        const fetchData = await fetchIndexedDB();
+        setTodos(fetchData);
+      } catch (error) {
+        console.error(error);
+      }
     }
   }, []);
 
   const handleWindowFocus = useCallback(async () => {
-    const fetchData = await fetchIndexedDB();
-    setTodos(fetchData);
+    try {
+      const fetchData = await fetchIndexedDB();
+      setTodos(fetchData);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
   useEffect(() => {
@@ -231,10 +257,14 @@ export default function Home() {
 
   useEffect(() => {
     const init = async () => {
-      createIndexedDB();
-      const fetchData = await fetchIndexedDB();
-      setTodos(fetchData);
-      todosHistoryRef.current = [fetchData];
+      try {
+        await createIndexedDB();
+        const fetchData = await fetchIndexedDB();
+        setTodos(fetchData);
+        todosHistoryRef.current = [fetchData];
+      } catch (error) {
+        console.error(error);
+      }
     };
     registerServiceWorker();
     init();
