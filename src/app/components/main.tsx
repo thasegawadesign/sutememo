@@ -49,15 +49,19 @@ export default function Main() {
         todosHistoryRef.current.length >= 2,
     );
     const prevTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
+    const currentTodos =
+      todosHistoryRef.current[todosHistoryCurrentIndex.current + 1];
     if (canUndo) {
       try {
         await clearIndexedDB();
         updateAllIndexedDB(prevTodos);
-      } catch (error) {
-        console.error(error);
-      } finally {
         setTodos(prevTodos);
         scrollToBottom();
+      } catch (error) {
+        console.error(error);
+        todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+        updateAllIndexedDB(currentTodos);
+        setTodos(currentTodos);
       }
     }
   };
@@ -76,16 +80,20 @@ export default function Main() {
       todosHistoryCurrentIndex.current < todosHistoryRef.current.length - 1 &&
         todosHistoryRef.current.length >= 2,
     );
+    const currentTodos =
+      todosHistoryRef.current[todosHistoryCurrentIndex.current - 1];
     const nextTodos = todosHistoryRef.current[todosHistoryCurrentIndex.current];
     if (canRedo) {
       try {
         await clearIndexedDB();
         updateAllIndexedDB(nextTodos);
-      } catch (error) {
-        console.error(error);
-      } finally {
         setTodos(nextTodos);
         scrollToBottom();
+      } catch (error) {
+        console.error(error);
+        todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current - 1;
+        updateAllIndexedDB(currentTodos);
+        setTodos(currentTodos);
       }
     }
   };
@@ -186,6 +194,12 @@ export default function Main() {
     window.addEventListener('focus', handleWindowFocus);
     return () => window.removeEventListener('focus', handleWindowFocus);
   }, [handleWindowFocus]);
+
+  useEffect(() => {
+    if (todos === undefined) {
+      setTodos([]);
+    }
+  }, [todos]);
 
   useEffect(() => {
     const init = async () => {
