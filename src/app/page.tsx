@@ -204,36 +204,38 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <>
       <Header />
-      {todos.length > 0 && (
-        <>
-          <TodoList
-            todos={todos}
-            editableRef={editableRef}
-            todosHistoryRef={todosHistoryRef}
-            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
-            setCanUndo={setCanUndo}
-            setCanRedo={setCanRedo}
-            setTodos={setTodos}
-            updatePartialIndexedDB={updatePartialIndexedDB}
-            updateAllIndexedDB={updateAllIndexedDB}
-            deleteIndexedDB={deleteIndexedDB}
-          />
-        </>
-      )}
-      <Undo handleUndoClick={handleUndoClick} canUndo={canUndo} />
-      <Redo handleRedoClick={handleRedoClick} canRedo={canRedo} />
-      <AddButton
-        handleAddButtonClick={handleAddButtonClick}
-        handleAddButtonMouseUp={handleAddButtonMouseUp}
-      />
-      {todos.length > 0 && (
-        <div
-          ref={scrollBottomRef}
-          className="h-[calc(env(safe-area-inset-bottom)+224px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+204px),224px)]"
+      <main>
+        {todos.length > 0 && (
+          <>
+            <TodoList
+              todos={todos}
+              editableRef={editableRef}
+              todosHistoryRef={todosHistoryRef}
+              todosHistoryCurrentIndex={todosHistoryCurrentIndex}
+              setCanUndo={setCanUndo}
+              setCanRedo={setCanRedo}
+              setTodos={setTodos}
+              updatePartialIndexedDB={updatePartialIndexedDB}
+              updateAllIndexedDB={updateAllIndexedDB}
+              deleteIndexedDB={deleteIndexedDB}
+            />
+          </>
+        )}
+        <Undo handleUndoClick={handleUndoClick} canUndo={canUndo} />
+        <Redo handleRedoClick={handleRedoClick} canRedo={canRedo} />
+        <AddButton
+          handleAddButtonClick={handleAddButtonClick}
+          handleAddButtonMouseUp={handleAddButtonMouseUp}
         />
-      )}
-    </main>
+        {todos.length > 0 && (
+          <div
+            ref={scrollBottomRef}
+            className="h-[calc(env(safe-area-inset-bottom)+224px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+204px),224px)]"
+          />
+        )}
+      </main>
+    </>
   );
 }
