@@ -22,9 +22,9 @@ export default function Header() {
     useState<BeforeInstallPromptEvent | null>(null);
   const [showAppInstallButton, setShowAppInstallButton] = useState(false);
 
-  const [open, setOpen] = useState(false);
-  const openDrawer = () => setOpen(true);
-  const closeDrawer = () => setOpen(false);
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+  const openDrawer = () => setIsOpenDrawer(true);
+  const closeDrawer = () => setIsOpenDrawer(false);
 
   const [openAccordion, setOpenAccordion] = useState(1);
   const handleOpenAccordion = (value: number) =>
@@ -113,7 +113,7 @@ export default function Header() {
         </Button>
         <Drawer
           placement="left"
-          open={open}
+          open={isOpenDrawer}
           onClose={closeDrawer}
           className="p-5"
         >
