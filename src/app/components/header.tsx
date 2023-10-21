@@ -5,11 +5,30 @@ import AppInstallButton from './app-install-button';
 import IconSvg from './icon-svg';
 import { ShowAppInstallButtonContext } from '../context/show-app-install-button-context';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
+import { BiSolidPencil } from 'react-icons/bi';
+import { FaSearchPlus } from 'react-icons/fa';
+import { FaGear } from 'react-icons/fa6';
+import {
+  Accordion,
+  AccordionBody,
+  AccordionHeader,
+  Button,
+  Drawer,
+} from '../context/material-providers';
+import AccorionIcon from './accordion-icon';
 
 export default function Header() {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [showAppInstallButton, setShowAppInstallButton] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
+
+  const [openAccordion, setOpenAccordion] = useState(1);
+  const handleOpenAccordion = (value: number) =>
+    setOpenAccordion(openAccordion === value ? 0 : value);
 
   const handleAppInstallButtonClick = useCallback(async () => {
     if (!globalThis.window) return;
@@ -79,11 +98,62 @@ export default function Header() {
           ToDo
         </h1>
       </div>
-      <ShowAppInstallButtonContext.Provider value={showAppInstallButton}>
-        <AppInstallButton
-          handleAppInstallButtonClick={handleAppInstallButtonClick}
-        />
-      </ShowAppInstallButtonContext.Provider>
+      <div className="flex items-center gap-2">
+        <ShowAppInstallButtonContext.Provider value={showAppInstallButton}>
+          <AppInstallButton
+            handleAppInstallButtonClick={handleAppInstallButtonClick}
+          />
+        </ShowAppInstallButtonContext.Provider>
+        <Button
+          onClick={openDrawer}
+          variant="text"
+          className="rounded-full !p-3 text-[32px] text-main hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
+        >
+          <FaGear />
+        </Button>
+        <Drawer
+          placement="left"
+          open={open}
+          onClose={closeDrawer}
+          className="p-5"
+        >
+          <Accordion
+            open={openAccordion === 1}
+            icon={<AccorionIcon id={1} open={openAccordion} />}
+          >
+            <AccordionHeader
+              onClick={() => handleOpenAccordion(1)}
+              className="rounded-lg border-none px-3 text-main hover:bg-blue-gray-50 hover:text-main hover:brightness-[102%]"
+            >
+              設定
+            </AccordionHeader>
+            <AccordionBody className="py-3">
+              <ul className="grid gap-2">
+                <li>
+                  <Button
+                    variant="text"
+                    fullWidth
+                    className="flex items-center gap-4 pl-3 text-xl shadow-none transition hover:bg-blue-gray-50 hover:shadow-none hover:brightness-[102%] active:bg-blue-gray-50"
+                  >
+                    <BiSolidPencil />
+                    <span className="text-base">テーマカラーの変更</span>
+                  </Button>
+                </li>
+                <li>
+                  <Button
+                    variant="text"
+                    fullWidth
+                    className="flex items-center gap-4 pl-3 text-xl shadow-none transition hover:bg-blue-gray-50 hover:shadow-none hover:brightness-[102%] active:bg-blue-gray-50"
+                  >
+                    <FaSearchPlus />
+                    <span className="text-base">文字サイズの変更</span>
+                  </Button>
+                </li>
+              </ul>
+            </AccordionBody>
+          </Accordion>
+        </Drawer>
+      </div>
     </header>
   );
 }
