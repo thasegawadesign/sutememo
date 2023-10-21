@@ -32,6 +32,11 @@ import SortableItem from './sortable-item';
 import { isMobile } from 'react-device-detect';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
 import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOrder';
+import {
+  findDisplayOrder,
+  findIndex,
+  findName,
+} from '../utils/findTodoTargetKey';
 
 type Props = {
   todos: Todo[];
@@ -76,27 +81,6 @@ export default function TodoList(props: Props) {
   );
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  const findIndex = function (id: string) {
-    let targetIndex = -1;
-    todos.forEach((todo, i) => {
-      if (id === todo.id) targetIndex = i;
-    });
-    return targetIndex;
-  };
-  const findName = function (id: string) {
-    let targetName = '';
-    todos.forEach((todo) => {
-      if (id === todo.id) targetName = todo.name;
-    });
-    return targetName;
-  };
-  const findDisplayOrder = function (id: string) {
-    let targetOrder = -1;
-    todos.forEach((todo, i) => {
-      if (id === todo.id) targetOrder = todo.displayOrder;
-    });
-    return targetOrder;
-  };
   const handleDragStart = function (event: DragStartEvent) {
     const { active } = event;
     setActiveId(active.id as string);
@@ -113,8 +97,8 @@ export default function TodoList(props: Props) {
     document.getElementById('cursor-style')?.remove();
     if (!over) return;
     if (active.id !== over?.id) {
-      const oldIndex = findIndex(active.id as string);
-      const newIndex = findIndex(over?.id as string);
+      const oldIndex = findIndex(todos, active.id as string);
+      const newIndex = findIndex(todos, over?.id as string);
       const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(
         arrayMove(todos, oldIndex, newIndex),
       );
@@ -173,8 +157,8 @@ export default function TodoList(props: Props) {
           <SortableItem
             key={activeId}
             id={activeId}
-            displayOrder={findDisplayOrder(activeId)}
-            name={findName(activeId)}
+            displayOrder={findDisplayOrder(todos, activeId)}
+            name={findName(todos, activeId)}
             todos={todos}
             editableRef={editableRef}
             todosHistoryRef={todosHistoryRef}
