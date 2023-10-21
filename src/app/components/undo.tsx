@@ -1,5 +1,5 @@
 import { ImUndo } from 'react-icons/im';
-import { Button } from '../context/theme-providers';
+import { Button } from '../context/material-providers';
 
 type Props = {
   canUndo: boolean;
