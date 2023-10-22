@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import useWindowSize from '../hooks/useWindowSize';
 import AppInstallButton from './app-install-button';
 import IconSvg from './icon-svg';
@@ -15,11 +15,11 @@ import {
   AccordionHeader,
   Button,
   Drawer,
-  Radio,
 } from '../context/material-providers';
 import AccorionIcon from './accordion-icon';
-import CheckedIcon from './checked-icon';
 import ThemeRadio from './theme-radio';
+import { Theme, ThemeContext } from '../context/theme-color-context';
+import { Mode } from '../context/theme-color-context';
 
 export default function Header() {
   const [deferredPrompt, setDeferredPrompt] =
@@ -27,6 +27,23 @@ export default function Header() {
   const [showAppInstallButton, setShowAppInstallButton] = useState(false);
 
   const [width, height] = useWindowSize();
+
+  const [theme, setTheme] = useState<Theme>({
+    baseColor: '',
+    mainColor: '',
+    mode: 'light',
+  });
+
+  const handleThemeClick = useCallback(
+    (baseColor: string, mainColor: string, mode: Mode) => {
+      setTheme({
+        baseColor,
+        mainColor,
+        mode,
+      });
+    },
+    [],
+  );
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(true);
   const openDrawer = () => setIsOpenDrawer(true);
@@ -154,35 +171,59 @@ export default function Header() {
                 </div>
               </AccordionHeader>
               <AccordionBody className="px-2">
-                <ul className="xxs:grid-cols-3 grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2">
-                  <li>
-                    <ThemeRadio
-                      defaultChecked={true}
-                      name="theme-color"
-                      id="default-theme"
-                      baseColor="bg-white"
-                      mainColor="bg-main"
-                    />
-                  </li>
-                  <li>
-                    <ThemeRadio
-                      defaultChecked={false}
-                      name="theme-color"
-                      id="tomato-light-theme"
-                      baseColor="bg-white"
-                      mainColor="bg-tomato"
-                    />
-                  </li>
-                  <li>
-                    <ThemeRadio
-                      defaultChecked={false}
-                      name="theme-color"
-                      id="tigersYellow-dark-theme"
-                      baseColor="bg-tigersBlack"
-                      mainColor="bg-tigersYellow"
-                    />
-                  </li>
-                </ul>
+                <ThemeContext.Provider value={theme}>
+                  <ul className="xxs:grid-cols-3 grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2">
+                    <li>
+                      <button
+                        onClick={() =>
+                          handleThemeClick('bg-white', 'bg-main', 'light')
+                        }
+                      >
+                        <ThemeRadio
+                          defaultChecked={true}
+                          name="theme-color"
+                          id="default-theme"
+                          baseColor="bg-white"
+                          mainColor="bg-main"
+                        />
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() =>
+                          handleThemeClick('bg-white', 'bg-tomato', 'light')
+                        }
+                      >
+                        <ThemeRadio
+                          defaultChecked={false}
+                          name="theme-color"
+                          id="tomato-light-theme"
+                          baseColor="bg-white"
+                          mainColor="bg-tomato"
+                        />
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() =>
+                          handleThemeClick(
+                            'bg-tigersBlack',
+                            'bg-tigersYellow',
+                            'dark',
+                          )
+                        }
+                      >
+                        <ThemeRadio
+                          defaultChecked={false}
+                          name="theme-color"
+                          id="tigersYellow-dark-theme"
+                          baseColor="bg-tigersBlack"
+                          mainColor="bg-tigersYellow"
+                        />
+                      </button>
+                    </li>
+                  </ul>
+                </ThemeContext.Provider>
               </AccordionBody>
             </Accordion>
             <Accordion
