@@ -154,7 +154,7 @@ export default function Header() {
               variant="text"
               size="md"
               onClick={closeDrawer}
-              className="rounded-full text-base hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
+              className="rounded-full text-base text-primary hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
               ripple={false}
             >
               完了
