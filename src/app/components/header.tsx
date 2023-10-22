@@ -154,7 +154,7 @@ export default function Header() {
                 </div>
               </AccordionHeader>
               <AccordionBody className="px-2">
-                <ul className="grid grid-cols-3 gap-5 pr-8">
+                <ul className="xxs:grid-cols-3 grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2">
                   <li>
                     <ThemeRadio
                       defaultChecked={true}
@@ -168,14 +168,20 @@ export default function Header() {
                     <ThemeRadio
                       defaultChecked={false}
                       name="theme-color"
-                      id="brown-theme"
+                      id="tomato-light-theme"
                       baseColor="bg-white"
-                      mainColor="bg-brown"
+                      mainColor="bg-tomato"
                     />
                   </li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
+                  <li>
+                    <ThemeRadio
+                      defaultChecked={false}
+                      name="theme-color"
+                      id="tigersYellow-dark-theme"
+                      baseColor="bg-tigersBlack"
+                      mainColor="bg-tigersYellow"
+                    />
+                  </li>
                 </ul>
               </AccordionBody>
             </Accordion>
