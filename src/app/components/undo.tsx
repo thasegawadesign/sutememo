@@ -1,5 +1,8 @@
 import { ImUndo } from 'react-icons/im';
-import { Button } from '../context/material-providers';
+import { Button } from '../contexts/material-providers';
+import { useContext } from 'react';
+import { ThemeContext } from '../contexts/theme-provider';
+import { bgVariants, colorVariants } from '../utils/colorVariants';
 
 type Props = {
   canUndo: boolean;
@@ -8,6 +11,10 @@ type Props = {
 
 export default function Undo(props: Props) {
   const { canUndo, handleUndoClick } = props;
+
+  const theme = useContext(ThemeContext);
+  const { baseColor, mainColor, mode } = theme;
+
   return (
     <>
       <Button
@@ -17,8 +24,12 @@ export default function Undo(props: Props) {
         color="white"
         className={`!fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] left-[22px] rounded-full p-[26px] text-lg !shadow-none xs:p-7 xs:text-xl ${
           canUndo
-            ? 'text-gray-500 hover:bg-blue-gray-50 hover:brightness-[102%]'
-            : 'text-gray-400'
+            ? `${`${bgVariants[baseColor]} ${
+                colorVariants[mainColor]
+              } hover:brightness-[102%] ${
+                mode === 'light' ? 'hover:bg-gray-900/10' : 'hover:bg-gray-900'
+              }`}`
+            : `${`${bgVariants[baseColor]} ${colorVariants[mainColor]} opacity-30`}`
         }`}
         ripple={canUndo}
         disabled={!canUndo}
