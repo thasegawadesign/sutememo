@@ -4,7 +4,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import useWindowSize from '../hooks/useWindowSize';
 import AppInstallButton from './app-install-button';
 import IconSvg from './icon-svg';
-import { ShowAppInstallButtonContext } from '../context/show-app-install-button-context';
+import { ShowAppInstallButtonContext } from '../contexts/show-app-install-button-provider';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
 import { BiSolidPencil } from 'react-icons/bi';
 import { FaSearchPlus } from 'react-icons/fa';
@@ -16,9 +16,9 @@ import {
   Button,
   Drawer,
   Radio,
-} from '../context/material-providers';
+} from '../contexts/material-providers';
 import AccorionIcon from './accordion-icon';
-import { ThemeContext } from '../context/theme-color-context';
+import { ThemeContext } from '../contexts/theme-provider';
 
 import CheckedIcon from './checked-icon';
 
