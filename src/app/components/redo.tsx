@@ -13,7 +13,7 @@ export default function Redo(props: Props) {
   const { canRedo, handleRedoClick } = props;
 
   const theme = useContext(ThemeContext);
-  const { baseColor, mainColor } = theme;
+  const { baseColor, mainColor, mode } = theme;
 
   return (
     <>
@@ -24,7 +24,11 @@ export default function Redo(props: Props) {
         color="white"
         className={`!fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] right-[22px] rounded-full p-[26px] text-lg !shadow-none xs:p-7 xs:text-xl ${
           canRedo
-            ? `${`${bgVariants[baseColor]} ${colorVariants[mainColor]} hover:hover:bg-gray-900/10 hover:brightness-[102%]`}`
+            ? `${`${bgVariants[baseColor]} ${
+                colorVariants[mainColor]
+              } hover:brightness-[102%] ${
+                mode === 'light' ? 'hover:bg-gray-900/10' : 'hover:bg-gray-900'
+              }`}`
             : `${`${bgVariants[baseColor]} ${colorVariants[mainColor]} opacity-30`}`
         }`}
         ripple={canRedo}
