@@ -1,6 +1,6 @@
 import { useContext, useRef } from 'react';
-import { Button } from '../context/material-providers';
-import { ShowAppInstallButtonContext } from '../context/show-app-install-button-context';
+import { Button } from '../contexts/material-providers';
+import { ShowAppInstallButtonContext } from '../contexts/show-app-install-button-provider';
 
 type Props = {
   handleAppInstallButtonClick: () => void;
@@ -9,11 +9,11 @@ type Props = {
 export default function AppInstallButton(props: Props) {
   const { handleAppInstallButtonClick } = props;
   const appInstallButtonRef = useRef<HTMLButtonElement>(null);
-  const showInstallButton = useContext(ShowAppInstallButtonContext);
+  const { showAppInstallButton } = useContext(ShowAppInstallButtonContext);
 
   return (
     <>
-      {showInstallButton && (
+      {showAppInstallButton && (
         <Button
           ref={appInstallButtonRef}
           onClick={handleAppInstallButtonClick}

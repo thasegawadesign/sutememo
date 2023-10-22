@@ -25,7 +25,9 @@ import CheckedIcon from './checked-icon';
 export default function Header() {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
-  const [showAppInstallButton, setShowAppInstallButton] = useState(false);
+
+  const appInstallButtonContext = useContext(ShowAppInstallButtonContext);
+  const { setShowAppInstallButton } = appInstallButtonContext;
 
   const [width, height] = useWindowSize();
 
@@ -61,23 +63,26 @@ export default function Header() {
     } finally {
       setShowAppInstallButton(false);
     }
-  }, [deferredPrompt]);
+  }, [deferredPrompt, setShowAppInstallButton]);
 
   const handleAppInstalled = useCallback(() => {
     if (!globalThis.window) return;
     console.log('PWA was installed');
     setDeferredPrompt(null);
     setShowAppInstallButton(false);
-  }, []);
+  }, [setShowAppInstallButton]);
 
-  const handleBeforeInstallPrompt = useCallback((event: Event) => {
-    if (!globalThis.window) return;
-    event.preventDefault();
-    const beforeInstallPromptEvent = event as BeforeInstallPromptEvent;
-    console.log('beforeInstallPromptEvent: ', beforeInstallPromptEvent);
-    setDeferredPrompt(beforeInstallPromptEvent);
-    setShowAppInstallButton(true);
-  }, []);
+  const handleBeforeInstallPrompt = useCallback(
+    (event: Event) => {
+      if (!globalThis.window) return;
+      event.preventDefault();
+      const beforeInstallPromptEvent = event as BeforeInstallPromptEvent;
+      console.log('beforeInstallPromptEvent: ', beforeInstallPromptEvent);
+      setDeferredPrompt(beforeInstallPromptEvent);
+      setShowAppInstallButton(true);
+    },
+    [setShowAppInstallButton],
+  );
 
   useEffect(() => {
     if (!globalThis.window) return;
@@ -109,11 +114,9 @@ export default function Header() {
         </h1>
       </div>
       <div className="flex items-center gap-2">
-        <ShowAppInstallButtonContext.Provider value={showAppInstallButton}>
-          <AppInstallButton
-            handleAppInstallButtonClick={handleAppInstallButtonClick}
-          />
-        </ShowAppInstallButtonContext.Provider>
+        <AppInstallButton
+          handleAppInstallButtonClick={handleAppInstallButtonClick}
+        />
         <Button
           onClick={openDrawer}
           variant="text"
