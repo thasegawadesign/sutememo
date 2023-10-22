@@ -13,10 +13,13 @@ import {
   forwardRef,
   useCallback,
   MutableRefObject,
+  useContext,
 } from 'react';
 import { Todo } from '@/types/Todo';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
 import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOrder';
+import { ThemeContext } from '../contexts/theme-provider';
+import { bgVariants } from '../utils/colorVariants';
 
 type Props = {
   id: string;
@@ -65,6 +68,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
+
+  const theme = useContext(ThemeContext);
+  const { baseColor, mode } = theme;
 
   const handleDeleteButtonClick = async function () {
     const targetId = id;
@@ -146,8 +152,10 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       ref={setNodeRef}
       style={style}
       role="listitem"
-      className={`flex items-center justify-between gap-1.5 rounded-md border border-gray-100 bg-white px-1.5 py-2 sm:gap-2.5 sm:px-2 ${
-        isDragging && 'opacity-30'
+      className={`borderpx-1.5 flex items-center justify-between gap-1.5 rounded-md border py-2 sm:gap-2.5 sm:px-2 ${
+        bgVariants[baseColor]
+      } ${isDragging && 'opacity-30'} ${
+        mode === 'light' ? 'border-gray-100 ' : 'border-gray-900'
       }`}
     >
       <div className="flex flex-1 items-center gap-1.5 sm:gap-2.5">
@@ -158,7 +166,11 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           variant="text"
           color="white"
           ripple={false}
-          className="self-stretch rounded px-3 py-4 text-2xl text-gray-500 hover:cursor-grab hover:bg-blue-gray-50 sm:px-4 sm:py-5"
+          className={`self-stretch rounded px-3 py-4 text-2xl hover:cursor-grab sm:px-4 sm:py-5 ${
+            mode === 'light'
+              ? 'text-gray-700 hover:bg-gray-900/10'
+              : 'text-gray-500 hover:bg-gray-900'
+          }`}
         >
           <PiDotsSixVerticalBold />
         </Button>
@@ -170,7 +182,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           contentEditable
           inputMode="text"
           suppressContentEditableWarning
-          className="max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-2xl leading-snug text-gray-700 focus:w-full sm:max-w-[calc(100svw-190px)] sm:rounded"
+          className={`max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-2xl leading-snug focus:w-full sm:max-w-[calc(100svw-190px)] sm:rounded ${
+            mode === 'light' ? 'text-gray-700' : 'text-gray-300'
+          }`}
         >
           {name}
         </span>
@@ -190,8 +204,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         variant="text"
         color="white"
         ripple={false}
-        className={`rounded px-3 py-4 text-xl text-gray-500 hover:cursor-pointer hover:bg-blue-gray-50 active:bg-blue-gray-50 active:brightness-95 sm:px-4 sm:py-5 ${
+        className={`rounded px-3 py-4 text-xl hover:cursor-pointer active:brightness-95 sm:px-4 sm:py-5 ${
           isDesktop && 'self-stretch'
+        } ${
+          mode === 'light'
+            ? 'text-gray-700 hover:bg-gray-900/10'
+            : 'text-gray-500 hover:bg-gray-900'
         }`}
       >
         <PiXBold />
