@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import useWindowSize from '../hooks/useWindowSize';
 import AppInstallButton from './app-install-button';
 import IconSvg from './icon-svg';
 import { ShowAppInstallButtonContext } from '../context/show-app-install-button-context';
@@ -22,7 +23,9 @@ export default function Header() {
     useState<BeforeInstallPromptEvent | null>(null);
   const [showAppInstallButton, setShowAppInstallButton] = useState(false);
 
-  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+  const [width, height] = useWindowSize();
+
+  const [isOpenDrawer, setIsOpenDrawer] = useState(true);
   const openDrawer = () => setIsOpenDrawer(true);
   const closeDrawer = () => setIsOpenDrawer(false);
 
@@ -112,46 +115,62 @@ export default function Header() {
           <FaGear />
         </Button>
         <Drawer
-          placement="left"
+          placement="bottom"
+          size={height - 60}
           open={isOpenDrawer}
           onClose={closeDrawer}
-          className="p-5"
+          className="-bottom-[max(env(safe-area-inset-bottom),20px)] rounded-3xl"
         >
-          <Accordion
-            open={openAccordion === 1}
-            icon={<AccorionIcon id={1} open={openAccordion} />}
-          >
-            <AccordionHeader
-              onClick={() => handleOpenAccordion(1)}
-              className="rounded-lg border-none px-3 text-main hover:bg-blue-gray-50 hover:text-main hover:brightness-[102%]"
+          <div className="flex items-center justify-between px-2 pb-5 pt-2">
+            <h2 className="pl-5 text-lg font-semibold text-gray-900">設定</h2>
+            <Button
+              variant="text"
+              size="md"
+              onClick={closeDrawer}
+              className="rounded-full text-base hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
+              ripple={false}
             >
-              設定
-            </AccordionHeader>
-            <AccordionBody className="py-3">
-              <ul className="grid gap-2">
-                <li>
-                  <Button
-                    variant="text"
-                    fullWidth
-                    className="flex items-center gap-4 pl-3 text-xl shadow-none transition hover:bg-blue-gray-50 hover:shadow-none hover:brightness-[102%] active:bg-blue-gray-50"
-                  >
-                    <BiSolidPencil />
-                    <span className="text-base">テーマカラーの変更</span>
-                  </Button>
-                </li>
-                <li>
-                  <Button
-                    variant="text"
-                    fullWidth
-                    className="flex items-center gap-4 pl-3 text-xl shadow-none transition hover:bg-blue-gray-50 hover:shadow-none hover:brightness-[102%] active:bg-blue-gray-50"
-                  >
-                    <FaSearchPlus />
-                    <span className="text-base">文字サイズの変更</span>
-                  </Button>
-                </li>
-              </ul>
-            </AccordionBody>
-          </Accordion>
+              完了
+            </Button>
+          </div>
+          <div className="px-5">
+            <Accordion
+              open={openAccordion === 1}
+              icon={<AccorionIcon id={1} open={openAccordion} />}
+            >
+              <AccordionHeader
+                onClick={() => handleOpenAccordion(1)}
+                className="rounded-lg border-none px-3 text-main hover:bg-blue-gray-50 hover:text-main hover:brightness-[102%]"
+              >
+                <div className="flex items-center gap-5">
+                  <BiSolidPencil />
+                  <span className="text-base">テーマカラーの変更</span>
+                </div>
+              </AccordionHeader>
+              <AccordionBody>
+                <p>
+                  テーマカラーパレットテーマカラーパレットテーマカラーパレット
+                </p>
+              </AccordionBody>
+            </Accordion>
+            <Accordion
+              open={openAccordion === 2}
+              icon={<AccorionIcon id={2} open={openAccordion} />}
+            >
+              <AccordionHeader
+                onClick={() => handleOpenAccordion(2)}
+                className="rounded-lg border-none px-3 text-main hover:bg-blue-gray-50 hover:text-main hover:brightness-[102%]"
+              >
+                <div className="flex items-center gap-5">
+                  <FaSearchPlus />
+                  <span className="text-base">文字サイズの変更</span>
+                </div>
+              </AccordionHeader>
+              <AccordionBody>
+                <p>文字サイズ文字サイズ文字サイズ</p>
+              </AccordionBody>
+            </Accordion>
+          </div>
         </Drawer>
       </div>
     </header>
