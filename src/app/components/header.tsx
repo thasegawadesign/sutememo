@@ -8,7 +8,7 @@ import { ShowAppInstallButtonContext } from '../context/show-app-install-button-
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
 import { BiSolidPencil } from 'react-icons/bi';
 import { FaSearchPlus } from 'react-icons/fa';
-import { FaGear } from 'react-icons/fa6';
+import { GoGear } from 'react-icons/go';
 import {
   Accordion,
   AccordionBody,
@@ -111,8 +111,9 @@ export default function Header() {
           onClick={openDrawer}
           variant="text"
           className="rounded-full !p-3 text-[32px] text-main hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
+          ripple={false}
         >
-          <FaGear />
+          <GoGear />
         </Button>
         <Drawer
           placement="bottom"
@@ -121,8 +122,10 @@ export default function Header() {
           onClose={closeDrawer}
           className="-bottom-[max(env(safe-area-inset-bottom),20px)] rounded-3xl"
         >
-          <div className="flex items-center justify-between px-2 pb-5 pt-2">
-            <h2 className="pl-5 text-lg font-semibold text-gray-900">設定</h2>
+          <div className="flex items-center justify-between px-2 pb-5 pt-3">
+            <h2 className="select-none pl-5 text-xl font-semibold text-gray-900">
+              設定
+            </h2>
             <Button
               variant="text"
               size="md"
