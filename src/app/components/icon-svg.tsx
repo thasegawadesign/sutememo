@@ -24,8 +24,7 @@ export default function IconSvg(props: Props) {
               height="61.31"
               rx="12"
               ry="12"
-              // style={{ fill: '#208cd8', strokeWidth: '0' }}
-              style={{ strokeWidth: '0' }}
+              style={{ fill: '#208cd8', strokeWidth: '0' }}
               transform="translate(-26.26 143.42) rotate(-45)"
               className={fillVariants[color]}
             />
@@ -38,8 +37,7 @@ export default function IconSvg(props: Props) {
               height="140.67"
               rx="12"
               ry="12"
-              // style={{ fill: '#208cd8', strokeWidth: '0' }}
-              style={{ strokeWidth: '0' }}
+              style={{ fill: '#208cd8', strokeWidth: '0' }}
               transform="translate(-79.81 88.1) rotate(-45)"
               className={fillVariants[color]}
             />
