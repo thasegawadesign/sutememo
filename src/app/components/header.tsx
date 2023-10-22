@@ -106,8 +106,12 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between px-[22px] pb-5 pt-3">
-      <div className="flex items-center gap-2">
-        <div className="hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border border-gray-200 bg-white p-3 text-center minimum:flex">
+      <div className="flex items-center gap-2.5">
+        <div
+          className={`hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border p-3 text-center minimum:flex ${
+            bgVariants[baseColor]
+          } ${mode === 'light' ? 'border-gray-200' : 'border-gray-800'}`}
+        >
           <IconSvg color={mainColor} />
         </div>
         <h1
