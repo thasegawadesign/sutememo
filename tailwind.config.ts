@@ -16,6 +16,10 @@ const config: Config = withMT({
       },
       colors: {
         main: '#208cd8',
+        gold: '#978365',
+        bronze: 'a#18072',
+        brown: '#ad7f58',
+        grass: '#46a758',
       },
     },
   },
