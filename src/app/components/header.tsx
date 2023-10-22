@@ -35,7 +35,7 @@ export default function Header() {
   const { baseColor, mainColor, mode } = theme;
 
   const [checkedThemeOption, setCheckedThemeOption] = useState(
-    checkedThemeOptionVariant(mainColor, mode),
+    checkedThemeOptionVariant(mainColor, baseColor, mode),
   );
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
@@ -193,9 +193,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="primary-light-theme"
-                      baseColor="white"
+                      id="primary-white-light-theme"
                       mainColor="primary"
+                      baseColor="white"
                       mode="light"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -204,9 +204,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="primary-dark-theme"
-                      baseColor="themeBlack"
+                      id="primary-themeBlack-dark-theme"
                       mainColor="primary"
+                      baseColor="themeBlack"
                       mode="dark"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -215,9 +215,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="tomato-light-theme"
-                      baseColor="white"
+                      id="tomato-white-light-theme"
                       mainColor="tomato"
+                      baseColor="white"
                       mode="light"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -226,9 +226,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="tomato-dark-theme"
-                      baseColor="themeBlack"
+                      id="tomato-themeBlack-dark-theme"
                       mainColor="tomato"
+                      baseColor="themeBlack"
                       mode="dark"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -237,9 +237,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="ruby-light-theme"
-                      baseColor="white"
+                      id="ruby-white-light-theme"
                       mainColor="ruby"
+                      baseColor="white"
                       mode="light"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -248,9 +248,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="ruby-dark-theme"
-                      baseColor="themeBlack"
+                      id="ruby-themeBlack-dark-theme"
                       mainColor="ruby"
+                      baseColor="themeBlack"
                       mode="dark"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -259,9 +259,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="stone-light-theme"
-                      baseColor="gold"
+                      id="stone-gold-light-theme"
                       mainColor="stone"
+                      baseColor="gold"
                       mode="light"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -270,9 +270,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="gold-dark-theme"
-                      baseColor="stone"
+                      id="gold-stone-dark-theme"
                       mainColor="gold"
+                      baseColor="stone"
                       mode="dark"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -281,9 +281,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="tigersYellow-dark-theme"
-                      baseColor="tigersBlack"
+                      id="tigersYellow-tigersBlack-dark-theme"
                       mainColor="tigersYellow"
+                      baseColor="tigersBlack"
                       mode="dark"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
