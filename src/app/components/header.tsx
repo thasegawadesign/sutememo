@@ -32,13 +32,13 @@ export default function Header() {
   const [width, height] = useWindowSize();
 
   const theme = useContext(ThemeContext);
-  const { baseColor, mainColor, mode, setTheme } = theme;
+  const { baseColor, mainColor, mode } = theme;
 
   const [checkedThemeOption, setCheckedThemeOption] = useState(
     checkedThemeOptionVariant(mainColor, mode),
   );
 
-  const [isOpenDrawer, setIsOpenDrawer] = useState(true);
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const openDrawer = () => setIsOpenDrawer(true);
   const closeDrawer = () => setIsOpenDrawer(false);
 
@@ -131,10 +131,16 @@ export default function Header() {
         </Button>
         <Drawer
           placement="bottom"
-          size={height - 60}
+          size={height}
           open={isOpenDrawer}
           onClose={closeDrawer}
-          className={`-bottom-[max(env(safe-area-inset-bottom),20px)] rounded-3xl ${bgVariants[baseColor]} ${colorVariants[mainColor]}`}
+          className={`rounded-3xl transition-transform ${
+            bgVariants[baseColor]
+          } ${colorVariants[mainColor]} ${
+            isOpenDrawer
+              ? '!translate-y-[max(env(safe-area-inset-top),32px)]'
+              : '!translate-y-full'
+          }`}
         >
           <div className="flex items-center justify-between px-2 pb-5 pt-3">
             <h2
