@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { IoIosAdd } from 'react-icons/io';
-import { Button } from '../context/material-providers';
+import { Button } from '../contexts/material-providers';
 
 type Props = {
   handleAddButtonClick: () => void;
