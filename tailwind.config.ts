@@ -32,6 +32,7 @@ const config: Config = withMT({
         tigersYellow: '#f7da07',
         tigersBlack: '#060606',
         themeBlack: '#18191b',
+        stone: '#1c1917',
       },
       transitionDuration: {
         themeChange: '240ms',
