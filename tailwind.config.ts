@@ -12,10 +12,12 @@ const config: Config = withMT({
       screens: {
         pwa: { raw: '(display-mode: standalone)' },
         minimum: '300px',
+        xxs: '360px',
         xs: '480px',
       },
       colors: {
         main: '#208cd8',
+        dark: '#18191b',
         orange: '#f66b15',
         tomato: '#e54d2e',
         ruby: '#e64566',
@@ -26,6 +28,9 @@ const config: Config = withMT({
         mint: '#86ead4',
         sand: '#6f6d66',
         olive: '#697066',
+        deepGreen: '#2f693c',
+        tigersYellow: '#f7da07',
+        tigersBlack: '#060606',
       },
     },
   },
