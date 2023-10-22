@@ -1,4 +1,7 @@
 import { Mode } from '../contexts/theme-provider';
 
-export const checkedThemeOptionVariant = (mainColor: string, mode: Mode) =>
-  [mainColor, mode, 'theme'].join('-');
+export const checkedThemeOptionVariant = (
+  mainColor: string,
+  baseColor: string,
+  mode: Mode,
+) => [mainColor, baseColor, mode, 'theme'].join('-');

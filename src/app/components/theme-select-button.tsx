@@ -40,7 +40,8 @@ export default function ThemeSelectButton(props: Props) {
     >
       <Radio
         checked={
-          checkedThemeOptionVariant(mainColor, mode) === checkedThemeOption
+          checkedThemeOptionVariant(mainColor, baseColor, mode) ===
+          checkedThemeOption
         }
         name={name}
         id={id}
