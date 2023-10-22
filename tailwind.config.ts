@@ -32,6 +32,13 @@ const config: Config = withMT({
         tigersYellow: '#f7da07',
         tigersBlack: '#060606',
       },
+      transitionDuration: {
+        themeChange: '240ms',
+      },
+      transitionProperty: {
+        drawer:
+          'color, background-color, border-color, text-decoration-color, fill, stroke, transform',
+      },
     },
   },
   future: {
