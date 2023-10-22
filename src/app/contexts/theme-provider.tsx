@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 type Mode = 'light' | 'dark';
-interface ThemeType {
+export interface ThemeType {
   baseColor: string;
   mainColor: string;
   mode: Mode;

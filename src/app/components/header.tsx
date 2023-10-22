@@ -19,8 +19,7 @@ import {
 } from '../contexts/material-providers';
 import AccorionIcon from './accordion-icon';
 import { ThemeContext } from '../contexts/theme-provider';
-
-import CheckedIcon from './checked-icon';
+import ThemeSelectButton from './theme-select-button';
 
 export default function Header() {
   const [deferredPrompt, setDeferredPrompt] =
@@ -163,92 +162,32 @@ export default function Header() {
               <AccordionBody className="px-2">
                 <ul className="grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2 xxs:grid-cols-3">
                   <li>
-                    <button
-                      onClick={() =>
-                        setTheme({
-                          baseColor: 'white',
-                          mainColor: 'main',
-                          mode: 'light',
-                        })
-                      }
-                    >
-                      <Radio
-                        defaultChecked={true}
-                        name="theme-color"
-                        id="default-theme"
-                        icon={<CheckedIcon />}
-                        className="checked:before:bg-blue-gray-50 hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
-                        label={
-                          <div className="grid rounded-full border border-gray-300">
-                            <div
-                              className={`h-6 w-12 rounded-t-full bg-white`}
-                            />
-                            <div
-                              className={`h-6 w-12 rounded-b-full bg-main`}
-                            />
-                          </div>
-                        }
-                        ripple={false}
-                      />
-                    </button>
+                    <ThemeSelectButton
+                      defaultChecked={true}
+                      name="theme-color"
+                      id="default-theme"
+                      baseColor="white"
+                      mainColor="main"
+                      mode="light"
+                    />
                   </li>
                   <li>
-                    <button
-                      onClick={() =>
-                        setTheme({
-                          baseColor: 'white',
-                          mainColor: 'tomato',
-                          mode: 'light',
-                        })
-                      }
-                    >
-                      <Radio
-                        name="theme-color"
-                        id="tomato-light-theme"
-                        icon={<CheckedIcon />}
-                        className="checked:before:bg-blue-gray-50 hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
-                        label={
-                          <div className="grid rounded-full border border-gray-300">
-                            <div
-                              className={`h-6 w-12 rounded-t-full bg-white`}
-                            />
-                            <div
-                              className={`h-6 w-12 rounded-b-full bg-tomato`}
-                            />
-                          </div>
-                        }
-                        ripple={false}
-                      />
-                    </button>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="tomato-light-theme"
+                      baseColor="white"
+                      mainColor="tomato"
+                      mode="light"
+                    />
                   </li>
                   <li>
-                    <button
-                      onClick={() =>
-                        setTheme({
-                          baseColor: 'tigersBlack',
-                          mainColor: 'tigersYellow',
-                          mode: 'dark',
-                        })
-                      }
-                    >
-                      <Radio
-                        name="theme-color"
-                        id="tigersYellow-dark-theme"
-                        icon={<CheckedIcon />}
-                        className="checked:before:bg-blue-gray-50 hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
-                        label={
-                          <div className="grid rounded-full border border-gray-300">
-                            <div
-                              className={`h-6 w-12 rounded-t-full bg-tigersBlack`}
-                            />
-                            <div
-                              className={`h-6 w-12 rounded-b-full bg-tigersYellow`}
-                            />
-                          </div>
-                        }
-                        ripple={false}
-                      />
-                    </button>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="tigersYellow-dark-theme"
+                      baseColor="tigersBlack"
+                      mainColor="tigersYellow"
+                      mode="dark"
+                    />
                   </li>
                 </ul>
               </AccordionBody>
