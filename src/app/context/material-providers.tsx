@@ -7,6 +7,7 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
+  Radio,
 } from '@material-tailwind/react';
 
 export {
@@ -16,4 +17,5 @@ export {
   Accordion,
   AccordionHeader,
   AccordionBody,
+  Radio,
 };
