@@ -41,6 +41,28 @@ export const bgVariants: {
   tigersBlack: 'bg-tigersBlack',
 } satisfies ColorList;
 
+export const bgHoverVariants: {
+  [key: string]: string;
+} = {
+  primary: 'hover:bg-primary',
+  white: 'hover:bg-white',
+  black: 'hover:bg-black',
+  dark: 'hover:bg-dark',
+  orange: 'hover:bg-orange',
+  tomato: 'hover:bg-tomato',
+  ruby: 'hover:bg-ruby',
+  gold: 'hover:bg-gold',
+  bronze: 'hover:bg-bronze',
+  brown: 'hover:bg-brown',
+  grass: 'hover:bg-grass',
+  mint: 'hover:bg-mint',
+  sand: 'hover:bg-sand',
+  olive: 'hover:bg-olive',
+  deepGeen: 'hover:bg-deepGeen',
+  tigersYellow: 'hover:bg-tigersYellow',
+  tigersBlack: 'hover:bg-tigersBlack',
+} satisfies ColorList;
+
 export const colorVariants: {
   [key: string]: string;
 } = {
