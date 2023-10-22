@@ -45,7 +45,6 @@ export default function ThemeSelectButton(props: Props) {
         name={name}
         id={id}
         icon={<CheckedIcon />}
-        className="checked:before:bg-blue-gray-50 hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
         label={
           <div className="grid rounded-full border border-gray-300">
             <div

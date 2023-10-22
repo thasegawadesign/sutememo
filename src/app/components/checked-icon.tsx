@@ -1,10 +1,18 @@
+import { useContext } from 'react';
+import { ThemeContext } from '../contexts/theme-provider';
+
 export default function CheckedIcon() {
+  const theme = useContext(ThemeContext);
+  const { mode } = theme;
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className="h-full w-full scale-105"
+      className={`h-full w-full scale-105 ${
+        mode === 'light' ? 'text-gray-900' : 'text-white'
+      }`}
     >
       <path
         fillRule="evenodd"
