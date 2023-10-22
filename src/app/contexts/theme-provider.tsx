@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
-type Mode = 'light' | 'dark';
+export type Mode = 'light' | 'dark';
 export interface ThemeType {
   baseColor: string;
   mainColor: string;
@@ -26,8 +26,8 @@ export default function ThemeProvider({
   children: React.ReactNode;
 }) {
   const [theme, setTheme] = useState<ThemeType>({
-    baseColor: '',
-    mainColor: '',
+    baseColor: 'white',
+    mainColor: 'primary',
     mode: 'light',
   });
 

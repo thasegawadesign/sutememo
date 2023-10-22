@@ -20,6 +20,7 @@ import AccorionIcon from './accordion-icon';
 import { ThemeContext } from '../contexts/theme-provider';
 import ThemeSelectButton from './theme-select-button';
 import { bgVariants, colorVariants } from '../utils/colorVariants';
+import { checkedThemeOptionVariant } from '../utils/checkedThemeOptionVariant';
 
 export default function Header() {
   const [deferredPrompt, setDeferredPrompt] =
@@ -32,6 +33,10 @@ export default function Header() {
 
   const theme = useContext(ThemeContext);
   const { baseColor, mainColor, mode, setTheme } = theme;
+
+  const [checkedThemeOption, setCheckedThemeOption] = useState(
+    checkedThemeOptionVariant(mainColor, mode),
+  );
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(true);
   const openDrawer = () => setIsOpenDrawer(true);
@@ -167,32 +172,35 @@ export default function Header() {
                 <ul className="grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2 xxs:grid-cols-3">
                   <li>
                     <ThemeSelectButton
-                      defaultChecked={true}
                       name="theme-color"
-                      id="default-theme"
+                      id="primary-light-theme"
                       baseColor="white"
                       mainColor="primary"
                       mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
                     />
                   </li>
                   <li>
                     <ThemeSelectButton
-                      defaultChecked={false}
                       name="theme-color"
                       id="tomato-light-theme"
                       baseColor="white"
                       mainColor="tomato"
                       mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
                     />
                   </li>
                   <li>
                     <ThemeSelectButton
-                      defaultChecked={false}
                       name="theme-color"
                       id="tigersYellow-dark-theme"
                       baseColor="tigersBlack"
                       mainColor="tigersYellow"
                       mode="dark"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
                     />
                   </li>
                 </ul>

@@ -1,18 +1,32 @@
-import { useContext } from 'react';
+import { Dispatch, SetStateAction, useContext } from 'react';
 import { ThemeContext, ThemeType } from '../contexts/theme-provider';
 import CheckedIcon from './checked-icon';
 import { Radio } from '../contexts/material-providers';
 import { bgVariants } from '../utils/colorVariants';
+import { checkedThemeOptionVariant } from '../utils/checkedThemeOptionVariant';
 
 interface Props extends ThemeType {
   id: string;
   name: string;
-  defaultChecked: boolean;
+  checkedThemeOption: string;
+  setCheckedThemeOption: Dispatch<SetStateAction<string>>;
 }
 
 export default function ThemeSelectButton(props: Props) {
-  const { id, name, baseColor, mainColor, mode, defaultChecked } = props;
+  const {
+    id,
+    name,
+    baseColor,
+    mainColor,
+    mode,
+    checkedThemeOption,
+    setCheckedThemeOption,
+  } = props;
   const { setTheme } = useContext(ThemeContext);
+
+  const handleOptionChange = () => {
+    setCheckedThemeOption(id);
+  };
 
   return (
     <button
@@ -25,7 +39,9 @@ export default function ThemeSelectButton(props: Props) {
       }
     >
       <Radio
-        defaultChecked={defaultChecked}
+        checked={
+          checkedThemeOptionVariant(mainColor, mode) === checkedThemeOption
+        }
         name={name}
         id={id}
         icon={<CheckedIcon />}
@@ -41,6 +57,8 @@ export default function ThemeSelectButton(props: Props) {
           </div>
         }
         ripple={false}
+        crossOrigin={undefined}
+        onChange={handleOptionChange}
       />
     </button>
   );
