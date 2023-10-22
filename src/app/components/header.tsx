@@ -15,11 +15,11 @@ import {
   AccordionHeader,
   Button,
   Drawer,
-  Radio,
 } from '../contexts/material-providers';
 import AccorionIcon from './accordion-icon';
 import { ThemeContext } from '../contexts/theme-provider';
 import ThemeSelectButton from './theme-select-button';
+import { bgVariants, colorVariants } from '../utils/colorVariants';
 
 export default function Header() {
   const [deferredPrompt, setDeferredPrompt] =
@@ -103,11 +103,11 @@ export default function Header() {
     <header className="flex items-center justify-between px-[22px] pb-5 pt-3">
       <div className="flex items-center gap-2">
         <div className="hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border border-gray-200 bg-white p-3 text-center minimum:flex">
-          <IconSvg />
+          <IconSvg color={mainColor} />
         </div>
         <h1
           style={{ fontWeight: 800 }}
-          className="select-none text-4xl text-main"
+          className={`select-none text-4xl ${colorVariants[mainColor]}`}
         >
           ToDo
         </h1>
@@ -119,7 +119,7 @@ export default function Header() {
         <Button
           onClick={openDrawer}
           variant="text"
-          className="rounded-full !p-3 text-[32px] text-main hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
+          className={`rounded-full p-3 text-[32px] hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50 ${colorVariants[mainColor]}`}
           ripple={false}
         >
           <GoGear />
@@ -129,10 +129,14 @@ export default function Header() {
           size={height - 60}
           open={isOpenDrawer}
           onClose={closeDrawer}
-          className={`-bottom-[max(env(safe-area-inset-bottom),20px)] rounded-3xl bg-${theme.baseColor}`}
+          className={`-bottom-[max(env(safe-area-inset-bottom),20px)] rounded-3xl ${bgVariants[baseColor]} ${colorVariants[mainColor]}`}
         >
           <div className="flex items-center justify-between px-2 pb-5 pt-3">
-            <h2 className="select-none pl-5 text-xl font-semibold text-gray-900">
+            <h2
+              className={`select-none pl-5 text-xl font-semibold ${
+                mode === 'light' ? 'text-gray-800' : 'text-white'
+              }`}
+            >
               設定
             </h2>
             <Button
@@ -152,7 +156,7 @@ export default function Header() {
             >
               <AccordionHeader
                 onClick={() => handleOpenAccordion(1)}
-                className="rounded-lg border-none px-3 text-main hover:bg-blue-gray-50 hover:text-main hover:brightness-[102%]"
+                className={`rounded-lg border-none px-3 hover:bg-blue-gray-50 hover:brightness-[102%] ${colorVariants[mainColor]} hover:${colorVariants[mainColor]}`}
               >
                 <div className="flex items-center gap-5">
                   <BiSolidPencil />
@@ -167,12 +171,13 @@ export default function Header() {
                       name="theme-color"
                       id="default-theme"
                       baseColor="white"
-                      mainColor="main"
+                      mainColor="primary"
                       mode="light"
                     />
                   </li>
                   <li>
                     <ThemeSelectButton
+                      defaultChecked={false}
                       name="theme-color"
                       id="tomato-light-theme"
                       baseColor="white"
@@ -182,6 +187,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
+                      defaultChecked={false}
                       name="theme-color"
                       id="tigersYellow-dark-theme"
                       baseColor="tigersBlack"
@@ -198,16 +204,14 @@ export default function Header() {
             >
               <AccordionHeader
                 onClick={() => handleOpenAccordion(2)}
-                className={`rounded-lg border-none px-3 hover:bg-blue-gray-50 hover:brightness-[102%] bg-${baseColor} text-${mainColor} hover:text-${theme.mainColor}`}
+                className={`rounded-lg border-none px-3 hover:bg-blue-gray-50 hover:brightness-[102%] bg-${baseColor} text-${mainColor} hover:text-${mainColor}`}
               >
                 <div className="flex items-center gap-5">
                   <FaSearchPlus />
                   <span className="text-base">文字サイズの変更</span>
                 </div>
               </AccordionHeader>
-              <AccordionBody>
-                <p>文字サイズ文字サイズ文字サイズ</p>
-              </AccordionBody>
+              <AccordionBody></AccordionBody>
             </Accordion>
           </div>
         </Drawer>

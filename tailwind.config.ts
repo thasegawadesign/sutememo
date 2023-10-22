@@ -16,7 +16,7 @@ const config: Config = withMT({
         xs: '480px',
       },
       colors: {
-        main: '#208cd8',
+        primary: '#208cd8',
         dark: '#18191b',
         orange: '#f66b15',
         tomato: '#e54d2e',
