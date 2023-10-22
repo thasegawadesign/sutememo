@@ -152,7 +152,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       ref={setNodeRef}
       style={style}
       role="listitem"
-      className={`borderpx-1.5 flex items-center justify-between gap-1.5 rounded-md border py-2 sm:gap-2.5 sm:px-2 ${
+      className={`flex items-center justify-between gap-1.5 rounded-md border px-1.5 py-2 sm:gap-2.5 sm:px-2 ${
         bgVariants[baseColor]
       } ${isDragging && 'opacity-30'} ${
         mode === 'light' ? 'border-gray-100 ' : 'border-gray-900'
