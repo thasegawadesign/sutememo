@@ -93,6 +93,54 @@ export const colorVariants: {
   stone: 'text-stone',
 } satisfies ColorList;
 
+export const borderVariants: {
+  [key: string]: string;
+} = {
+  primary: 'border-primary',
+  white: 'border-white',
+  black: 'border-black',
+  dark: 'border-dark',
+  orange: 'border-orange',
+  tomato: 'border-tomato',
+  ruby: 'border-ruby',
+  gold: 'border-gold',
+  bronze: 'border-bronze',
+  brown: 'border-brown',
+  grass: 'border-grass',
+  mint: 'border-mint',
+  sand: 'border-sand',
+  olive: 'border-olive',
+  deepGeen: 'border-deepGeen',
+  tigersYellow: 'border-tigersYellow',
+  tigersBlack: 'border-tigersBlack',
+  themeBlack: 'border-themeBlack',
+  stone: 'border-stone',
+} satisfies ColorList;
+
+export const outlineVariants: {
+  [key: string]: string;
+} = {
+  primary: 'outline-primary',
+  white: 'outline-white',
+  black: 'outline-black',
+  dark: 'outline-dark',
+  orange: 'outline-orange',
+  tomato: 'outline-tomato',
+  ruby: 'outline-ruby',
+  gold: 'outline-gold',
+  bronze: 'outline-bronze',
+  brown: 'outline-brown',
+  grass: 'outline-grass',
+  mint: 'outline-mint',
+  sand: 'outline-sand',
+  olive: 'outline-olive',
+  deepGeen: 'outline-deepGeen',
+  tigersYellow: 'outline-tigersYellow',
+  tigersBlack: 'outline-tigersBlack',
+  themeBlack: 'outline-themeBlack',
+  stone: 'outline-stone',
+} satisfies ColorList;
+
 export const fillVariants: {
   [key: string]: string;
 } = {

@@ -19,7 +19,11 @@ import {
 import AccorionIcon from './accordion-icon';
 import { ThemeContext } from '../contexts/theme-provider';
 import ThemeSelectButton from './theme-select-button';
-import { bgVariants, colorVariants } from '../utils/colorVariants';
+import {
+  bgVariants,
+  colorVariants,
+  borderVariants,
+} from '../utils/colorVariants';
 import { checkedThemeOptionVariant } from '../utils/checkedThemeOptionVariant';
 
 export default function Header() {
@@ -108,9 +112,7 @@ export default function Header() {
     <header className="flex items-center justify-between px-[22px] pb-5 pt-3">
       <div className="flex items-center gap-2.5">
         <div
-          className={`hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border p-3 text-center minimum:flex ${
-            bgVariants[baseColor]
-          } ${mode === 'light' ? 'border-gray-200' : 'border-gray-800'}`}
+          className={`hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border p-3 text-center minimum:flex ${bgVariants[baseColor]} ${borderVariants[mainColor]}`}
         >
           <IconSvg color={mainColor} />
         </div>
@@ -151,7 +153,7 @@ export default function Header() {
           <div className="flex items-center justify-between px-2 pb-5 pt-3">
             <h2
               className={`select-none pl-5 text-xl font-semibold ${
-                mode === 'light' ? 'text-gray-800' : 'text-white'
+                mode === 'light' ? 'text-gray-900' : 'text-white'
               }`}
             >
               設定

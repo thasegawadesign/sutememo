@@ -19,7 +19,7 @@ import { Todo } from '@/types/Todo';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
 import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOrder';
 import { ThemeContext } from '../contexts/theme-provider';
-import { bgVariants } from '../utils/colorVariants';
+import { bgVariants, outlineVariants } from '../utils/colorVariants';
 
 type Props = {
   id: string;
@@ -70,7 +70,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   };
 
   const theme = useContext(ThemeContext);
-  const { baseColor, mode } = theme;
+  const { mainColor, baseColor, mode } = theme;
 
   const handleDeleteButtonClick = async function () {
     const targetId = id;
@@ -168,8 +168,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           ripple={false}
           className={`self-stretch rounded px-3 py-4 text-2xl hover:cursor-grab sm:px-4 sm:py-5 ${
             mode === 'light'
-              ? 'text-gray-700 hover:bg-gray-900/10'
-              : 'text-gray-500 hover:bg-gray-900'
+              ? 'text-gray-800 hover:bg-gray-900/10'
+              : 'text-gray-400 hover:bg-gray-900'
           }`}
         >
           <PiDotsSixVerticalBold />
@@ -183,8 +183,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           inputMode="text"
           suppressContentEditableWarning
           className={`max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-2xl leading-snug focus:w-full sm:max-w-[calc(100svw-190px)] sm:rounded ${
-            mode === 'light' ? 'text-gray-700' : 'text-gray-300'
-          }`}
+            mode === 'light' ? 'text-gray-900' : 'text-gray-300'
+          } ${outlineVariants[mainColor]}`}
         >
           {name}
         </span>
@@ -208,8 +208,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           isDesktop && 'self-stretch'
         } ${
           mode === 'light'
-            ? 'text-gray-700 hover:bg-gray-900/10'
-            : 'text-gray-500 hover:bg-gray-900'
+            ? 'text-gray-800 hover:bg-gray-900/10'
+            : 'text-gray-400 hover:bg-gray-900'
         }`}
       >
         <PiXBold />
