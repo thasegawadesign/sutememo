@@ -124,7 +124,9 @@ export default function Header() {
         <Button
           onClick={openDrawer}
           variant="text"
-          className={`rounded-full p-3 text-[32px] hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50 ${colorVariants[mainColor]}`}
+          className={`rounded-full p-3 text-[32px] ${
+            colorVariants[mainColor]
+          } ${mode === 'light' ? '' : 'hover:bg-gray-900'}`}
           ripple={false}
         >
           <GoGear />
