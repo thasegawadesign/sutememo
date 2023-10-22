@@ -15,8 +15,11 @@ import {
   AccordionHeader,
   Button,
   Drawer,
+  Radio,
 } from '../context/material-providers';
 import AccorionIcon from './accordion-icon';
+import CheckedIcon from './checked-icon';
+import ThemeRadio from './theme-radio';
 
 export default function Header() {
   const [deferredPrompt, setDeferredPrompt] =
@@ -150,10 +153,30 @@ export default function Header() {
                   <span className="text-base">テーマカラーの変更</span>
                 </div>
               </AccordionHeader>
-              <AccordionBody>
-                <p>
-                  テーマカラーパレットテーマカラーパレットテーマカラーパレット
-                </p>
+              <AccordionBody className="px-2">
+                <ul className="grid grid-cols-3 gap-5 pr-8">
+                  <li>
+                    <ThemeRadio
+                      defaultChecked={true}
+                      name="theme-color"
+                      id="default-theme"
+                      baseColor="bg-white"
+                      mainColor="bg-main"
+                    />
+                  </li>
+                  <li>
+                    <ThemeRadio
+                      defaultChecked={false}
+                      name="theme-color"
+                      id="brown-theme"
+                      baseColor="bg-white"
+                      mainColor="bg-brown"
+                    />
+                  </li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
               </AccordionBody>
             </Accordion>
             <Accordion
