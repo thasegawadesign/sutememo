@@ -160,7 +160,7 @@ export default function Header() {
               variant="text"
               size="md"
               onClick={closeDrawer}
-              className={`rounded-full text-base text-primary ${
+              className={`rounded-full text-base text-blue-700 ${
                 mode === 'light' ? '' : 'hover:bg-gray-900'
               }`}
               ripple={false}
@@ -204,10 +204,76 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
+                      id="primary-dark-theme"
+                      baseColor="themeBlack"
+                      mainColor="primary"
+                      mode="dark"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
                       id="tomato-light-theme"
                       baseColor="white"
                       mainColor="tomato"
                       mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="tomato-dark-theme"
+                      baseColor="themeBlack"
+                      mainColor="tomato"
+                      mode="dark"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="ruby-light-theme"
+                      baseColor="white"
+                      mainColor="ruby"
+                      mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="ruby-dark-theme"
+                      baseColor="themeBlack"
+                      mainColor="ruby"
+                      mode="dark"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="stone-light-theme"
+                      baseColor="gold"
+                      mainColor="stone"
+                      mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="gold-dark-theme"
+                      baseColor="stone"
+                      mainColor="gold"
+                      mode="dark"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
                     />

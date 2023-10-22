@@ -16,7 +16,9 @@ export type ColorList = {
     | 'olive'
     | 'deepGeen'
     | 'tigersYellow'
-    | 'tigersBlack']: unknown;
+    | 'tigersBlack'
+    | 'themeBlack'
+    | 'stone']: unknown;
 };
 
 export const bgVariants: {
@@ -39,6 +41,8 @@ export const bgVariants: {
   deepGeen: 'bg-deepGeen',
   tigersYellow: 'bg-tigersYellow',
   tigersBlack: 'bg-tigersBlack',
+  themeBlack: 'bg-themeBlack',
+  stone: 'bg-stone',
 } satisfies ColorList;
 
 export const bgHoverVariants: {
@@ -61,6 +65,8 @@ export const bgHoverVariants: {
   deepGeen: 'hover:bg-deepGeen',
   tigersYellow: 'hover:bg-tigersYellow',
   tigersBlack: 'hover:bg-tigersBlack',
+  themeBlack: 'hover:bg-themeBlack',
+  stone: 'hover:bg-stone',
 } satisfies ColorList;
 
 export const colorVariants: {
@@ -83,6 +89,8 @@ export const colorVariants: {
   deepGeen: 'text-deepGeen',
   tigersYellow: 'text-tigersYellow',
   tigersBlack: 'text-tigersBlack',
+  themeBlack: 'text-themeBlack',
+  stone: 'text-stone',
 } satisfies ColorList;
 
 export const fillVariants: {
@@ -105,4 +113,6 @@ export const fillVariants: {
   deepGeen: '!fill-deepGeen',
   tigersYellow: '!fill-tigersYellow',
   tigersBlack: '!fill-tigersBlack',
+  themeBlack: '!fill-themeBlack',
+  stone: '!fill-stone',
 } satisfies ColorList;
