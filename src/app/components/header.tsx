@@ -134,7 +134,7 @@ export default function Header() {
           size={height}
           open={isOpenDrawer}
           onClose={closeDrawer}
-          className={`rounded-3xl transition-transform ${
+          className={`transition-drawer duration-themeChange rounded-3xl ${
             bgVariants[baseColor]
           } ${colorVariants[mainColor]} ${
             isOpenDrawer
@@ -169,7 +169,13 @@ export default function Header() {
             >
               <AccordionHeader
                 onClick={() => handleOpenAccordion(1)}
-                className={`rounded-lg border-none px-3 hover:bg-blue-gray-50 hover:brightness-[102%] ${colorVariants[mainColor]} hover:${colorVariants[mainColor]}`}
+                className={`rounded-lg border-none px-3 ${
+                  colorVariants[mainColor]
+                } hover:${colorVariants[mainColor]} ${
+                  mode === 'light'
+                    ? 'hover:bg-gray-900/10 active:bg-gray-900/20'
+                    : 'hover:bg-gray-900 active:bg-gray-800'
+                }`}
               >
                 <div className="flex items-center gap-5">
                   <BiSolidPencil />
@@ -220,7 +226,11 @@ export default function Header() {
             >
               <AccordionHeader
                 onClick={() => handleOpenAccordion(2)}
-                className={`rounded-lg border-none px-3 hover:bg-blue-gray-50 hover:brightness-[102%] bg-${baseColor} text-${mainColor} hover:text-${mainColor}`}
+                className={`rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} ${
+                  mode === 'light'
+                    ? 'hover:bg-gray-900/10 active:bg-gray-900/20'
+                    : 'hover:bg-gray-900 active:bg-gray-800'
+                }`}
               >
                 <div className="flex items-center gap-5">
                   <FaSearchPlus />
