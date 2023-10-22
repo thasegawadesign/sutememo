@@ -67,10 +67,7 @@ export default function RootLayout({
       <head>
         <Analytics />
       </head>
-      <body
-        className={`min-h-[100svh] overscroll-none pt-[env(safe-area-inset-top)] pwa:min-h-screen ${notoSansJP.className}`}
-        role="application"
-      >
+      <body className={`${notoSansJP.className}`} role="application">
         <Providers>{children}</Providers>
       </body>
     </html>
