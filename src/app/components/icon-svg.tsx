@@ -1,4 +1,11 @@
-export default function IconSvg() {
+import { fillVariants } from '../utils/colorVariants';
+
+type Props = {
+  color: string;
+};
+
+export default function IconSvg(props: Props) {
+  const { color } = props;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,6 +26,7 @@ export default function IconSvg() {
               ry="12"
               style={{ fill: '#208cd8', strokeWidth: '0' }}
               transform="translate(-26.26 143.42) rotate(-45)"
+              className={fillVariants[color]}
             />
           </g>
           <g id="l">
@@ -31,6 +39,7 @@ export default function IconSvg() {
               ry="12"
               style={{ fill: '#208cd8', strokeWidth: '0' }}
               transform="translate(-79.81 88.1) rotate(-45)"
+              className={fillVariants[color]}
             />
           </g>
         </g>

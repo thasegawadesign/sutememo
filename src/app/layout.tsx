@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     apple: '/icons/icon-192x192.png',
   },
   themeColor: {
-    color: '#208cd8',
+    color: '#18191b',
   },
   authors: [
     {
@@ -68,7 +68,7 @@ export default function RootLayout({
         <Analytics />
       </head>
       <body
-        className={`min-h-[100svh] overscroll-none pt-[env(safe-area-inset-top)] pwa:min-h-screen ${notoSansJP.className}`}
+        className={`bg-themeBlack ${notoSansJP.className}`}
         role="application"
       >
         <Providers>{children}</Providers>
