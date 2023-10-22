@@ -15,11 +15,12 @@ import {
   AccordionHeader,
   Button,
   Drawer,
+  Radio,
 } from '../context/material-providers';
 import AccorionIcon from './accordion-icon';
-import ThemeRadio from './theme-radio';
-import { Theme, ThemeContext } from '../context/theme-color-context';
-import { Mode } from '../context/theme-color-context';
+import { ThemeContext } from '../context/theme-color-context';
+
+import CheckedIcon from './checked-icon';
 
 export default function Header() {
   const [deferredPrompt, setDeferredPrompt] =
@@ -28,22 +29,8 @@ export default function Header() {
 
   const [width, height] = useWindowSize();
 
-  const [theme, setTheme] = useState<Theme>({
-    baseColor: '',
-    mainColor: '',
-    mode: 'light',
-  });
-
-  const handleThemeClick = useCallback(
-    (baseColor: string, mainColor: string, mode: Mode) => {
-      setTheme({
-        baseColor,
-        mainColor,
-        mode,
-      });
-    },
-    [],
-  );
+  const theme = useContext(ThemeContext);
+  const { baseColor, mainColor, mode, setTheme } = theme;
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(true);
   const openDrawer = () => setIsOpenDrawer(true);
@@ -140,7 +127,7 @@ export default function Header() {
           size={height - 60}
           open={isOpenDrawer}
           onClose={closeDrawer}
-          className="-bottom-[max(env(safe-area-inset-bottom),20px)] rounded-3xl"
+          className={`-bottom-[max(env(safe-area-inset-bottom),20px)] rounded-3xl bg-${theme.baseColor}`}
         >
           <div className="flex items-center justify-between px-2 pb-5 pt-3">
             <h2 className="select-none pl-5 text-xl font-semibold text-gray-900">
@@ -171,59 +158,96 @@ export default function Header() {
                 </div>
               </AccordionHeader>
               <AccordionBody className="px-2">
-                <ThemeContext.Provider value={theme}>
-                  <ul className="xxs:grid-cols-3 grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2">
-                    <li>
-                      <button
-                        onClick={() =>
-                          handleThemeClick('bg-white', 'bg-main', 'light')
+                <ul className="grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2 xxs:grid-cols-3">
+                  <li>
+                    <button
+                      onClick={() =>
+                        setTheme({
+                          baseColor: 'white',
+                          mainColor: 'main',
+                          mode: 'light',
+                        })
+                      }
+                    >
+                      <Radio
+                        defaultChecked={true}
+                        name="theme-color"
+                        id="default-theme"
+                        icon={<CheckedIcon />}
+                        className="checked:before:bg-blue-gray-50 hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
+                        label={
+                          <div className="grid rounded-full border border-gray-300">
+                            <div
+                              className={`h-6 w-12 rounded-t-full bg-white`}
+                            />
+                            <div
+                              className={`h-6 w-12 rounded-b-full bg-main`}
+                            />
+                          </div>
                         }
-                      >
-                        <ThemeRadio
-                          defaultChecked={true}
-                          name="theme-color"
-                          id="default-theme"
-                          baseColor="bg-white"
-                          mainColor="bg-main"
-                        />
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() =>
-                          handleThemeClick('bg-white', 'bg-tomato', 'light')
+                        ripple={false}
+                      />
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() =>
+                        setTheme({
+                          baseColor: 'white',
+                          mainColor: 'tomato',
+                          mode: 'light',
+                        })
+                      }
+                    >
+                      <Radio
+                        name="theme-color"
+                        id="tomato-light-theme"
+                        icon={<CheckedIcon />}
+                        className="checked:before:bg-blue-gray-50 hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
+                        label={
+                          <div className="grid rounded-full border border-gray-300">
+                            <div
+                              className={`h-6 w-12 rounded-t-full bg-white`}
+                            />
+                            <div
+                              className={`h-6 w-12 rounded-b-full bg-tomato`}
+                            />
+                          </div>
                         }
-                      >
-                        <ThemeRadio
-                          defaultChecked={false}
-                          name="theme-color"
-                          id="tomato-light-theme"
-                          baseColor="bg-white"
-                          mainColor="bg-tomato"
-                        />
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() =>
-                          handleThemeClick(
-                            'bg-tigersBlack',
-                            'bg-tigersYellow',
-                            'dark',
-                          )
+                        ripple={false}
+                      />
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() =>
+                        setTheme({
+                          baseColor: 'tigersBlack',
+                          mainColor: 'tigersYellow',
+                          mode: 'dark',
+                        })
+                      }
+                    >
+                      <Radio
+                        name="theme-color"
+                        id="tigersYellow-dark-theme"
+                        icon={<CheckedIcon />}
+                        className="checked:before:bg-blue-gray-50 hover:bg-blue-gray-50 hover:brightness-[102%] active:bg-blue-gray-50"
+                        label={
+                          <div className="grid rounded-full border border-gray-300">
+                            <div
+                              className={`h-6 w-12 rounded-t-full bg-tigersBlack`}
+                            />
+                            <div
+                              className={`h-6 w-12 rounded-b-full bg-tigersYellow`}
+                            />
+                          </div>
                         }
-                      >
-                        <ThemeRadio
-                          defaultChecked={false}
-                          name="theme-color"
-                          id="tigersYellow-dark-theme"
-                          baseColor="bg-tigersBlack"
-                          mainColor="bg-tigersYellow"
-                        />
-                      </button>
-                    </li>
-                  </ul>
-                </ThemeContext.Provider>
+                        ripple={false}
+                      />
+                    </button>
+                  </li>
+                </ul>
               </AccordionBody>
             </Accordion>
             <Accordion
@@ -232,7 +256,7 @@ export default function Header() {
             >
               <AccordionHeader
                 onClick={() => handleOpenAccordion(2)}
-                className="rounded-lg border-none px-3 text-main hover:bg-blue-gray-50 hover:text-main hover:brightness-[102%]"
+                className={`rounded-lg border-none px-3 hover:bg-blue-gray-50 hover:brightness-[102%] bg-${baseColor} text-${mainColor} hover:text-${theme.mainColor}`}
               >
                 <div className="flex items-center gap-5">
                   <FaSearchPlus />
