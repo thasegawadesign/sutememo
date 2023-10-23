@@ -19,7 +19,7 @@ import { Todo } from '@/types/Todo';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
 import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOrder';
 import { ThemeContext } from '../contexts/theme-provider';
-import { bgVariants, outlineVariants } from '../utils/colorVariants';
+import { bgVariants, ringVariants } from '../utils/colorVariants';
 
 type Props = {
   id: string;
@@ -182,9 +182,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           contentEditable
           inputMode="text"
           suppressContentEditableWarning
-          className={`max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-2xl leading-snug focus:w-full sm:max-w-[calc(100svw-190px)] sm:rounded ${
+          className={`max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-2xl leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-190px)] sm:rounded ${
             mode === 'light' ? 'text-gray-900' : 'text-gray-300'
-          } ${outlineVariants[mainColor]}`}
+          } ${ringVariants[mainColor]}`}
         >
           {name}
         </span>
