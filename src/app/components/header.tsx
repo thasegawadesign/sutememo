@@ -108,8 +108,6 @@ export default function Header() {
     return () => window.removeEventListener('appinstalled', handleAppInstalled);
   }, [handleAppInstalled]);
 
-  console.log(bgVariants);
-
   return (
     <header className="flex items-center justify-between px-[22px] pb-5 pt-3">
       <div className="flex items-center gap-2.5">
@@ -212,17 +210,6 @@ export default function Header() {
                       mainColor="primary"
                       baseColor="radixGray-12"
                       mode="dark"
-                      checkedThemeOption={checkedThemeOption}
-                      setCheckedThemeOption={setCheckedThemeOption}
-                    />
-                  </li>
-                  <li>
-                    <ThemeSelectButton
-                      name="theme-color"
-                      id="tomato-white-light-theme"
-                      mainColor="tomato"
-                      baseColor="white"
-                      mode="light"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
                     />

@@ -7,6 +7,12 @@ const config: Config = withMT({
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    {
+      pattern:
+        /(bg|hover:bg|text|border|ring|!fill)-(radixGray|radixMauve|radixSlate|radixSage|radixOlive|radixSand|radixTomato|radixRed|radixRuby|radixCrimson|radixPink|radixPlum|radixPurple|radixViolet|radixIris|radixIndigo|radixBlue|radixCyan|radixTeal|radixJade|radixGreen|radixGrass|radixBronze|radixGold|radixBrown|radixOrange|radixAmber|radixYellow|radixLime|radixMint|radixSky|radixBlack|radixWhite)-(1|2|3|4|5|6|7|8|9|10|11|12|a1|a2|a3|a4|a5|a6|a7|a8|a9|a10|a11|a12)/,
+    },
+  ],
   theme: {
     extend: {
       screens: {
@@ -69,7 +75,7 @@ const config: Config = withMT({
 });
 export default config;
 
-function generateScale(name: string) {
+export function generateScale(name: string) {
   let scale = Array.from({ length: 12 }, (_, i) => {
     let id = i + 1;
     return [
