@@ -46,10 +46,9 @@ type RadixColorList = (typeof radixColorList)[number];
 type RadixScaleSolid = `${RadixColorList}-${number}`;
 type RadixScaleAlpha = `${RadixColorList}-a${number}`;
 type RadixScale = RadixScaleSolid | RadixScaleAlpha;
-// type RadixScale = `${RadixColorList}-${number}`;
 type RadixScaleTailwind = `${TailwindPrefix}${RadixScale}`;
 
-export type ColorList = {
+type ColorList = {
   [key in
     | 'primary'
     | 'black'
