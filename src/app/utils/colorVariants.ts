@@ -117,28 +117,28 @@ export const borderVariants: {
   stone: 'border-stone',
 } satisfies ColorList;
 
-export const outlineVariants: {
+export const ringVariants: {
   [key: string]: string;
 } = {
-  primary: 'outline-primary',
-  white: 'outline-white',
-  black: 'outline-black',
-  dark: 'outline-dark',
-  orange: 'outline-orange',
-  tomato: 'outline-tomato',
-  ruby: 'outline-ruby',
-  gold: 'outline-gold',
-  bronze: 'outline-bronze',
-  brown: 'outline-brown',
-  grass: 'outline-grass',
-  mint: 'outline-mint',
-  sand: 'outline-sand',
-  olive: 'outline-olive',
-  deepGeen: 'outline-deepGeen',
-  tigersYellow: 'outline-tigersYellow',
-  tigersBlack: 'outline-tigersBlack',
-  themeBlack: 'outline-themeBlack',
-  stone: 'outline-stone',
+  primary: 'ring-primary',
+  white: 'ring-white',
+  black: 'ring-black',
+  dark: 'ring-dark',
+  orange: 'ring-orange',
+  tomato: 'ring-tomato',
+  ruby: 'ring-ruby',
+  gold: 'ring-gold',
+  bronze: 'ring-bronze',
+  brown: 'ring-brown',
+  grass: 'ring-grass',
+  mint: 'ring-mint',
+  sand: 'ring-sand',
+  olive: 'ring-olive',
+  deepGeen: 'ring-deepGeen',
+  tigersYellow: 'ring-tigersYellow',
+  tigersBlack: 'ring-tigersBlack',
+  themeBlack: 'ring-themeBlack',
+  stone: 'ring-stone',
 } satisfies ColorList;
 
 export const fillVariants: {
