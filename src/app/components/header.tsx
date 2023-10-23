@@ -217,8 +217,8 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="tomato-radixGray-12-dark-theme"
-                      mainColor="tomato"
+                      id="radixGray-7-radixGray-12-dark-theme"
+                      mainColor="radixGray-7"
                       baseColor="radixGray-12"
                       mode="dark"
                       checkedThemeOption={checkedThemeOption}
@@ -228,8 +228,30 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="ruby-white-light-theme"
-                      mainColor="ruby"
+                      id="radixOlive-12-radixOlive-8-light-theme"
+                      mainColor="radixOlive-12"
+                      baseColor="radixOlive-8"
+                      mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="radixGrass-10-radixGrass-5-light-theme"
+                      mainColor="radixGrass-10"
+                      baseColor="radixGrass-5"
+                      mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="radixSand-10-white-light-theme"
+                      mainColor="radixSand-10"
                       baseColor="white"
                       mode="light"
                       checkedThemeOption={checkedThemeOption}
@@ -239,8 +261,8 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="ruby-radixGray-12-dark-theme"
-                      mainColor="ruby"
+                      id="radixRuby-9-radixGray-12-dark-theme"
+                      mainColor="radixRuby-9"
                       baseColor="radixGray-12"
                       mode="dark"
                       checkedThemeOption={checkedThemeOption}
@@ -250,9 +272,31 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="stone-gold-light-theme"
-                      mainColor="stone"
-                      baseColor="gold"
+                      id="radixIris-9-radixGray-12-dark-theme"
+                      mainColor="radixIris-9"
+                      baseColor="radixGray-12"
+                      mode="dark"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="radixCyan-9-radixCyan-12-dark-theme"
+                      mainColor="radixCyan-9"
+                      baseColor="radixCyan-12"
+                      mode="dark"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="radixGold-10-white-light-theme"
+                      mainColor="radixGold-10"
+                      baseColor="white"
                       mode="light"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -261,10 +305,76 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="gold-stone-dark-theme"
-                      mainColor="gold"
-                      baseColor="stone"
+                      id="radixViolet-10-radixViolet-5-light-theme"
+                      mainColor="radixViolet-10"
+                      baseColor="radixViolet-5"
+                      mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="radixRuby-8-radixRuby-5-light-theme"
+                      mainColor="radixRuby-8"
+                      baseColor="radixRuby-5"
+                      mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="radixBrown-12-radixBrown-4-light-theme"
+                      mainColor="radixBrown-12"
+                      baseColor="radixBrown-4"
+                      mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="radixLime-12-radixLime-4-light-theme"
+                      mainColor="radixLime-12"
+                      baseColor="radixLime-4"
+                      mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="radixJade-3-radixJade-12-dark-theme"
+                      mainColor="radixJade-3"
+                      baseColor="radixJade-12"
                       mode="dark"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="radixAmber-12-radixAmber-3-light-theme"
+                      mainColor="radixAmber-12"
+                      baseColor="radixAmber-3"
+                      mode="light"
+                      checkedThemeOption={checkedThemeOption}
+                      setCheckedThemeOption={setCheckedThemeOption}
+                    />
+                  </li>
+                  <li>
+                    <ThemeSelectButton
+                      name="theme-color"
+                      id="radixSky-11-radixSky-3-light-theme"
+                      mainColor="radixSky-11"
+                      baseColor="radixSky-3"
+                      mode="light"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
                     />
