@@ -1,166 +1,141 @@
-export type ColorList = {
+const radixColorList = [
+  'radixGray',
+  'radixMauve',
+  'radixMauve',
+  'radixSlate',
+  'radixSage',
+  'radixOlive',
+  'radixSand',
+  'radixTomato',
+  'radixRed',
+  'radixRuby',
+  'radixCrimson',
+  'radixPink',
+  'radixPlum',
+  'radixPurple',
+  'radixViolet',
+  'radixIris',
+  'radixIndigo',
+  'radixBlue',
+  'radixCyan',
+  'radixTeal',
+  'radixJade',
+  'radixGreen',
+  'radixGrass',
+  'radixBronze',
+  'radixGold',
+  'radixBrown',
+  'radixOrange',
+  'radixAmber',
+  'radixYellow',
+  'radixLime',
+  'radixMint',
+  'radixSky',
+  'radixBlack',
+  'radixWhite',
+] as const;
+
+type TailwindPrefix =
+  | 'bg-'
+  | 'hover:bg-'
+  | 'text-'
+  | 'border-'
+  | 'ring-'
+  | '!fill-';
+type RadixColorList = (typeof radixColorList)[number];
+type RadixScaleSolid = `${RadixColorList}-${number}`;
+type RadixScaleAlpha = `${RadixColorList}-a${number}`;
+type RadixScale = RadixScaleSolid | RadixScaleAlpha;
+type RadixScaleTailwind = `${TailwindPrefix}${RadixScale}`;
+
+type ColorList = {
   [key in
     | 'primary'
-    | 'white'
     | 'black'
-    | 'dark'
-    | 'orange'
-    | 'tomato'
-    | 'ruby'
-    | 'gold'
-    | 'bronze'
-    | 'brown'
-    | 'grass'
-    | 'mint'
-    | 'sand'
-    | 'olive'
-    | 'deepGeen'
+    | 'white'
     | 'tigersYellow'
     | 'tigersBlack'
-    | 'themeBlack'
-    | 'stone']: unknown;
+    | RadixScale]: unknown;
 };
 
 export const bgVariants: {
   [key: string]: string;
 } = {
   primary: 'bg-primary',
-  white: 'bg-white',
   black: 'bg-black',
-  dark: 'bg-dark',
-  orange: 'bg-orange',
-  tomato: 'bg-tomato',
-  ruby: 'bg-ruby',
-  gold: 'bg-gold',
-  bronze: 'bg-bronze',
-  brown: 'bg-brown',
-  grass: 'bg-grass',
-  mint: 'bg-mint',
-  sand: 'bg-sand',
-  olive: 'bg-olive',
-  deepGeen: 'bg-deepGeen',
+  white: 'bg-white',
   tigersYellow: 'bg-tigersYellow',
   tigersBlack: 'bg-tigersBlack',
-  themeBlack: 'bg-themeBlack',
-  stone: 'bg-stone',
+  ...generateRadixMappingObj('bg-'),
 } satisfies ColorList;
 
 export const bgHoverVariants: {
   [key: string]: string;
 } = {
   primary: 'hover:bg-primary',
-  white: 'hover:bg-white',
-  black: 'hover:bg-black',
-  dark: 'hover:bg-dark',
-  orange: 'hover:bg-orange',
-  tomato: 'hover:bg-tomato',
-  ruby: 'hover:bg-ruby',
-  gold: 'hover:bg-gold',
-  bronze: 'hover:bg-bronze',
-  brown: 'hover:bg-brown',
-  grass: 'hover:bg-grass',
-  mint: 'hover:bg-mint',
-  sand: 'hover:bg-sand',
-  olive: 'hover:bg-olive',
-  deepGeen: 'hover:bg-deepGeen',
+  black: 'hover-bg:black',
+  white: 'hover-bg:white',
   tigersYellow: 'hover:bg-tigersYellow',
   tigersBlack: 'hover:bg-tigersBlack',
-  themeBlack: 'hover:bg-themeBlack',
-  stone: 'hover:bg-stone',
+  ...generateRadixMappingObj('hover:bg-'),
 } satisfies ColorList;
 
 export const colorVariants: {
   [key: string]: string;
 } = {
   primary: 'text-primary',
-  white: 'text-white',
   black: 'text-black',
-  dark: 'text-dark',
-  orange: 'text-orange',
-  tomato: 'text-tomato',
-  ruby: 'text-ruby',
-  gold: 'text-gold',
-  bronze: 'text-bronze',
-  brown: 'text-brown',
-  grass: 'text-grass',
-  mint: 'text-mint',
-  sand: 'text-sand',
-  olive: 'text-olive',
-  deepGeen: 'text-deepGeen',
+  white: 'text-white',
   tigersYellow: 'text-tigersYellow',
   tigersBlack: 'text-tigersBlack',
-  themeBlack: 'text-themeBlack',
-  stone: 'text-stone',
+  ...generateRadixMappingObj('text-'),
 } satisfies ColorList;
 
 export const borderVariants: {
   [key: string]: string;
 } = {
   primary: 'border-primary',
-  white: 'border-white',
   black: 'border-black',
-  dark: 'border-dark',
-  orange: 'border-orange',
-  tomato: 'border-tomato',
-  ruby: 'border-ruby',
-  gold: 'border-gold',
-  bronze: 'border-bronze',
-  brown: 'border-brown',
-  grass: 'border-grass',
-  mint: 'border-mint',
-  sand: 'border-sand',
-  olive: 'border-olive',
-  deepGeen: 'border-deepGeen',
+  white: 'border-white',
   tigersYellow: 'border-tigersYellow',
   tigersBlack: 'border-tigersBlack',
-  themeBlack: 'border-themeBlack',
-  stone: 'border-stone',
+  ...generateRadixMappingObj('border-'),
 } satisfies ColorList;
 
 export const ringVariants: {
   [key: string]: string;
 } = {
   primary: 'ring-primary',
-  white: 'ring-white',
   black: 'ring-black',
-  dark: 'ring-dark',
-  orange: 'ring-orange',
-  tomato: 'ring-tomato',
-  ruby: 'ring-ruby',
-  gold: 'ring-gold',
-  bronze: 'ring-bronze',
-  brown: 'ring-brown',
-  grass: 'ring-grass',
-  mint: 'ring-mint',
-  sand: 'ring-sand',
-  olive: 'ring-olive',
-  deepGeen: 'ring-deepGeen',
+  white: 'ring-white',
   tigersYellow: 'ring-tigersYellow',
   tigersBlack: 'ring-tigersBlack',
-  themeBlack: 'ring-themeBlack',
-  stone: 'ring-stone',
+  ...generateRadixMappingObj('ring-'),
 } satisfies ColorList;
 
 export const fillVariants: {
   [key: string]: string;
 } = {
   primary: '!fill-primary',
-  white: '!fill-white',
   black: '!fill-black',
-  dark: '!fill-dark',
-  orange: '!fill-orange',
-  tomato: '!fill-tomato',
-  ruby: '!fill-ruby',
-  gold: '!fill-gold',
-  bronze: '!fill-bronze',
-  brown: '!fill-brown',
-  grass: '!fill-grass',
-  mint: '!fill-mint',
-  sand: '!fill-sand',
-  olive: '!fill-olive',
-  deepGeen: '!fill-deepGeen',
+  white: '!fill-white',
   tigersYellow: '!fill-tigersYellow',
   tigersBlack: '!fill-tigersBlack',
-  themeBlack: '!fill-themeBlack',
-  stone: '!fill-stone',
+  ...generateRadixMappingObj('!fill-'),
 } satisfies ColorList;
+
+function generateRadixMappingObj(tailwindPrefix: TailwindPrefix) {
+  const radixArr: [RadixScale, RadixScaleTailwind][] = [];
+  radixColorList.map((radixColor, i) => {
+    [...Array(12)].map((_, i) => {
+      const id = i + 1;
+      const key: RadixScale =
+        radixColor === 'radixBlack' || radixColor === 'radixWhite'
+          ? `${radixColor}-a${id}`
+          : `${radixColor}-${id}`;
+      const value: RadixScaleTailwind = `${tailwindPrefix}${key}`;
+      radixArr.push([key, value]);
+    });
+  });
+  return Object.fromEntries(radixArr);
+}
