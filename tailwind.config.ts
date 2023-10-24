@@ -1,39 +1,39 @@
+import { SafeTailwind, TailwindPrefix } from '@/types/ColorList';
 import type { Config } from 'tailwindcss';
-import { SafeList, TailwindPrefix } from '@/types/ColorList';
 const withMT = require('@material-tailwind/react/utils/withMT');
 
-const safelist: SafeList = {
-  primary: 'primary',
-  white: 'white',
-  tigersYellow: 'tigersYellow',
-  tigersBlack: 'tigersBlack',
-  'radixGray-7': 'radixGray-7',
-  'radixGray-12': 'radixGray-12',
-  'radixOlive-8': 'radixOlive-8',
-  'radixOlive-12': 'radixOlive-12',
-  'radixGrass-5': 'radixGrass-5',
-  'radixGrass-10': 'radixGrass-10',
-  'radixSand-10': 'radixSand-10',
-  'radixRuby-5': 'radixRuby-5',
-  'radixRuby-8': 'radixRuby-8',
-  'radixRuby-9': 'radixRuby-9',
-  'radixIris-9': 'radixIris-9',
-  'radixCyan-9': 'radixCyan-9',
-  'radixCyan-12': 'radixCyan-12',
-  'radixGold-10': 'radixGold-10',
-  'radixViolet-5': 'radixViolet-5',
-  'radixViolet-10': 'radixViolet-10',
-  'radixBrown-4': 'radixBrown-4',
-  'radixBrown-12': 'radixBrown-12',
-  'radixLime-4': 'radixLime-4',
-  'radixLime-12': 'radixLime-12',
-  'radixJade-3': 'radixJade-3',
-  'radixJade-12': 'radixJade-12',
-  'radixAmber-3': 'radixAmber-3',
-  'radixAmber-12': 'radixAmber-12',
-  'radixSky-3': 'radixSky-3',
-  'radixSky-11': 'radixSky-11',
-};
+export const safeColorList = [
+  'primary',
+  'white',
+  'tigersYellow',
+  'tigersBlack',
+  'radixGray-7',
+  'radixGray-12',
+  'radixOlive-8',
+  'radixOlive-12',
+  'radixGrass-5',
+  'radixGrass-10',
+  'radixSand-10',
+  'radixRuby-5',
+  'radixRuby-8',
+  'radixRuby-9',
+  'radixIris-9',
+  'radixCyan-9',
+  'radixCyan-12',
+  'radixGold-10',
+  'radixViolet-5',
+  'radixViolet-10',
+  'radixBrown-4',
+  'radixBrown-12',
+  'radixLime-4',
+  'radixLime-12',
+  'radixJade-3',
+  'radixJade-12',
+  'radixAmber-3',
+  'radixAmber-12',
+  'radixSky-3',
+  'radixSky-11',
+] as const;
 
 const variants: TailwindPrefix[] = [
   'bg-',
@@ -43,12 +43,12 @@ const variants: TailwindPrefix[] = [
   'ring-',
   '!fill-',
 ];
-const safeColorList = Object.values(safelist);
-const tailwindSafelist: string[] = [];
+
+const tailwindSafelist: `"${SafeTailwind}"`[] = [];
 for (const color of safeColorList) {
   for (const prefix of variants) {
     const safeColorTailwind = `"${prefix}${color}"`;
-    tailwindSafelist.push(safeColorTailwind);
+    tailwindSafelist.push(safeColorTailwind as `"${SafeTailwind}"`);
   }
 }
 
