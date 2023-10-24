@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ThemeContext } from '../contexts/theme-provider';
+import { ThemeContext } from '@/contexts/theme-provider';
 
 export default function CheckedIcon() {
   const theme = useContext(ThemeContext);

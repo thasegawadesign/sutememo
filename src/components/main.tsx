@@ -15,8 +15,8 @@ import {
   insertIndexedDB,
   updateAllIndexedDB,
   updatePartialIndexedDB,
-} from '../utils/indexedDB';
-import { registerServiceWorker } from '../utils/registerServiceWorker';
+} from '@/utils/indexedDB';
+import { registerServiceWorker } from '@/utils/registerServiceWorker';
 
 export default function Main() {
   const [todos, setTodos] = useState<Todo[]>([]);

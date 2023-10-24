@@ -1,4 +1,4 @@
-import { Mode } from '../contexts/theme-provider';
+import { Mode } from '@/contexts/theme-provider';
 
 export const checkedThemeOptionVariant = (
   mainColor: string,

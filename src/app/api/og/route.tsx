@@ -1,4 +1,4 @@
-import IconSvg from '@/app/components/icon-svg';
+import IconSvg from '@/components/icon-svg';
 import { ImageResponse } from 'next/server';
 
 export const runtime = 'edge';

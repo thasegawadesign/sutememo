@@ -1,4 +1,4 @@
-import { fillVariants } from '../utils/colorVariants';
+import { fillVariants } from '@/utils/colorVariants';
 
 type Props = {
   color: string;
