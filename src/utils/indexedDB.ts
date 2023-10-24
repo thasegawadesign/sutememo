@@ -1,6 +1,6 @@
 import { IndexedDBResult } from '@/types/IndexedDBResult';
 import { Todo } from '@/types/Todo';
-import { sortTodosOrderByDisplayOrder } from './sortTodosOrderByDisplayOrder';
+import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
 
 const dbVer = 1;
 const dbName = 'TodoDB';

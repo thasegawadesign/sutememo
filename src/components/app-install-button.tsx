@@ -1,8 +1,8 @@
 import { useContext, useRef } from 'react';
-import { Button } from '../contexts/material-providers';
-import { ShowAppInstallButtonContext } from '../contexts/show-app-install-button-provider';
-import { ThemeContext } from '../contexts/theme-provider';
-import { bgVariants, colorVariants } from '../utils/colorVariants';
+import { Button } from '@/contexts/material-providers';
+import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-provider';
+import { ThemeContext } from '@/contexts/theme-provider';
+import { bgVariants, colorVariants } from '@/utils/colorVariants';
 
 type Props = {
   handleAppInstallButtonClick: () => void;

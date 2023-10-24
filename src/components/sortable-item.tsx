@@ -2,7 +2,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
 import { isMobile, isTablet, isDesktop } from 'react-device-detect';
-import { Button } from '../contexts/material-providers';
+import { Button } from '@/contexts/material-providers';
 
 import {
   Dispatch,
@@ -17,9 +17,9 @@ import {
 } from 'react';
 import { Todo } from '@/types/Todo';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
-import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOrder';
-import { ThemeContext } from '../contexts/theme-provider';
-import { bgVariants, ringVariants } from '../utils/colorVariants';
+import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
+import { ThemeContext } from '@/contexts/theme-provider';
+import { bgVariants, ringVariants } from '@/utils/colorVariants';
 
 type Props = {
   id: string;
