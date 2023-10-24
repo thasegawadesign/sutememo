@@ -1,10 +1,10 @@
 'use client';
 
 import { useCallback, useContext, useEffect, useState } from 'react';
-import useWindowSize from '../hooks/useWindowSize';
+import useWindowSize from '@/hooks/useWindowSize';
 import AppInstallButton from './app-install-button';
 import IconSvg from './icon-svg';
-import { ShowAppInstallButtonContext } from '../contexts/show-app-install-button-provider';
+import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-provider';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
 import { BiSolidPencil } from 'react-icons/bi';
 import { FaSearchPlus } from 'react-icons/fa';
@@ -15,16 +15,16 @@ import {
   AccordionHeader,
   Button,
   Drawer,
-} from '../contexts/material-providers';
+} from '@/contexts/material-providers';
 import AccorionIcon from './accordion-icon';
-import { ThemeContext } from '../contexts/theme-provider';
+import { ThemeContext } from '@/contexts/theme-provider';
 import ThemeSelectButton from './theme-select-button';
 import {
   bgVariants,
   colorVariants,
   borderVariants,
-} from '../utils/colorVariants';
-import { checkedThemeOptionVariant } from '../utils/checkedThemeOptionVariant';
+} from '@/utils/colorVariants';
+import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
 
 export default function Header() {
   const [deferredPrompt, setDeferredPrompt] =
@@ -410,7 +410,7 @@ export default function Header() {
                   <span className="text-base">文字サイズの変更</span>
                 </div>
               </AccordionHeader>
-              <AccordionBody></AccordionBody>
+              {/* <AccordionBody></AccordionBody> */}
             </Accordion>
           </div>
         </Drawer>

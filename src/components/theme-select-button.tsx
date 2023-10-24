@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, useContext } from 'react';
-import { ThemeContext, ThemeType } from '../contexts/theme-provider';
+import { ThemeContext, ThemeType } from '@/contexts/theme-provider';
 import CheckedIcon from './checked-icon';
-import { Radio } from '../contexts/material-providers';
-import { bgVariants } from '../utils/colorVariants';
-import { checkedThemeOptionVariant } from '../utils/checkedThemeOptionVariant';
+import { Radio } from '@/contexts/material-providers';
+import { bgVariants } from '@/utils/colorVariants';
+import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
 
 interface Props extends ThemeType {
   id: string;

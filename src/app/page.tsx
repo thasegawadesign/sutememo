@@ -1,10 +1,10 @@
 'use client';
 
 import { useContext } from 'react';
-import Header from './components/header';
-import Main from './components/main';
-import { ThemeContext } from './contexts/theme-provider';
-import { bgVariants } from './utils/colorVariants';
+import Header from '@/components/header';
+import Main from '@/components/main';
+import { ThemeContext } from '@/contexts/theme-provider';
+import { bgVariants } from '@/utils/colorVariants';
 
 export default function Home() {
   const theme = useContext(ThemeContext);
