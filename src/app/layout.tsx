@@ -1,9 +1,9 @@
 import { env } from 'process';
-import './globals.css';
+import '@/globals.css';
 import type { Metadata } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
-import Analytics from './components/analytics';
-import { Providers } from './providers';
+import Analytics from '@/components/analytics';
+import { Providers } from '@/providers';
 
 const baseURL = env.BASE_URL;
 const creator = env.CREATOR;

@@ -31,12 +31,12 @@ import {
 import SortableItem from './sortable-item';
 import { isMobile } from 'react-device-detect';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
-import { sortTodosOrderByDisplayOrder } from '../utils/sortTodosOrderByDisplayOrder';
+import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
 import {
   findDisplayOrder,
   findIndex,
   findName,
-} from '../utils/findTodoTargetKey';
+} from '@/utils/findTodoTargetKey';
 
 type Props = {
   todos: Todo[];

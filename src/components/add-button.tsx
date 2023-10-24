@@ -1,8 +1,8 @@
 import { forwardRef, useContext } from 'react';
 import { IoIosAdd } from 'react-icons/io';
-import { Button } from '../contexts/material-providers';
-import { ThemeContext } from '../contexts/theme-provider';
-import { bgVariants, colorVariants } from '../utils/colorVariants';
+import { Button } from '@/contexts/material-providers';
+import { ThemeContext } from '@/contexts/theme-provider';
+import { bgVariants, colorVariants } from '@/utils/colorVariants';
 
 type Props = {
   handleAddButtonClick: () => void;
