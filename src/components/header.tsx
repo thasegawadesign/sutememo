@@ -37,6 +37,7 @@ export default function Header() {
 
   const theme = useContext(ThemeContext);
   const { baseColor, mainColor, mode } = theme;
+  const labelName = 'theme-color';
 
   const [checkedThemeOption, setCheckedThemeOption] = useState(
     checkedThemeOptionVariant(mainColor, baseColor, mode),
@@ -194,7 +195,7 @@ export default function Header() {
                 <ul className="grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2 xxs:grid-cols-3">
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="primary-white-light-theme"
                       mainColor="primary"
                       baseColor="white"
@@ -205,7 +206,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="primary-radixGray-12-dark-theme"
                       mainColor="primary"
                       baseColor="radixGray-12"
@@ -216,7 +217,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixGray-7-radixGray-12-dark-theme"
                       mainColor="radixGray-7"
                       baseColor="radixGray-12"
@@ -227,7 +228,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixOlive-12-radixOlive-8-light-theme"
                       mainColor="radixOlive-12"
                       baseColor="radixOlive-8"
@@ -238,7 +239,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixGrass-10-radixGrass-5-light-theme"
                       mainColor="radixGrass-10"
                       baseColor="radixGrass-5"
@@ -249,7 +250,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixSand-10-white-light-theme"
                       mainColor="radixSand-10"
                       baseColor="white"
@@ -260,7 +261,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixRuby-9-radixGray-12-dark-theme"
                       mainColor="radixRuby-9"
                       baseColor="radixGray-12"
@@ -271,7 +272,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixIris-9-radixGray-12-dark-theme"
                       mainColor="radixIris-9"
                       baseColor="radixGray-12"
@@ -282,7 +283,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixCyan-9-radixCyan-12-dark-theme"
                       mainColor="radixCyan-9"
                       baseColor="radixCyan-12"
@@ -293,7 +294,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixGold-10-white-light-theme"
                       mainColor="radixGold-10"
                       baseColor="white"
@@ -304,7 +305,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixViolet-10-radixViolet-5-light-theme"
                       mainColor="radixViolet-10"
                       baseColor="radixViolet-5"
@@ -315,7 +316,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixRuby-8-radixRuby-5-light-theme"
                       mainColor="radixRuby-8"
                       baseColor="radixRuby-5"
@@ -326,7 +327,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixBrown-12-radixBrown-4-light-theme"
                       mainColor="radixBrown-12"
                       baseColor="radixBrown-4"
@@ -337,7 +338,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixLime-12-radixLime-4-light-theme"
                       mainColor="radixLime-12"
                       baseColor="radixLime-4"
@@ -348,7 +349,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixJade-3-radixJade-12-dark-theme"
                       mainColor="radixJade-3"
                       baseColor="radixJade-12"
@@ -359,7 +360,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixAmber-12-radixAmber-3-light-theme"
                       mainColor="radixAmber-12"
                       baseColor="radixAmber-3"
@@ -370,7 +371,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="radixSky-11-radixSky-3-light-theme"
                       mainColor="radixSky-11"
                       baseColor="radixSky-3"
@@ -381,7 +382,7 @@ export default function Header() {
                   </li>
                   <li>
                     <ThemeSelectButton
-                      name="theme-color"
+                      name={labelName}
                       id="tigersYellow-tigersBlack-dark-theme"
                       mainColor="tigersYellow"
                       baseColor="tigersBlack"

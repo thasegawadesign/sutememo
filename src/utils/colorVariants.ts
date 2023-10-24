@@ -1,62 +1,10 @@
-const radixColorList = [
-  'radixGray',
-  'radixMauve',
-  'radixMauve',
-  'radixSlate',
-  'radixSage',
-  'radixOlive',
-  'radixSand',
-  'radixTomato',
-  'radixRed',
-  'radixRuby',
-  'radixCrimson',
-  'radixPink',
-  'radixPlum',
-  'radixPurple',
-  'radixViolet',
-  'radixIris',
-  'radixIndigo',
-  'radixBlue',
-  'radixCyan',
-  'radixTeal',
-  'radixJade',
-  'radixGreen',
-  'radixGrass',
-  'radixBronze',
-  'radixGold',
-  'radixBrown',
-  'radixOrange',
-  'radixAmber',
-  'radixYellow',
-  'radixLime',
-  'radixMint',
-  'radixSky',
-  'radixBlack',
-  'radixWhite',
-] as const;
-
-type TailwindPrefix =
-  | 'bg-'
-  | 'hover:bg-'
-  | 'text-'
-  | 'border-'
-  | 'ring-'
-  | '!fill-';
-type RadixColorList = (typeof radixColorList)[number];
-type RadixScaleSolid = `${RadixColorList}-${number}`;
-type RadixScaleAlpha = `${RadixColorList}-a${number}`;
-type RadixScale = RadixScaleSolid | RadixScaleAlpha;
-type RadixScaleTailwind = `${TailwindPrefix}${RadixScale}`;
-
-type ColorList = {
-  [key in
-    | 'primary'
-    | 'black'
-    | 'white'
-    | 'tigersYellow'
-    | 'tigersBlack'
-    | RadixScale]: unknown;
-};
+import type {
+  ColorScaleList,
+  RadixScale,
+  RadixScaleTailwind,
+  TailwindPrefix,
+} from '@/types/ColorList';
+import { radixColorList } from './radixColorList';
 
 export const bgVariants: {
   [key: string]: string;
@@ -67,7 +15,7 @@ export const bgVariants: {
   tigersYellow: 'bg-tigersYellow',
   tigersBlack: 'bg-tigersBlack',
   ...generateRadixMappingObj('bg-'),
-} satisfies ColorList;
+} satisfies ColorScaleList;
 
 export const bgHoverVariants: {
   [key: string]: string;
@@ -78,7 +26,7 @@ export const bgHoverVariants: {
   tigersYellow: 'hover:bg-tigersYellow',
   tigersBlack: 'hover:bg-tigersBlack',
   ...generateRadixMappingObj('hover:bg-'),
-} satisfies ColorList;
+} satisfies ColorScaleList;
 
 export const colorVariants: {
   [key: string]: string;
@@ -89,7 +37,7 @@ export const colorVariants: {
   tigersYellow: 'text-tigersYellow',
   tigersBlack: 'text-tigersBlack',
   ...generateRadixMappingObj('text-'),
-} satisfies ColorList;
+} satisfies ColorScaleList;
 
 export const borderVariants: {
   [key: string]: string;
@@ -100,7 +48,7 @@ export const borderVariants: {
   tigersYellow: 'border-tigersYellow',
   tigersBlack: 'border-tigersBlack',
   ...generateRadixMappingObj('border-'),
-} satisfies ColorList;
+} satisfies ColorScaleList;
 
 export const ringVariants: {
   [key: string]: string;
@@ -111,7 +59,7 @@ export const ringVariants: {
   tigersYellow: 'ring-tigersYellow',
   tigersBlack: 'ring-tigersBlack',
   ...generateRadixMappingObj('ring-'),
-} satisfies ColorList;
+} satisfies ColorScaleList;
 
 export const fillVariants: {
   [key: string]: string;
@@ -122,7 +70,7 @@ export const fillVariants: {
   tigersYellow: '!fill-tigersYellow',
   tigersBlack: '!fill-tigersBlack',
   ...generateRadixMappingObj('!fill-'),
-} satisfies ColorList;
+} satisfies ColorScaleList;
 
 function generateRadixMappingObj(tailwindPrefix: TailwindPrefix) {
   const radixArr: [RadixScale, RadixScaleTailwind][] = [];

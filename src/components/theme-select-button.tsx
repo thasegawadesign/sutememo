@@ -4,12 +4,13 @@ import CheckedIcon from './checked-icon';
 import { Radio } from '@/contexts/material-providers';
 import { bgVariants } from '@/utils/colorVariants';
 import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
+import { ThemeId } from '@/types/ColorList';
 
 interface Props extends ThemeType {
-  id: string;
+  id: ThemeId;
   name: string;
-  checkedThemeOption: string;
-  setCheckedThemeOption: Dispatch<SetStateAction<string>>;
+  checkedThemeOption: ThemeId;
+  setCheckedThemeOption: Dispatch<SetStateAction<ThemeId>>;
 }
 
 export default function ThemeSelectButton(props: Props) {
