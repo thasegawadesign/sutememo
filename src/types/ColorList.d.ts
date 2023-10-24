@@ -35,3 +35,5 @@ export type TailwindPrefix =
 export type SafeList = {
   [key: string]: ColorList;
 };
+
+export type ThemeId = `${ColorList}-${ColorList}-${Mode}-theme`;
