@@ -1,5 +1,56 @@
+import { SafeTailwind, TailwindPrefix } from '@/types/ColorList';
 import type { Config } from 'tailwindcss';
 const withMT = require('@material-tailwind/react/utils/withMT');
+
+export const safeColorList = [
+  'primary',
+  'white',
+  'tigersYellow',
+  'tigersBlack',
+  'radixGray-7',
+  'radixGray-12',
+  'radixOlive-8',
+  'radixOlive-12',
+  'radixGrass-5',
+  'radixGrass-10',
+  'radixSand-10',
+  'radixRuby-5',
+  'radixRuby-8',
+  'radixRuby-9',
+  'radixIris-9',
+  'radixCyan-9',
+  'radixCyan-12',
+  'radixGold-10',
+  'radixViolet-5',
+  'radixViolet-10',
+  'radixBrown-4',
+  'radixBrown-12',
+  'radixLime-4',
+  'radixLime-12',
+  'radixJade-3',
+  'radixJade-12',
+  'radixAmber-3',
+  'radixAmber-12',
+  'radixSky-3',
+  'radixSky-11',
+] as const;
+
+const variants: TailwindPrefix[] = [
+  'bg-',
+  'hover:bg-',
+  'text-',
+  'border-',
+  'ring-',
+  '!fill-',
+];
+
+const tailwindSafelist: `"${SafeTailwind}"`[] = [];
+for (const color of safeColorList) {
+  for (const prefix of variants) {
+    const safeColorTailwind = `"${prefix}${color}"`;
+    tailwindSafelist.push(safeColorTailwind as `"${SafeTailwind}"`);
+  }
+}
 
 const config: Config = withMT({
   content: [
@@ -7,16 +58,7 @@ const config: Config = withMT({
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  safelist: [
-    {
-      pattern:
-        /(bg|hover:bg|text|border|ring|!fill)-(primary|tigersYellow|tigersBlack)/,
-    },
-    {
-      pattern:
-        /(bg|hover:bg|text|border|ring|!fill)-(radixGray|radixMauve|radixSlate|radixSage|radixOlive|radixSand|radixTomato|radixRed|radixRuby|radixCrimson|radixPink|radixPlum|radixPurple|radixViolet|radixIris|radixIndigo|radixBlue|radixCyan|radixTeal|radixJade|radixGreen|radixGrass|radixBronze|radixGold|radixBrown|radixOrange|radixAmber|radixYellow|radixLime|radixMint|radixSky|radixBlack|radixWhite)-(1|2|3|4|5|6|7|8|9|10|11|12|a1|a2|a3|a4|a5|a6|a7|a8|a9|a10|a11|a12)/,
-    },
-  ],
+  safelist: [`${tailwindSafelist.toString()}`],
   theme: {
     extend: {
       screens: {

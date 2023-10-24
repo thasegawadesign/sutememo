@@ -1,11 +1,12 @@
 'use client';
 
+import { SafeColorList } from '@/types/ColorList';
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 export type Mode = 'light' | 'dark';
 export interface ThemeType {
-  baseColor: string;
-  mainColor: string;
+  baseColor: SafeColorList;
+  mainColor: SafeColorList;
   mode: Mode;
 }
 
@@ -14,8 +15,8 @@ interface ThemeContextType extends ThemeType {
 }
 
 export const ThemeContext = createContext<ThemeContextType>({
-  baseColor: '',
-  mainColor: '',
+  baseColor: 'white',
+  mainColor: 'primary',
   mode: 'light',
   setTheme: () => {},
 });
