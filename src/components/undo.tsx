@@ -1,8 +1,8 @@
 import { ImUndo } from 'react-icons/im';
-import { Button } from '../contexts/material-providers';
+import { Button } from '@/contexts/material-providers';
 import { useContext } from 'react';
-import { ThemeContext } from '../contexts/theme-provider';
-import { bgVariants, colorVariants } from '../utils/colorVariants';
+import { ThemeContext } from '@/contexts/theme-provider';
+import { bgVariants, colorVariants } from '@/utils/colorVariants';
 
 type Props = {
   canUndo: boolean;
