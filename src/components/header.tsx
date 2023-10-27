@@ -25,6 +25,7 @@ import {
   borderVariants,
 } from '@/utils/colorVariants';
 import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
+import clsx from 'clsx';
 
 export default function Header() {
   const [deferredPrompt, setDeferredPrompt] =
@@ -131,9 +132,10 @@ export default function Header() {
         <Button
           onClick={openDrawer}
           variant="text"
-          className={`rounded-full p-3 text-[32px] ${
-            colorVariants[mainColor]
-          } ${mode === 'light' ? '' : 'hover:bg-gray-900'}`}
+          className={clsx(
+            `rounded-full p-3 text-[32px] ${colorVariants[mainColor]}`,
+            { 'hover:hover:bg-gray-900': mode === 'dark' },
+          )}
           ripple={false}
         >
           <GoGear />
@@ -143,19 +145,21 @@ export default function Header() {
           size={height}
           open={isOpenDrawer}
           onClose={closeDrawer}
-          className={`rounded-3xl transition-drawer duration-themeChange ${
-            bgVariants[baseColor]
-          } ${colorVariants[mainColor]} ${
-            isOpenDrawer
-              ? '!translate-y-[max(env(safe-area-inset-top),32px)]'
-              : '!translate-y-full'
-          }`}
+          className={clsx(
+            `rounded-3xl transition-drawer duration-themeChange ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
+            {
+              '!translate-y-[max(env(safe-area-inset-top),32px)]':
+                isOpenDrawer === true,
+              '!translate-y-full': isOpenDrawer === false,
+            },
+          )}
         >
           <div className="flex items-center justify-between px-2 pb-5 pt-3">
             <h2
-              className={`select-none pl-5 text-xl font-semibold ${
-                mode === 'light' ? 'text-gray-900' : 'text-white'
-              }`}
+              className={clsx('select-none pl-5 text-xl font-semibold', {
+                'text-gray-900': mode === 'light',
+                'text-white': mode === 'dark',
+              })}
             >
               設定
             </h2>
@@ -163,9 +167,9 @@ export default function Header() {
               variant="text"
               size="md"
               onClick={closeDrawer}
-              className={`rounded-full text-base text-blue-700 ${
-                mode === 'light' ? '' : 'hover:bg-gray-900'
-              }`}
+              className={clsx('rounded-full text-base text-blue-700', {
+                'hover:bg-gray-900': mode === 'dark',
+              })}
               ripple={false}
             >
               完了
@@ -178,13 +182,14 @@ export default function Header() {
             >
               <AccordionHeader
                 onClick={() => handleOpenAccordion(1)}
-                className={`rounded-lg border-none px-3 ${
-                  colorVariants[mainColor]
-                } hover:${colorVariants[mainColor]} ${
-                  mode === 'light'
-                    ? 'hover:bg-gray-900/10 active:bg-gray-900/20'
-                    : 'hover:bg-gray-900 active:bg-gray-800'
-                }`}
+                className={clsx(
+                  `rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]}`,
+                  {
+                    'hover:bg-gray-900/10 active:bg-gray-900/20':
+                      mode === 'light',
+                    'hover:bg-gray-900 active:bg-gray-800': mode === 'dark',
+                  },
+                )}
               >
                 <div className="flex items-center gap-5">
                   <BiSolidPencil />
@@ -400,11 +405,14 @@ export default function Header() {
             >
               <AccordionHeader
                 onClick={() => handleOpenAccordion(2)}
-                className={`rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} ${
-                  mode === 'light'
-                    ? 'hover:bg-gray-900/10 active:bg-gray-900/20'
-                    : 'hover:bg-gray-900 active:bg-gray-800'
-                }`}
+                className={clsx(
+                  `rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor}`,
+                  {
+                    'hover:bg-gray-900/10 active:bg-gray-900/20':
+                      mode === 'light',
+                    'hover:bg-gray-900 active:bg-gray-800': mode === 'dark',
+                  },
+                )}
               >
                 <div className="flex items-center gap-5">
                   <FaSearchPlus />
