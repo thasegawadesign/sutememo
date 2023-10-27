@@ -6,13 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write .",
     "lint": "next lint",
-    "format": "prettier --write .",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "npm run format",
+      "npm run format:check",
+      "npm run format:fix",
       "npm run lint"
     ]
   },
@@ -29,7 +31,7 @@
     "autoprefixer": "^10",
     "next": "~13.4",
     "next-pwa": "^5",
-    "postcss": "^8.4",
+    "postcss": "^8",
     "react": "~18.2",
     "react-device-detect": "^2",
     "react-dom": "~18.2",
