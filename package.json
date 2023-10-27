@@ -1,6 +1,6 @@
 {
   "name": "todoify",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,42 +17,42 @@
     ]
   },
   "dependencies": {
-    "@dnd-kit/core": "^6.0.8",
-    "@dnd-kit/sortable": "^7.0.2",
-    "@dnd-kit/utilities": "^3.2.1",
-    "@material-tailwind/react": "^2.1.4",
-    "@radix-ui/colors": "^3.0.0",
-    "@types/node": "20.6.5",
-    "@types/react": "18.2.22",
-    "@types/react-dom": "18.2.7",
-    "@vercel/og": "^0.5.17",
-    "autoprefixer": "10.4.16",
-    "eslint": "8.50.0",
-    "eslint-config-next": "13.5.2",
-    "next": "^13.4.19",
-    "next-pwa": "^5.6.0",
-    "postcss": "^8.4.31",
-    "react": "18.2.0",
-    "react-device-detect": "^2.2.3",
-    "react-dom": "18.2.0",
-    "react-icons": "^4.11.0",
-    "typescript": "5.2.2",
-    "uuid": "^9.0.1"
+    "@dnd-kit/core": "^6",
+    "@dnd-kit/sortable": "^7",
+    "@dnd-kit/utilities": "^3",
+    "@material-tailwind/react": "^2",
+    "@radix-ui/colors": "^3",
+    "@types/node": "^20",
+    "@types/react": "~18.2",
+    "@types/react-dom": "~18.2",
+    "@vercel/og": "~0.5",
+    "autoprefixer": "^10",
+    "next": "~13.4",
+    "next-pwa": "^5",
+    "postcss": "^8.4",
+    "react": "~18.2",
+    "react-device-detect": "^2",
+    "react-dom": "~18.2",
+    "react-icons": "^4",
+    "typescript": "^5",
+    "uuid": "^9"
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.4",
-    "eslint-config-prettier": "^9.0.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^14.0.1",
-    "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.5",
-    "tailwindcss": "^3.3.3"
+    "@types/uuid": "^9",
+    "eslint": "^8",
+    "eslint-config-next": "~13.4",
+    "eslint-config-prettier": "^9",
+    "husky": "^8",
+    "lint-staged": "^15",
+    "prettier": "^3",
+    "prettier-plugin-tailwindcss": "~0.5",
+    "tailwindcss": "~3.3"
   },
   "volta": {
-    "node": "18.18.0",
-    "npm": "9.8.1"
+    "node": "20.9.0",
+    "npm": "10.2.1"
   },
   "engines": {
-    "node": "18.x"
+    "node": "^20"
   }
 }
