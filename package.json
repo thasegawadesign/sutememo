@@ -29,6 +29,7 @@
     "@types/react-dom": "~18.2",
     "@vercel/og": "~0.5",
     "autoprefixer": "^10",
+    "clsx": "^2",
     "next": "~13.4",
     "next-pwa": "^5",
     "postcss": "^8",
