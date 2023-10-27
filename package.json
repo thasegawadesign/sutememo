@@ -1,6 +1,6 @@
 {
   "name": "todoify",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -49,10 +49,10 @@
     "tailwindcss": "~3.3"
   },
   "volta": {
-    "node": "20.9.0",
+    "node": "18.18.2",
     "npm": "10.2.1"
   },
   "engines": {
-    "node": "^20"
+    "node": "^18"
   }
 }
