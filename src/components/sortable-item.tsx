@@ -18,7 +18,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { isMobile, isTablet, isDesktop } from 'react-device-detect';
 import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
 import { bgVariants, ringVariants } from '@/utils/colorVariants';
-import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
+import { GoGrabber, GoX } from 'react-icons/go';
 import clsx from 'clsx';
 
 type Props = {
@@ -170,7 +170,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           color="white"
           ripple={false}
           className={clsx(
-            `self-stretch rounded px-3 py-4 text-2xl hover:cursor-grab sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+            `self-stretch rounded px-3 py-4 text-[26px] hover:cursor-grab sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
             {
               'text-gray-800 hover:brightness-95 active:brightness-90':
                 mode === 'light',
@@ -179,7 +179,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
             },
           )}
         >
-          <PiDotsSixVerticalBold />
+          <GoGrabber />
         </Button>
         <span
           ref={editableRef}
@@ -190,7 +190,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           inputMode="text"
           suppressContentEditableWarning
           className={clsx(
-            `max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-2xl leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-190px)] sm:rounded ${ringVariants[mainColor]}`,
+            `max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-lg leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-190px)] sm:rounded ${ringVariants[mainColor]}`,
             {
               'text-gray-900': mode === 'light',
               'text-gray-300': mode === 'dark',
@@ -226,7 +226,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           },
         )}
       >
-        <PiXBold />
+        <GoX />
       </Button>
     </li>
   );
