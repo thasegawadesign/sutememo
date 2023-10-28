@@ -11,7 +11,7 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div
-        className={`min-h-[100svh] overscroll-none pt-[env(safe-area-inset-top)] pwa:min-h-screen ${bgVariants[baseColor]}`}
+        className={`min-h-[100svh] pt-[env(safe-area-inset-top)] pwa:min-h-screen ${bgVariants[baseColor]}`}
       >
         {children}
       </div>

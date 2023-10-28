@@ -63,12 +63,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja">
+    <html lang="ja" className="overscroll-y-none">
       <head>
         <Analytics />
       </head>
       <body
-        className={`${notoSansJP.className} bg-radixGray-12 subpixel-antialiased`}
+        className={`${notoSansJP.className} overscroll-y-none bg-radixGray-12 subpixel-antialiased`}
         role="application"
       >
         <Providers>{children}</Providers>

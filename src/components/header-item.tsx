@@ -12,9 +12,7 @@ import {
 import { ThemeContext } from '@/contexts/theme-provider';
 import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-provider';
 import useWindowSize from '@/hooks/useWindowSize';
-import { BiSolidPencil } from 'react-icons/bi';
-import { FaSearchPlus } from 'react-icons/fa';
-import { GoGear } from 'react-icons/go';
+import { GoGear, GoPencil, GoZoomIn } from 'react-icons/go';
 import {
   bgVariants,
   colorVariants,
@@ -113,21 +111,21 @@ export default function HeaderItem() {
 
   return (
     <>
-      <div className="flex items-center justify-between px-[22px] pb-5 pt-3">
+      <div className="flex items-center justify-between pb-5 pl-[22px] pr-3 pt-2">
         <div className="flex items-center gap-2.5">
           <div
-            className={`hidden h-12 w-12 select-none items-center justify-center rounded-[24%] border p-3 text-center minimum:flex ${bgVariants[baseColor]} ${borderVariants[mainColor]}`}
+            className={`hidden h-8 w-8 select-none items-center justify-center rounded-[24%] border p-2 text-center minimum:flex ${bgVariants[baseColor]} ${borderVariants[mainColor]}`}
           >
             <IconSvg color={mainColor} />
           </div>
           <h1
             style={{ fontWeight: 800 }}
-            className={`select-none text-4xl ${colorVariants[mainColor]}`}
+            className={`select-none text-3xl ${colorVariants[mainColor]}`}
           >
             ToDo
           </h1>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-0.5">
           <AppInstallButton
             handleAppInstallButtonClick={handleAppInstallButtonClick}
           />
@@ -135,8 +133,9 @@ export default function HeaderItem() {
             onClick={openDrawer}
             variant="text"
             className={clsx(
-              `rounded-full p-3 text-[32px] ${colorVariants[mainColor]}`,
-              { 'hover:hover:bg-gray-900': mode === 'dark' },
+              `rounded-full p-3 text-[28px] ${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+              { 'hover:brightness-95 active:brightness-90': mode === 'light' },
+              { 'hover:brightness-110 active:brightness-125': mode === 'dark' },
             )}
             ripple={false}
           >
@@ -158,7 +157,7 @@ export default function HeaderItem() {
           >
             <div className="flex items-center justify-between px-2 pb-5 pt-3">
               <h2
-                className={clsx('select-none pl-5 text-xl font-semibold', {
+                className={clsx('select-none pl-5 text-lg font-semibold', {
                   'text-gray-900': mode === 'light',
                   'text-white': mode === 'dark',
                 })}
@@ -169,9 +168,17 @@ export default function HeaderItem() {
                 variant="text"
                 size="md"
                 onClick={closeDrawer}
-                className={clsx('rounded-full text-base text-blue-700', {
-                  'hover:bg-gray-900': mode === 'dark',
-                })}
+                className={clsx(
+                  `rounded-full text-base text-blue-700 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                  {
+                    'hover:brightness-95 active:brightness-90':
+                      mode === 'light',
+                  },
+                  {
+                    'hover:brightness-110 active:brightness-125':
+                      mode === 'dark',
+                  },
+                )}
                 ripple={false}
               >
                 完了
@@ -185,17 +192,18 @@ export default function HeaderItem() {
                 <AccordionHeader
                   onClick={() => handleOpenAccordion(1)}
                   className={clsx(
-                    `rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]}`,
+                    `rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
-                      'hover:bg-gray-900/10 active:bg-gray-900/20':
+                      'hover:brightness-95 active:brightness-90':
                         mode === 'light',
-                      'hover:bg-gray-900 active:bg-gray-800': mode === 'dark',
+                      'hover:brightness-110 active:brightness-125':
+                        mode === 'dark',
                     },
                   )}
                 >
-                  <div className="flex items-center gap-5">
-                    <BiSolidPencil />
-                    <span className="text-base">テーマカラーの変更</span>
+                  <div className="flex items-center gap-4">
+                    <GoPencil />
+                    <span className="text-base">テーマカラーの選択</span>
                   </div>
                 </AccordionHeader>
                 <AccordionBody className="px-2">
@@ -390,6 +398,17 @@ export default function HeaderItem() {
                     <li>
                       <ThemeSelectButton
                         name={labelName}
+                        id="radixOrange-10-radixPlum-12-dark-theme"
+                        mainColor="radixOrange-10"
+                        baseColor="radixPlum-12"
+                        mode="dark"
+                        checkedThemeOption={checkedThemeOption}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        name={labelName}
                         id="tigersYellow-a10-tigersBlack-a10-dark-theme"
                         mainColor="tigersYellow-a10"
                         baseColor="tigersBlack-a10"
@@ -408,17 +427,18 @@ export default function HeaderItem() {
                 <AccordionHeader
                   onClick={() => handleOpenAccordion(2)}
                   className={clsx(
-                    `rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor}`,
+                    `rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
-                      'hover:bg-gray-900/10 active:bg-gray-900/20':
+                      'hover:brightness-95 active:brightness-90':
                         mode === 'light',
-                      'hover:bg-gray-900 active:bg-gray-800': mode === 'dark',
+                      'hover:brightness-110 active:brightness-125':
+                        mode === 'dark',
                     },
                   )}
                 >
-                  <div className="flex items-center gap-5">
-                    <FaSearchPlus />
-                    <span className="text-base">文字サイズの変更</span>
+                  <div className="flex items-center gap-4 text-xl">
+                    <GoZoomIn />
+                    <span className="text-base">文字サイズの選択</span>
                   </div>
                 </AccordionHeader>
                 {/* <AccordionBody></AccordionBody> */}
