@@ -1,24 +1,23 @@
 import { radixColorList } from '@/utils/radixColorList';
-import { safeColorList } from '/tailwind.config';
+import { customColorList } from '@/utils/customColorList';
+import { safeColorList } from '../../tailwind.config';
 
 type RadixColorList = (typeof radixColorList)[number];
-type RadixScaleSolid = `${RadixColorList}-${number}`;
+type RadixScaleOpaque = `${RadixColorList}-${number}`;
 type RadixScaleAlpha = `${RadixColorList}-a${number}`;
-export type RadixScale = RadixScaleSolid | RadixScaleAlpha;
+export type RadixScale = RadixScaleOpaque | RadixScaleAlpha;
 export type RadixScaleTailwind = `${TailwindPrefix}${RadixScale}`;
+
+type CustomColorList = (typeof customColorList)[number];
+export type CustomScale = `${CustomColorList}-a${number}`;
+export type CustomScaleTailwind = `${TailwindPrefix}${CustomScale}`;
+
+export type ColorList = CustomColorList | RadixScale;
+export type SafeColorList = (typeof safeColorList)[number];
 export type SafeTailwind = `${TailwindPrefix}${SafeColorList}`;
 
-export type ColorList =
-  | 'primary'
-  | 'black'
-  | 'white'
-  | 'tigersYellow'
-  | 'tigersBlack'
-  | RadixScale;
-export type SafeColorList = (typeof safeColorList)[number];
-
 export type ColorScaleList = {
-  [key in ColorList]: unknown;
+  [key in SafeColorList]: unknown;
 };
 
 export type TailwindPrefix =
