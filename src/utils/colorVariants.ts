@@ -1,76 +1,66 @@
 import type {
-  ColorScaleList,
+  CustomScale,
+  CustomScaleTailwind,
   RadixScale,
   RadixScaleTailwind,
   TailwindPrefix,
 } from '@/types/ColorList';
 import { radixColorList } from '@/utils/radixColorList';
+import { customColorList } from '@/utils/customColorList';
 
 export const bgVariants: {
   [key: string]: string;
 } = {
-  primary: 'bg-primary',
-  black: 'bg-black',
   white: 'bg-white',
-  tigersYellow: 'bg-tigersYellow',
-  tigersBlack: 'bg-tigersBlack',
+  black: 'bg-black',
+  ...generateCustomMappingObj('bg-'),
   ...generateRadixMappingObj('bg-'),
-} satisfies ColorScaleList;
+};
 
 export const bgHoverVariants: {
   [key: string]: string;
 } = {
-  primary: 'hover:bg-primary',
-  black: 'hover-bg:black',
   white: 'hover-bg:white',
-  tigersYellow: 'hover:bg-tigersYellow',
-  tigersBlack: 'hover:bg-tigersBlack',
+  black: 'hover-bg:black',
+  ...generateCustomMappingObj('!fill-'),
   ...generateRadixMappingObj('hover:bg-'),
-} satisfies ColorScaleList;
+};
 
 export const colorVariants: {
   [key: string]: string;
 } = {
-  primary: 'text-primary',
-  black: 'text-black',
   white: 'text-white',
-  tigersYellow: 'text-tigersYellow',
-  tigersBlack: 'text-tigersBlack',
+  black: 'text-black',
+  ...generateCustomMappingObj('text-'),
   ...generateRadixMappingObj('text-'),
-} satisfies ColorScaleList;
+};
 
 export const borderVariants: {
   [key: string]: string;
 } = {
-  primary: 'border-primary',
-  black: 'border-black',
   white: 'border-white',
-  tigersYellow: 'border-tigersYellow',
-  tigersBlack: 'border-tigersBlack',
+  black: 'border-black',
+  ...generateCustomMappingObj('border-'),
   ...generateRadixMappingObj('border-'),
-} satisfies ColorScaleList;
+};
 
 export const ringVariants: {
   [key: string]: string;
 } = {
-  primary: 'ring-primary',
-  black: 'ring-black',
   white: 'ring-white',
-  tigersYellow: 'ring-tigersYellow',
-  tigersBlack: 'ring-tigersBlack',
+  black: 'ring-black',
+  ...generateCustomMappingObj('ring-'),
   ...generateRadixMappingObj('ring-'),
-} satisfies ColorScaleList;
+};
 
 export const fillVariants: {
   [key: string]: string;
 } = {
-  primary: '!fill-primary',
-  black: '!fill-black',
   white: '!fill-white',
-  tigersYellow: '!fill-tigersYellow',
-  tigersBlack: '!fill-tigersBlack',
+  black: '!fill-black',
+  ...generateCustomMappingObj('!fill-'),
   ...generateRadixMappingObj('!fill-'),
-} satisfies ColorScaleList;
+};
 
 function generateRadixMappingObj(tailwindPrefix: TailwindPrefix) {
   const radixArr: [RadixScale, RadixScaleTailwind][] = [];
@@ -86,4 +76,17 @@ function generateRadixMappingObj(tailwindPrefix: TailwindPrefix) {
     });
   });
   return Object.fromEntries(radixArr);
+}
+
+function generateCustomMappingObj(tailwindPrefix: TailwindPrefix) {
+  const customArr: [CustomScale, CustomScaleTailwind][] = [];
+  customColorList.map((customColor, i) => {
+    [...Array(10)].map((_, i) => {
+      const id = i + 1;
+      const key: CustomScale = `${customColor}-a${id}`;
+      const value: CustomScaleTailwind = `${tailwindPrefix}${key}`;
+      customArr.push([key, value]);
+    });
+  });
+  return Object.fromEntries(customArr);
 }
