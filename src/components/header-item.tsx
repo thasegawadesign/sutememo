@@ -398,6 +398,17 @@ export default function HeaderItem() {
                     <li>
                       <ThemeSelectButton
                         name={labelName}
+                        id="radixOrange-10-radixPlum-12-dark-theme"
+                        mainColor="radixOrange-10"
+                        baseColor="radixPlum-12"
+                        mode="dark"
+                        checkedThemeOption={checkedThemeOption}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        name={labelName}
                         id="tigersYellow-a10-tigersBlack-a10-dark-theme"
                         mainColor="tigersYellow-a10"
                         baseColor="tigersBlack-a10"
