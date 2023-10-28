@@ -1,8 +1,9 @@
-import { ImUndo } from 'react-icons/im';
-import { Button } from '@/contexts/material-providers';
 import { useContext } from 'react';
+import { Button } from '@/contexts/material-providers';
 import { ThemeContext } from '@/contexts/theme-provider';
 import { bgVariants, colorVariants } from '@/utils/colorVariants';
+import { ImUndo } from 'react-icons/im';
+import clsx from 'clsx';
 
 type Props = {
   canUndo: boolean;
@@ -22,15 +23,15 @@ export default function Undo(props: Props) {
         aria-label="Undo"
         role="button"
         color="white"
-        className={`!fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] left-[22px] rounded-full p-[26px] text-lg !shadow-none xs:p-7 xs:text-xl ${
-          canUndo
-            ? `${`${bgVariants[baseColor]} ${
-                colorVariants[mainColor]
-              } hover:brightness-[102%] ${
-                mode === 'light' ? 'hover:bg-gray-900/10' : 'hover:bg-gray-900'
-              }`}`
-            : `${`${bgVariants[baseColor]} ${colorVariants[mainColor]} opacity-30`}`
-        }`}
+        className={clsx(
+          `!fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] left-[22px] rounded-full p-[26px] text-lg !shadow-none xs:p-7 xs:text-xl ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
+          {
+            'hover:brightness-[102%]': canUndo === true,
+            'hover:bg-gray-900/10': canUndo && mode === 'light',
+            'hover:bg-gray-900': canUndo && mode === 'dark',
+            'opacity-30': canUndo === false,
+          },
+        )}
         ripple={canUndo}
         disabled={!canUndo}
         onClick={handleUndoClick}

@@ -1,23 +1,20 @@
-'use client';
-
-import { useContext } from 'react';
+import Screen from '@/components/screen';
 import Header from '@/components/header';
+import HeaderItem from '@/components/header-item';
 import Main from '@/components/main';
-import { ThemeContext } from '@/contexts/theme-provider';
-import { bgVariants } from '@/utils/colorVariants';
+import MainItem from '@/components/main-item';
 
 export default function Home() {
-  const theme = useContext(ThemeContext);
-  const { baseColor } = theme;
-
   return (
     <>
-      <div
-        className={`min-h-[100svh] overscroll-none pt-[env(safe-area-inset-top)] pwa:min-h-screen ${bgVariants[baseColor]}`}
-      >
-        <Header />
-        <Main />
-      </div>
+      <Screen>
+        <Header>
+          <HeaderItem />
+        </Header>
+        <Main>
+          <MainItem />
+        </Main>
+      </Screen>
     </>
   );
 }

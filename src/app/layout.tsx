@@ -68,7 +68,7 @@ export default function RootLayout({
         <Analytics />
       </head>
       <body
-        className={`bg-radixGray-12 ${notoSansJP.className}`}
+        className={`${notoSansJP.className} bg-radixGray-12 subpixel-antialiased`}
         role="application"
       >
         <Providers>{children}</Providers>

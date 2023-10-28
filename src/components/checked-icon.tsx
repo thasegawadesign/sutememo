@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { ThemeContext } from '@/contexts/theme-provider';
+import clsx from 'clsx';
 
 export default function CheckedIcon() {
   const theme = useContext(ThemeContext);
@@ -10,9 +11,10 @@ export default function CheckedIcon() {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={`h-full w-full scale-105 ${
-        mode === 'light' ? 'text-gray-900' : 'text-white'
-      }`}
+      className={clsx('h-full w-full scale-105', {
+        'text-gray-900': mode === 'light',
+        'text-white': mode === 'dark',
+      })}
     >
       <path
         fillRule="evenodd"

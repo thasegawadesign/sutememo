@@ -1,18 +1,20 @@
 {
   "name": "todoify",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write .",
     "lint": "next lint",
-    "format": "prettier --write .",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "npm run format",
+      "npm run format:check",
+      "npm run format:fix",
       "npm run lint"
     ]
   },
@@ -27,9 +29,10 @@
     "@types/react-dom": "~18.2",
     "@vercel/og": "~0.5",
     "autoprefixer": "^10",
+    "clsx": "^2",
     "next": "~13.4",
     "next-pwa": "^5",
-    "postcss": "^8.4",
+    "postcss": "^8",
     "react": "~18.2",
     "react-device-detect": "^2",
     "react-dom": "~18.2",
@@ -38,6 +41,7 @@
     "uuid": "^9"
   },
   "devDependencies": {
+    "@swc/core": "^1",
     "@types/uuid": "^9",
     "eslint": "^8",
     "eslint-config-next": "~13.4",
@@ -53,6 +57,6 @@
     "npm": "10.2.1"
   },
   "engines": {
-    "node": "^18"
+    "node": ">=18"
   }
 }
