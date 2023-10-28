@@ -1,6 +1,6 @@
 import Script from 'next/script';
 import { env } from 'process';
-import { minify } from 'terser';
+import { minify } from '@swc/core';
 
 export default async function Analytics() {
   const cookieDomain = env.COOKIE_DOMAIN;
@@ -115,7 +115,7 @@ export default async function Analytics() {
         async
         src={`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_ID}`}
       ></Script>
-      <Script id="ga">{minifiedCode}</Script>
+      <Script id="gtag">{minifiedCode}</Script>
     </>
   );
 }
