@@ -153,11 +153,11 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       style={style}
       role="listitem"
       className={clsx(
-        `flex items-center justify-between gap-1.5 rounded-md border px-1.5 py-2 sm:gap-2.5 sm:px-2 ${bgVariants[baseColor]}`,
+        `flex items-center justify-between gap-1.5 rounded-[10px] px-1.5 py-2 sm:gap-2.5 sm:px-2 ${bgVariants[baseColor]}`,
         {
           'opacity-30': isDragging === true,
-          'border-gray-100': mode === 'light',
-          'border-gray-900': mode === 'dark',
+          'text-gray-800 brightness-[1.03]': mode === 'light',
+          'text-gray-400 brightness-125': mode === 'dark',
         },
       )}
     >
