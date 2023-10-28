@@ -153,11 +153,11 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       style={style}
       role="listitem"
       className={clsx(
-        `flex items-center justify-between gap-1.5 rounded-md border px-1.5 py-2 sm:gap-2.5 sm:px-2 ${bgVariants[baseColor]}`,
+        `flex items-center justify-between gap-1.5 rounded-[10px] px-1.5 py-2 sm:gap-2.5 sm:px-2 ${bgVariants[baseColor]}`,
         {
           'opacity-30': isDragging === true,
-          'border-gray-100': mode === 'light',
-          'border-gray-900': mode === 'dark',
+          'text-gray-800 brightness-[1.03]': mode === 'light',
+          'text-gray-400 brightness-125': mode === 'dark',
         },
       )}
     >
@@ -170,10 +170,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           color="white"
           ripple={false}
           className={clsx(
-            `self-stretch rounded px-3 py-4 text-2xl hover:cursor-grab sm:px-4 sm:py-5`,
+            `self-stretch rounded px-3 py-4 text-2xl hover:cursor-grab sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
             {
-              'text-gray-800 hover:bg-gray-900/10': mode === 'light',
-              'text-gray-400 hover:bg-gray-900': mode === 'dark',
+              'text-gray-800 hover:brightness-95 active:brightness-90':
+                mode === 'light',
+              'text-gray-400 hover:brightness-125 active:brightness-150':
+                mode === 'dark',
             },
           )}
         >
@@ -214,11 +216,13 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         color="white"
         ripple={false}
         className={clsx(
-          `rounded px-3 py-4 text-xl hover:cursor-pointer active:brightness-95 sm:px-4 sm:py-5`,
+          `rounded px-3 py-4 text-xl hover:cursor-pointer sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
           {
             'self-stretch': isDesktop === true,
-            'text-gray-800 hover:bg-gray-900/10': mode === 'light',
-            'text-gray-400 hover:bg-gray-900': mode === 'dark',
+            'text-gray-800 hover:brightness-95 active:brightness-90':
+              mode === 'light',
+            'text-gray-400 hover:brightness-125 active:brightness-150':
+              mode === 'dark',
           },
         )}
       >

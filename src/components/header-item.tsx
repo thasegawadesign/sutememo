@@ -203,9 +203,9 @@ export default function HeaderItem() {
                     <li>
                       <ThemeSelectButton
                         name={labelName}
-                        id="primary-white-light-theme"
-                        mainColor="primary"
-                        baseColor="white"
+                        id="primary-a10-radixGray-2-light-theme"
+                        mainColor="primary-a10"
+                        baseColor="radixGray-2"
                         mode="light"
                         checkedThemeOption={checkedThemeOption}
                         setCheckedThemeOption={setCheckedThemeOption}
@@ -214,8 +214,8 @@ export default function HeaderItem() {
                     <li>
                       <ThemeSelectButton
                         name={labelName}
-                        id="primary-radixGray-12-dark-theme"
-                        mainColor="primary"
+                        id="primary-a10-radixGray-12-dark-theme"
+                        mainColor="primary-a10"
                         baseColor="radixGray-12"
                         mode="dark"
                         checkedThemeOption={checkedThemeOption}
@@ -258,9 +258,9 @@ export default function HeaderItem() {
                     <li>
                       <ThemeSelectButton
                         name={labelName}
-                        id="radixSand-10-white-light-theme"
+                        id="radixSand-10-radixGray-2-light-theme"
                         mainColor="radixSand-10"
-                        baseColor="white"
+                        baseColor="radixGray-2"
                         mode="light"
                         checkedThemeOption={checkedThemeOption}
                         setCheckedThemeOption={setCheckedThemeOption}
@@ -302,9 +302,9 @@ export default function HeaderItem() {
                     <li>
                       <ThemeSelectButton
                         name={labelName}
-                        id="radixGold-10-white-light-theme"
+                        id="radixGold-10-radixGray-2-light-theme"
                         mainColor="radixGold-10"
-                        baseColor="white"
+                        baseColor="radixGray-2"
                         mode="light"
                         checkedThemeOption={checkedThemeOption}
                         setCheckedThemeOption={setCheckedThemeOption}
@@ -390,9 +390,9 @@ export default function HeaderItem() {
                     <li>
                       <ThemeSelectButton
                         name={labelName}
-                        id="tigersYellow-tigersBlack-dark-theme"
-                        mainColor="tigersYellow"
-                        baseColor="tigersBlack"
+                        id="tigersYellow-a10-tigersBlack-a10-dark-theme"
+                        mainColor="tigersYellow-a10"
+                        baseColor="tigersBlack-a10"
                         mode="dark"
                         checkedThemeOption={checkedThemeOption}
                         setCheckedThemeOption={setCheckedThemeOption}
