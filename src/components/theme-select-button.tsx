@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useContext } from 'react';
+import { ThemeId } from '@/types/ColorList';
 import { ThemeContext, ThemeType } from '@/contexts/theme-provider';
-import CheckedIcon from './checked-icon';
 import { Radio } from '@/contexts/material-providers';
 import { bgVariants } from '@/utils/colorVariants';
 import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
-import { ThemeId } from '@/types/ColorList';
+import CheckedIcon from '@/components/checked-icon';
 
 interface Props extends ThemeType {
   id: ThemeId;
