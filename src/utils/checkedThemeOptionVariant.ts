@@ -1,5 +1,5 @@
-import { Mode } from '@/contexts/theme-provider';
 import { ColorList, ThemeId } from '@/types/ColorList';
+import { Mode } from '@/contexts/theme-provider';
 
 export const checkedThemeOptionVariant = (
   mainColor: ColorList,

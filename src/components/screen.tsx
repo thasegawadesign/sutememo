@@ -1,8 +1,8 @@
 'use client';
 
+import { useContext } from 'react';
 import { ThemeContext } from '@/contexts/theme-provider';
 import { bgVariants } from '@/utils/colorVariants';
-import { useContext } from 'react';
 
 export default function Screen({ children }: { children: React.ReactNode }) {
   const theme = useContext(ThemeContext);

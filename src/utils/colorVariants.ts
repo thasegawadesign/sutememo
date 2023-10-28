@@ -4,7 +4,7 @@ import type {
   RadixScaleTailwind,
   TailwindPrefix,
 } from '@/types/ColorList';
-import { radixColorList } from './radixColorList';
+import { radixColorList } from '@/utils/radixColorList';
 
 export const bgVariants: {
   [key: string]: string;
