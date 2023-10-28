@@ -4,6 +4,7 @@ import {
   ThemeProvider,
   Button,
   Drawer,
+  DrawerStylesType,
   Accordion,
   AccordionHeader,
   AccordionBody,
@@ -19,3 +20,4 @@ export {
   AccordionBody,
   Radio,
 };
+export type { DrawerStylesType };
