@@ -135,8 +135,9 @@ export default function HeaderItem() {
             onClick={openDrawer}
             variant="text"
             className={clsx(
-              `rounded-full p-3 text-[32px] ${colorVariants[mainColor]}`,
-              { 'hover:hover:bg-gray-900': mode === 'dark' },
+              `rounded-full p-3 text-[32px] ${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+              { 'hover:brightness-95 active:brightness-90': mode === 'light' },
+              { 'hover:brightness-110 active:brightness-125': mode === 'dark' },
             )}
             ripple={false}
           >
@@ -169,9 +170,17 @@ export default function HeaderItem() {
                 variant="text"
                 size="md"
                 onClick={closeDrawer}
-                className={clsx('rounded-full text-base text-blue-700', {
-                  'hover:bg-gray-900': mode === 'dark',
-                })}
+                className={clsx(
+                  `rounded-full text-base text-blue-700 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                  {
+                    'hover:brightness-95 active:brightness-90':
+                      mode === 'light',
+                  },
+                  {
+                    'hover:brightness-110 active:brightness-125':
+                      mode === 'dark',
+                  },
+                )}
                 ripple={false}
               >
                 完了
@@ -185,11 +194,12 @@ export default function HeaderItem() {
                 <AccordionHeader
                   onClick={() => handleOpenAccordion(1)}
                   className={clsx(
-                    `rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]}`,
+                    `rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
-                      'hover:bg-gray-900/10 active:bg-gray-900/20':
+                      'hover:brightness-95 active:brightness-90':
                         mode === 'light',
-                      'hover:bg-gray-900 active:bg-gray-800': mode === 'dark',
+                      'hover:brightness-110 active:brightness-125':
+                        mode === 'dark',
                     },
                   )}
                 >
@@ -408,11 +418,12 @@ export default function HeaderItem() {
                 <AccordionHeader
                   onClick={() => handleOpenAccordion(2)}
                   className={clsx(
-                    `rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor}`,
+                    `rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
-                      'hover:bg-gray-900/10 active:bg-gray-900/20':
+                      'hover:brightness-95 active:brightness-90':
                         mode === 'light',
-                      'hover:bg-gray-900 active:bg-gray-800': mode === 'dark',
+                      'hover:brightness-110 active:brightness-125':
+                        mode === 'dark',
                     },
                   )}
                 >
