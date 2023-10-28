@@ -18,15 +18,6 @@ export const bgVariants: {
   ...generateRadixMappingObj('bg-'),
 };
 
-// export const bgHoverVariants: {
-//   [key: string]: string;
-// } = {
-//   white: 'hover-bg:white',
-//   black: 'hover-bg:black',
-//   ...generateCustomMappingObj('hover:bg-'),
-//   ...generateRadixMappingObj('hover:bg-'),
-// };
-
 export const colorVariants: {
   [key: string]: string;
 } = {
