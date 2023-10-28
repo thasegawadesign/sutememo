@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Button } from '@/contexts/material-providers';
 import { ThemeContext } from '@/contexts/theme-provider';
 import { bgVariants, colorVariants } from '@/utils/colorVariants';
-import { ImUndo } from 'react-icons/im';
+import { GoReply } from 'react-icons/go';
 import clsx from 'clsx';
 
 type Props = {
@@ -24,7 +24,7 @@ export default function Undo(props: Props) {
         role="button"
         color="white"
         className={clsx(
-          `!fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] left-[22px] rounded-full p-[26px] text-lg !shadow-none xs:p-7 xs:text-xl ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
+          `!fixed bottom-[max(calc(env(safe-area-inset-bottom)+64px),84px)] left-[16px] rounded-full p-5 text-xl !shadow-none xs:p-7 xs:text-xl ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
           {
             'hover:brightness-95 active:brightness-90':
               canUndo && mode === 'light',
@@ -37,7 +37,7 @@ export default function Undo(props: Props) {
         disabled={!canUndo}
         onClick={handleUndoClick}
       >
-        <ImUndo />
+        <GoReply />
       </Button>
     </>
   );
