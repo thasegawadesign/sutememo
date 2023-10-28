@@ -1,9 +1,3 @@
-import { CSS } from '@dnd-kit/utilities';
-import { useSortable } from '@dnd-kit/sortable';
-import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
-import { isMobile, isTablet, isDesktop } from 'react-device-detect';
-import { Button } from '@/contexts/material-providers';
-
 import {
   Dispatch,
   FocusEvent,
@@ -17,9 +11,14 @@ import {
 } from 'react';
 import { Todo } from '@/types/Todo';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
-import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
+import { Button } from '@/contexts/material-providers';
 import { ThemeContext } from '@/contexts/theme-provider';
+import { CSS } from '@dnd-kit/utilities';
+import { useSortable } from '@dnd-kit/sortable';
+import { isMobile, isTablet, isDesktop } from 'react-device-detect';
+import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
 import { bgVariants, ringVariants } from '@/utils/colorVariants';
+import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
 import clsx from 'clsx';
 
 type Props = {

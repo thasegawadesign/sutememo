@@ -1,6 +1,16 @@
 'use client';
 
 import {
+  Dispatch,
+  MutableRefObject,
+  RefObject,
+  SetStateAction,
+  useId,
+  useState,
+} from 'react';
+import type { Todo } from '@/types/Todo';
+import { IndexedDBResult } from '@/types/IndexedDBResult';
+import {
   DndContext,
   DragEndEvent,
   DragOverlay,
@@ -19,24 +29,14 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import type { Todo } from '@/types/Todo';
-import {
-  Dispatch,
-  MutableRefObject,
-  RefObject,
-  SetStateAction,
-  useId,
-  useState,
-} from 'react';
-import SortableItem from './sortable-item';
 import { isMobile } from 'react-device-detect';
-import { IndexedDBResult } from '@/types/IndexedDBResult';
 import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
 import {
   findDisplayOrder,
   findIndex,
   findName,
 } from '@/utils/findTodoTargetKey';
+import SortableItem from '@/components/sortable-item';
 
 type Props = {
   todos: Todo[];
