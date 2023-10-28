@@ -26,9 +26,10 @@ export default function Redo(props: Props) {
         className={clsx(
           `!fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] right-[22px] rounded-full p-[26px] text-lg !shadow-none xs:p-7 xs:text-xl ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
           {
-            'hover:brightness-[102%]': canRedo === true,
-            'hover:bg-gray-900/10': canRedo && mode === 'light',
-            'hover:bg-gray-900': canRedo && mode === 'dark',
+            'hover:brightness-95 active:brightness-90':
+              canRedo && mode === 'light',
+            'hover:brightness-125 active:brightness-150':
+              canRedo && mode === 'dark',
             'opacity-30': canRedo === false,
           },
         )}

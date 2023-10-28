@@ -26,9 +26,10 @@ export default function Undo(props: Props) {
         className={clsx(
           `!fixed bottom-[max(calc(env(safe-area-inset-bottom)+72px),94px)] left-[22px] rounded-full p-[26px] text-lg !shadow-none xs:p-7 xs:text-xl ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
           {
-            'hover:brightness-[102%]': canUndo === true,
-            'hover:bg-gray-900/10': canUndo && mode === 'light',
-            'hover:bg-gray-900': canUndo && mode === 'dark',
+            'hover:brightness-95 active:brightness-90':
+              canUndo && mode === 'light',
+            'hover:brightness-125 active:brightness-150':
+              canUndo && mode === 'dark',
             'opacity-30': canUndo === false,
           },
         )}
