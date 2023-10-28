@@ -1,9 +1,3 @@
-import { CSS } from '@dnd-kit/utilities';
-import { useSortable } from '@dnd-kit/sortable';
-import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
-import { isMobile, isTablet, isDesktop } from 'react-device-detect';
-import { Button } from '@/contexts/material-providers';
-
 import {
   Dispatch,
   FocusEvent,
@@ -17,9 +11,15 @@ import {
 } from 'react';
 import { Todo } from '@/types/Todo';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
-import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
+import { Button } from '@/contexts/material-providers';
 import { ThemeContext } from '@/contexts/theme-provider';
+import { CSS } from '@dnd-kit/utilities';
+import { useSortable } from '@dnd-kit/sortable';
+import { isMobile, isTablet, isDesktop } from 'react-device-detect';
+import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
 import { bgVariants, ringVariants } from '@/utils/colorVariants';
+import { PiDotsSixVerticalBold, PiXBold } from 'react-icons/pi';
+import clsx from 'clsx';
 
 type Props = {
   id: string;
@@ -152,11 +152,14 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       ref={setNodeRef}
       style={style}
       role="listitem"
-      className={`flex items-center justify-between gap-1.5 rounded-md border px-1.5 py-2 sm:gap-2.5 sm:px-2 ${
-        bgVariants[baseColor]
-      } ${isDragging && 'opacity-30'} ${
-        mode === 'light' ? 'border-gray-100 ' : 'border-gray-900'
-      }`}
+      className={clsx(
+        `flex items-center justify-between gap-1.5 rounded-md border px-1.5 py-2 sm:gap-2.5 sm:px-2 ${bgVariants[baseColor]}`,
+        {
+          'opacity-30': isDragging === true,
+          'border-gray-100': mode === 'light',
+          'border-gray-900': mode === 'dark',
+        },
+      )}
     >
       <div className="flex flex-1 items-center gap-1.5 sm:gap-2.5">
         <Button
@@ -166,11 +169,13 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           variant="text"
           color="white"
           ripple={false}
-          className={`self-stretch rounded px-3 py-4 text-2xl hover:cursor-grab sm:px-4 sm:py-5 ${
-            mode === 'light'
-              ? 'text-gray-800 hover:bg-gray-900/10'
-              : 'text-gray-400 hover:bg-gray-900'
-          }`}
+          className={clsx(
+            `self-stretch rounded px-3 py-4 text-2xl hover:cursor-grab sm:px-4 sm:py-5`,
+            {
+              'text-gray-800 hover:bg-gray-900/10': mode === 'light',
+              'text-gray-400 hover:bg-gray-900': mode === 'dark',
+            },
+          )}
         >
           <PiDotsSixVerticalBold />
         </Button>
@@ -182,9 +187,13 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           contentEditable
           inputMode="text"
           suppressContentEditableWarning
-          className={`max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-2xl leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-190px)] sm:rounded ${
-            mode === 'light' ? 'text-gray-900' : 'text-gray-300'
-          } ${ringVariants[mainColor]}`}
+          className={clsx(
+            `max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-2xl leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-190px)] sm:rounded ${ringVariants[mainColor]}`,
+            {
+              'text-gray-900': mode === 'light',
+              'text-gray-300': mode === 'dark',
+            },
+          )}
         >
           {name}
         </span>
@@ -204,13 +213,14 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         variant="text"
         color="white"
         ripple={false}
-        className={`rounded px-3 py-4 text-xl hover:cursor-pointer active:brightness-95 sm:px-4 sm:py-5 ${
-          isDesktop && 'self-stretch'
-        } ${
-          mode === 'light'
-            ? 'text-gray-800 hover:bg-gray-900/10'
-            : 'text-gray-400 hover:bg-gray-900'
-        }`}
+        className={clsx(
+          `rounded px-3 py-4 text-xl hover:cursor-pointer active:brightness-95 sm:px-4 sm:py-5`,
+          {
+            'self-stretch': isDesktop === true,
+            'text-gray-800 hover:bg-gray-900/10': mode === 'light',
+            'text-gray-400 hover:bg-gray-900': mode === 'dark',
+          },
+        )}
       >
         <PiXBold />
       </Button>

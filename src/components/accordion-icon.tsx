@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 export default function AccorionIcon({
   id,
   open,
@@ -12,9 +14,9 @@ export default function AccorionIcon({
       viewBox="0 0 24 24"
       strokeWidth={2.5}
       stroke="currentColor"
-      className={`${
-        id === open ? '-rotate-180' : ''
-      } h-5 w-5 transition-transform`}
+      className={clsx('h-5 w-5 transition-transform', {
+        '-rotate-180': id === open,
+      })}
     >
       <path
         strokeLinecap="round"
