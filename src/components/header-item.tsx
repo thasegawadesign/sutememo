@@ -111,7 +111,7 @@ export default function HeaderItem() {
 
   return (
     <>
-      <div className="flex items-center justify-between pb-5 pl-[22px] pr-3 pt-3">
+      <div className="flex items-center justify-between pb-5 pl-[22px] pr-3 pt-2">
         <div className="flex items-center gap-2.5">
           <div
             className={`hidden h-8 w-8 select-none items-center justify-center rounded-[24%] border p-2 text-center minimum:flex ${bgVariants[baseColor]} ${borderVariants[mainColor]}`}
