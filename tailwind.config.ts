@@ -2,6 +2,13 @@ import { SafeTailwind, TailwindPrefix } from '@/types/ColorList';
 import type { Config } from 'tailwindcss';
 const withMT = require('@material-tailwind/react/utils/withMT');
 
+export const RADIX_COLOR_STEP = 12;
+export const CUSTOM_COLOR_STEP = 10;
+
+export const primary = '#208cd8';
+const tigersYellow = '#f7da07';
+const tigersBlack = '#060606';
+
 export const safeColorList = [
   'white',
   'black',
@@ -52,12 +59,6 @@ for (const color of safeColorList) {
     tailwindSafelist.push(safeColorTailwind as `"${SafeTailwind}"`);
   }
 }
-
-const white = '#ffffff';
-const black = '#000000';
-const primary = '#208cd8';
-const tigersYellow = '#f7da07';
-const tigersBlack = '#060606';
 
 const config: Config = withMT({
   content: [
@@ -129,7 +130,7 @@ const config: Config = withMT({
 export default config;
 
 function generateRadixScale(name: string) {
-  let scale = Array.from({ length: 12 }, (_, i) => {
+  let scale = Array.from({ length: RADIX_COLOR_STEP }, (_, i) => {
     let id = i + 1;
     return [
       [id, `var(--${name}-${id})`],
@@ -140,7 +141,7 @@ function generateRadixScale(name: string) {
 }
 
 function generateCustomeScale(color: string) {
-  let scale = Array.from({ length: 10 }, (_, i) => {
+  let scale = Array.from({ length: CUSTOM_COLOR_STEP }, (_, i) => {
     let id = i + 1;
     return getCustomOpacity(id, color);
   });
