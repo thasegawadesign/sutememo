@@ -15,6 +15,7 @@ export const safeColorList = [
   'primary-a10',
   'tigersYellow-a10',
   'tigersBlack-a10',
+  'radixGray-2',
   'radixGray-7',
   'radixGray-12',
   'radixOlive-8',

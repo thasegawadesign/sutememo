@@ -126,7 +126,7 @@ export default function TodoList(props: Props) {
     >
       <SortableContext items={todos} strategy={verticalListSortingStrategy}>
         <div className="px-[22px]">
-          <ul className="grid touch-none gap-3">
+          <ul className="grid touch-none gap-4">
             {todos.map((todo) => (
               <SortableItem
                 key={todo.id}
