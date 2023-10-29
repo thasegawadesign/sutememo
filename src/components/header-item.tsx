@@ -2,8 +2,15 @@
 
 import { ReloadIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { GoGear, GoPencil, GoZoomIn } from 'react-icons/go';
+import {
+  MouseEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { GoGear, GoInfo, GoZoomIn } from 'react-icons/go';
+import { VscSymbolColor } from 'react-icons/vsc';
 
 import AccorionIcon from '@/components/accordion-icon';
 import AppInstallButton from '@/components/app-install-button';
@@ -29,7 +36,10 @@ import {
 } from '@/utils/colorVariants';
 import { customColorList } from '@/utils/customColorList';
 
+const packageJson = require('package.json');
+
 export default function HeaderItem() {
+  const appVersion = packageJson.version;
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
 
@@ -86,7 +96,7 @@ export default function HeaderItem() {
   const openDrawer = () => setIsOpenDrawer(true);
   const closeDrawer = () => setIsOpenDrawer(false);
 
-  const [openAccordion, setOpenAccordion] = useState(1);
+  const [openAccordion, setOpenAccordion] = useState(0);
   const handleOpenAccordion = (value: number) =>
     setOpenAccordion(openAccordion === value ? 0 : value);
 
@@ -131,6 +141,10 @@ export default function HeaderItem() {
     },
     [setShowAppInstallButton],
   );
+
+  const handleReloadButtonClick = useCallback(() => {
+    location.reload();
+  }, []);
 
   useEffect(() => {
     if (!globalThis.window) return;
@@ -249,7 +263,9 @@ export default function HeaderItem() {
                   onClick={() => handleOpenAccordion(1)}
                 >
                   <div className="flex items-center gap-4">
-                    <GoPencil />
+                    <span className="shrink-0">
+                      <VscSymbolColor />
+                    </span>
                     <span className="text-base">テーマカラーの選択</span>
                   </div>
                 </AccordionHeader>
@@ -484,15 +500,75 @@ export default function HeaderItem() {
                   onClick={() => handleOpenAccordion(2)}
                 >
                   <div className="flex items-center gap-4 text-xl">
-                    <GoZoomIn />
+                    <span className="shrink-0">
+                      <GoZoomIn />
+                    </span>
                     <span className="text-base">文字サイズの選択</span>
                   </div>
                 </AccordionHeader>
                 {/* <AccordionBody></AccordionBody> */}
               </Accordion>
-              {/* <Button variant="text">
-                <ReloadIcon />
-              </Button> */}
+              <Accordion
+                icon={<AccorionIcon id={3} open={openAccordion} />}
+                open={openAccordion === 3}
+              >
+                <AccordionHeader
+                  className={clsx(
+                    `rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    {
+                      'hover:brightness-95 active:brightness-90':
+                        mode === 'light',
+                      'hover:brightness-110 active:brightness-125':
+                        mode === 'dark',
+                    },
+                  )}
+                  onClick={() => handleOpenAccordion(3)}
+                >
+                  <div className="flex items-center gap-4 text-xl">
+                    <span className="shrink-0">
+                      <GoInfo />
+                    </span>
+                    <span className="text-base">アプリ情報</span>
+                  </div>
+                </AccordionHeader>
+                <AccordionBody>
+                  <div className="grid gap-5 px-5">
+                    <dl
+                      className={clsx(
+                        'flex items-center justify-between px-3',
+                        {
+                          'text-gray-900': mode === 'light',
+                          'text-white-a10': mode === 'dark',
+                        },
+                      )}
+                    >
+                      <dt className="text-base font-semibold">
+                        現在のバージョン
+                      </dt>
+                      <dd className="text-sm font-medium">{appVersion}</dd>
+                    </dl>
+                    <Button
+                      ripple={false}
+                      variant="text"
+                      className={clsx(
+                        `flex items-center justify-center gap-3 px-3 py-4 text-${baseColor} ${bgVariants[mainColor]} hover:${bgVariants[mainColor]} active:${bgVariants[mainColor]}`,
+                        {
+                          'hover:brightness-95 active:brightness-90':
+                            mode === 'light',
+                          'hover:brightness-110 active:brightness-125':
+                            mode === 'dark',
+                        },
+                      )}
+                      onClick={handleReloadButtonClick}
+                    >
+                      <ReloadIcon className="h-[18px] w-[18px] shrink-0" />
+                      <span className="text-base font-semibold">
+                        アプリケーションを更新する
+                      </span>
+                    </Button>
+                  </div>
+                </AccordionBody>
+              </Accordion>
             </div>
           </Drawer>
         </div>
