@@ -1,6 +1,7 @@
 'use client';
 
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
+
 import { SafeColorList } from '@/types/ColorList';
 
 export type Mode = 'light' | 'dark';

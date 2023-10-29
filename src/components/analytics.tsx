@@ -1,6 +1,7 @@
-import Script from 'next/script';
 import { env } from 'process';
+
 import { minify } from '@swc/core';
+import Script from 'next/script';
 
 export default async function Analytics() {
   const cookieDomain = env.COOKIE_DOMAIN;

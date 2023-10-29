@@ -1,16 +1,6 @@
 'use client';
 
 import {
-  Dispatch,
-  MutableRefObject,
-  RefObject,
-  SetStateAction,
-  useId,
-  useState,
-} from 'react';
-import type { Todo } from '@/types/Todo';
-import { IndexedDBResult } from '@/types/IndexedDBResult';
-import {
   DndContext,
   DragEndEvent,
   DragOverlay,
@@ -29,14 +19,26 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import {
+  Dispatch,
+  MutableRefObject,
+  RefObject,
+  SetStateAction,
+  useId,
+  useState,
+} from 'react';
 import { isMobile } from 'react-device-detect';
-import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
+
+import SortableItem from '@/components/sortable-item';
+import { IndexedDBResult } from '@/types/IndexedDBResult';
 import {
   findDisplayOrder,
   findIndex,
   findName,
 } from '@/utils/findTodoTargetKey';
-import SortableItem from '@/components/sortable-item';
+import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
+
+import type { Todo } from '@/types/Todo';
 
 type Props = {
   todos: Todo[];
@@ -117,12 +119,12 @@ export default function TodoList(props: Props) {
 
   return (
     <DndContext
-      sensors={sensors}
       collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragMove={handleDragMove}
-      onDragEnd={handleDragEnd}
       id={useId()}
+      sensors={sensors}
+      onDragEnd={handleDragEnd}
+      onDragMove={handleDragMove}
+      onDragStart={handleDragStart}
     >
       <SortableContext items={todos} strategy={verticalListSortingStrategy}>
         <div className="px-[22px]">
@@ -130,45 +132,45 @@ export default function TodoList(props: Props) {
             {todos.map((todo) => (
               <SortableItem
                 key={todo.id}
-                id={todo.id}
-                displayOrder={todo.displayOrder}
-                name={todo.name}
-                todos={todos}
-                editableRef={editableRef}
-                todosHistoryRef={todosHistoryRef}
-                todosHistoryCurrentIndex={todosHistoryCurrentIndex}
-                setCanUndo={setCanUndo}
-                setCanRedo={setCanRedo}
-                setTodos={setTodos}
-                updatePartialIndexedDB={updatePartialIndexedDB}
-                updateAllIndexedDB={updateAllIndexedDB}
                 deleteIndexedDB={deleteIndexedDB}
+                displayOrder={todo.displayOrder}
+                editableRef={editableRef}
+                id={todo.id}
+                name={todo.name}
+                setCanRedo={setCanRedo}
+                setCanUndo={setCanUndo}
+                setTodos={setTodos}
+                todos={todos}
+                todosHistoryCurrentIndex={todosHistoryCurrentIndex}
+                todosHistoryRef={todosHistoryRef}
+                updateAllIndexedDB={updateAllIndexedDB}
+                updatePartialIndexedDB={updatePartialIndexedDB}
               />
             ))}
           </ul>
         </div>
       </SortableContext>
       <DragOverlay
-        wrapperElement="ul"
         className="shadow-sm"
         style={{ scale: isMobile ? 1.032 : 1.016 }}
+        wrapperElement="ul"
       >
         {activeId ? (
           <SortableItem
             key={activeId}
-            id={activeId}
+            deleteIndexedDB={deleteIndexedDB}
             displayOrder={findDisplayOrder(todos, activeId)}
-            name={findName(todos, activeId)}
-            todos={todos}
             editableRef={editableRef}
-            todosHistoryRef={todosHistoryRef}
-            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
-            setCanUndo={setCanUndo}
+            id={activeId}
+            name={findName(todos, activeId)}
             setCanRedo={setCanRedo}
+            setCanUndo={setCanUndo}
             setTodos={setTodos}
+            todos={todos}
+            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
+            todosHistoryRef={todosHistoryRef}
             updateAllIndexedDB={updateAllIndexedDB}
             updatePartialIndexedDB={updatePartialIndexedDB}
-            deleteIndexedDB={deleteIndexedDB}
           />
         ) : null}
       </DragOverlay>

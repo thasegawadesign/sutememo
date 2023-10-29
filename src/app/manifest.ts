@@ -1,5 +1,6 @@
-import { MetadataRoute } from 'next';
 import { env } from 'process';
+
+import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   const baseURL = env.BASE_URL;
