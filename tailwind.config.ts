@@ -19,6 +19,7 @@ export const themeColor = '#202020';
 export const safeColorList = [
   'white-a10',
   'black-a5',
+  'black-a6',
   'black-a10',
   'primary-a6',
   'primary-a10',
