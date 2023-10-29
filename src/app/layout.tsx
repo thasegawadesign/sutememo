@@ -1,5 +1,6 @@
 import { env } from 'process';
 
+import { Viewport } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
 
 import Analytics from '@/components/analytics';
@@ -13,10 +14,17 @@ const creator = env.CREATOR;
 const authorName = env.ATHOR_NAME;
 const authorURL = env.ATHOR_URL;
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#191919',
+};
+
 export const metadata: Metadata = {
   title: 'Todoify',
   description: 'Todoアプリケーション',
-  viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
   metadataBase: new URL(baseURL as string),
   manifest: `${baseURL}/manifest.webmanifest`,
   applicationName: 'Todoify',
@@ -28,9 +36,6 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
     apple: '/icons/icon-192x192.png',
-  },
-  themeColor: {
-    color: '#191919',
   },
   authors: [
     {
@@ -66,12 +71,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html className="overscroll-y-none" lang="ja">
+    <html className="overscroll-none" lang="ja">
       <head>
         <Analytics />
       </head>
       <body
-        className={`${notoSansJP.className} overscroll-y-none bg-radixGray-12 subpixel-antialiased`}
+        className={`${notoSansJP.className} overscroll-none bg-radixGray-12 subpixel-antialiased`}
         role="application"
       >
         <Providers>{children}</Providers>
