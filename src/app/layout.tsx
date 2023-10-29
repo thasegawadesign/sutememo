@@ -1,19 +1,32 @@
 import { env } from 'process';
-import '@/globals.css';
-import type { Metadata } from 'next';
+
+import { Viewport } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
+
 import Analytics from '@/components/analytics';
+import '@/globals.css';
 import { Providers } from '@/providers';
+
+import { themeColor } from '../../tailwind.config';
+
+import type { Metadata } from 'next';
 
 const baseURL = env.BASE_URL;
 const creator = env.CREATOR;
 const authorName = env.ATHOR_NAME;
 const authorURL = env.ATHOR_URL;
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
+  themeColor: themeColor,
+};
+
 export const metadata: Metadata = {
   title: 'Todoify',
   description: 'Todoアプリケーション',
-  viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
   metadataBase: new URL(baseURL as string),
   manifest: `${baseURL}/manifest.webmanifest`,
   applicationName: 'Todoify',
@@ -25,9 +38,6 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
     apple: '/icons/icon-192x192.png',
-  },
-  themeColor: {
-    color: '#191919',
   },
   authors: [
     {
@@ -63,12 +73,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className="overscroll-y-none">
+    <html className="overscroll-none" lang="ja">
       <head>
         <Analytics />
       </head>
       <body
-        className={`${notoSansJP.className} overscroll-y-none bg-radixGray-12 subpixel-antialiased`}
+        className={`${notoSansJP.className} overscroll-none bg-radixGray-12 subpixel-antialiased`}
         role="application"
       >
         <Providers>{children}</Providers>

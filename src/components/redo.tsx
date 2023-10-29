@@ -1,9 +1,10 @@
+import clsx from 'clsx';
 import { useContext } from 'react';
+import { GoReply } from 'react-icons/go';
+
 import { Button } from '@/contexts/material-providers';
 import { ThemeContext } from '@/contexts/theme-provider';
 import { bgVariants, colorVariants } from '@/utils/colorVariants';
-import { GoReply } from 'react-icons/go';
-import clsx from 'clsx';
 
 type Props = {
   canRedo: boolean;
@@ -19,10 +20,12 @@ export default function Redo(props: Props) {
   return (
     <>
       <Button
-        tabIndex={0}
         aria-label="Undo"
-        role="button"
         color="white"
+        disabled={!canRedo}
+        ripple={canRedo}
+        role="button"
+        tabIndex={0}
         className={clsx(
           `!fixed bottom-[max(calc(env(safe-area-inset-bottom)+64px),84px)] right-[16px] -scale-x-100 rounded-full p-5 text-xl !shadow-none xs:p-7 xs:text-xl ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
           {
@@ -33,8 +36,6 @@ export default function Redo(props: Props) {
             'opacity-30': canRedo === false,
           },
         )}
-        ripple={canRedo}
-        disabled={!canRedo}
         onClick={handleRedoClick}
       >
         <GoReply />

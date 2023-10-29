@@ -1,3 +1,6 @@
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import clsx from 'clsx';
 import {
   Dispatch,
   FocusEvent,
@@ -9,17 +12,16 @@ import {
   MutableRefObject,
   useContext,
 } from 'react';
-import { Todo } from '@/types/Todo';
-import { IndexedDBResult } from '@/types/IndexedDBResult';
+import { isMobile, isTablet, isDesktop } from 'react-device-detect';
+import { GoGrabber, GoX } from 'react-icons/go';
+
 import { Button } from '@/contexts/material-providers';
 import { ThemeContext } from '@/contexts/theme-provider';
-import { CSS } from '@dnd-kit/utilities';
-import { useSortable } from '@dnd-kit/sortable';
-import { isMobile, isTablet, isDesktop } from 'react-device-detect';
-import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
+import { IndexedDBResult } from '@/types/IndexedDBResult';
+import { Todo } from '@/types/Todo';
 import { bgVariants, ringVariants } from '@/utils/colorVariants';
-import { GoGrabber, GoX } from 'react-icons/go';
-import clsx from 'clsx';
+import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
+
 
 type Props = {
   id: string;
@@ -150,8 +152,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   return (
     <li
       ref={setNodeRef}
-      style={style}
       role="listitem"
+      style={style}
       className={clsx(
         `flex items-center justify-between gap-1.5 rounded-[10px] px-1.5 py-2 sm:gap-2.5 sm:px-2 ${bgVariants[baseColor]}`,
         {
@@ -166,9 +168,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          variant="text"
           color="white"
           ripple={false}
+          variant="text"
           className={clsx(
             `self-stretch rounded px-3 py-4 text-[26px] hover:cursor-grab sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
             {
@@ -183,12 +185,10 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         </Button>
         <span
           ref={editableRef}
-          onBlur={handleBlurContentEditable}
-          onKeyDown={handleKeyDownContentEditable}
-          role="textbox"
           contentEditable
-          inputMode="text"
           suppressContentEditableWarning
+          inputMode="text"
+          role="textbox"
           className={clsx(
             `max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-lg leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-190px)] sm:rounded ${ringVariants[mainColor]}`,
             {
@@ -196,13 +196,15 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
               'text-gray-300': mode === 'dark',
             },
           )}
+          onBlur={handleBlurContentEditable}
+          onKeyDown={handleKeyDownContentEditable}
         >
           {name}
         </span>
         {(isMobile || isTablet) && (
           <button
-            className="flex-1 self-stretch bg-transparent"
             ref={setActivatorNodeRef}
+            className="flex-1 self-stretch bg-transparent"
             {...listeners}
             {...attributes}
             disabled
@@ -211,10 +213,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       </div>
       <Button
         aria-label={'Delete'}
-        onClick={handleDeleteButtonClick}
-        variant="text"
         color="white"
         ripple={false}
+        variant="text"
         className={clsx(
           `rounded px-3 py-4 text-xl hover:cursor-pointer sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
           {
@@ -225,6 +226,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
               mode === 'dark',
           },
         )}
+        onClick={handleDeleteButtonClick}
       >
         <GoX />
       </Button>

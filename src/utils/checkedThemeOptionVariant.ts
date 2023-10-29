@@ -1,5 +1,5 @@
-import { SafeColorList, ThemeId } from '@/types/ColorList';
 import { Mode } from '@/contexts/theme-provider';
+import { SafeColorList, ThemeId } from '@/types/ColorList';
 
 export const checkedThemeOptionVariant = (
   mainColor: SafeColorList,

@@ -1,9 +1,11 @@
 'use client';
 
 import React from 'react';
-import ThemeProvider from '@/contexts/theme-provider';
-import ShowAppInstallButtonProvider from '@/contexts/show-app-install-button-provider';
+
 import { ThemeProvider as MaterialThemeProvider } from '@/contexts/material-providers';
+import ShowAppInstallButtonProvider from '@/contexts/show-app-install-button-provider';
+import ThemeProvider from '@/contexts/theme-provider';
+
 import type { DrawerStylesType } from '@/contexts/material-providers';
 
 type CustomTheme = {
