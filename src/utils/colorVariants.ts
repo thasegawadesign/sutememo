@@ -1,3 +1,8 @@
+import { customColorList } from '@/utils/customColorList';
+import { radixColorList } from '@/utils/radixColorList';
+
+import { CUSTOM_COLOR_STEP, RADIX_COLOR_STEP } from '../../tailwind.config';
+
 import type {
   CustomScale,
   CustomScaleTailwind,
@@ -5,9 +10,6 @@ import type {
   RadixScaleTailwind,
   TailwindPrefix,
 } from '@/types/ColorList';
-import { radixColorList } from '@/utils/radixColorList';
-import { customColorList } from '@/utils/customColorList';
-import { CUSTOM_COLOR_STEP, RADIX_COLOR_STEP } from '../../tailwind.config';
 
 export const bgVariants: {
   [key: string]: string;
