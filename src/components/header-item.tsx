@@ -1,7 +1,13 @@
 'use client';
 
+import clsx from 'clsx';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
+import { GoGear, GoPencil, GoZoomIn } from 'react-icons/go';
+
+import AccorionIcon from '@/components/accordion-icon';
+import AppInstallButton from '@/components/app-install-button';
+import IconSvg from '@/components/icon-svg';
+import ThemeSelectButton from '@/components/theme-select-button';
 import {
   Accordion,
   AccordionBody,
@@ -9,22 +15,16 @@ import {
   Button,
   Drawer,
 } from '@/contexts/material-providers';
-import { ThemeContext } from '@/contexts/theme-provider';
 import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-provider';
+import { ThemeContext } from '@/contexts/theme-provider';
 import useWindowSize from '@/hooks/useWindowSize';
-import { GoGear, GoPencil, GoZoomIn } from 'react-icons/go';
+import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
+import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
 import {
   bgVariants,
   colorVariants,
   borderVariants,
 } from '@/utils/colorVariants';
-import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
-import clsx from 'clsx';
-
-import ThemeSelectButton from '@/components/theme-select-button';
-import AppInstallButton from '@/components/app-install-button';
-import IconSvg from '@/components/icon-svg';
-import AccorionIcon from '@/components/accordion-icon';
 
 export default function HeaderItem() {
   const [deferredPrompt, setDeferredPrompt] =
@@ -119,8 +119,8 @@ export default function HeaderItem() {
             <IconSvg color={mainColor} />
           </div>
           <h1
-            style={{ fontWeight: 800 }}
             className={`select-none text-3xl ${colorVariants[mainColor]}`}
+            style={{ fontWeight: 800 }}
           >
             ToDo
           </h1>
@@ -130,22 +130,21 @@ export default function HeaderItem() {
             handleAppInstallButtonClick={handleAppInstallButtonClick}
           />
           <Button
-            onClick={openDrawer}
+            ripple={false}
             variant="text"
             className={clsx(
               `rounded-full p-3 text-[28px] ${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
               { 'hover:brightness-95 active:brightness-90': mode === 'light' },
               { 'hover:brightness-110 active:brightness-125': mode === 'dark' },
             )}
-            ripple={false}
+            onClick={openDrawer}
           >
             <GoGear />
           </Button>
           <Drawer
+            open={isOpenDrawer}
             placement="bottom"
             size={height}
-            open={isOpenDrawer}
-            onClose={closeDrawer}
             className={clsx(
               `rounded-3xl transition-drawer duration-themeChange ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
               {
@@ -154,6 +153,7 @@ export default function HeaderItem() {
                 '!translate-y-full': isOpenDrawer === false,
               },
             )}
+            onClose={closeDrawer}
           >
             <div className="flex items-center justify-between px-2 pb-5 pt-3">
               <h2
@@ -165,9 +165,9 @@ export default function HeaderItem() {
                 設定
               </h2>
               <Button
-                variant="text"
+                ripple={false}
                 size="md"
-                onClick={closeDrawer}
+                variant="text"
                 className={clsx(
                   `rounded-full text-base text-blue-700 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                   {
@@ -179,18 +179,17 @@ export default function HeaderItem() {
                       mode === 'dark',
                   },
                 )}
-                ripple={false}
+                onClick={closeDrawer}
               >
                 完了
               </Button>
             </div>
             <div className="px-5">
               <Accordion
-                open={openAccordion === 1}
                 icon={<AccorionIcon id={1} open={openAccordion} />}
+                open={openAccordion === 1}
               >
                 <AccordionHeader
-                  onClick={() => handleOpenAccordion(1)}
                   className={clsx(
                     `rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
@@ -200,6 +199,7 @@ export default function HeaderItem() {
                         mode === 'dark',
                     },
                   )}
+                  onClick={() => handleOpenAccordion(1)}
                 >
                   <div className="flex items-center gap-4">
                     <GoPencil />
@@ -210,210 +210,210 @@ export default function HeaderItem() {
                   <ul className="grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2 xxs:grid-cols-3">
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixGray-2"
+                        checkedThemeOption={checkedThemeOption}
                         id="primary-a10-radixGray-2-light-theme"
                         mainColor="primary-a10"
-                        baseColor="radixGray-2"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixGray-12"
+                        checkedThemeOption={checkedThemeOption}
                         id="primary-a10-radixGray-12-dark-theme"
                         mainColor="primary-a10"
-                        baseColor="radixGray-12"
                         mode="dark"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixGray-12"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixGray-7-radixGray-12-dark-theme"
                         mainColor="radixGray-7"
-                        baseColor="radixGray-12"
                         mode="dark"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixOlive-8"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixOlive-12-radixOlive-8-light-theme"
                         mainColor="radixOlive-12"
-                        baseColor="radixOlive-8"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixGrass-5"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixGrass-10-radixGrass-5-light-theme"
                         mainColor="radixGrass-10"
-                        baseColor="radixGrass-5"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixGray-2"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixSand-10-radixGray-2-light-theme"
                         mainColor="radixSand-10"
-                        baseColor="radixGray-2"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixGray-12"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixRuby-9-radixGray-12-dark-theme"
                         mainColor="radixRuby-9"
-                        baseColor="radixGray-12"
                         mode="dark"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixGray-12"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixIris-9-radixGray-12-dark-theme"
                         mainColor="radixIris-9"
-                        baseColor="radixGray-12"
                         mode="dark"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixCyan-12"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixCyan-9-radixCyan-12-dark-theme"
                         mainColor="radixCyan-9"
-                        baseColor="radixCyan-12"
                         mode="dark"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixGray-2"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixGold-10-radixGray-2-light-theme"
                         mainColor="radixGold-10"
-                        baseColor="radixGray-2"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixViolet-5"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixViolet-10-radixViolet-5-light-theme"
                         mainColor="radixViolet-10"
-                        baseColor="radixViolet-5"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixRuby-5"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixRuby-8-radixRuby-5-light-theme"
                         mainColor="radixRuby-8"
-                        baseColor="radixRuby-5"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixBrown-4"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixBrown-12-radixBrown-4-light-theme"
                         mainColor="radixBrown-12"
-                        baseColor="radixBrown-4"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixLime-4"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixLime-12-radixLime-4-light-theme"
                         mainColor="radixLime-12"
-                        baseColor="radixLime-4"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixJade-12"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixJade-3-radixJade-12-dark-theme"
                         mainColor="radixJade-3"
-                        baseColor="radixJade-12"
                         mode="dark"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixAmber-3"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixAmber-12-radixAmber-3-light-theme"
                         mainColor="radixAmber-12"
-                        baseColor="radixAmber-3"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixSky-3"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixSky-11-radixSky-3-light-theme"
                         mainColor="radixSky-11"
-                        baseColor="radixSky-3"
                         mode="light"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="radixPlum-12"
+                        checkedThemeOption={checkedThemeOption}
                         id="radixOrange-10-radixPlum-12-dark-theme"
                         mainColor="radixOrange-10"
-                        baseColor="radixPlum-12"
                         mode="dark"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
                       <ThemeSelectButton
-                        name={labelName}
+                        baseColor="tigersBlack-a10"
+                        checkedThemeOption={checkedThemeOption}
                         id="tigersYellow-a10-tigersBlack-a10-dark-theme"
                         mainColor="tigersYellow-a10"
-                        baseColor="tigersBlack-a10"
                         mode="dark"
-                        checkedThemeOption={checkedThemeOption}
+                        name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
@@ -421,11 +421,10 @@ export default function HeaderItem() {
                 </AccordionBody>
               </Accordion>
               <Accordion
-                open={openAccordion === 2}
                 icon={<AccorionIcon id={2} open={openAccordion} />}
+                open={openAccordion === 2}
               >
                 <AccordionHeader
-                  onClick={() => handleOpenAccordion(2)}
                   className={clsx(
                     `rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
@@ -435,6 +434,7 @@ export default function HeaderItem() {
                         mode === 'dark',
                     },
                   )}
+                  onClick={() => handleOpenAccordion(2)}
                 >
                   <div className="flex items-center gap-4 text-xl">
                     <GoZoomIn />

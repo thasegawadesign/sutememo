@@ -1,5 +1,6 @@
-import { radixColorList } from '@/utils/radixColorList';
 import { customColorList } from '@/utils/customColorList';
+import { radixColorList } from '@/utils/radixColorList';
+
 import { safeColorList } from '../../tailwind.config';
 
 type RadixColorList = (typeof radixColorList)[number];
