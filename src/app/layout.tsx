@@ -7,6 +7,8 @@ import Analytics from '@/components/analytics';
 import '@/globals.css';
 import { Providers } from '@/providers';
 
+import { themeColor } from '../../tailwind.config';
+
 import type { Metadata } from 'next';
 
 const baseURL = env.BASE_URL;
@@ -19,7 +21,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: '#191919',
+  themeColor: themeColor,
 };
 
 export const metadata: Metadata = {
