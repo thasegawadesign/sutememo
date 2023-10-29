@@ -2,13 +2,7 @@
 
 import { ReloadIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';
-import {
-  MouseEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { GoGear, GoInfo, GoZoomIn } from 'react-icons/go';
 import { VscSymbolColor } from 'react-icons/vsc';
 
