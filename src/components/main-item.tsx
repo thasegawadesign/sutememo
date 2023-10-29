@@ -1,8 +1,13 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Todo } from '@/types/Todo';
 import { v4 as uuidv4 } from 'uuid';
+
+import AddButton from '@/components/add-button';
+import Redo from '@/components/redo';
+import TodoList from '@/components/todo-list';
+import Undo from '@/components/undo';
+import { Todo } from '@/types/Todo';
 import {
   clearIndexedDB,
   createIndexedDB,
@@ -13,11 +18,6 @@ import {
   updatePartialIndexedDB,
 } from '@/utils/indexedDB';
 import { registerServiceWorker } from '@/utils/registerServiceWorker';
-
-import AddButton from '@/components/add-button';
-import Redo from '@/components/redo';
-import TodoList from '@/components/todo-list';
-import Undo from '@/components/undo';
 
 export default function MainItem() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -222,21 +222,21 @@ export default function MainItem() {
       {todos.length > 0 && (
         <>
           <TodoList
-            todos={todos}
-            editableRef={editableRef}
-            todosHistoryRef={todosHistoryRef}
-            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
-            setCanUndo={setCanUndo}
-            setCanRedo={setCanRedo}
-            setTodos={setTodos}
-            updatePartialIndexedDB={updatePartialIndexedDB}
-            updateAllIndexedDB={updateAllIndexedDB}
             deleteIndexedDB={deleteIndexedDB}
+            editableRef={editableRef}
+            setCanRedo={setCanRedo}
+            setCanUndo={setCanUndo}
+            setTodos={setTodos}
+            todos={todos}
+            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
+            todosHistoryRef={todosHistoryRef}
+            updateAllIndexedDB={updateAllIndexedDB}
+            updatePartialIndexedDB={updatePartialIndexedDB}
           />
         </>
       )}
-      <Undo handleUndoClick={handleUndoClick} canUndo={canUndo} />
-      <Redo handleRedoClick={handleRedoClick} canRedo={canRedo} />
+      <Undo canUndo={canUndo} handleUndoClick={handleUndoClick} />
+      <Redo canRedo={canRedo} handleRedoClick={handleRedoClick} />
       <AddButton
         handleAddButtonClick={handleAddButtonClick}
         handleAddButtonMouseUp={handleAddButtonMouseUp}

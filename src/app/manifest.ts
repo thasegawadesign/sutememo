@@ -1,5 +1,8 @@
-import { MetadataRoute } from 'next';
 import { env } from 'process';
+
+import { MetadataRoute } from 'next';
+
+import { backgroundColor, themeColor } from '../../tailwind.config';
 
 export default function manifest(): MetadataRoute.Manifest {
   const baseURL = env.BASE_URL;
@@ -8,15 +11,17 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Todoify',
     short_name: 'Todoify',
     description: 'Todoアプリケーション',
+    categories: ['lifestyle', 'personalization', 'productivity'],
     lang: 'ja',
     dir: 'ltr',
     start_url: `${baseURL}/${id}`,
     id: `${id}`,
     scope: `${baseURL}`,
+    display_override: ['fullscreen', 'minimal-ui'],
     display: 'standalone',
     orientation: 'landscape',
-    background_color: '#ffffff',
-    theme_color: '#191919',
+    background_color: backgroundColor,
+    theme_color: themeColor,
     icons: [
       {
         src: '/icons/icon-192x192.png',

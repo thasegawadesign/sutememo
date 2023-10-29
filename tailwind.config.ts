@@ -1,5 +1,7 @@
 import { SafeTailwind, TailwindPrefix } from '@/types/ColorList';
+
 import type { Config } from 'tailwindcss';
+
 const withMT = require('@material-tailwind/react/utils/withMT');
 
 export const RADIX_COLOR_STEP = 12;
@@ -8,6 +10,9 @@ export const CUSTOM_COLOR_STEP = 10;
 export const primary = '#208cd8';
 const tigersYellow = '#f7da07';
 const tigersBlack = '#060606';
+
+export const backgroundColor = '#f9f9f9';
+export const themeColor = '#202020';
 
 export const safeColorList = [
   'white',
