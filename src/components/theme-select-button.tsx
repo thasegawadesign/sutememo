@@ -1,10 +1,11 @@
 import { Dispatch, SetStateAction, useContext } from 'react';
-import { ThemeId } from '@/types/ColorList';
-import { ThemeContext, ThemeType } from '@/contexts/theme-provider';
-import { Radio } from '@/contexts/material-providers';
-import { bgVariants } from '@/utils/colorVariants';
-import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
+
 import CheckedIcon from '@/components/checked-icon';
+import { Radio } from '@/contexts/material-providers';
+import { ThemeContext, ThemeType } from '@/contexts/theme-provider';
+import { ThemeId } from '@/types/ColorList';
+import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
+import { bgVariants } from '@/utils/colorVariants';
 
 interface Props extends ThemeType {
   id: ThemeId;
@@ -40,13 +41,15 @@ export default function ThemeSelectButton(props: Props) {
       }
     >
       <Radio
+        crossOrigin={undefined}
+        icon={<CheckedIcon />}
+        id={id}
+        name={name}
+        ripple={false}
         checked={
           checkedThemeOptionVariant(mainColor, baseColor, mode) ===
           checkedThemeOption
         }
-        name={name}
-        id={id}
-        icon={<CheckedIcon />}
         label={
           <div className="grid rounded-full border border-gray-300">
             <div
@@ -57,8 +60,6 @@ export default function ThemeSelectButton(props: Props) {
             />
           </div>
         }
-        ripple={false}
-        crossOrigin={undefined}
         onChange={handleOptionChange}
       />
     </button>
