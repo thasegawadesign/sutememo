@@ -1,5 +1,6 @@
 'use client';
 
+import { ReloadIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { GoGear, GoPencil, GoZoomIn } from 'react-icons/go';
@@ -19,12 +20,14 @@ import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-
 import { ThemeContext } from '@/contexts/theme-provider';
 import useWindowSize from '@/hooks/useWindowSize';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
+import { SafeColorList } from '@/types/ColorList';
 import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
 import {
   bgVariants,
   colorVariants,
   borderVariants,
 } from '@/utils/colorVariants';
+import { customColorList } from '@/utils/customColorList';
 
 export default function HeaderItem() {
   const [deferredPrompt, setDeferredPrompt] =
@@ -38,6 +41,42 @@ export default function HeaderItem() {
   const theme = useContext(ThemeContext);
   const { baseColor, mainColor, mode } = theme;
   const labelName = 'theme-color';
+
+  const [baseColorTranslucent, setBaseColorTranslucent] =
+    useState<SafeColorList>('black-a5');
+  const generateBaseColorTranslucent = useCallback(
+    (baseColor: SafeColorList) => {
+      let isCustomBaseColor: boolean;
+      let radixColorStep: number;
+      const baseColorType = baseColor.split('-')[0];
+      for (const customColor of customColorList) {
+        isCustomBaseColor = baseColorType === customColor;
+        if (isCustomBaseColor) {
+          setBaseColorTranslucent(`${baseColorType}-a${6}` as SafeColorList);
+        } else {
+          radixColorStep = Number(baseColor.split('-')[1]);
+          if (radixColorStep < 3) {
+            setBaseColorTranslucent(
+              `${baseColorType}-a${radixColorStep}` as SafeColorList,
+            );
+          } else if (radixColorStep < 6) {
+            setBaseColorTranslucent(
+              `${baseColorType}-a${radixColorStep - 2}` as SafeColorList,
+            );
+          } else if (radixColorStep < 10) {
+            setBaseColorTranslucent(
+              `${baseColorType}-a${radixColorStep - 3}` as SafeColorList,
+            );
+          } else {
+            setBaseColorTranslucent(
+              `${baseColorType}-a${radixColorStep - 6}` as SafeColorList,
+            );
+          }
+        }
+      }
+    },
+    [],
+  );
 
   const [checkedThemeOption, setCheckedThemeOption] = useState(
     checkedThemeOptionVariant(mainColor, baseColor, mode),
@@ -109,6 +148,10 @@ export default function HeaderItem() {
     return () => window.removeEventListener('appinstalled', handleAppInstalled);
   }, [handleAppInstalled]);
 
+  useEffect(() => {
+    generateBaseColorTranslucent(baseColor);
+  }, [baseColor, generateBaseColorTranslucent]);
+
   return (
     <>
       <div className="flex items-center justify-between pb-5 pl-[22px] pr-3 pt-2">
@@ -146,7 +189,7 @@ export default function HeaderItem() {
             placement="bottom"
             size={height}
             className={clsx(
-              `rounded-3xl transition-drawer duration-themeChange ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
+              `overflow-y-auto overscroll-none rounded-3xl transition-drawer duration-themeChange ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
               {
                 '!translate-y-[max(env(safe-area-inset-top),32px)]':
                   isOpenDrawer === true,
@@ -155,36 +198,40 @@ export default function HeaderItem() {
             )}
             onClose={closeDrawer}
           >
-            <div className="flex items-center justify-between px-2 pb-5 pt-3">
-              <h2
-                className={clsx('select-none pl-5 text-lg font-semibold', {
-                  'text-gray-900': mode === 'light',
-                  'text-white': mode === 'dark',
-                })}
+            <div className="sticky top-0 z-[9999]">
+              <div
+                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-lg transition-drawer duration-themeChange ${bgVariants[baseColorTranslucent]}`}
               >
-                設定
-              </h2>
-              <Button
-                ripple={false}
-                size="md"
-                variant="text"
-                className={clsx(
-                  `rounded-full text-base text-blue-700 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
-                  {
-                    'hover:brightness-95 active:brightness-90':
-                      mode === 'light',
-                  },
-                  {
-                    'hover:brightness-110 active:brightness-125':
-                      mode === 'dark',
-                  },
-                )}
-                onClick={closeDrawer}
-              >
-                完了
-              </Button>
+                <h2
+                  className={clsx('select-none pl-5 text-lg font-semibold', {
+                    'text-gray-900': mode === 'light',
+                    'text-white-a10': mode === 'dark',
+                  })}
+                >
+                  設定
+                </h2>
+                <Button
+                  ripple={false}
+                  size="md"
+                  variant="text"
+                  className={clsx(
+                    `rounded-full text-base text-blue-700 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    {
+                      'hover:brightness-95 active:brightness-90':
+                        mode === 'light',
+                    },
+                    {
+                      'hover:brightness-110 active:brightness-125':
+                        mode === 'dark',
+                    },
+                  )}
+                  onClick={closeDrawer}
+                >
+                  完了
+                </Button>
+              </div>
             </div>
-            <div className="px-5">
+            <div className="grid gap-2 px-5 pb-24">
               <Accordion
                 icon={<AccorionIcon id={1} open={openAccordion} />}
                 open={openAccordion === 1}
@@ -443,6 +490,9 @@ export default function HeaderItem() {
                 </AccordionHeader>
                 {/* <AccordionBody></AccordionBody> */}
               </Accordion>
+              {/* <Button variant="text">
+                <ReloadIcon />
+              </Button> */}
             </div>
           </Drawer>
         </div>
