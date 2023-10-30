@@ -20,7 +20,7 @@ export default function Redo(props: Props) {
   return (
     <>
       <Button
-        aria-label="Undo"
+        aria-label="Redo"
         color="white"
         disabled={!canRedo}
         ripple={canRedo}
