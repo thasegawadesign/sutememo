@@ -112,18 +112,18 @@ export default function MainItem() {
           scrollToBottom();
         }
         if (target.nodeName === 'BODY') {
-          setTodos([
-            ...prevTodos,
-            { id: insertID, displayOrder: prevTodos.length, name: '' },
-          ]);
           try {
+            setTodos([
+              ...prevTodos,
+              { id: insertID, displayOrder: prevTodos.length, name: '' },
+            ]);
             await insertIndexedDB(insertID, prevTodos.length, '');
+            scrollToBottom();
+            editableRef.current?.focus();
           } catch (error) {
             console.error(error);
             setTodos(prevTodos);
           }
-          scrollToBottom();
-          editableRef.current?.focus();
         }
       }
     },
@@ -138,13 +138,11 @@ export default function MainItem() {
       { id: insertID, displayOrder: prevTodos.length, name: '' },
     ]);
     todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
-    setCanRedo(false);
-    setCanUndo(true);
-    setTodos([
-      ...prevTodos,
-      { id: insertID, displayOrder: prevTodos.length, name: '' },
-    ]);
     try {
+      setTodos([
+        ...prevTodos,
+        { id: insertID, displayOrder: prevTodos.length, name: '' },
+      ]);
       insertIndexedDB(insertID, prevTodos.length, '');
     } catch (error) {
       console.error(error);
@@ -195,12 +193,6 @@ export default function MainItem() {
     window.addEventListener('focus', handleWindowFocus);
     return () => window.removeEventListener('focus', handleWindowFocus);
   }, [handleWindowFocus]);
-
-  useEffect(() => {
-    if (todos === undefined) {
-      setTodos([]);
-    }
-  }, [todos]);
 
   useEffect(() => {
     const init = async () => {
