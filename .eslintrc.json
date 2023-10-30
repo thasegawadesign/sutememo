@@ -1,5 +1,5 @@
 {
-  "extends": ["next", "prettier"],
+  "extends": ["next", "plugin:jsx-a11y/recommended", "prettier"],
   "rules": {
     "import/order": [
       "warn",
