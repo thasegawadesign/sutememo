@@ -22,7 +22,6 @@ import { Todo } from '@/types/Todo';
 import { bgVariants, ringVariants } from '@/utils/colorVariants';
 import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
 
-
 type Props = {
   id: string;
   displayOrder: number;
@@ -152,7 +151,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   return (
     <li
       ref={setNodeRef}
-      role="listitem"
+      role="list"
       style={style}
       className={clsx(
         `flex items-center justify-between gap-1.5 rounded-[10px] px-1.5 py-2 sm:gap-2.5 sm:px-2 ${bgVariants[baseColor]}`,
@@ -189,6 +188,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           suppressContentEditableWarning
           inputMode="text"
           role="textbox"
+          tabIndex={0}
           className={clsx(
             `max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-lg leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-190px)] sm:rounded ${ringVariants[mainColor]}`,
             {
