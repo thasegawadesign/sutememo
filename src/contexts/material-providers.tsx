@@ -9,6 +9,8 @@ import {
   AccordionHeader,
   AccordionBody,
   Radio,
+  Switch,
+  SwitchButtonStylesType,
 } from '@material-tailwind/react';
 
 export {
@@ -19,5 +21,6 @@ export {
   AccordionHeader,
   AccordionBody,
   Radio,
+  Switch,
 };
-export type { DrawerStylesType };
+export type { DrawerStylesType, SwitchButtonStylesType };

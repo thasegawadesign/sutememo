@@ -2,7 +2,13 @@
 
 import { ReloadIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  ChangeEvent,
+} from 'react';
 import { GoGear, GoInfo, GoZoomIn } from 'react-icons/go';
 import { VscSymbolColor } from 'react-icons/vsc';
 
@@ -16,8 +22,10 @@ import {
   AccordionHeader,
   Button,
   Drawer,
+  Switch,
 } from '@/contexts/material-providers';
 import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-provider';
+import { SystemColorSchemeContext } from '@/contexts/system-color-scheme-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
 import useWindowSize from '@/hooks/useWindowSize';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
@@ -43,7 +51,8 @@ export default function HeaderItem() {
   const [width, height] = useWindowSize();
 
   const theme = useContext(ThemeContext);
-  const { baseColor, mainColor, mode } = theme;
+  const { prefersColorScheme } = useContext(SystemColorSchemeContext);
+  const { baseColor, mainColor, mode, setTheme } = theme;
   const labelName = 'theme-color';
 
   const [baseColorTranslucent, setBaseColorTranslucent] =
@@ -93,6 +102,70 @@ export default function HeaderItem() {
   const [openAccordion, setOpenAccordion] = useState(0);
   const handleOpenAccordion = (value: number) =>
     setOpenAccordion(openAccordion === value ? 0 : value);
+
+  const [isDarkModeSelect, setIsDarkModeSelect] = useState(false);
+  const [isSystemModeSelect, setIsSystemModeSelect] = useState(true);
+
+  const handleDarkModeSwitchChange = useCallback(
+    (event: ChangeEvent) => {
+      const toggleSwitch = event.target as HTMLInputElement;
+      const isDarkMode = toggleSwitch.checked;
+      setIsDarkModeSelect(isDarkMode);
+      if (isDarkMode && prefersColorScheme === 'dark') {
+        setTheme({
+          baseColor,
+          mainColor,
+          mode: 'dark',
+        });
+      }
+      if (!isDarkMode && prefersColorScheme === 'light') {
+        setTheme({
+          baseColor,
+          mainColor,
+          mode: 'light',
+        });
+      }
+      if (isDarkMode && prefersColorScheme === 'light') {
+        setIsSystemModeSelect(false);
+        setTheme({
+          baseColor,
+          mainColor,
+          mode: 'dark',
+        });
+      }
+      if (!isDarkMode && prefersColorScheme === 'dark') {
+        setIsSystemModeSelect(false);
+        setTheme({
+          baseColor,
+          mainColor,
+          mode: 'light',
+        });
+      }
+    },
+    [baseColor, mainColor, prefersColorScheme, setTheme],
+  );
+
+  const handleUseSystemModeChange = useCallback(
+    (event: ChangeEvent) => {
+      const toggleSwitch = event.target as HTMLInputElement;
+      setIsSystemModeSelect(toggleSwitch.checked);
+      if (prefersColorScheme === 'dark') {
+        setIsDarkModeSelect(true);
+        setTheme({
+          baseColor,
+          mainColor,
+          mode: 'dark',
+        });
+      } else {
+        setTheme({
+          baseColor,
+          mainColor,
+          mode: 'light',
+        });
+      }
+    },
+    [baseColor, mainColor, prefersColorScheme, setTheme],
+  );
 
   const handleAppInstallButtonClick = useCallback(async () => {
     if (!globalThis.window) return;
@@ -155,6 +228,12 @@ export default function HeaderItem() {
     window.addEventListener('appinstalled', handleAppInstalled);
     return () => window.removeEventListener('appinstalled', handleAppInstalled);
   }, [handleAppInstalled]);
+
+  useEffect(() => {
+    if (prefersColorScheme === 'dark') {
+      setIsDarkModeSelect(true);
+    }
+  }, [prefersColorScheme]);
 
   useEffect(() => {
     generateBaseColorTranslucent(baseColor);
@@ -260,40 +339,76 @@ export default function HeaderItem() {
                     <span className="shrink-0">
                       <VscSymbolColor />
                     </span>
-                    <span className="text-base">テーマカラーの選択</span>
+                    <span className="text-base">
+                      表示モード と テーマカラー
+                    </span>
                   </div>
                 </AccordionHeader>
                 <AccordionBody className="px-2">
+                  <div className="mb-10 grid gap-6">
+                    <div className="flex items-center justify-between">
+                      <h3
+                        className={clsx('text-base font-semibold', {
+                          'text-gray-900': mode === 'light',
+                          'text-white-a10': mode === 'dark',
+                        })}
+                      >
+                        ダークモード
+                      </h3>
+                      <Switch
+                        checked={isDarkModeSelect}
+                        className="h-full w-full checked:bg-[#2ec946]"
+                        crossOrigin={undefined}
+                        ripple={false}
+                        circleProps={{
+                          className: 'before:hidden left-0.5 border-none',
+                        }}
+                        containerProps={{
+                          className: 'w-11 h-6 scale-[1.25]',
+                        }}
+                        disabled={
+                          baseColor === 'tigersBlack-a10' ||
+                          baseColor === 'tigersYellow-a10'
+                        }
+                        onChange={handleDarkModeSwitchChange}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <h3
+                        className={clsx('text-base font-semibold', {
+                          'text-gray-900': mode === 'light',
+                          'text-white-a10': mode === 'dark',
+                        })}
+                      >
+                        端末の設定を使う
+                      </h3>
+                      <Switch
+                        checked={isSystemModeSelect}
+                        className="h-full w-full checked:bg-[#2ec946]"
+                        crossOrigin={undefined}
+                        ripple={false}
+                        circleProps={{
+                          className: 'before:hidden left-0.5 border-none',
+                        }}
+                        containerProps={{
+                          className: 'w-11 h-6 scale-[1.25]',
+                        }}
+                        disabled={
+                          baseColor === 'tigersBlack-a10' ||
+                          baseColor === 'tigersYellow-a10'
+                        }
+                        onChange={handleUseSystemModeChange}
+                      />
+                    </div>
+                  </div>
                   <ul className="grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2 xxs:grid-cols-3">
                     <li>
                       <ThemeSelectButton
                         baseColor="radixGray-2"
                         checkedThemeOption={checkedThemeOption}
-                        id="primary-a10-radixGray-2-light-theme"
+                        id={`primary-a10-radixGray-2-${mode}-theme`}
                         mainColor="primary-a10"
-                        mode="light"
-                        name={labelName}
-                        setCheckedThemeOption={setCheckedThemeOption}
-                      />
-                    </li>
-                    <li>
-                      <ThemeSelectButton
-                        baseColor="radixGray-12"
-                        checkedThemeOption={checkedThemeOption}
-                        id="primary-a10-radixGray-12-dark-theme"
-                        mainColor="primary-a10"
-                        mode="dark"
-                        name={labelName}
-                        setCheckedThemeOption={setCheckedThemeOption}
-                      />
-                    </li>
-                    <li>
-                      <ThemeSelectButton
-                        baseColor="radixGray-12"
-                        checkedThemeOption={checkedThemeOption}
-                        id="radixGray-7-radixGray-12-dark-theme"
-                        mainColor="radixGray-7"
-                        mode="dark"
+                        mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
@@ -302,9 +417,9 @@ export default function HeaderItem() {
                       <ThemeSelectButton
                         baseColor="radixOlive-8"
                         checkedThemeOption={checkedThemeOption}
-                        id="radixOlive-12-radixOlive-8-light-theme"
+                        id={`radixOlive-12-radixOlive-8-${mode}-theme`}
                         mainColor="radixOlive-12"
-                        mode="light"
+                        mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
@@ -313,9 +428,9 @@ export default function HeaderItem() {
                       <ThemeSelectButton
                         baseColor="radixGrass-5"
                         checkedThemeOption={checkedThemeOption}
-                        id="radixGrass-10-radixGrass-5-light-theme"
+                        id={`radixGrass-10-radixGrass-5-${mode}-theme`}
                         mainColor="radixGrass-10"
-                        mode="light"
+                        mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
@@ -324,42 +439,9 @@ export default function HeaderItem() {
                       <ThemeSelectButton
                         baseColor="radixGray-2"
                         checkedThemeOption={checkedThemeOption}
-                        id="radixSand-10-radixGray-2-light-theme"
+                        id={`radixSand-10-radixGray-2-${mode}-theme`}
                         mainColor="radixSand-10"
-                        mode="light"
-                        name={labelName}
-                        setCheckedThemeOption={setCheckedThemeOption}
-                      />
-                    </li>
-                    <li>
-                      <ThemeSelectButton
-                        baseColor="radixGray-12"
-                        checkedThemeOption={checkedThemeOption}
-                        id="radixRuby-9-radixGray-12-dark-theme"
-                        mainColor="radixRuby-9"
-                        mode="dark"
-                        name={labelName}
-                        setCheckedThemeOption={setCheckedThemeOption}
-                      />
-                    </li>
-                    <li>
-                      <ThemeSelectButton
-                        baseColor="radixGray-12"
-                        checkedThemeOption={checkedThemeOption}
-                        id="radixIris-9-radixGray-12-dark-theme"
-                        mainColor="radixIris-9"
-                        mode="dark"
-                        name={labelName}
-                        setCheckedThemeOption={setCheckedThemeOption}
-                      />
-                    </li>
-                    <li>
-                      <ThemeSelectButton
-                        baseColor="radixCyan-12"
-                        checkedThemeOption={checkedThemeOption}
-                        id="radixCyan-9-radixCyan-12-dark-theme"
-                        mainColor="radixCyan-9"
-                        mode="dark"
+                        mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
@@ -368,31 +450,9 @@ export default function HeaderItem() {
                       <ThemeSelectButton
                         baseColor="radixGray-2"
                         checkedThemeOption={checkedThemeOption}
-                        id="radixGold-10-radixGray-2-light-theme"
+                        id={`radixGold-10-radixGray-2-${mode}-theme`}
                         mainColor="radixGold-10"
-                        mode="light"
-                        name={labelName}
-                        setCheckedThemeOption={setCheckedThemeOption}
-                      />
-                    </li>
-                    <li>
-                      <ThemeSelectButton
-                        baseColor="radixViolet-5"
-                        checkedThemeOption={checkedThemeOption}
-                        id="radixViolet-10-radixViolet-5-light-theme"
-                        mainColor="radixViolet-10"
-                        mode="light"
-                        name={labelName}
-                        setCheckedThemeOption={setCheckedThemeOption}
-                      />
-                    </li>
-                    <li>
-                      <ThemeSelectButton
-                        baseColor="radixRuby-5"
-                        checkedThemeOption={checkedThemeOption}
-                        id="radixRuby-8-radixRuby-5-light-theme"
-                        mainColor="radixRuby-8"
-                        mode="light"
+                        mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
@@ -421,22 +481,11 @@ export default function HeaderItem() {
                     </li>
                     <li>
                       <ThemeSelectButton
-                        baseColor="radixJade-12"
-                        checkedThemeOption={checkedThemeOption}
-                        id="radixJade-3-radixJade-12-dark-theme"
-                        mainColor="radixJade-3"
-                        mode="dark"
-                        name={labelName}
-                        setCheckedThemeOption={setCheckedThemeOption}
-                      />
-                    </li>
-                    <li>
-                      <ThemeSelectButton
                         baseColor="radixAmber-3"
                         checkedThemeOption={checkedThemeOption}
-                        id="radixAmber-12-radixAmber-3-light-theme"
+                        id={`radixAmber-12-radixAmber-3-${mode}-theme`}
                         mainColor="radixAmber-12"
-                        mode="light"
+                        mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
@@ -445,34 +494,35 @@ export default function HeaderItem() {
                       <ThemeSelectButton
                         baseColor="radixSky-3"
                         checkedThemeOption={checkedThemeOption}
-                        id="radixSky-11-radixSky-3-light-theme"
+                        id={`radixSky-11-radixSky-3-${mode}-theme`}
                         mainColor="radixSky-11"
-                        mode="light"
+                        mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
                     </li>
                     <li>
-                      <ThemeSelectButton
-                        baseColor="radixPlum-12"
-                        checkedThemeOption={checkedThemeOption}
-                        id="radixOrange-10-radixPlum-12-dark-theme"
-                        mainColor="radixOrange-10"
-                        mode="dark"
-                        name={labelName}
-                        setCheckedThemeOption={setCheckedThemeOption}
-                      />
-                    </li>
-                    <li>
-                      <ThemeSelectButton
-                        baseColor="tigersBlack-a10"
-                        checkedThemeOption={checkedThemeOption}
-                        id="tigersYellow-a10-tigersBlack-a10-dark-theme"
-                        mainColor="tigersYellow-a10"
-                        mode="dark"
-                        name={labelName}
-                        setCheckedThemeOption={setCheckedThemeOption}
-                      />
+                      {mode === 'dark' ? (
+                        <ThemeSelectButton
+                          baseColor="tigersBlack-a10"
+                          checkedThemeOption={checkedThemeOption}
+                          id="tigersYellow-a10-tigersBlack-a10-dark-theme"
+                          mainColor="tigersYellow-a10"
+                          mode="dark"
+                          name={labelName}
+                          setCheckedThemeOption={setCheckedThemeOption}
+                        />
+                      ) : (
+                        <ThemeSelectButton
+                          baseColor="tigersYellow-a10"
+                          checkedThemeOption={checkedThemeOption}
+                          id="tigersBlack-a10-tigersYellow-a10-light-theme"
+                          mainColor="tigersBlack-a10"
+                          mode="light"
+                          name={labelName}
+                          setCheckedThemeOption={setCheckedThemeOption}
+                        />
+                      )}
                     </li>
                   </ul>
                 </AccordionBody>
@@ -497,7 +547,7 @@ export default function HeaderItem() {
                     <span className="shrink-0">
                       <GoZoomIn />
                     </span>
-                    <span className="text-base">文字サイズの選択</span>
+                    <span className="text-base">文字サイズ</span>
                   </div>
                 </AccordionHeader>
                 {/* <AccordionBody></AccordionBody> */}
