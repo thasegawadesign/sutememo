@@ -1,13 +1,26 @@
 'use client';
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { ThemeContext } from '@/contexts/theme-provider';
 import { bgVariants } from '@/utils/colorVariants';
 
 export default function Screen({ children }: { children: React.ReactNode }) {
   const theme = useContext(ThemeContext);
-  const { baseColor } = theme;
+  const { baseColor, mode } = theme;
+
+  useEffect(() => {
+    const HTML = document.querySelector('html');
+    if (!HTML) return;
+    switch (mode) {
+      case 'light':
+        HTML.style.colorScheme = 'light';
+        break;
+      case 'dark':
+        HTML.style.colorScheme = 'dark';
+        break;
+    }
+  }, [mode]);
 
   return (
     <>
