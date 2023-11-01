@@ -1,4 +1,6 @@
-import { Dispatch, SetStateAction, useContext } from 'react';
+'use client';
+
+import { Dispatch, SetStateAction, useContext, useEffect } from 'react';
 
 import CheckedIcon from '@/components/checked-icon';
 import { Radio } from '@/contexts/material-providers';
@@ -24,11 +26,32 @@ export default function ThemeSelectButton(props: Props) {
     checkedThemeOption,
     setCheckedThemeOption,
   } = props;
-  const { setTheme } = useContext(ThemeContext);
+
+  const theme = useContext(ThemeContext);
+  const setTheme = theme.setTheme;
+  const contextBaseColor = theme.baseColor;
+  const contextMainColor = theme.mainColor;
+  const contextMode = theme.mode;
 
   const handleOptionChange = () => {
-    setCheckedThemeOption(id);
+    setCheckedThemeOption(
+      checkedThemeOptionVariant(
+        contextMainColor,
+        contextBaseColor,
+        contextMode,
+      ),
+    );
   };
+
+  useEffect(() => {
+    setCheckedThemeOption(
+      checkedThemeOptionVariant(
+        contextMainColor,
+        contextBaseColor,
+        contextMode,
+      ),
+    );
+  }, [contextBaseColor, contextMainColor, contextMode, setCheckedThemeOption]);
 
   return (
     <button
