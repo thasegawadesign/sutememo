@@ -302,7 +302,7 @@ export default function HeaderItem() {
           >
             <div className="sticky top-0 z-[9999]">
               <div
-                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-lg transition-drawer duration-themeChange ${bgVariants[baseColorTranslucent]}`}
+                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-2xl transition-drawer duration-themeChange ${bgVariants[baseColorTranslucent]}`}
               >
                 <h2
                   className={clsx('select-none pl-5 text-lg font-semibold', {
@@ -430,10 +430,65 @@ export default function HeaderItem() {
                     </li>
                     <li>
                       <ThemeSelectButton
-                        baseColor="radixOlive-8"
+                        baseColor="radixGray-2"
                         checkedThemeOption={checkedThemeOption}
-                        id={`radixOlive-12-radixOlive-8-${mode}-theme`}
-                        mainColor="radixOlive-12"
+                        id={`radixTomato-11-radixGray-2-${mode}-theme`}
+                        mainColor="radixTomato-11"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixGray-2"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixCrimson-11-radixGray-2-${mode}-theme`}
+                        mainColor="radixCrimson-11"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixGray-2"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixViolet-11-radixGray-2-${mode}-theme`}
+                        mainColor="radixViolet-11"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixGray-2"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixMint-11-radixGray-2-${mode}-theme`}
+                        mainColor="radixMint-11"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixGray-2"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixGrass-11-radixGray-2-${mode}-theme`}
+                        mainColor="radixGrass-11"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixOlive-5"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixOlive-11-radixOlive-5-${mode}-theme`}
+                        mainColor="radixOlive-11"
                         mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
@@ -476,9 +531,9 @@ export default function HeaderItem() {
                       <ThemeSelectButton
                         baseColor="radixBrown-4"
                         checkedThemeOption={checkedThemeOption}
-                        id="radixBrown-12-radixBrown-4-light-theme"
+                        id={`radixBrown-12-radixBrown-4-${mode}-theme`}
                         mainColor="radixBrown-12"
-                        mode="light"
+                        mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
@@ -487,9 +542,9 @@ export default function HeaderItem() {
                       <ThemeSelectButton
                         baseColor="radixLime-4"
                         checkedThemeOption={checkedThemeOption}
-                        id="radixLime-12-radixLime-4-light-theme"
+                        id={`radixLime-12-radixLime-4-${mode}-theme`}
                         mainColor="radixLime-12"
-                        mode="light"
+                        mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
                       />
@@ -511,6 +566,72 @@ export default function HeaderItem() {
                         checkedThemeOption={checkedThemeOption}
                         id={`radixSky-11-radixSky-3-${mode}-theme`}
                         mainColor="radixSky-11"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixRuby-3"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixRuby-10-radixRuby-3-${mode}-theme`}
+                        mainColor="radixRuby-10"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixPlum-4"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixPlum-12-radixPlum-4-${mode}-theme`}
+                        mainColor="radixPlum-12"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixJade-3"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixJade-12-radixJade-3-${mode}-theme`}
+                        mainColor="radixJade-12"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixSage-5"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixSage-12-radixSage-5-${mode}-theme`}
+                        mainColor="radixSage-12"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixMint-3"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixMint-11-radixMint-3-${mode}-theme`}
+                        mainColor="radixMint-11"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
+                        baseColor="radixGray-1"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixGray-12-radixGray-1-${mode}-theme`}
+                        mainColor="radixGray-12"
                         mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
