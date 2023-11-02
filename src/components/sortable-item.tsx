@@ -177,6 +177,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
                 mode === 'light',
               'text-gray-400 hover:brightness-125 active:brightness-150':
                 mode === 'dark',
+              'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
             },
           )}
         >
@@ -224,6 +225,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
               mode === 'light',
             'text-gray-400 hover:brightness-125 active:brightness-150':
               mode === 'dark',
+            'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
           },
         )}
         onClick={handleDeleteButtonClick}
