@@ -18,7 +18,7 @@ interface SystemColorSchemeContext extends SystemColorScheme {
   setPrefersColorScheme: Dispatch<SetStateAction<Mode>>;
 }
 
-export const defaultMode: Mode = 'light';
+export const defaultMode: Mode = 'dark';
 
 export const SystemColorSchemeContext = createContext<SystemColorSchemeContext>(
   {
