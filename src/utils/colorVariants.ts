@@ -15,8 +15,6 @@ import type {
 export const bgVariants: {
   [key: string]: string;
 } = {
-  white: 'bg-white',
-  black: 'bg-black',
   ...generateCustomMappingObj('bg-'),
   ...generateRadixMappingObj('bg-'),
 };
@@ -24,8 +22,6 @@ export const bgVariants: {
 export const colorVariants: {
   [key: string]: string;
 } = {
-  white: 'text-white',
-  black: 'text-black',
   ...generateCustomMappingObj('text-'),
   ...generateRadixMappingObj('text-'),
 };
@@ -33,8 +29,6 @@ export const colorVariants: {
 export const borderVariants: {
   [key: string]: string;
 } = {
-  white: 'border-white',
-  black: 'border-black',
   ...generateCustomMappingObj('border-'),
   ...generateRadixMappingObj('border-'),
 };
@@ -42,8 +36,6 @@ export const borderVariants: {
 export const ringVariants: {
   [key: string]: string;
 } = {
-  white: 'ring-white',
-  black: 'ring-black',
   ...generateCustomMappingObj('ring-'),
   ...generateRadixMappingObj('ring-'),
 };
@@ -51,8 +43,6 @@ export const ringVariants: {
 export const fillVariants: {
   [key: string]: string;
 } = {
-  white: '!fill-white',
-  black: '!fill-black',
   ...generateCustomMappingObj('!fill-'),
   ...generateRadixMappingObj('!fill-'),
 };
