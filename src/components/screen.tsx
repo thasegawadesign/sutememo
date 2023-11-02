@@ -27,7 +27,7 @@ export default function Screen({ children }: { children: React.ReactNode }) {
     localStorage.setItem('mainColor', mainColor);
     localStorage.setItem('mode', mode);
     updateBodyBackgroundColor(baseColor);
-    updateMetaThemeColor(baseColor);
+    updateMetaThemeColor(baseColor, mode);
   }, [baseColor, isLoading, mainColor, mode]);
 
   useEffect(() => {
@@ -52,14 +52,15 @@ export default function Screen({ children }: { children: React.ReactNode }) {
       mode: initialMode,
     });
     updateBodyBackgroundColor(initialBaseColor);
-    updateMetaThemeColor(initialBaseColor);
+    updateMetaThemeColor(initialBaseColor, initialMode);
     setIsLoading(false);
   }, [setTheme]);
 
   useEffect(() => {
     if (matchMedia('(prefers-color-scheme: dark)').matches) {
       setPrefersColorScheme('dark');
-    } else {
+    }
+    if (matchMedia('(prefers-color-scheme: light)').matches) {
       setPrefersColorScheme('light');
     }
   }, [setPrefersColorScheme]);
