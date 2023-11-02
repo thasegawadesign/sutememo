@@ -278,8 +278,11 @@ export default function HeaderItem() {
             variant="text"
             className={clsx(
               `group rounded-full p-3 text-[28px] ${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
-              { 'hover:brightness-95 active:brightness-90': mode === 'light' },
-              { 'hover:brightness-125 active:brightness-150': mode === 'dark' },
+              {
+                'hover:brightness-95 active:brightness-90': mode === 'light',
+                'hover:brightness-125 active:brightness-150': mode === 'dark',
+                'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
+              },
             )}
             onClick={openDrawer}
           >
@@ -329,10 +332,9 @@ export default function HeaderItem() {
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
-                    },
-                    {
                       'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
+                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
                     },
                   )}
                   onClick={closeDrawer}
@@ -363,6 +365,7 @@ export default function HeaderItem() {
                         mode === 'light',
                       'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
+                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
                     },
                   )}
                   onClick={() => handleOpenAccordion(1)}
@@ -706,6 +709,7 @@ export default function HeaderItem() {
                         mode === 'light',
                       'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
+                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
                     },
                   )}
                   onClick={() => handleOpenAccordion(2)}
@@ -747,6 +751,7 @@ export default function HeaderItem() {
                         mode === 'light',
                       'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
+                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
                     },
                   )}
                   onClick={() => handleOpenAccordion(3)}
