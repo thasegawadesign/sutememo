@@ -25,8 +25,8 @@ export default function AppInstallButton(props: Props) {
           className={clsx(
             `flex items-center gap-0.5 rounded-full px-6 py-1.5 font-semibold !shadow-none transition ${bgVariants[mainColor]} ${colorVariants[baseColor]}`,
             {
-              'hover:brightness-95 active:brightness-90': mode === 'light',
-              'hover:brightness-110 active:brightness-125': mode === 'dark',
+              'hover:brightness-110 active:brightness-125': mode === 'light',
+              'hover:brightness-95 active:brightness-90': mode === 'dark',
             },
           )}
           onClick={handleAppInstallButtonClick}
