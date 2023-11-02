@@ -15,7 +15,7 @@ export default function AccorionIcon({
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       className={clsx('h-5 w-5 -rotate-90 transition-transform', {
-        '-rotate-0': id === open,
+        'rotate-0': id === open,
       })}
     >
       <path
