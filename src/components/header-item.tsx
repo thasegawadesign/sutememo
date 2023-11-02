@@ -149,18 +149,20 @@ export default function HeaderItem() {
     (event: ChangeEvent) => {
       const toggleSwitch = event.target as HTMLInputElement;
       setIsSystemModeSelect(toggleSwitch.checked);
+      if (prefersColorScheme === 'light') {
+        setIsDarkModeSelect(false);
+        setTheme({
+          baseColor,
+          mainColor,
+          mode: 'light',
+        });
+      }
       if (prefersColorScheme === 'dark') {
         setIsDarkModeSelect(true);
         setTheme({
           baseColor,
           mainColor,
           mode: 'dark',
-        });
-      } else {
-        setTheme({
-          baseColor,
-          mainColor,
-          mode: 'light',
         });
       }
     },
@@ -230,10 +232,23 @@ export default function HeaderItem() {
   }, [handleAppInstalled]);
 
   useEffect(() => {
-    if (prefersColorScheme === 'dark') {
+    if (mode === 'dark' && prefersColorScheme === 'dark') {
       setIsDarkModeSelect(true);
+      setIsSystemModeSelect(true);
     }
-  }, [prefersColorScheme]);
+    if (mode === 'dark' && prefersColorScheme === 'light') {
+      setIsDarkModeSelect(true);
+      setIsSystemModeSelect(false);
+    }
+    if (mode === 'light' && prefersColorScheme === 'dark') {
+      setIsDarkModeSelect(false);
+      setIsSystemModeSelect(false);
+    }
+    if (mode === 'light' && prefersColorScheme === 'light') {
+      setIsDarkModeSelect(false);
+      setIsSystemModeSelect(true);
+    }
+  }, [mode, prefersColorScheme]);
 
   useEffect(() => {
     generateBaseColorTranslucent(baseColor);

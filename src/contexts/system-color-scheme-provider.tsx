@@ -1,6 +1,12 @@
 'use client';
 
-import { Dispatch, SetStateAction, createContext, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import { Mode } from '@/contexts/theme-provider';
 
@@ -12,9 +18,11 @@ interface SystemColorSchemeContext extends SystemColorScheme {
   setPrefersColorScheme: Dispatch<SetStateAction<Mode>>;
 }
 
+export const defaultMode: Mode = 'light';
+
 export const SystemColorSchemeContext = createContext<SystemColorSchemeContext>(
   {
-    prefersColorScheme: 'light',
+    prefersColorScheme: defaultMode,
     setPrefersColorScheme: () => {},
   },
 );
@@ -24,7 +32,15 @@ export default function SystemColorSchemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [prefersColorScheme, setPrefersColorScheme] = useState<Mode>('light');
+  const [prefersColorScheme, setPrefersColorScheme] =
+    useState<Mode>(defaultMode);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    setPrefersColorScheme(
+      matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+    );
+  }, []);
 
   return (
     <SystemColorSchemeContext.Provider
