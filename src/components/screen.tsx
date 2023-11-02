@@ -11,6 +11,8 @@ import {
 } from '@/contexts/theme-provider';
 import { SafeColorList } from '@/types/ColorList';
 import { bgVariants } from '@/utils/colorVariants';
+import { updateBodyBackgroundColor } from '@/utils/updateBodyBackgroundColor';
+import { updateMetaThemeColor } from '@/utils/updateMetaThemeColor';
 
 import { safeColorList } from '../../tailwind.config';
 
@@ -24,6 +26,8 @@ export default function Screen({ children }: { children: React.ReactNode }) {
     localStorage.setItem('baseColor', baseColor);
     localStorage.setItem('mainColor', mainColor);
     localStorage.setItem('mode', mode);
+    updateBodyBackgroundColor(baseColor);
+    updateMetaThemeColor(baseColor);
   }, [baseColor, isLoading, mainColor, mode]);
 
   useEffect(() => {
@@ -47,6 +51,8 @@ export default function Screen({ children }: { children: React.ReactNode }) {
       mainColor: initialMainColor,
       mode: initialMode,
     });
+    updateBodyBackgroundColor(initialBaseColor);
+    updateMetaThemeColor(initialBaseColor);
     setIsLoading(false);
   }, [setTheme]);
 
