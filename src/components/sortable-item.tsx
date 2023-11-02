@@ -70,8 +70,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     transition,
   };
 
-  const theme = useContext(ThemeContext);
-  const { mainColor, baseColor, mode } = theme;
+  const { mainColor, baseColor, mode } = useContext(ThemeContext);
 
   const handleDeleteButtonClick = async function () {
     const targetId = id;
