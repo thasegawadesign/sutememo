@@ -50,9 +50,8 @@ export default function HeaderItem() {
 
   const [width, height] = useWindowSize();
 
-  const theme = useContext(ThemeContext);
+  const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
   const { prefersColorScheme } = useContext(SystemColorSchemeContext);
-  const { baseColor, mainColor, mode, setTheme } = theme;
   const labelName = 'theme-color';
 
   const [baseColorTranslucent, setBaseColorTranslucent] =
@@ -278,13 +277,22 @@ export default function HeaderItem() {
             ripple={false}
             variant="text"
             className={clsx(
-              `rounded-full p-3 text-[28px] ${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+              `group rounded-full p-3 text-[28px] ${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
               { 'hover:brightness-95 active:brightness-90': mode === 'light' },
-              { 'hover:brightness-110 active:brightness-125': mode === 'dark' },
+              { 'hover:brightness-125 active:brightness-150': mode === 'dark' },
             )}
             onClick={openDrawer}
           >
-            <GoGear />
+            <span
+              className={clsx('', {
+                'group-hover:brightness-105 group-active:brightness-[1.11]':
+                  mode === 'light',
+                'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
+                  mode === 'dark',
+              })}
+            >
+              <GoGear />
+            </span>
           </Button>
           <Drawer
             open={isOpenDrawer}
@@ -317,19 +325,28 @@ export default function HeaderItem() {
                   size="md"
                   variant="text"
                   className={clsx(
-                    `rounded-full text-base text-blue-700 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    `group rounded-full active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
                     },
                     {
-                      'hover:brightness-110 active:brightness-125':
+                      'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
                     },
                   )}
                   onClick={closeDrawer}
                 >
-                  完了
+                  <span
+                    className={clsx('text-base text-blue-700', {
+                      'group-hover:brightness-105 group-active:brightness-[1.11]':
+                        mode === 'light',
+                      'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
+                        mode === 'dark',
+                    })}
+                  >
+                    完了
+                  </span>
                 </Button>
               </div>
             </div>
@@ -340,21 +357,35 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    `group rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
-                      'hover:brightness-110 active:brightness-125':
+                      'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
                     },
                   )}
                   onClick={() => handleOpenAccordion(1)}
                 >
                   <div className="flex items-center gap-4">
-                    <span className="shrink-0">
+                    <span
+                      className={clsx('shrink-0', {
+                        'group-hover:brightness-105 group-active:brightness-[1.11]':
+                          mode === 'light',
+                        'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
+                          mode === 'dark',
+                      })}
+                    >
                       <VscSymbolColor />
                     </span>
-                    <span className="text-base">
+                    <span
+                      className={clsx('text-base', {
+                        'group-hover:brightness-105 group-active:brightness-[1.11]':
+                          mode === 'light',
+                        'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
+                          mode === 'dark',
+                      })}
+                    >
                       表示モード と テーマカラー
                     </span>
                   </div>
@@ -669,21 +700,37 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    `group rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
-                      'hover:brightness-110 active:brightness-125':
+                      'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
                     },
                   )}
                   onClick={() => handleOpenAccordion(2)}
                 >
                   <div className="flex items-center gap-4 text-xl">
-                    <span className="shrink-0">
+                    <span
+                      className={clsx('shrink-0', {
+                        'group-hover:brightness-105 group-active:brightness-[1.11]':
+                          mode === 'light',
+                        'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
+                          mode === 'dark',
+                      })}
+                    >
                       <GoZoomIn />
                     </span>
-                    <span className="text-base">文字サイズ</span>
+                    <span
+                      className={clsx('text-base', {
+                        'group-hover:brightness-105 group-active:brightness-[1.11]':
+                          mode === 'light',
+                        'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
+                          mode === 'dark',
+                      })}
+                    >
+                      文字サイズ
+                    </span>
                   </div>
                 </AccordionHeader>
                 {/* <AccordionBody></AccordionBody> */}
@@ -694,21 +741,37 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    `group rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
-                      'hover:brightness-110 active:brightness-125':
+                      'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
                     },
                   )}
                   onClick={() => handleOpenAccordion(3)}
                 >
                   <div className="flex items-center gap-4 text-xl">
-                    <span className="shrink-0">
+                    <span
+                      className={clsx('shrink-0', {
+                        'group-hover:brightness-105 group-active:brightness-[1.11]':
+                          mode === 'light',
+                        'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
+                          mode === 'dark',
+                      })}
+                    >
                       <GoInfo />
                     </span>
-                    <span className="text-base">アプリ情報</span>
+                    <span
+                      className={clsx('text-base', {
+                        'group-hover:brightness-105 group-active:brightness-[1.11]':
+                          mode === 'light',
+                        'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
+                          mode === 'dark',
+                      })}
+                    >
+                      アプリ情報
+                    </span>
                   </div>
                 </AccordionHeader>
                 <AccordionBody>
