@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { forwardRef, useContext } from 'react';
 import { GoPlus } from 'react-icons/go';
 
@@ -13,8 +14,7 @@ type Props = {
 export default forwardRef(function AddButton(props: Props, _ref) {
   const { handleAddButtonClick, handleAddButtonMouseUp } = props;
 
-  const theme = useContext(ThemeContext);
-  const { baseColor, mainColor } = theme;
+  const { baseColor, mainColor, mode } = useContext(ThemeContext);
 
   return (
     <>
@@ -22,8 +22,13 @@ export default forwardRef(function AddButton(props: Props, _ref) {
         aria-label="Add"
         role="button"
         tabIndex={0}
-        className={`!fixed bottom-5 left-0 right-0 mx-auto w-[calc(100%-40px)] rounded-lg p-2.5 text-3xl
-        text-white !shadow-none transition hover:brightness-95 pwa:bottom-[max(env(safe-area-inset-bottom),20px)] ${bgVariants[mainColor]} ${colorVariants[baseColor]}`}
+        className={clsx(
+          `text-white !fixed bottom-5 left-0 right-0 mx-auto w-[calc(100%-40px)] rounded-lg p-2.5 text-3xl !shadow-none transition pwa:bottom-[max(env(safe-area-inset-bottom),20px)] ${bgVariants[mainColor]} ${colorVariants[baseColor]}`,
+          {
+            'hover:brightness-95 active:brightness-90': mode === 'light',
+            'hover:brightness-110 active:brightness-125': mode === 'dark',
+          },
+        )}
         onClick={handleAddButtonClick}
         onMouseUp={handleAddButtonMouseUp}
       >

@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useContext, useRef } from 'react';
 
 import { Button } from '@/contexts/material-providers';
@@ -14,15 +15,20 @@ export default function AppInstallButton(props: Props) {
   const appInstallButtonRef = useRef<HTMLButtonElement>(null);
   const { showAppInstallButton } = useContext(ShowAppInstallButtonContext);
 
-  const theme = useContext(ThemeContext);
-  const { baseColor, mainColor } = theme;
+  const { baseColor, mainColor, mode } = useContext(ThemeContext);
 
   return (
     <>
       {showAppInstallButton && (
         <Button
           ref={appInstallButtonRef}
-          className={`flex items-center gap-0.5 rounded-full px-6 py-1.5 font-semibold !shadow-none transition hover:brightness-95 ${bgVariants[mainColor]} ${colorVariants[baseColor]}`}
+          className={clsx(
+            `flex items-center gap-0.5 rounded-full px-6 py-1.5 font-semibold !shadow-none transition ${bgVariants[mainColor]} ${colorVariants[baseColor]}`,
+            {
+              'hover:brightness-95 active:brightness-90': mode === 'light',
+              'hover:brightness-110 active:brightness-125': mode === 'dark',
+            },
+          )}
           onClick={handleAppInstallButtonClick}
         >
           <span className="select-none text-sm">入手</span>
