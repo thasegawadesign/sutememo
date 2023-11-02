@@ -1,24 +1,54 @@
 'use client';
 
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { SystemColorSchemeContext } from '@/contexts/system-color-scheme-provider';
-import { ThemeContext } from '@/contexts/theme-provider';
+import {
+  Mode,
+  ThemeContext,
+  defaultBaseColor,
+  defaultMainColor,
+} from '@/contexts/theme-provider';
+import { SafeColorList } from '@/types/ColorList';
 import { bgVariants } from '@/utils/colorVariants';
 
+import { safeColorList } from '../../tailwind.config';
+
 export default function Screen({ children }: { children: React.ReactNode }) {
-  const { prefersColorScheme, setPrefersColorScheme } = useContext(
-    SystemColorSchemeContext,
-  );
+  const { setPrefersColorScheme } = useContext(SystemColorSchemeContext);
   const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (isLoading) return;
+    localStorage.setItem('baseColor', baseColor);
+    localStorage.setItem('mainColor', mainColor);
+    localStorage.setItem('mode', mode);
+  }, [baseColor, isLoading, mainColor, mode]);
+
+  useEffect(() => {
+    const initialBaseColor = safeColorList.includes(
+      localStorage.getItem('baseColor') as SafeColorList,
+    )
+      ? (localStorage.getItem('baseColor') as SafeColorList)
+      : defaultBaseColor;
+    const initialMainColor = safeColorList.includes(
+      localStorage.getItem('mainColor') as SafeColorList,
+    )
+      ? (localStorage.getItem('mainColor') as SafeColorList)
+      : defaultMainColor;
+    const initialMode = localStorage.getItem('mode')
+      ? (localStorage.getItem('mode') as Mode)
+      : matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
     setTheme({
-      baseColor,
-      mainColor,
-      mode: prefersColorScheme,
+      baseColor: initialBaseColor,
+      mainColor: initialMainColor,
+      mode: initialMode,
     });
-  }, [baseColor, mainColor, prefersColorScheme, setTheme]);
+    setIsLoading(false);
+  }, [setTheme]);
 
   useEffect(() => {
     if (matchMedia('(prefers-color-scheme: dark)').matches) {
