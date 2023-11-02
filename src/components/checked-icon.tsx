@@ -14,7 +14,7 @@ export default function CheckedIcon() {
       xmlns="http://www.w3.org/2000/svg"
       className={clsx('h-full w-full scale-105', {
         'text-gray-900': mode === 'light',
-        'text-white': mode === 'dark',
+        'text-white-a10': mode === 'dark',
       })}
     >
       <path
