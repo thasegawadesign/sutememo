@@ -157,6 +157,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           'opacity-30': isDragging === true,
           'text-gray-800 brightness-[1.03]': mode === 'light',
           'text-gray-400 brightness-125': mode === 'dark',
+          '!bg-radixGray-1': baseColor === 'tigersBlack-a10',
         },
       )}
     >
@@ -172,8 +173,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
               'text-gray-800 hover:brightness-95 active:brightness-90':
                 mode === 'light',
               'text-gray-400 hover:brightness-125 active:brightness-150':
-                mode === 'dark',
-              'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
+                mode === 'dark' && baseColor !== 'tigersBlack-a10',
+              'text-gray-400 hover:!bg-radixGray-2 active:!bg-radixGray-2':
+                mode === 'dark' && baseColor === 'tigersBlack-a10',
             },
           )}
         >
@@ -217,8 +219,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
             'text-gray-800 hover:brightness-95 active:brightness-90':
               mode === 'light',
             'text-gray-400 hover:brightness-125 active:brightness-150':
-              mode === 'dark',
-            'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
+              mode === 'dark' && baseColor !== 'tigersBlack-a10',
+            'text-gray-400 hover:!bg-radixGray-2 hover:brightness-105 active:!bg-radixGray-2 active:brightness-125':
+              mode === 'dark' && baseColor === 'tigersBlack-a10',
           },
         )}
         onClick={handleDeleteButtonClick}
