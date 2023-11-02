@@ -1,3 +1,4 @@
+import { Mode } from '@/contexts/theme-provider';
 import { CustomColorList, SafeColorList } from '@/types/ColorList';
 import { customColorList } from '@/utils/customColorList';
 
@@ -9,7 +10,7 @@ import {
   white,
 } from '../../tailwind.config';
 
-export const updateMetaThemeColor = (themeColor: SafeColorList) => {
+export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
   const metaThemeColor = document.head.querySelector(
     '[name="theme-color"]',
   ) as HTMLMetaElement;
@@ -25,22 +26,27 @@ export const updateMetaThemeColor = (themeColor: SafeColorList) => {
       case 'white':
         result = white;
         metaThemeColor.content = result;
+        metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
         return;
       case 'black':
         result = black;
         metaThemeColor.content = result;
+        metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
         return;
       case 'primary':
         result = primary;
         metaThemeColor.content = result;
+        metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
         return;
       case 'tigersBlack':
         result = tigersBlack;
         metaThemeColor.content = result;
+        metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
         return;
       case 'tigersYellow':
         result = tigersYellow;
         metaThemeColor.content = result;
+        metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
         return;
     }
   } else {
@@ -50,5 +56,6 @@ export const updateMetaThemeColor = (themeColor: SafeColorList) => {
       `--${radixColorType}-${radixColorStep}`,
     );
     metaThemeColor.content = result;
+    metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
   }
 };
