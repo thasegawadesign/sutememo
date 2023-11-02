@@ -15,7 +15,6 @@ import {
 import { isMobile, isTablet, isDesktop } from 'react-device-detect';
 import { GoGrabber, GoX } from 'react-icons/go';
 
-import { Button } from '@/contexts/material-providers';
 import { ThemeContext } from '@/contexts/theme-provider';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
 import { Todo } from '@/types/Todo';
@@ -162,15 +161,13 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       )}
     >
       <div className="flex flex-1 items-center gap-1.5 sm:gap-2.5">
-        <Button
+        <button
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          color="white"
-          ripple={false}
-          variant="text"
+          disabled={window.matchMedia('(display-mode: standalone)').matches}
           className={clsx(
-            `self-stretch rounded px-3 py-4 text-[26px] hover:cursor-grab sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+            `select-none self-stretch rounded bg-transparent px-3 py-4 text-[26px] hover:cursor-grab sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
             {
               'text-gray-800 hover:brightness-95 active:brightness-90':
                 mode === 'light',
@@ -181,7 +178,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           )}
         >
           <GoGrabber />
-        </Button>
+        </button>
         <span
           ref={editableRef}
           contentEditable
@@ -211,13 +208,10 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           />
         )}
       </div>
-      <Button
+      <button
         aria-label={'Delete'}
-        color="white"
-        ripple={false}
-        variant="text"
         className={clsx(
-          `rounded px-3 py-4 text-xl hover:cursor-pointer sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+          `select-none rounded px-3 py-4 text-xl hover:cursor-pointer sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
           {
             'self-stretch': isDesktop === true,
             'text-gray-800 hover:brightness-95 active:brightness-90':
@@ -230,7 +224,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         onClick={handleDeleteButtonClick}
       >
         <GoX />
-      </Button>
+      </button>
     </li>
   );
 });
