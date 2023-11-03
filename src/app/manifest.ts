@@ -2,7 +2,7 @@ import { env } from 'process';
 
 import { MetadataRoute } from 'next';
 
-import { backgroundColor, primary } from '../../tailwind.config';
+import { backgroundColor } from '../../tailwind.config';
 
 export default function manifest(): MetadataRoute.Manifest {
   const baseURL = env.BASE_URL;
@@ -21,7 +21,7 @@ export default function manifest(): MetadataRoute.Manifest {
     display: 'standalone',
     orientation: 'landscape',
     background_color: backgroundColor,
-    theme_color: primary,
+    theme_color: backgroundColor,
     icons: [
       {
         src: '/icons/icon-192x192.png',
