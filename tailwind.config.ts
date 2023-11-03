@@ -99,7 +99,6 @@ const variants: TailwindPrefix[] = [
   'text-',
   'border-',
   'ring-',
-  '!fill-',
 ];
 
 const tailwindSafelist: `"${SafeTailwind}"`[] = [];
