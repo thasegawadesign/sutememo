@@ -2,9 +2,9 @@
 
 import React from 'react';
 
+import IsSystemModeSelectProvider from '@/contexts/is-system-mode-select-provider';
 import { ThemeProvider as MaterialThemeProvider } from '@/contexts/material-providers';
 import ShowAppInstallButtonProvider from '@/contexts/show-app-install-button-provider';
-import SystemColorSchemeProvider from '@/contexts/system-color-scheme-provider';
 import ThemeProvider from '@/contexts/theme-provider';
 
 import type {
@@ -45,7 +45,7 @@ const CustomTheme: CustomTheme = {
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SystemColorSchemeProvider>
+    <IsSystemModeSelectProvider>
       <ThemeProvider>
         <MaterialThemeProvider value={CustomTheme}>
           <ShowAppInstallButtonProvider>
@@ -53,6 +53,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
           </ShowAppInstallButtonProvider>
         </MaterialThemeProvider>
       </ThemeProvider>
-    </SystemColorSchemeProvider>
+    </IsSystemModeSelectProvider>
   );
 }
