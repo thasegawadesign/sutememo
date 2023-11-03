@@ -16,6 +16,7 @@ import AccorionIcon from '@/components/accordion-icon';
 import AppInstallButton from '@/components/app-install-button';
 import IconSvg from '@/components/icon-svg';
 import ThemeSelectButton from '@/components/theme-select-button';
+import { IsDarkModeSelectContext } from '@/contexts/is-dark-mode-select-provider';
 import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
 import {
   Accordion,
@@ -102,7 +103,9 @@ export default function HeaderItem() {
   const handleOpenAccordion = (value: number) =>
     setOpenAccordion(openAccordion === value ? 0 : value);
 
-  const [isDarkModeSelect, setIsDarkModeSelect] = useState(false);
+  const { isDarkModeSelect, setIsDarkModeSelect } = useContext(
+    IsDarkModeSelectContext,
+  );
   const { isSystemModeSelect, setIsSystemModeSelect } = useContext(
     IsSystemModeSelectContext,
   );
@@ -124,7 +127,7 @@ export default function HeaderItem() {
       });
       if (isDarkModeSelect) setIsDarkModeSelect(false);
     }
-  }, [baseColor, isDarkModeSelect, mainColor, setTheme]);
+  }, [baseColor, isDarkModeSelect, mainColor, setIsDarkModeSelect, setTheme]);
 
   const handleDarkModeSwitchChange = useCallback(
     (event: ChangeEvent) => {
@@ -174,7 +177,13 @@ export default function HeaderItem() {
         setIsSystemModeSelect(false);
       }
     },
-    [baseColor, mainColor, setIsSystemModeSelect, setTheme],
+    [
+      baseColor,
+      mainColor,
+      setIsDarkModeSelect,
+      setIsSystemModeSelect,
+      setTheme,
+    ],
   );
 
   const handleUseSystemModeChange = useCallback(
@@ -198,7 +207,13 @@ export default function HeaderItem() {
         setIsDarkModeSelect(false);
       }
     },
-    [baseColor, mainColor, setIsSystemModeSelect, setTheme],
+    [
+      baseColor,
+      mainColor,
+      setIsDarkModeSelect,
+      setIsSystemModeSelect,
+      setTheme,
+    ],
   );
 
   const handleAppInstallButtonClick = useCallback(async () => {
