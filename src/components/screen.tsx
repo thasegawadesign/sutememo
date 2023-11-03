@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
@@ -10,48 +10,8 @@ import { updateMetaThemeColor } from '@/utils/updateMetaThemeColor';
 
 export default function Screen({ children }: { children: React.ReactNode }) {
   const { isSystemModeSelect } = useContext(IsSystemModeSelectContext);
-  const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
+  const { baseColor, mainColor, mode } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(true);
-
-  // const syncSystemMode = useCallback(() => {
-  //   if (matchMedia('(prefers-color-scheme: dark)').matches) {
-  //     setTheme({
-  //       baseColor,
-  //       mainColor,
-  //       mode: 'dark',
-  //     });
-  //   }
-  //   if (matchMedia('(prefers-color-scheme: light)').matches) {
-  //     setTheme({
-  //       baseColor,
-  //       mainColor,
-  //       mode: 'light',
-  //     });
-  //   }
-  // }, [baseColor, mainColor, setTheme]);
-
-  // const handleVisibilityChange = useCallback(async () => {
-  //   if (!isSystemModeSelect) return;
-  //   syncSystemMode();
-  // }, [isSystemModeSelect, syncSystemMode]);
-
-  // const handleWindowFocus = useCallback(async () => {
-  //   if (!isSystemModeSelect) return;
-  //   syncSystemMode();
-  // }, [isSystemModeSelect, syncSystemMode]);
-
-  // useEffect(() => {
-  //   if (!globalThis.window) return;
-  //   document.addEventListener('visibilitychange', handleVisibilityChange);
-  //   return () =>
-  //     document.removeEventListener('visibilitychange', handleVisibilityChange);
-  // }, [handleVisibilityChange]);
-
-  // useEffect(() => {
-  //   if (!globalThis.window) return;
-  //   window.addEventListener('focus', handleWindowFocus);
-  //   return () => window.removeEventListener('focus', handleWindowFocus);
-  // }, [handleWindowFocus]);
 
   useEffect(() => {
     if (isLoading) return;
