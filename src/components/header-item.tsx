@@ -107,6 +107,25 @@ export default function HeaderItem() {
     IsSystemModeSelectContext,
   );
 
+  const syncSystemMode = useCallback(() => {
+    if (matchMedia('(prefers-color-scheme: dark)').matches) {
+      setTheme({
+        baseColor,
+        mainColor,
+        mode: 'dark',
+      });
+      if (!isDarkModeSelect) setIsDarkModeSelect(true);
+    }
+    if (matchMedia('(prefers-color-scheme: light)').matches) {
+      setTheme({
+        baseColor,
+        mainColor,
+        mode: 'light',
+      });
+      if (isDarkModeSelect) setIsDarkModeSelect(false);
+    }
+  }, [baseColor, isDarkModeSelect, mainColor, setTheme]);
+
   const handleDarkModeSwitchChange = useCallback(
     (event: ChangeEvent) => {
       const toggleSwitch = event.target as HTMLInputElement;
@@ -227,6 +246,29 @@ export default function HeaderItem() {
   const handleReloadButtonClick = useCallback(() => {
     location.reload();
   }, []);
+
+  const handleVisibilityChange = useCallback(async () => {
+    if (!isSystemModeSelect) return;
+    syncSystemMode();
+  }, [isSystemModeSelect, syncSystemMode]);
+
+  const handleWindowFocus = useCallback(async () => {
+    if (!isSystemModeSelect) return;
+    syncSystemMode();
+  }, [isSystemModeSelect, syncSystemMode]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [handleVisibilityChange]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    window.addEventListener('focus', handleWindowFocus);
+    return () => window.removeEventListener('focus', handleWindowFocus);
+  }, [handleWindowFocus]);
 
   useEffect(() => {
     if (!globalThis.window) return;
