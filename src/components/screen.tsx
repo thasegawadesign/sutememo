@@ -61,7 +61,7 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   return (
     <>
       {isLoading ? (
-        <div className="grid min-h-[100svh] place-items-center bg-black-a10 pb-[env(safe-area-inset-bottom)] pwa:min-h-screen">
+        <div className="bg-customGray-a10 grid min-h-[100svh] place-items-center pb-[env(safe-area-inset-bottom)] pwa:min-h-screen">
           <div className={'w-[min(15vw,80px)]'}>
             <IconSvg color="white-a10" />
           </div>
