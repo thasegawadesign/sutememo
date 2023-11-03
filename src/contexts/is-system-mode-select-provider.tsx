@@ -8,8 +8,6 @@ import {
   useState,
 } from 'react';
 
-import { Mode } from '@/contexts/theme-provider';
-
 type IsSystemModeSelect = {
   isSystemModeSelect: boolean;
 };
@@ -17,8 +15,6 @@ type IsSystemModeSelect = {
 interface IsSystemModeSelectContext extends IsSystemModeSelect {
   setIsSystemModeSelect: Dispatch<SetStateAction<boolean>>;
 }
-
-// export const defaultMode: Mode = 'dark';
 
 export const IsSystemModeSelectContext =
   createContext<IsSystemModeSelectContext>({
@@ -35,7 +31,6 @@ export default function IsSystemModeSelectProvider({
 
   useEffect(() => {
     if (!globalThis.window) return;
-    // console.log(Boolean(localStorage.getItem('isSystemModeSelect')));
     setIsSystemModeSelect(
       JSON.parse(localStorage.getItem('isSystemModeSelect') as string),
     );
