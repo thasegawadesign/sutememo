@@ -1,69 +1,70 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { SystemColorSchemeContext } from '@/contexts/system-color-scheme-provider';
-import {
-  Mode,
-  ThemeContext,
-  defaultBaseColor,
-  defaultMainColor,
-} from '@/contexts/theme-provider';
-import { SafeColorList } from '@/types/ColorList';
+import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
+import { ThemeContext } from '@/contexts/theme-provider';
 import { bgVariants } from '@/utils/colorVariants';
 import { updateBodyBackgroundColor } from '@/utils/updateBodyBackgroundColor';
 import { updateMetaThemeColor } from '@/utils/updateMetaThemeColor';
 
-import { safeColorList } from '../../tailwind.config';
-
 export default function Screen({ children }: { children: React.ReactNode }) {
-  const { setPrefersColorScheme } = useContext(SystemColorSchemeContext);
+  const { isSystemModeSelect } = useContext(IsSystemModeSelectContext);
   const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(true);
+
+  const syncSystemMode = useCallback(() => {
+    if (matchMedia('(prefers-color-scheme: dark)').matches) {
+      setTheme({
+        baseColor,
+        mainColor,
+        mode: 'dark',
+      });
+    }
+    if (matchMedia('(prefers-color-scheme: light)').matches) {
+      setTheme({
+        baseColor,
+        mainColor,
+        mode: 'light',
+      });
+    }
+  }, [baseColor, mainColor, setTheme]);
+
+  const handleVisibilityChange = useCallback(async () => {
+    if (!isSystemModeSelect) return;
+    syncSystemMode();
+  }, [isSystemModeSelect, syncSystemMode]);
+
+  const handleWindowFocus = useCallback(async () => {
+    if (!isSystemModeSelect) return;
+    syncSystemMode();
+  }, [isSystemModeSelect, syncSystemMode]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [handleVisibilityChange]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    window.addEventListener('focus', handleWindowFocus);
+    return () => window.removeEventListener('focus', handleWindowFocus);
+  }, [handleWindowFocus]);
 
   useEffect(() => {
     if (isLoading) return;
     localStorage.setItem('baseColor', baseColor);
     localStorage.setItem('mainColor', mainColor);
     localStorage.setItem('mode', mode);
+    localStorage.setItem(
+      'isSystemModeSelect',
+      JSON.stringify(isSystemModeSelect),
+    );
     updateBodyBackgroundColor(baseColor);
     updateMetaThemeColor(baseColor, mode);
-  }, [baseColor, isLoading, mainColor, mode]);
-
-  useEffect(() => {
-    const initialBaseColor = safeColorList.includes(
-      localStorage.getItem('baseColor') as SafeColorList,
-    )
-      ? (localStorage.getItem('baseColor') as SafeColorList)
-      : defaultBaseColor;
-    const initialMainColor = safeColorList.includes(
-      localStorage.getItem('mainColor') as SafeColorList,
-    )
-      ? (localStorage.getItem('mainColor') as SafeColorList)
-      : defaultMainColor;
-    const initialMode = localStorage.getItem('mode')
-      ? (localStorage.getItem('mode') as Mode)
-      : matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-    setTheme({
-      baseColor: initialBaseColor,
-      mainColor: initialMainColor,
-      mode: initialMode,
-    });
-    updateBodyBackgroundColor(initialBaseColor);
-    updateMetaThemeColor(initialBaseColor, initialMode);
-    setIsLoading(false);
-  }, [setTheme]);
-
-  useEffect(() => {
-    if (matchMedia('(prefers-color-scheme: dark)').matches) {
-      setPrefersColorScheme('dark');
-    }
-    if (matchMedia('(prefers-color-scheme: light)').matches) {
-      setPrefersColorScheme('light');
-    }
-  }, [setPrefersColorScheme]);
+  }, [baseColor, isLoading, isSystemModeSelect, mainColor, mode]);
 
   useEffect(() => {
     const HTML = document.querySelector('html');
@@ -81,6 +82,10 @@ export default function Screen({ children }: { children: React.ReactNode }) {
         break;
     }
   }, [mode]);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
     <>
