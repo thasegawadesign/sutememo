@@ -2,23 +2,17 @@
 
 import { useContext, useEffect, useState } from 'react';
 
-import { SystemColorSchemeContext } from '@/contexts/system-color-scheme-provider';
-import {
-  Mode,
-  ThemeContext,
-  defaultBaseColor,
-  defaultMainColor,
-} from '@/contexts/theme-provider';
-import { SafeColorList } from '@/types/ColorList';
+import { IsDarkModeSelectContext } from '@/contexts/is-dark-mode-select-provider';
+import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
+import { ThemeContext } from '@/contexts/theme-provider';
 import { bgVariants } from '@/utils/colorVariants';
 import { updateBodyBackgroundColor } from '@/utils/updateBodyBackgroundColor';
 import { updateMetaThemeColor } from '@/utils/updateMetaThemeColor';
 
-import { safeColorList } from '../../tailwind.config';
-
 export default function Screen({ children }: { children: React.ReactNode }) {
-  const { setPrefersColorScheme } = useContext(SystemColorSchemeContext);
-  const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
+  const { isSystemModeSelect } = useContext(IsSystemModeSelectContext);
+  const { isDarkModeSelect } = useContext(IsDarkModeSelectContext);
+  const { baseColor, mainColor, mode } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -26,44 +20,21 @@ export default function Screen({ children }: { children: React.ReactNode }) {
     localStorage.setItem('baseColor', baseColor);
     localStorage.setItem('mainColor', mainColor);
     localStorage.setItem('mode', mode);
+    localStorage.setItem(
+      'isSystemModeSelect',
+      JSON.stringify(isSystemModeSelect),
+    );
+    localStorage.setItem('isDarkModeSelect', JSON.stringify(isDarkModeSelect));
     updateBodyBackgroundColor(baseColor);
     updateMetaThemeColor(baseColor, mode);
-  }, [baseColor, isLoading, mainColor, mode]);
-
-  useEffect(() => {
-    const initialBaseColor = safeColorList.includes(
-      localStorage.getItem('baseColor') as SafeColorList,
-    )
-      ? (localStorage.getItem('baseColor') as SafeColorList)
-      : defaultBaseColor;
-    const initialMainColor = safeColorList.includes(
-      localStorage.getItem('mainColor') as SafeColorList,
-    )
-      ? (localStorage.getItem('mainColor') as SafeColorList)
-      : defaultMainColor;
-    const initialMode = localStorage.getItem('mode')
-      ? (localStorage.getItem('mode') as Mode)
-      : matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-    setTheme({
-      baseColor: initialBaseColor,
-      mainColor: initialMainColor,
-      mode: initialMode,
-    });
-    updateBodyBackgroundColor(initialBaseColor);
-    updateMetaThemeColor(initialBaseColor, initialMode);
-    setIsLoading(false);
-  }, [setTheme]);
-
-  useEffect(() => {
-    if (matchMedia('(prefers-color-scheme: dark)').matches) {
-      setPrefersColorScheme('dark');
-    }
-    if (matchMedia('(prefers-color-scheme: light)').matches) {
-      setPrefersColorScheme('light');
-    }
-  }, [setPrefersColorScheme]);
+  }, [
+    baseColor,
+    isDarkModeSelect,
+    isLoading,
+    isSystemModeSelect,
+    mainColor,
+    mode,
+  ]);
 
   useEffect(() => {
     const HTML = document.querySelector('html');
@@ -81,6 +52,10 @@ export default function Screen({ children }: { children: React.ReactNode }) {
         break;
     }
   }, [mode]);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
     <>
