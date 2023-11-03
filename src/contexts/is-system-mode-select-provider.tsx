@@ -32,7 +32,7 @@ export default function IsSystemModeSelectProvider({
   useEffect(() => {
     if (!globalThis.window) return;
     setIsSystemModeSelect(
-      JSON.parse(localStorage.getItem('isSystemModeSelect') as string),
+      JSON.parse(localStorage.getItem('isSystemModeSelect') as string) ?? true,
     );
   }, []);
 

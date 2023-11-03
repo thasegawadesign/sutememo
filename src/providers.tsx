@@ -2,6 +2,7 @@
 
 import React from 'react';
 
+import IsDarkModeSelectProvider from '@/contexts/is-dark-mode-select-provider';
 import IsSystemModeSelectProvider from '@/contexts/is-system-mode-select-provider';
 import { ThemeProvider as MaterialThemeProvider } from '@/contexts/material-providers';
 import ShowAppInstallButtonProvider from '@/contexts/show-app-install-button-provider';
@@ -11,6 +12,7 @@ import type {
   DrawerStylesType,
   SwitchButtonStylesType,
 } from '@/contexts/material-providers';
+
 
 type CustomTheme = {
   drawer: DrawerStylesType;
@@ -46,13 +48,15 @@ const CustomTheme: CustomTheme = {
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <IsSystemModeSelectProvider>
-      <ThemeProvider>
-        <MaterialThemeProvider value={CustomTheme}>
-          <ShowAppInstallButtonProvider>
-            {children}
-          </ShowAppInstallButtonProvider>
-        </MaterialThemeProvider>
-      </ThemeProvider>
+      <IsDarkModeSelectProvider>
+        <ThemeProvider>
+          <MaterialThemeProvider value={CustomTheme}>
+            <ShowAppInstallButtonProvider>
+              {children}
+            </ShowAppInstallButtonProvider>
+          </MaterialThemeProvider>
+        </ThemeProvider>
+      </IsDarkModeSelectProvider>
     </IsSystemModeSelectProvider>
   );
 }

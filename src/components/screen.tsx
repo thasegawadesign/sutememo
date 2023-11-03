@@ -2,6 +2,7 @@
 
 import { useContext, useEffect, useState } from 'react';
 
+import { IsDarkModeSelectContext } from '@/contexts/is-dark-mode-select-provider';
 import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
 import { bgVariants } from '@/utils/colorVariants';
@@ -10,6 +11,7 @@ import { updateMetaThemeColor } from '@/utils/updateMetaThemeColor';
 
 export default function Screen({ children }: { children: React.ReactNode }) {
   const { isSystemModeSelect } = useContext(IsSystemModeSelectContext);
+  const { isDarkModeSelect } = useContext(IsDarkModeSelectContext);
   const { baseColor, mainColor, mode } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,9 +24,17 @@ export default function Screen({ children }: { children: React.ReactNode }) {
       'isSystemModeSelect',
       JSON.stringify(isSystemModeSelect),
     );
+    localStorage.setItem('isDarkModeSelect', JSON.stringify(isDarkModeSelect));
     updateBodyBackgroundColor(baseColor);
     updateMetaThemeColor(baseColor, mode);
-  }, [baseColor, isLoading, isSystemModeSelect, mainColor, mode]);
+  }, [
+    baseColor,
+    isDarkModeSelect,
+    isLoading,
+    isSystemModeSelect,
+    mainColor,
+    mode,
+  ]);
 
   useEffect(() => {
     const HTML = document.querySelector('html');
