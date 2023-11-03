@@ -26,7 +26,6 @@ export type TailwindPrefix =
   | 'hover:bg-'
   | 'text-'
   | 'border-'
-  | 'ring-'
-  | '!fill-';
+  | 'ring-';
 
 export type ThemeId = `${SafeColorList}-${SafeColorList}-${Mode}-theme`;
