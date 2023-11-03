@@ -8,7 +8,6 @@ import {
   useState,
 } from 'react';
 
-import { defaultMode } from '@/contexts/system-color-scheme-provider';
 import { SafeColorList } from '@/types/ColorList';
 
 import { safeColorList } from '../../tailwind.config';
@@ -24,9 +23,9 @@ interface ThemeContextType extends ThemeType {
   setTheme: Dispatch<SetStateAction<ThemeType>>;
 }
 
-export const defaultBaseColor: SafeColorList = 'radixGray-2';
-
-export const defaultMainColor: SafeColorList = 'primary-a10';
+const defaultBaseColor: SafeColorList = 'radixGray-2';
+const defaultMainColor: SafeColorList = 'primary-a10';
+const defaultMode: Mode = 'dark';
 
 export const ThemeContext = createContext<ThemeContextType>({
   baseColor: defaultBaseColor,

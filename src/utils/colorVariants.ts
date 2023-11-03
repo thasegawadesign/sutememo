@@ -40,13 +40,6 @@ export const ringVariants: {
   ...generateRadixMappingObj('ring-'),
 };
 
-export const fillVariants: {
-  [key: string]: string;
-} = {
-  ...generateCustomMappingObj('!fill-'),
-  ...generateRadixMappingObj('!fill-'),
-};
-
 function generateRadixMappingObj(tailwindPrefix: TailwindPrefix) {
   const radixArr: [RadixScale, RadixScaleTailwind][] = [];
   radixColorList.map((radixColor) => {

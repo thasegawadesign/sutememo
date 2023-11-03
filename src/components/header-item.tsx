@@ -16,6 +16,8 @@ import AccorionIcon from '@/components/accordion-icon';
 import AppInstallButton from '@/components/app-install-button';
 import IconSvg from '@/components/icon-svg';
 import ThemeSelectButton from '@/components/theme-select-button';
+import { IsDarkModeSelectContext } from '@/contexts/is-dark-mode-select-provider';
+import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
 import {
   Accordion,
   AccordionBody,
@@ -25,7 +27,6 @@ import {
   Switch,
 } from '@/contexts/material-providers';
 import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-provider';
-import { SystemColorSchemeContext } from '@/contexts/system-color-scheme-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
 import useWindowSize from '@/hooks/useWindowSize';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
@@ -51,7 +52,7 @@ export default function HeaderItem() {
   const [width, height] = useWindowSize();
 
   const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
-  const { prefersColorScheme } = useContext(SystemColorSchemeContext);
+
   const labelName = 'theme-color';
 
   const [baseColorTranslucent, setBaseColorTranslucent] =
@@ -102,70 +103,117 @@ export default function HeaderItem() {
   const handleOpenAccordion = (value: number) =>
     setOpenAccordion(openAccordion === value ? 0 : value);
 
-  const [isDarkModeSelect, setIsDarkModeSelect] = useState(false);
-  const [isSystemModeSelect, setIsSystemModeSelect] = useState(true);
+  const { isDarkModeSelect, setIsDarkModeSelect } = useContext(
+    IsDarkModeSelectContext,
+  );
+  const { isSystemModeSelect, setIsSystemModeSelect } = useContext(
+    IsSystemModeSelectContext,
+  );
+
+  const syncSystemMode = useCallback(() => {
+    if (matchMedia('(prefers-color-scheme: dark)').matches) {
+      setTheme({
+        baseColor,
+        mainColor,
+        mode: 'dark',
+      });
+      if (!isDarkModeSelect) setIsDarkModeSelect(true);
+    }
+    if (matchMedia('(prefers-color-scheme: light)').matches) {
+      setTheme({
+        baseColor,
+        mainColor,
+        mode: 'light',
+      });
+      if (isDarkModeSelect) setIsDarkModeSelect(false);
+    }
+  }, [baseColor, isDarkModeSelect, mainColor, setIsDarkModeSelect, setTheme]);
 
   const handleDarkModeSwitchChange = useCallback(
     (event: ChangeEvent) => {
       const toggleSwitch = event.target as HTMLInputElement;
-      const isDarkMode = toggleSwitch.checked;
-      setIsDarkModeSelect(isDarkMode);
-      if (isDarkMode && prefersColorScheme === 'dark') {
+      const isRequestDarkMode = toggleSwitch.checked;
+      setIsDarkModeSelect(isRequestDarkMode);
+      if (
+        isRequestDarkMode &&
+        matchMedia('(prefers-color-scheme: dark)').matches
+      ) {
         setTheme({
           baseColor,
           mainColor,
           mode: 'dark',
         });
       }
-      if (!isDarkMode && prefersColorScheme === 'light') {
+      if (
+        !isRequestDarkMode &&
+        matchMedia('(prefers-color-scheme: light)').matches
+      ) {
         setTheme({
           baseColor,
           mainColor,
           mode: 'light',
         });
       }
-      if (isDarkMode && prefersColorScheme === 'light') {
-        setIsSystemModeSelect(false);
+      if (
+        isRequestDarkMode &&
+        matchMedia('(prefers-color-scheme: light)').matches
+      ) {
         setTheme({
           baseColor,
           mainColor,
           mode: 'dark',
         });
-      }
-      if (!isDarkMode && prefersColorScheme === 'dark') {
         setIsSystemModeSelect(false);
+      }
+      if (
+        !isRequestDarkMode &&
+        matchMedia('(prefers-color-scheme: dark)').matches
+      ) {
         setTheme({
           baseColor,
           mainColor,
           mode: 'light',
         });
+        setIsSystemModeSelect(false);
       }
     },
-    [baseColor, mainColor, prefersColorScheme, setTheme],
+    [
+      baseColor,
+      mainColor,
+      setIsDarkModeSelect,
+      setIsSystemModeSelect,
+      setTheme,
+    ],
   );
 
   const handleUseSystemModeChange = useCallback(
     (event: ChangeEvent) => {
       const toggleSwitch = event.target as HTMLInputElement;
       setIsSystemModeSelect(toggleSwitch.checked);
-      if (prefersColorScheme === 'light') {
-        setIsDarkModeSelect(false);
-        setTheme({
-          baseColor,
-          mainColor,
-          mode: 'light',
-        });
-      }
-      if (prefersColorScheme === 'dark') {
-        setIsDarkModeSelect(true);
+      if (matchMedia('(prefers-color-scheme: dark)').matches) {
         setTheme({
           baseColor,
           mainColor,
           mode: 'dark',
         });
+        setIsDarkModeSelect(true);
+      }
+      if (matchMedia('(prefers-color-scheme: light)').matches) {
+        setTheme({
+          baseColor,
+          mainColor,
+          mode: 'light',
+        });
+        setIsDarkModeSelect(false);
       }
     },
-    [baseColor, mainColor, prefersColorScheme, setTheme],
+    [
+      baseColor,
+      mainColor,
+      setIsDarkModeSelect,
+      setIsSystemModeSelect,
+      setTheme,
+    ],
   );
 
   const handleAppInstallButtonClick = useCallback(async () => {
@@ -214,6 +262,29 @@ export default function HeaderItem() {
     location.reload();
   }, []);
 
+  const handleVisibilityChange = useCallback(async () => {
+    if (!isSystemModeSelect) return;
+    syncSystemMode();
+  }, [isSystemModeSelect, syncSystemMode]);
+
+  const handleWindowFocus = useCallback(async () => {
+    if (!isSystemModeSelect) return;
+    syncSystemMode();
+  }, [isSystemModeSelect, syncSystemMode]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [handleVisibilityChange]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    window.addEventListener('focus', handleWindowFocus);
+    return () => window.removeEventListener('focus', handleWindowFocus);
+  }, [handleWindowFocus]);
+
   useEffect(() => {
     if (!globalThis.window) return;
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -229,25 +300,6 @@ export default function HeaderItem() {
     window.addEventListener('appinstalled', handleAppInstalled);
     return () => window.removeEventListener('appinstalled', handleAppInstalled);
   }, [handleAppInstalled]);
-
-  useEffect(() => {
-    if (mode === 'dark' && prefersColorScheme === 'dark') {
-      setIsDarkModeSelect(true);
-      setIsSystemModeSelect(true);
-    }
-    if (mode === 'dark' && prefersColorScheme === 'light') {
-      setIsDarkModeSelect(true);
-      setIsSystemModeSelect(false);
-    }
-    if (mode === 'light' && prefersColorScheme === 'dark') {
-      setIsDarkModeSelect(false);
-      setIsSystemModeSelect(false);
-    }
-    if (mode === 'light' && prefersColorScheme === 'light') {
-      setIsDarkModeSelect(false);
-      setIsSystemModeSelect(true);
-    }
-  }, [mode, prefersColorScheme]);
 
   useEffect(() => {
     generateBaseColorTranslucent(baseColor);
