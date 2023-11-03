@@ -13,8 +13,7 @@ export const primary = '#208cd8';
 export const tigersYellow = '#f7da07';
 export const tigersBlack = '#060606';
 
-export const backgroundColor = '#f9f9f9';
-export const themeColor = '#202020';
+export const backgroundColor = '#191919';
 
 export const safeColorList = [
   'white-a10',
