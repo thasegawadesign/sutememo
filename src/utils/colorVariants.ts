@@ -1,10 +1,11 @@
 import { customColorList } from '@/utils/customColorList';
 import { radixColorList } from '@/utils/radixColorList';
 
-import { CUSTOM_COLOR_STEP, RADIX_COLOR_STEP } from '../../tailwind.config';
+import { COLOR_STEP } from '../../tailwind.config';
 
 import type {
   CustomScale,
+  CustomScaleAlpha,
   CustomScaleTailwind,
   RadixScale,
   RadixScaleAlpha,
@@ -43,11 +44,11 @@ export const ringVariants: {
 function generateRadixMappingObj(tailwindPrefix: TailwindPrefix) {
   const radixArr: [RadixScale, RadixScaleTailwind][] = [];
   radixColorList.map((radixColor) => {
-    [...Array(RADIX_COLOR_STEP)].map((_, i) => {
+    [...Array(COLOR_STEP)].map((_, i) => {
       const id = i + 1;
       const key: RadixScale = `${radixColor}-${id}`;
-      const alphaKey: RadixScaleAlpha = `${radixColor}-a${id}`;
       const value: RadixScaleTailwind = `${tailwindPrefix}${key}`;
+      const alphaKey: RadixScaleAlpha = `${radixColor}-a${id}`;
       const alphaValue: RadixScaleTailwind = `${tailwindPrefix}${alphaKey}`;
       radixArr.push([key, value]);
       radixArr.push([alphaKey, alphaValue]);
@@ -59,11 +60,14 @@ function generateRadixMappingObj(tailwindPrefix: TailwindPrefix) {
 function generateCustomMappingObj(tailwindPrefix: TailwindPrefix) {
   const customArr: [CustomScale, CustomScaleTailwind][] = [];
   customColorList.map((customColor) => {
-    [...Array(CUSTOM_COLOR_STEP)].map((_, i) => {
-      const id = i + 1;
-      const key: CustomScale = `${customColor}-a${id}`;
+    [...Array(COLOR_STEP)].map((_, i) => {
+      const step = i + 1;
+      const key: CustomScale = `${customColor}-${step}`;
       const value: CustomScaleTailwind = `${tailwindPrefix}${key}`;
+      const alphaKey: CustomScaleAlpha = `${customColor}-a${step}`;
+      const alphaValue: CustomScaleTailwind = `${tailwindPrefix}${alphaKey}`;
       customArr.push([key, value]);
+      customArr.push([alphaKey, alphaValue]);
     });
   });
   return Object.fromEntries(customArr);

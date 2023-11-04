@@ -333,7 +333,7 @@ export default function HeaderItem() {
               {
                 'hover:brightness-95 active:brightness-90': mode === 'light',
                 'hover:brightness-125 active:brightness-150': mode === 'dark',
-                'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
+                'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
               },
             )}
             onClick={openDrawer}
@@ -370,7 +370,7 @@ export default function HeaderItem() {
                 <h2
                   className={clsx('select-none pl-5 text-lg font-semibold', {
                     'text-gray-900': mode === 'light',
-                    'text-white-a10': mode === 'dark',
+                    'text-white-12': mode === 'dark',
                   })}
                 >
                   設定
@@ -386,7 +386,7 @@ export default function HeaderItem() {
                         mode === 'light',
                       'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
-                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
+                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
                     },
                   )}
                   onClick={closeDrawer}
@@ -417,7 +417,7 @@ export default function HeaderItem() {
                         mode === 'light',
                       'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
-                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
+                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
                     },
                   )}
                   onClick={() => handleOpenAccordion(1)}
@@ -451,7 +451,7 @@ export default function HeaderItem() {
                       <h3
                         className={clsx('text-base font-semibold', {
                           'text-gray-900': mode === 'light',
-                          'text-white-a10': mode === 'dark',
+                          'text-white-12': mode === 'dark',
                         })}
                       >
                         ダークモード
@@ -468,8 +468,8 @@ export default function HeaderItem() {
                           className: 'w-11 h-6 scale-[1.25]',
                         }}
                         disabled={
-                          baseColor === 'tigersBlack-a10' ||
-                          baseColor === 'tigersYellow-a10'
+                          baseColor === 'tigersBlack-9' ||
+                          baseColor === 'tigersYellow-9'
                         }
                         onChange={handleDarkModeSwitchChange}
                       />
@@ -478,7 +478,7 @@ export default function HeaderItem() {
                       <h3
                         className={clsx('text-base font-semibold', {
                           'text-gray-900': mode === 'light',
-                          'text-white-a10': mode === 'dark',
+                          'text-white-12': mode === 'dark',
                         })}
                       >
                         端末の設定を使う
@@ -495,8 +495,8 @@ export default function HeaderItem() {
                           className: 'w-11 h-6 scale-[1.25]',
                         }}
                         disabled={
-                          baseColor === 'tigersBlack-a10' ||
-                          baseColor === 'tigersYellow-a10'
+                          baseColor === 'tigersBlack-9' ||
+                          baseColor === 'tigersYellow-9'
                         }
                         onChange={handleUseSystemModeChange}
                       />
@@ -518,8 +518,8 @@ export default function HeaderItem() {
                       <ThemeSelectButton
                         baseColor="radixGray-2"
                         checkedThemeOption={checkedThemeOption}
-                        id={`primary-a10-radixGray-2-${mode}-theme`}
-                        mainColor="primary-a10"
+                        id={`primary-9-radixGray-2-${mode}-theme`}
+                        mainColor="primary-9"
                         mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
@@ -737,20 +737,20 @@ export default function HeaderItem() {
                     <li>
                       {mode === 'dark' ? (
                         <ThemeSelectButton
-                          baseColor="tigersBlack-a10"
+                          baseColor="tigersBlack-9"
                           checkedThemeOption={checkedThemeOption}
-                          id="tigersYellow-a10-tigersBlack-a10-dark-theme"
-                          mainColor="tigersYellow-a10"
+                          id="tigersYellow-9-tigersBlack-9-dark-theme"
+                          mainColor="tigersYellow-9"
                           mode="dark"
                           name={labelName}
                           setCheckedThemeOption={setCheckedThemeOption}
                         />
                       ) : (
                         <ThemeSelectButton
-                          baseColor="tigersYellow-a10"
+                          baseColor="tigersYellow-9"
                           checkedThemeOption={checkedThemeOption}
-                          id="tigersBlack-a10-tigersYellow-a10-light-theme"
-                          mainColor="tigersBlack-a10"
+                          id="tigersBlack-9-tigersYellow-9-light-theme"
+                          mainColor="tigersBlack-9"
                           mode="light"
                           name={labelName}
                           setCheckedThemeOption={setCheckedThemeOption}
@@ -772,7 +772,7 @@ export default function HeaderItem() {
                         mode === 'light',
                       'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
-                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
+                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
                     },
                   )}
                   onClick={() => handleOpenAccordion(2)}
@@ -814,7 +814,7 @@ export default function HeaderItem() {
                         mode === 'light',
                       'hover:brightness-125 active:brightness-150':
                         mode === 'dark',
-                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-a10',
+                      'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
                     },
                   )}
                   onClick={() => handleOpenAccordion(3)}
@@ -849,7 +849,7 @@ export default function HeaderItem() {
                         'flex items-center justify-between px-3',
                         {
                           'text-gray-900': mode === 'light',
-                          'text-white-a10': mode === 'dark',
+                          'text-white-12': mode === 'dark',
                         },
                       )}
                     >

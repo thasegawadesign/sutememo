@@ -20,7 +20,7 @@ export async function GET() {
           alignItems: 'center',
         }}
       >
-        <IconSvg color="white-a10" />
+        <IconSvg color="white-12" />
       </div>
     ),
     {
