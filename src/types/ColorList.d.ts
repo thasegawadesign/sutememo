@@ -10,7 +10,9 @@ export type RadixScale = RadixScaleOpaque | RadixScaleAlpha;
 export type RadixScaleTailwind = `${TailwindPrefix}${RadixScale}`;
 
 type CustomColorList = (typeof customColorList)[number];
-export type CustomScale = `${CustomColorList}-a${number}`;
+type CustomScaleOpaque = `${CustomColorList}-${number}`;
+type CustomScaleAlpha = `${CustomColorList}-a${number}`;
+export type CustomScale = CustomScaleOpaque | CustomScaleAlpha;
 export type CustomScaleTailwind = `${TailwindPrefix}${CustomScale}`;
 
 export type ColorList = CustomColorList | RadixScale;
