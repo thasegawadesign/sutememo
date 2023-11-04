@@ -518,8 +518,8 @@ export default function HeaderItem() {
                       <ThemeSelectButton
                         baseColor="radixGray-2"
                         checkedThemeOption={checkedThemeOption}
-                        id={`primary-9-radixGray-2-${mode}-theme`}
-                        mainColor="primary-9"
+                        id={`primary-8-radixGray-2-${mode}-theme`}
+                        mainColor="primary-8"
                         mode={mode}
                         name={labelName}
                         setCheckedThemeOption={setCheckedThemeOption}
