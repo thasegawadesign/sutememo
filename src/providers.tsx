@@ -24,7 +24,7 @@ const CustomTheme: CustomTheme = {
       base: {
         overlay: {
           height: 'h-screen',
-          backgroundColor: 'bg-black-a6',
+          backgroundColor: 'bg-black-12',
         },
       },
     },
