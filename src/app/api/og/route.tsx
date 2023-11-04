@@ -2,6 +2,8 @@ import { ImageResponse } from 'next/og';
 
 import IconSvg from '@/components/icon-svg';
 
+import { customGray } from '../../../../tailwind.config';
+
 export const runtime = 'edge';
 
 export async function GET() {
@@ -10,7 +12,7 @@ export async function GET() {
       <div
         style={{
           display: 'flex',
-          background: 'white',
+          background: customGray,
           width: '100%',
           height: '100%',
           textAlign: 'center',
@@ -18,7 +20,7 @@ export async function GET() {
           alignItems: 'center',
         }}
       >
-        <IconSvg color="primary-a10" />
+        <IconSvg color="white-a10" />
       </div>
     ),
     {
