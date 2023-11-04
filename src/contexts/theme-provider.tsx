@@ -10,8 +10,6 @@ import {
 
 import { SafeColorList } from '@/types/ColorList';
 
-import { safeColorList } from '../../tailwind.config';
-
 export type Mode = 'light' | 'dark';
 export interface ThemeType {
   baseColor: SafeColorList;
@@ -23,7 +21,7 @@ interface ThemeContextType extends ThemeType {
   setTheme: Dispatch<SetStateAction<ThemeType>>;
 }
 
-const defaultBaseColor: SafeColorList = 'radixGray-3';
+const defaultBaseColor: SafeColorList = 'radixGray-1';
 const defaultMainColor: SafeColorList = 'radixGray-12';
 const defaultMode: Mode = 'dark';
 
@@ -48,21 +46,15 @@ export default function ThemeProvider({
   useEffect(() => {
     if (!globalThis.window) return;
     setTheme({
-      baseColor: safeColorList.includes(
-        localStorage.getItem('baseColor') as SafeColorList,
-      )
+      baseColor: localStorage.getItem('baseColor')
         ? (localStorage.getItem('baseColor') as SafeColorList)
         : defaultBaseColor,
-      mainColor: safeColorList.includes(
-        localStorage.getItem('mainColor') as SafeColorList,
-      )
+      mainColor: localStorage.getItem('mainColor')
         ? (localStorage.getItem('mainColor') as SafeColorList)
         : defaultMainColor,
       mode: localStorage.getItem('mode')
         ? (localStorage.getItem('mode') as Mode)
-        : matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light',
+        : defaultMode,
     });
   }, []);
 
