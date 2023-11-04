@@ -505,6 +505,17 @@ export default function HeaderItem() {
                   <ul className="grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2 xxs:grid-cols-3">
                     <li>
                       <ThemeSelectButton
+                        baseColor="radixGray-3"
+                        checkedThemeOption={checkedThemeOption}
+                        id={`radixGray-12-radixGray-3-${mode}-theme`}
+                        mainColor="radixGray-12"
+                        mode={mode}
+                        name={labelName}
+                        setCheckedThemeOption={setCheckedThemeOption}
+                      />
+                    </li>
+                    <li>
+                      <ThemeSelectButton
                         baseColor="radixGray-2"
                         checkedThemeOption={checkedThemeOption}
                         id={`primary-a10-radixGray-2-${mode}-theme`}

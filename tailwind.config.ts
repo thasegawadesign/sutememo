@@ -9,10 +9,10 @@ export const CUSTOM_COLOR_STEP = 10;
 
 export const white = '#ffffff';
 export const black = '#000000';
+export const customGray = '#111111';
 export const primary = '#208cd8';
 export const tigersYellow = '#f7da07';
 export const tigersBlack = '#060606';
-
 export const backgroundColor = '#191919';
 
 export const safeColorList = [
@@ -20,6 +20,8 @@ export const safeColorList = [
   'black-a5',
   'black-a6',
   'black-a10',
+  'customGray-a6',
+  'customGray-a10',
   'primary-a6',
   'primary-a10',
   'tigersYellow-a6',
@@ -27,8 +29,10 @@ export const safeColorList = [
   'tigersBlack-a6',
   'tigersBlack-a10',
   'radixGray-1',
+  'radixGray-a1',
   'radixGray-2',
   'radixGray-a2',
+  'radixGray-3',
   'radixGray-7',
   'radixGray-a4',
   'radixGray-9',
@@ -127,6 +131,7 @@ const config: Config = withMT({
       colors: {
         white: generateCustomeScale(white),
         black: generateCustomeScale(black),
+        customGray: generateCustomeScale(customGray),
         primary: generateCustomeScale(primary),
         tigersYellow: generateCustomeScale(tigersYellow),
         tigersBlack: generateCustomeScale(tigersBlack),
