@@ -33,7 +33,7 @@ export const safeColorList = [
   'black-a6',
   'customGray-9',
   'customGray-a6',
-  'primary-9',
+  'primary-8',
   'primary-a6',
   'tigersYellow-9',
   'tigersYellow-a6',
