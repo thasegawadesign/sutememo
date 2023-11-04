@@ -34,7 +34,7 @@ export default function Redo(props: Props) {
             'hover:brightness-125 active:brightness-150':
               canRedo && mode === 'dark',
             'opacity-30': canRedo === false,
-            'hover:bg-radixGray-1': canRedo && baseColor === 'tigersBlack-a10',
+            'hover:bg-radixGray-1': canRedo && baseColor === 'tigersBlack-9',
           },
         )}
         onClick={handleRedoClick}
