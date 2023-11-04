@@ -2,6 +2,7 @@
 
 import { useContext, useEffect, useState } from 'react';
 
+import IconSvg from '@/components/icon-svg';
 import { IsDarkModeSelectContext } from '@/contexts/is-dark-mode-select-provider';
 import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
@@ -59,11 +60,19 @@ export default function Screen({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div
-        className={`min-h-[100svh] pt-[env(safe-area-inset-top)] pwa:min-h-screen ${bgVariants[baseColor]}`}
-      >
-        {children}
-      </div>
+      {isLoading ? (
+        <div className="bg-customGray-a10 grid min-h-[100svh] place-items-center pb-[env(safe-area-inset-bottom)] pwa:min-h-screen">
+          <div className={'w-[min(15vw,80px)]'}>
+            <IconSvg color="white-a10" />
+          </div>
+        </div>
+      ) : (
+        <div
+          className={`min-h-[100svh] pt-[env(safe-area-inset-top)] pwa:min-h-screen ${bgVariants[baseColor]}`}
+        >
+          {children}
+        </div>
+      )}
     </>
   );
 }
