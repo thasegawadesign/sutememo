@@ -1,6 +1,5 @@
 'use client';
 
-import { ReloadIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';
 import {
   useCallback,
@@ -843,7 +842,7 @@ export default function HeaderItem() {
                   </div>
                 </AccordionHeader>
                 <AccordionBody>
-                  <div className="grid gap-5 px-5">
+                  <div className="grid gap-5 px-2">
                     <dl
                       className={clsx(
                         'flex items-center justify-between px-3',
@@ -862,7 +861,7 @@ export default function HeaderItem() {
                       ripple={false}
                       variant="text"
                       className={clsx(
-                        `flex items-center justify-center gap-3 px-3 py-4 text-${baseColor} ${bgVariants[mainColor]} hover:${bgVariants[mainColor]} active:${bgVariants[mainColor]}`,
+                        `flex items-center justify-center gap-3 px-3 py-3.5 text-${baseColor} ${bgVariants[mainColor]} hover:${bgVariants[mainColor]} active:${bgVariants[mainColor]}`,
                         {
                           'hover:brightness-95 active:brightness-90':
                             mode === 'light',
@@ -872,9 +871,8 @@ export default function HeaderItem() {
                       )}
                       onClick={handleReloadButtonClick}
                     >
-                      <ReloadIcon className="h-[18px] w-[18px] shrink-0" />
                       <span className="text-base font-semibold">
-                        アプリケーションを更新する
+                        アプリを更新する
                       </span>
                     </Button>
                   </div>
