@@ -38,10 +38,9 @@ import {
 } from '@/utils/colorVariants';
 import { customColorList } from '@/utils/customColorList';
 
-const packageJson = require('package.json');
-
 export default function HeaderItem() {
-  const appVersion = packageJson.version;
+  const appVersion = process.env.NEXT_PUBLIC_APP_VERSION;
+
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
 
