@@ -4,8 +4,10 @@ import type { Config } from 'tailwindcss';
 
 const withMT = require('@material-tailwind/react/utils/withMT');
 
-export const RADIX_COLOR_STEP = 12;
-export const CUSTOM_COLOR_STEP = 10;
+type COLOR_STEP = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+
+export const COLOR_STEP = 12;
+const SOLID_STEP = 9;
 
 export const white = '#ffffff';
 export const black = '#000000';
@@ -15,19 +17,28 @@ export const tigersYellow = '#f7da07';
 export const tigersBlack = '#060606';
 export const backgroundColor = '#191919';
 
+type CustomSolidColorCode =
+  | typeof white
+  | typeof black
+  | typeof customGray
+  | typeof primary
+  | typeof tigersYellow
+  | typeof tigersBlack
+  | typeof backgroundColor;
+
 export const safeColorList = [
-  'white-a10',
+  'white-12',
+  'black-12',
   'black-a5',
   'black-a6',
-  'black-a10',
+  'customGray-9',
   'customGray-a6',
-  'customGray-a10',
+  'primary-8',
   'primary-a6',
-  'primary-a10',
+  'tigersYellow-9',
   'tigersYellow-a6',
-  'tigersYellow-a10',
+  'tigersBlack-9',
   'tigersBlack-a6',
-  'tigersBlack-a10',
   'radixGray-1',
   'radixGray-a1',
   'radixGray-2',
@@ -186,7 +197,7 @@ const config: Config = withMT({
 export default config;
 
 function generateRadixScale(name: string) {
-  let scale = Array.from({ length: RADIX_COLOR_STEP }, (_, i) => {
+  let scale = Array.from({ length: COLOR_STEP }, (_, i) => {
     let id = i + 1;
     return [
       [id, `var(--${name}-${id})`],
@@ -196,36 +207,86 @@ function generateRadixScale(name: string) {
   return Object.fromEntries(scale);
 }
 
-function generateCustomeScale(color: string) {
-  let scale = Array.from({ length: CUSTOM_COLOR_STEP }, (_, i) => {
-    let id = i + 1;
-    return getCustomOpacity(id, color);
+function generateCustomeScale(solidColor: CustomSolidColorCode) {
+  let scale = Array.from({ length: COLOR_STEP }, (_, i) => {
+    let step = (i + 1) as COLOR_STEP;
+    return [
+      getCustomRadix(step, solidColor),
+      getCustomOpacity(step, solidColor),
+    ].flat();
   });
   return Object.fromEntries(scale);
 }
 
-function getCustomOpacity(id: number, color: string) {
-  switch (id) {
+function getCustomRadix(step: COLOR_STEP, solidColor: CustomSolidColorCode) {
+  let scale = Array.from({ length: step }, (_, i) => {
+    const diff = step - SOLID_STEP;
+    const attenuationRate = 10;
+    const rate = diff === 0 ? 1 : diff;
+    const param =
+      rate > 0
+        ? 1 + rate / attenuationRate
+        : 1 - Math.abs(rate) / attenuationRate;
+
+    const solidColorHEX = solidColor.split('#')[1];
+
+    const R_DECIMAL =
+      Math.floor(Number(parseInt(solidColorHEX.slice(0, 2), 16)) * param) > 255
+        ? 255
+        : Math.floor(Number(parseInt(solidColorHEX.slice(0, 2), 16)) * param);
+    const G_DECIMAL =
+      Math.floor(Number(parseInt(solidColorHEX.slice(2, 4), 16)) * param) > 255
+        ? 255
+        : Math.floor(Number(parseInt(solidColorHEX.slice(2, 4), 16)) * param);
+    const B_DECIMAL =
+      Math.floor(Number(parseInt(solidColorHEX.slice(4, 6), 16)) * param) > 255
+        ? 255
+        : Math.floor(Number(parseInt(solidColorHEX.slice(4, 6), 16)) * param);
+
+    const R_HEX =
+      R_DECIMAL.toString(16).length === 1
+        ? `0${R_DECIMAL.toString(16)}`
+        : R_DECIMAL.toString(16);
+    const G_HEX =
+      G_DECIMAL.toString(16).length === 1
+        ? `0${G_DECIMAL.toString(16)}`
+        : G_DECIMAL.toString(16);
+    const B_HEX =
+      B_DECIMAL.toString(16).length === 1
+        ? `0${B_DECIMAL.toString(16)}`
+        : B_DECIMAL.toString(16);
+
+    const colorCode = `#${R_HEX}${G_HEX}${B_HEX}`;
+    return [`${step}`, `${colorCode}`];
+  });
+  return scale.flat();
+}
+
+function getCustomOpacity(step: COLOR_STEP, color: CustomSolidColorCode) {
+  switch (step) {
     case 1:
-      return [`a${id}`, `${color}1a`];
+      return [`a${step}`, `${color}0d`];
     case 2:
-      return [`a${id}`, `${color}33`];
+      return [`a${step}`, `${color}1a`];
     case 3:
-      return [`a${id}`, `${color}4d`];
+      return [`a${step}`, `${color}26`];
     case 4:
-      return [`a${id}`, `${color}66`];
+      return [`a${step}`, `${color}33`];
     case 5:
-      return [`a${id}`, `${color}80`];
+      return [`a${step}`, `${color}4d`];
     case 6:
-      return [`a${id}`, `${color}99`];
+      return [`a${step}`, `${color}66`];
     case 7:
-      return [`a${id}`, `${color}b3`];
+      return [`a${step}`, `${color}80`];
     case 8:
-      return [`a${id}`, `${color}cc`];
+      return [`a${step}`, `${color}99`];
     case 9:
-      return [`a${id}`, `${color}e6`];
+      return [`a${step}`, `${color}b3`];
     case 10:
-      return [`a${id}`, `${color}ff`];
+      return [`a${step}`, `${color}cc`];
+    case 11:
+      return [`a${step}`, `${color}e6`];
+    case 12:
+      return [`a${step}`, `${color}f2`];
   }
-  return ['a10', `${color}ff`];
 }

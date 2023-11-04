@@ -13,7 +13,6 @@ import type {
   SwitchButtonStylesType,
 } from '@/contexts/material-providers';
 
-
 type CustomTheme = {
   drawer: DrawerStylesType;
   switch: SwitchButtonStylesType;
@@ -37,7 +36,7 @@ const CustomTheme: CustomTheme = {
           background: 'bg-radixGray-9',
         },
         circle: {
-          bg: 'bg-white-a10',
+          bg: 'bg-white-12',
         },
       },
       colors: {},
