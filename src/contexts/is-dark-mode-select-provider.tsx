@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 type IsDarkModeSelect = {
   isDarkModeSelect: boolean;
@@ -21,19 +15,23 @@ export const IsDarkModeSelectContext = createContext<IsDarkModeSelectContext>({
   setIsDarkModeSelect: () => {},
 });
 
-export default function IsDarkModeSelectProvider({
-  children,
-}: {
+type Props = {
   children: React.ReactNode;
-}) {
-  const [isDarkModeSelect, setIsDarkModeSelect] = useState(true);
+  isChecked: boolean | string | undefined;
+};
 
-  useEffect(() => {
-    if (!globalThis.window) return;
-    setIsDarkModeSelect(
-      JSON.parse(localStorage.getItem('isDarkModeSelect') as string) ?? true,
-    );
-  }, []);
+export default function IsDarkModeSelectProvider(props: Props) {
+  const { children, isChecked } = props;
+
+  const [isDarkModeSelect, setIsDarkModeSelect] = useState(
+    isChecked === undefined
+      ? true
+      : isChecked === true
+      ? true
+      : isChecked === false
+      ? false
+      : JSON.parse(isChecked),
+  );
 
   return (
     <IsDarkModeSelectContext.Provider
