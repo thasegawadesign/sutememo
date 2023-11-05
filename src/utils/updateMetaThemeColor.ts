@@ -11,43 +11,89 @@ import {
 } from '../../tailwind.config';
 
 export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
-  const metaThemeColor = document.head.querySelector(
-    '[name="theme-color"]',
+  const metaDarkTheme = document.head.querySelector(
+    '[media="(prefers-color-scheme: dark)"]',
   ) as HTMLMetaElement;
+  const metaLightTheme = document.head.querySelector(
+    '[media="(prefers-color-scheme: light)"]',
+  ) as HTMLMetaElement;
+
+  let result;
+
   let isCustomThemeColor: boolean;
   let radixColorType: string;
   let radixColorStep: number;
+
   const colorType = themeColor.split('-')[0];
-  let result;
   isCustomThemeColor = customColorList.includes(colorType as CustomColorList);
 
   if (isCustomThemeColor) {
     switch (colorType as CustomColorList) {
       case 'white':
         result = white;
-        metaThemeColor.content = result;
-        metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
-        return;
+        if (mode === 'dark') {
+          metaDarkTheme.content = result;
+          metaDarkTheme.media = '(prefers-color-scheme: dark)';
+          return;
+        }
+        if (mode === 'light') {
+          metaLightTheme.content = result;
+          metaLightTheme.media = '(prefers-color-scheme: light)';
+          return;
+        }
+        break;
       case 'black':
         result = black;
-        metaThemeColor.content = result;
-        metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
-        return;
+        if (mode === 'dark') {
+          metaDarkTheme.content = result;
+          metaDarkTheme.media = '(prefers-color-scheme: dark)';
+          return;
+        }
+        if (mode === 'light') {
+          metaLightTheme.content = result;
+          metaLightTheme.media = '(prefers-color-scheme: light)';
+          return;
+        }
+        break;
       case 'primary':
         result = primary;
-        metaThemeColor.content = result;
-        metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
-        return;
+        if (mode === 'dark') {
+          metaDarkTheme.content = result;
+          metaDarkTheme.media = '(prefers-color-scheme: dark)';
+          return;
+        }
+        if (mode === 'light') {
+          metaLightTheme.content = result;
+          metaLightTheme.media = '(prefers-color-scheme: light)';
+          return;
+        }
+        break;
       case 'tigersBlack':
         result = tigersBlack;
-        metaThemeColor.content = result;
-        metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
-        return;
+        if (mode === 'dark') {
+          metaDarkTheme.content = result;
+          metaDarkTheme.media = '(prefers-color-scheme: dark)';
+          return;
+        }
+        if (mode === 'light') {
+          metaLightTheme.content = result;
+          metaLightTheme.media = '(prefers-color-scheme: light)';
+          return;
+        }
+        break;
       case 'tigersYellow':
         result = tigersYellow;
-        metaThemeColor.content = result;
-        metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
-        return;
+        if (mode === 'dark') {
+          metaDarkTheme.content = result;
+          metaDarkTheme.media = '(prefers-color-scheme: dark)';
+          return;
+        }
+        if (mode === 'light') {
+          metaLightTheme.content = result;
+          metaLightTheme.media = '(prefers-color-scheme: light)';
+          return;
+        }
+        break;
     }
   } else {
     radixColorType = colorType.split('radix')[1].toLowerCase();
@@ -55,7 +101,15 @@ export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
     result = getComputedStyle(document.documentElement).getPropertyValue(
       `--${radixColorType}-${radixColorStep}`,
     );
-    metaThemeColor.content = result;
-    metaThemeColor.media = `(prefers-color-scheme: ${mode})`;
+    if (mode === 'dark') {
+      metaDarkTheme.content = result;
+      metaDarkTheme.media = '(prefers-color-scheme: dark)';
+      return;
+    }
+    if (mode === 'light') {
+      metaLightTheme.content = result;
+      metaLightTheme.media = '(prefers-color-scheme: light)';
+      return;
+    }
   }
 };
