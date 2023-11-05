@@ -67,15 +67,11 @@ export default function Screen({ children }: { children: React.ReactNode }) {
           className={clsx(
             'grid min-h-[100svh] place-items-center pb-[env(safe-area-inset-bottom)] pwa:min-h-screen',
             {
-              'bg-customGray-12': mode === 'dark',
+              'bg-customGray-9': mode === 'dark',
               'bg-white-12': mode === 'light',
             },
           )}
-        >
-          <div className={'w-[min(15vw,90px)] animate-ping'}>
-            <IconSvg color={mainColor} />
-          </div>
-        </div>
+        ></div>
       ) : (
         <div
           className={`min-h-[100svh] pt-[env(safe-area-inset-top)] pwa:min-h-screen ${bgVariants[baseColor]}`}
