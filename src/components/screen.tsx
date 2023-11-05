@@ -1,7 +1,13 @@
 'use client';
 
+import clsx from 'clsx';
 import { useContext, useEffect, useState } from 'react';
 
+import {
+  setCookiesIsDarkModeSelect,
+  setCookiesIsSystemModeSelect,
+  setCookiesUserTheme,
+} from '@/app/actions';
 import IconSvg from '@/components/icon-svg';
 import { IsDarkModeSelectContext } from '@/contexts/is-dark-mode-select-provider';
 import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
@@ -15,27 +21,6 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   const { isDarkModeSelect } = useContext(IsDarkModeSelectContext);
   const { baseColor, mainColor, mode } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (isLoading) return;
-    localStorage.setItem('baseColor', baseColor);
-    localStorage.setItem('mainColor', mainColor);
-    localStorage.setItem('mode', mode);
-    localStorage.setItem(
-      'isSystemModeSelect',
-      JSON.stringify(isSystemModeSelect),
-    );
-    localStorage.setItem('isDarkModeSelect', JSON.stringify(isDarkModeSelect));
-    updateBodyBackgroundColor(baseColor);
-    updateMetaThemeColor(baseColor, mode);
-  }, [
-    baseColor,
-    isDarkModeSelect,
-    isLoading,
-    isSystemModeSelect,
-    mainColor,
-    mode,
-  ]);
 
   useEffect(() => {
     const HTML = document.querySelector('html');
@@ -55,15 +40,40 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   }, [mode]);
 
   useEffect(() => {
+    setCookiesUserTheme(baseColor, mainColor, mode);
+  }, [baseColor, mainColor, mode]);
+
+  useEffect(() => {
+    updateBodyBackgroundColor(baseColor);
+    updateMetaThemeColor(baseColor, mode);
+  }, [baseColor, mode]);
+
+  useEffect(() => {
+    setCookiesIsDarkModeSelect(isDarkModeSelect);
+  }, [isDarkModeSelect]);
+
+  useEffect(() => {
+    setCookiesIsSystemModeSelect(isSystemModeSelect);
+  }, [isSystemModeSelect]);
+
+  useEffect(() => {
     setIsLoading(false);
   }, []);
 
   return (
     <>
       {isLoading ? (
-        <div className="bg-customGray-12 grid min-h-[100svh] place-items-center pb-[env(safe-area-inset-bottom)] pwa:min-h-screen">
-          <div className={'w-[min(15vw,80px)]'}>
-            <IconSvg color="white-12" />
+        <div
+          className={clsx(
+            'grid min-h-[100svh] place-items-center pb-[env(safe-area-inset-bottom)] pwa:min-h-screen',
+            {
+              'bg-customGray-12': mode === 'dark',
+              'bg-white-12': mode === 'light',
+            },
+          )}
+        >
+          <div className={'w-[min(15vw,90px)] animate-ping'}>
+            <IconSvg color={mainColor} />
           </div>
         </div>
       ) : (
