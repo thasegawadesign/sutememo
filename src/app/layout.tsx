@@ -7,7 +7,7 @@ import Analytics from '@/components/analytics';
 import '@/globals.css';
 import { Providers } from '@/providers';
 
-import { backgroundColor } from '../../tailwind.config';
+import { customGray } from '../../tailwind.config';
 
 import type { Metadata } from 'next';
 
@@ -21,7 +21,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: backgroundColor,
+  themeColor: customGray,
   colorScheme: 'dark light',
 };
 
