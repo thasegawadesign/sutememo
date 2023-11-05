@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-import IconSvg from '@/components/icon-svg';
+import RawIconSvg from '@/components/raw-icon-svg';
 
 import { customGray } from '../../../../tailwind.config';
 
@@ -20,7 +20,7 @@ export async function GET() {
           alignItems: 'center',
         }}
       >
-        <IconSvg color="white-12" />
+        <RawIconSvg color="white-12" />
       </div>
     ),
     {
