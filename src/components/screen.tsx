@@ -1,6 +1,5 @@
 'use client';
 
-import clsx from 'clsx';
 import { useContext, useEffect, useState } from 'react';
 
 import {
@@ -8,7 +7,7 @@ import {
   setCookiesIsSystemModeSelect,
   setCookiesUserTheme,
 } from '@/app/actions';
-import IconSvg from '@/components/icon-svg';
+import FullScreenSolidBackgound from '@/components/fullscreen-solid-backgound';
 import { IsDarkModeSelectContext } from '@/contexts/is-dark-mode-select-provider';
 import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
@@ -63,19 +62,7 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   return (
     <>
       {isLoading ? (
-        <div
-          className={clsx(
-            'grid min-h-[100svh] place-items-center pb-[env(safe-area-inset-bottom)] pwa:min-h-screen',
-            {
-              'bg-customGray-12': mode === 'dark',
-              'bg-white-12': mode === 'light',
-            },
-          )}
-        >
-          <div className={'w-[min(15vw,90px)] animate-ping'}>
-            <IconSvg color={mainColor} />
-          </div>
-        </div>
+        <FullScreenSolidBackgound mode={mode} />
       ) : (
         <div
           className={`min-h-[100svh] pt-[env(safe-area-inset-top)] pwa:min-h-screen ${bgVariants[baseColor]}`}
