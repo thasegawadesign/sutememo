@@ -27,7 +27,6 @@ import {
 } from '@/contexts/material-providers';
 import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
-import useTranslucentColor from '@/hooks/useTranslucentColor';
 import useWindowSize from '@/hooks/useWindowSize';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
 import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
@@ -36,6 +35,7 @@ import {
   colorVariants,
   borderVariants,
 } from '@/utils/colorVariants';
+import { getTranslucentColor } from '@/utils/getTranslucentColor';
 
 export default function HeaderItem() {
   const appVersion = process.env.NEXT_PUBLIC_APP_VERSION;
@@ -50,7 +50,7 @@ export default function HeaderItem() {
 
   const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
 
-  const baseTranslucentColor = useTranslucentColor({ color: baseColor });
+  const baseTranslucentColor = getTranslucentColor(baseColor);
 
   const labelName = 'theme-color';
 
