@@ -27,16 +27,15 @@ import {
 } from '@/contexts/material-providers';
 import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
+import useTranslucentColor from '@/hooks/useTranslucentColor';
 import useWindowSize from '@/hooks/useWindowSize';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
-import { SafeColorList } from '@/types/ColorList';
 import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
 import {
   bgVariants,
   colorVariants,
   borderVariants,
 } from '@/utils/colorVariants';
-import { customColorList } from '@/utils/customColorList';
 
 export default function HeaderItem() {
   const appVersion = process.env.NEXT_PUBLIC_APP_VERSION;
@@ -51,43 +50,9 @@ export default function HeaderItem() {
 
   const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
 
-  const labelName = 'theme-color';
+  const baseTranslucentColor = useTranslucentColor({ color: baseColor });
 
-  const [baseColorTranslucent, setBaseColorTranslucent] =
-    useState<SafeColorList>('black-a5');
-  const generateBaseColorTranslucent = useCallback(
-    (baseColor: SafeColorList) => {
-      let isCustomBaseColor: boolean;
-      let radixColorStep: number;
-      const baseColorType = baseColor.split('-')[0];
-      for (const customColor of customColorList) {
-        isCustomBaseColor = baseColorType === customColor;
-        if (isCustomBaseColor) {
-          setBaseColorTranslucent(`${baseColorType}-a${6}` as SafeColorList);
-        } else {
-          radixColorStep = Number(baseColor.split('-')[1]);
-          if (radixColorStep < 3) {
-            setBaseColorTranslucent(
-              `${baseColorType}-a${radixColorStep}` as SafeColorList,
-            );
-          } else if (radixColorStep < 6) {
-            setBaseColorTranslucent(
-              `${baseColorType}-a${radixColorStep - 2}` as SafeColorList,
-            );
-          } else if (radixColorStep < 10) {
-            setBaseColorTranslucent(
-              `${baseColorType}-a${radixColorStep - 3}` as SafeColorList,
-            );
-          } else {
-            setBaseColorTranslucent(
-              `${baseColorType}-a${radixColorStep - 6}` as SafeColorList,
-            );
-          }
-        }
-      }
-    },
-    [],
-  );
+  const labelName = 'theme-color';
 
   const [checkedThemeOption, setCheckedThemeOption] = useState(
     checkedThemeOptionVariant(mainColor, baseColor, mode),
@@ -299,10 +264,6 @@ export default function HeaderItem() {
     return () => window.removeEventListener('appinstalled', handleAppInstalled);
   }, [handleAppInstalled]);
 
-  useEffect(() => {
-    generateBaseColorTranslucent(baseColor);
-  }, [baseColor, generateBaseColorTranslucent]);
-
   return (
     <>
       <div className="flex items-center justify-between pb-5 pl-[22px] pr-3 pt-2">
@@ -363,7 +324,7 @@ export default function HeaderItem() {
           >
             <div className="sticky top-0 z-[9999]">
               <div
-                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-2xl transition-drawer duration-themeChange ${bgVariants[baseColorTranslucent]}`}
+                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-2xl transition-drawer duration-themeChange ${bgVariants[baseTranslucentColor]}`}
               >
                 <h2
                   className={clsx('select-none pl-5 text-lg font-semibold', {

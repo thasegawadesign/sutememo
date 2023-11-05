@@ -1,5 +1,6 @@
-'use client';
+'use server';
 
+import { cookies } from 'next/headers';
 import React from 'react';
 
 import IsDarkModeSelectProvider from '@/contexts/is-dark-mode-select-provider';
@@ -44,16 +45,23 @@ const CustomTheme: CustomTheme = {
   },
 };
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export async function Providers({ children }: { children: React.ReactNode }) {
+  const cookieStore = cookies();
+  const baseColor = cookieStore.get('baseColor')?.value;
+  const mainColor = cookieStore.get('mainColor')?.value;
+  const mode = cookieStore.get('mode')?.value;
+  const isDarkModeSelect = cookieStore.get('isDarkModeSelect')?.value;
+  const isSystemModeSelect = cookieStore.get('isSystemModeSelect')?.value;
+
   return (
-    <IsSystemModeSelectProvider>
-      <IsDarkModeSelectProvider>
-        <ThemeProvider>
-          <MaterialThemeProvider value={CustomTheme}>
-            <ShowAppInstallButtonProvider>
+    <IsSystemModeSelectProvider isChecked={isSystemModeSelect}>
+      <IsDarkModeSelectProvider isChecked={isDarkModeSelect}>
+        <ThemeProvider baseColor={baseColor} mainColor={mainColor} mode={mode}>
+          <ShowAppInstallButtonProvider>
+            <MaterialThemeProvider value={CustomTheme}>
               {children}
-            </ShowAppInstallButtonProvider>
-          </MaterialThemeProvider>
+            </MaterialThemeProvider>
+          </ShowAppInstallButtonProvider>
         </ThemeProvider>
       </IsDarkModeSelectProvider>
     </IsSystemModeSelectProvider>
