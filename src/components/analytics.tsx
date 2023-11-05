@@ -4,7 +4,7 @@ import { minify } from '@swc/core';
 import Script from 'next/script';
 
 export default async function Analytics() {
-  const cookieDomain = env.COOKIE_DOMAIN;
+  const COOKIE_DOMAIN = env.COOKIE_DOMAIN;
   const ANALYTICS_ID = env.NEXT_PUBLIC_ANALYTICS_ID;
 
   const customGaScript = `
@@ -12,7 +12,7 @@ export default async function Analytics() {
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('set', {
-    cookie_domain: '${cookieDomain}',
+    cookie_domain: '${COOKIE_DOMAIN}',
     cookie_flags: 'SameSite=None;Secure',
   });
   gtag('config', '${ANALYTICS_ID}');
