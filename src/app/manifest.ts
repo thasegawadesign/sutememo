@@ -11,17 +11,18 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Todoify',
     short_name: 'Todoify',
     description: 'Todoアプリケーション',
-    categories: ['lifestyle', 'personalization', 'productivity'],
+    categories: ['utilities', 'lifestyle', 'personalization', 'productivity'],
     lang: 'ja',
     dir: 'ltr',
     start_url: `${baseURL}/${id}`,
-    id: `${id}`,
-    scope: `${baseURL}`,
+    id: id,
+    scope: baseURL,
+    theme_color: customGray,
+    background_color: customGray,
     display_override: ['fullscreen', 'minimal-ui'],
     display: 'standalone',
     orientation: 'landscape',
-    background_color: customGray,
-    theme_color: customGray,
+    prefer_related_applications: false,
     icons: [
       {
         src: '/icons/icon-192x192.png',
@@ -48,6 +49,5 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: 'any',
       },
     ],
-    prefer_related_applications: false,
   };
 }
