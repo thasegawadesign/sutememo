@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 import { SafeColorList } from '@/types/ColorList';
 
@@ -32,31 +26,21 @@ export const ThemeContext = createContext<ThemeContextType>({
   setTheme: () => {},
 });
 
-export default function ThemeProvider({
-  children,
-}: {
+type Props = {
   children: React.ReactNode;
-}) {
-  const [theme, setTheme] = useState<ThemeType>({
-    baseColor: defaultBaseColor,
-    mainColor: defaultMainColor,
-    mode: defaultMode,
-  });
+  baseColor: string | undefined;
+  mainColor: string | undefined;
+  mode: string | undefined;
+};
 
-  useEffect(() => {
-    if (!globalThis.window) return;
-    setTheme({
-      baseColor: localStorage.getItem('baseColor')
-        ? (localStorage.getItem('baseColor') as SafeColorList)
-        : defaultBaseColor,
-      mainColor: localStorage.getItem('mainColor')
-        ? (localStorage.getItem('mainColor') as SafeColorList)
-        : defaultMainColor,
-      mode: localStorage.getItem('mode')
-        ? (localStorage.getItem('mode') as Mode)
-        : defaultMode,
-    });
-  }, []);
+export default function ThemeProvider(props: Props) {
+  const { children, baseColor, mainColor, mode } = props;
+
+  const [theme, setTheme] = useState<ThemeType>({
+    baseColor: baseColor ? (baseColor as SafeColorList) : defaultBaseColor,
+    mainColor: mainColor ? (mainColor as SafeColorList) : defaultMainColor,
+    mode: mode ? (mode as Mode) : defaultMode,
+  });
 
   return (
     <ThemeContext.Provider
