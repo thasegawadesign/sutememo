@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 import RawIconSvg from '@/components/raw-icon-svg';
 
-import { customGray } from '../../../../tailwind.config';
+import { primary, white } from '../../../../tailwind.config';
 
 export const runtime = 'edge';
 
@@ -12,7 +12,7 @@ export async function GET() {
       <div
         style={{
           display: 'flex',
-          background: customGray,
+          background: primary,
           width: '100%',
           height: '100%',
           textAlign: 'center',
@@ -20,7 +20,7 @@ export async function GET() {
           alignItems: 'center',
         }}
       >
-        <RawIconSvg color="white-12" />
+        <RawIconSvg colorCode={white} />
       </div>
     ),
     {
