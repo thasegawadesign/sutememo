@@ -7,7 +7,7 @@ import Analytics from '@/components/analytics';
 import '@/globals.css';
 import { Providers } from '@/providers';
 
-import { customGray } from '../../tailwind.config';
+import { customGray, white } from '../../tailwind.config';
 
 import type { Metadata } from 'next';
 
@@ -21,13 +21,19 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: customGray,
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: customGray },
+    { media: '(prefers-color-scheme: light)', color: white },
+  ],
   colorScheme: 'dark light',
 };
 
 export const metadata: Metadata = {
   title: 'Todoify',
-  description: 'Todoアプリケーション',
+  description: 'ToDoアプリケーション',
+  abstract: 'ToDoアプリケーション',
+  keywords: ['Todoify', 'ToDoアプリ', 'ToDoリスト'],
+  category: 'utilities',
   metadataBase: new URL(baseURL as string),
   manifest: `${baseURL}/manifest.webmanifest`,
   applicationName: 'Todoify',
@@ -144,21 +150,22 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
     apple: '/icons/icon-192x192.png',
   },
+  publisher: authorName,
   authors: [
     {
-      name: `${authorName}`,
-      url: `${authorURL}`,
+      name: authorName,
+      url: authorURL,
     },
   ],
   twitter: {
     card: 'summary',
-    creator: `${creator}`,
+    creator: creator,
   },
   openGraph: {
     type: 'website',
     url: baseURL,
     title: 'Todoify',
-    description: 'Todoアプリケーション',
+    description: 'ToDoアプリケーション',
     siteName: 'Todoify',
     images: [
       {
