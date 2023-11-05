@@ -1,15 +1,9 @@
-import { SafeColorList } from '@/types/ColorList';
-import { colorVariants } from '@/utils/colorVariants';
-
-import { primary } from '../../tailwind.config';
-
 type Props = {
-  color: SafeColorList;
-  realColor?: string;
+  colorCode: string;
 };
 
 export default function RawIconSvg(props: Props) {
-  const { color, realColor = primary } = props;
+  const { colorCode } = props;
 
   return (
     <svg
@@ -23,11 +17,10 @@ export default function RawIconSvg(props: Props) {
         <g id="group">
           <g id="l">
             <rect
-              className={`fill-current ${colorVariants[color]}`}
               height="140.67"
               rx="12"
               ry="12"
-              style={{ fill: realColor, strokeWidth: '0' }}
+              style={{ fill: colorCode, strokeWidth: '0' }}
               transform="translate(-79.81 88.1) rotate(-45)"
               width="61.31"
               x="35.79"
@@ -36,11 +29,10 @@ export default function RawIconSvg(props: Props) {
           </g>
           <g id="r">
             <rect
-              className={`fill-current ${colorVariants[color]}`}
               height="61.31"
               rx="12"
               ry="12"
-              style={{ fill: realColor, strokeWidth: '0' }}
+              style={{ fill: colorCode, strokeWidth: '0' }}
               transform="translate(-26.26 143.42) rotate(-45)"
               width="245.24"
               x="37.37"

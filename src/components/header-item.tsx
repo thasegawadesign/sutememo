@@ -271,7 +271,7 @@ export default function HeaderItem() {
           <div
             className={`hidden h-8 w-8 select-none items-center justify-center rounded-[24%] border p-2 text-center minimum:flex ${bgVariants[baseColor]} ${borderVariants[mainColor]}`}
           >
-            <IconSvg color={mainColor} />
+            <IconSvg colorName={mainColor} />
           </div>
           <h1
             className={`select-none text-3xl ${colorVariants[mainColor]}`}
