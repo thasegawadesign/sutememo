@@ -74,7 +74,7 @@ export default function ThemeSelectButton(props: Props) {
           checkedThemeOption
         }
         label={
-          <div className="grid rounded-full border border-gray-300">
+          <div className={'grid rounded-full border border-radixGray-6'}>
             <div
               className={`h-6 w-12 rounded-t-full ${bgVariants[baseColor]}`}
             />

@@ -271,7 +271,7 @@ export default function HeaderItem() {
           <div
             className={`hidden h-8 w-8 select-none items-center justify-center rounded-[24%] border p-2 text-center minimum:flex ${bgVariants[baseColor]} ${borderVariants[mainColor]}`}
           >
-            <IconSvg color={mainColor} />
+            <IconSvg colorName={mainColor} />
           </div>
           <h1
             className={`select-none text-3xl ${colorVariants[mainColor]}`}
@@ -313,7 +313,7 @@ export default function HeaderItem() {
             placement="bottom"
             size={height}
             className={clsx(
-              `overflow-y-auto overscroll-none rounded-3xl transition-drawer duration-themeChange ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
+              `overflow-y-auto overscroll-none rounded-3xl transition-drawer duration-themeChange ${bgVariants[baseColor]}`,
               {
                 '!translate-y-[max(env(safe-area-inset-top),32px)]':
                   isOpenDrawer === true,
@@ -328,7 +328,7 @@ export default function HeaderItem() {
               >
                 <h2
                   className={clsx('select-none pl-5 text-lg font-semibold', {
-                    'text-gray-900': mode === 'light',
+                    'text-customGray-9': mode === 'light',
                     'text-white-12': mode === 'dark',
                   })}
                 >
@@ -381,7 +381,12 @@ export default function HeaderItem() {
                   )}
                   onClick={() => handleOpenAccordion(1)}
                 >
-                  <div className="flex items-center gap-4">
+                  <div
+                    className={clsx('flex items-center gap-4', {
+                      'text-customGray-9': mode === 'light',
+                      'text-white-12': mode === 'dark',
+                    })}
+                  >
                     <span
                       className={clsx('shrink-0', {
                         'group-hover:brightness-105 group-active:brightness-[1.11]':
@@ -409,7 +414,7 @@ export default function HeaderItem() {
                     <div className="flex items-center justify-between">
                       <h3
                         className={clsx('text-base font-semibold', {
-                          'text-gray-900': mode === 'light',
+                          'text-customGray-9': mode === 'light',
                           'text-white-12': mode === 'dark',
                         })}
                       >
@@ -436,7 +441,7 @@ export default function HeaderItem() {
                     <div className="flex items-center justify-between">
                       <h3
                         className={clsx('text-base font-semibold', {
-                          'text-gray-900': mode === 'light',
+                          'text-customGray-9': mode === 'light',
                           'text-white-12': mode === 'dark',
                         })}
                       >
@@ -725,7 +730,7 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `group rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    `group rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
@@ -736,7 +741,12 @@ export default function HeaderItem() {
                   )}
                   onClick={() => handleOpenAccordion(2)}
                 >
-                  <div className="flex items-center gap-4 text-xl">
+                  <div
+                    className={clsx('flex items-center gap-4', {
+                      'text-customGray-9': mode === 'light',
+                      'text-white-12': mode === 'dark',
+                    })}
+                  >
                     <span
                       className={clsx('shrink-0', {
                         'group-hover:brightness-105 group-active:brightness-[1.11]':
@@ -767,7 +777,7 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `group rounded-lg border-none px-3 text-${mainColor} hover:text-${mainColor} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    `group rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
@@ -778,7 +788,12 @@ export default function HeaderItem() {
                   )}
                   onClick={() => handleOpenAccordion(3)}
                 >
-                  <div className="flex items-center gap-4 text-xl">
+                  <div
+                    className={clsx('flex items-center gap-4', {
+                      'text-customGray-9': mode === 'light',
+                      'text-white-12': mode === 'dark',
+                    })}
+                  >
                     <span
                       className={clsx('shrink-0', {
                         'group-hover:brightness-105 group-active:brightness-[1.11]':
@@ -807,7 +822,7 @@ export default function HeaderItem() {
                       className={clsx(
                         'flex items-center justify-between px-3',
                         {
-                          'text-gray-900': mode === 'light',
+                          'text-customGray-9': mode === 'light',
                           'text-white-12': mode === 'dark',
                         },
                       )}
