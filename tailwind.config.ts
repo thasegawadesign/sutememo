@@ -1,10 +1,9 @@
 import { SafeTailwind, TailwindPrefix } from '@/types/ColorList';
 
+import type { COLOR_STEP as COLOR_STEP_TYPE } from '@/types/ColorStep';
 import type { Config } from 'tailwindcss';
 
 const withMT = require('@material-tailwind/react/utils/withMT');
-
-type COLOR_STEP = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
 export const COLOR_STEP = 12;
 const SOLID_STEP = 9;
@@ -16,6 +15,8 @@ export const primary = '#208cd8';
 export const tigersYellow = '#f7da07';
 export const tigersBlack = '#060606';
 export const backgroundColor = '#191919';
+
+export const defaultTranslucentColor = 'black-a5';
 
 type CustomSolidColorCode =
   | typeof white
@@ -209,7 +210,7 @@ function generateRadixScale(name: string) {
 
 function generateCustomeScale(solidColor: CustomSolidColorCode) {
   let scale = Array.from({ length: COLOR_STEP }, (_, i) => {
-    let step = (i + 1) as COLOR_STEP;
+    let step = (i + 1) as COLOR_STEP_TYPE;
     return [
       getCustomRadix(step, solidColor),
       getCustomOpacity(step, solidColor),
@@ -218,7 +219,10 @@ function generateCustomeScale(solidColor: CustomSolidColorCode) {
   return Object.fromEntries(scale);
 }
 
-function getCustomRadix(step: COLOR_STEP, solidColor: CustomSolidColorCode) {
+function getCustomRadix(
+  step: COLOR_STEP_TYPE,
+  solidColor: CustomSolidColorCode,
+) {
   let scale = Array.from({ length: step }, (_, i) => {
     const diff = step - SOLID_STEP;
     const attenuationRate = 10;
@@ -262,7 +266,7 @@ function getCustomRadix(step: COLOR_STEP, solidColor: CustomSolidColorCode) {
   return scale.flat();
 }
 
-function getCustomOpacity(step: COLOR_STEP, color: CustomSolidColorCode) {
+function getCustomOpacity(step: COLOR_STEP_TYPE, color: CustomSolidColorCode) {
   switch (step) {
     case 1:
       return [`a${step}`, `${color}0d`];
