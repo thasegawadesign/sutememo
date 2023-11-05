@@ -13,7 +13,7 @@ export default function CheckedIcon() {
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       className={clsx('h-full w-full scale-105', {
-        'text-gray-900': mode === 'light',
+        'text-customGray-9': mode === 'light',
         'text-white-12': mode === 'dark',
       })}
     >
