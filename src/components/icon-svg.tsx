@@ -1,14 +1,15 @@
 import RawIconSvg from '@/components/raw-icon-svg';
-import useRealColor from '@/hooks/useRealColor';
 import { SafeColorList } from '@/types/ColorList';
+import { getColorCode } from '@/utils/getColorCode';
 
 type Props = {
-  color: SafeColorList;
+  colorName: SafeColorList;
 };
 
 export default function IconSvg(props: Props) {
-  const { color } = props;
-  const realColor = useRealColor({ color });
+  const { colorName } = props;
 
-  return RawIconSvg({ color, realColor });
+  const colorCode = getColorCode(colorName);
+
+  return RawIconSvg({ colorCode });
 }
