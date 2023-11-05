@@ -1,8 +1,14 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 import { CustomColorList, SafeColorList } from '@/types/ColorList';
+import { colorVariants } from '@/utils/colorVariants';
 import { customColorList } from '@/utils/customColorList';
 
 import {
   black,
+  customGray,
   primary,
   tigersBlack,
   tigersYellow,
@@ -11,41 +17,62 @@ import {
 
 type Props = {
   color: SafeColorList;
+  isLoading?: boolean;
 };
 
 export default function IconSvg(props: Props) {
-  const { color } = props;
+  const { color, isLoading } = props;
+
   const colorType = color.split('-')[0];
-  let isCustomThemeColor: boolean;
-  let radixColorType: string;
-  let radixColorStep: number;
-  let resultColor;
-  isCustomThemeColor = customColorList.includes(colorType as CustomColorList);
-  if (isCustomThemeColor) {
-    switch (colorType as CustomColorList) {
-      case 'white':
-        resultColor = white;
-        break;
-      case 'black':
-        resultColor = black;
-        break;
-      case 'primary':
-        resultColor = primary;
-        break;
-      case 'tigersBlack':
-        resultColor = tigersBlack;
-        break;
-      case 'tigersYellow':
-        resultColor = tigersYellow;
-        break;
+
+  const [resultColor, setResultColor] = useState('');
+  const [radixColorType, setRadixColorType] = useState('');
+  const [radixColorStep, setRadixColorStep] = useState(0);
+
+  const isCustomThemeColor = customColorList.includes(
+    colorType as CustomColorList,
+  );
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (isCustomThemeColor) {
+      switch (colorType as CustomColorList) {
+        case 'white':
+          setResultColor(white);
+          break;
+        case 'black':
+          setResultColor(black);
+          break;
+        case 'customGray':
+          setResultColor(customGray);
+          break;
+        case 'primary':
+          setResultColor(primary);
+          break;
+        case 'tigersBlack':
+          setResultColor(tigersBlack);
+          break;
+        case 'tigersYellow':
+          setResultColor(tigersYellow);
+          break;
+      }
+    } else {
+      setRadixColorType(colorType.split('radix')[1].toLowerCase());
+      setRadixColorStep(Number(color.split('-')[1]));
+      setResultColor(
+        getComputedStyle(document.documentElement).getPropertyValue(
+          `--${radixColorType}-${radixColorStep}`,
+        ),
+      );
     }
-  } else {
-    radixColorType = colorType.split('radix')[1].toLowerCase();
-    radixColorStep = Number(color.split('-')[1]);
-    resultColor = getComputedStyle(document.documentElement).getPropertyValue(
-      `--${radixColorType}-${radixColorStep}`,
-    );
-  }
+  }, [
+    color,
+    colorType,
+    isCustomThemeColor,
+    isLoading,
+    radixColorStep,
+    radixColorType,
+  ]);
 
   return (
     <svg
@@ -59,6 +86,7 @@ export default function IconSvg(props: Props) {
         <g id="group">
           <g id="l">
             <rect
+              className={`fill-current ${colorVariants[color]}`}
               height="140.67"
               rx="12"
               ry="12"
@@ -71,6 +99,7 @@ export default function IconSvg(props: Props) {
           </g>
           <g id="r">
             <rect
+              className={`fill-current ${colorVariants[color]}`}
               height="61.31"
               rx="12"
               ry="12"

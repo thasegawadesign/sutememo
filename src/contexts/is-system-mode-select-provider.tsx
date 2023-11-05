@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 type IsSystemModeSelect = {
   isSystemModeSelect: boolean;
@@ -22,19 +16,23 @@ export const IsSystemModeSelectContext =
     setIsSystemModeSelect: () => {},
   });
 
-export default function IsSystemModeSelectProvider({
-  children,
-}: {
+type Props = {
   children: React.ReactNode;
-}) {
-  const [isSystemModeSelect, setIsSystemModeSelect] = useState(true);
+  isChecked: boolean | string | undefined;
+};
 
-  useEffect(() => {
-    if (!globalThis.window) return;
-    setIsSystemModeSelect(
-      JSON.parse(localStorage.getItem('isSystemModeSelect') as string) ?? true,
-    );
-  }, []);
+export default function IsSystemModeSelectProvider(props: Props) {
+  const { children, isChecked } = props;
+
+  const [isSystemModeSelect, setIsSystemModeSelect] = useState(
+    isChecked === undefined
+      ? true
+      : isChecked === true
+      ? true
+      : isChecked === false
+      ? false
+      : JSON.parse(isChecked),
+  );
 
   return (
     <IsSystemModeSelectContext.Provider
