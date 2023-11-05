@@ -14,7 +14,6 @@ export const customGray = '#111111';
 export const primary = '#208cd8';
 export const tigersYellow = '#f7da07';
 export const tigersBlack = '#060606';
-export const backgroundColor = '#191919';
 
 export const defaultTranslucentColor = 'black-a5';
 
@@ -24,8 +23,7 @@ type CustomSolidColorCode =
   | typeof customGray
   | typeof primary
   | typeof tigersYellow
-  | typeof tigersBlack
-  | typeof backgroundColor;
+  | typeof tigersBlack;
 
 export const safeColorList = [
   'white-12',
