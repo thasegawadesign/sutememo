@@ -25,6 +25,12 @@ export default function manifest(): MetadataRoute.Manifest {
     prefer_related_applications: false,
     icons: [
       {
+        src: '/icons/icon-180x180.png',
+        sizes: '180x180',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
         src: '/icons/icon-192x192.png',
         sizes: '192x192',
         type: 'image/png',
@@ -45,6 +51,12 @@ export default function manifest(): MetadataRoute.Manifest {
       {
         src: '/icons/icon-512x512.png',
         sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-1024x1024.png',
+        sizes: '1024x1024',
         type: 'image/png',
         purpose: 'any',
       },
