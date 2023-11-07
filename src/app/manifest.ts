@@ -11,7 +11,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Todoify',
     short_name: 'Todoify',
     description: 'Todoアプリケーション',
-    categories: ['utilities', 'lifestyle', 'personalization', 'productivity'],
+    categories: ['productivity'],
     lang: 'ja',
     dir: 'ltr',
     start_url: `${baseURL}/${id}`,
