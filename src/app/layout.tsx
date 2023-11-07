@@ -42,107 +42,56 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: 'black-translucent',
     startupImage: [
-      '/splashscreens/ipad_splash_dark.png',
+      '/splashscreens/ipad_splash.png',
       {
-        url: '/splashscreens/iphone5_splash_dark.png',
+        url: '/splashscreens/iphone5_splash.png',
         media:
-          '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: dark)',
+          '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)',
       },
       {
-        url: '/splashscreens/iphone5_splash_light.png',
+        url: '/splashscreens/iphone6_splash.png',
         media:
-          '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: light)',
-      },
-
-      {
-        url: '/splashscreens/iphone6_splash_dark.png',
-        media:
-          '(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: dark)',
+          '(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)',
       },
       {
-        url: '/splashscreens/iphone6_splash_light.png',
+        url: '/splashscreens/iphoneplus_splash.png',
         media:
-          '(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: light)',
+          '(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)',
       },
       {
-        url: '/splashscreens/iphoneplus_splash_dark.png',
+        url: '/splashscreens/iphonex_splash.png',
         media:
-          '(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)',
+          '(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)',
       },
       {
-        url: '/splashscreens/iphoneplus_splash_light.png',
+        url: '/splashscreens/iphonexr_splash.png',
         media:
-          '(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: light)',
+          '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)',
       },
       {
-        url: '/splashscreens/iphonex_splash_dark.png',
+        url: '/splashscreens/iphonexsmax_splash.png',
         media:
-          '(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)',
+          '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)',
       },
       {
-        url: '/splashscreens/iphonex_splash_light.png',
+        url: '/splashscreens/ipad_splash.png',
         media:
-          '(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: light)',
+          '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)',
       },
       {
-        url: '/splashscreens/iphonexr_splash_dark.png',
+        url: '/splashscreens/ipadpro1_splash.png',
         media:
-          '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: dark)',
+          '(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)',
       },
       {
-        url: '/splashscreens/iphonexr_splash_light.png',
+        url: '/splashscreens/ipadpro3_splash.png',
         media:
-          '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: light)',
+          '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)',
       },
       {
-        url: '/splashscreens/iphonexsmax_splash_dark.png',
+        url: '/splashscreens/ipadpro2_splash.png',
         media:
-          '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)',
-      },
-      {
-        url: '/splashscreens/iphonexsmax_splash_light.png',
-        media:
-          '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: light)',
-      },
-      {
-        url: '/splashscreens/ipad_splash_dark.png',
-        media:
-          '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: dark)',
-      },
-      {
-        url: '/splashscreens/ipad_splash_light.png',
-        media:
-          '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: light)',
-      },
-      {
-        url: '/splashscreens/ipadpro1_splash_dark.png',
-        media:
-          '(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: dark)',
-      },
-      {
-        url: '/splashscreens/ipadpro1_splash_light.png',
-        media:
-          '(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: light)',
-      },
-      {
-        url: '/splashscreens/ipadpro3_splash_dark.png',
-        media:
-          '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: dark)',
-      },
-      {
-        url: '/splashscreens/ipadpro3_splash_light.png',
-        media:
-          '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: light)',
-      },
-      {
-        url: '/splashscreens/ipadpro2_splash_dark.png',
-        media:
-          '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: dark)',
-      },
-      {
-        url: '/splashscreens/ipadpro2_splash_light.png',
-        media:
-          '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (prefers-color-scheme: light)',
+          '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)',
       },
     ],
   },
