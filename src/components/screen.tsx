@@ -62,7 +62,7 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   return (
     <>
       {isLoading ? (
-        <FullScreenSolidBackgound />
+        <FullScreenSolidBackgound colorName="customGray-9" />
       ) : (
         <div
           className={`min-h-[100svh] pt-[env(safe-area-inset-top)] pwa:min-h-screen ${bgVariants[baseColor]}`}
