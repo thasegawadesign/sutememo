@@ -1,5 +1,3 @@
-import { env } from 'process';
-
 import { Viewport } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
 
@@ -11,10 +9,10 @@ import { customGray, white } from '../../tailwind.config';
 
 import type { Metadata } from 'next';
 
-const baseURL = env.BASE_URL;
-const creator = env.CREATOR;
-const authorName = env.ATHOR_NAME;
-const authorURL = env.ATHOR_URL;
+const baseURL = process.env.BASE_URL;
+const creator = process.env.CREATOR;
+const authorName = process.env.ATHOR_NAME;
+const authorURL = process.env.ATHOR_URL;
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -97,7 +95,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/favicon.ico',
-    apple: '/icons/icon-180x180.png',
+    apple: '/icons/apple-touch-icon.png',
   },
   publisher: authorName,
   authors: [
