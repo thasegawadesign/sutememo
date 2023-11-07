@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   description: 'ToDoアプリケーション',
   abstract: 'ToDoアプリケーション',
   keywords: ['Todoify', 'ToDoアプリ', 'ToDoリスト'],
-  category: 'utilities',
+  category: 'productivity',
   metadataBase: new URL(baseURL as string),
   manifest: `${baseURL}/manifest.webmanifest`,
   applicationName: 'Todoify',
