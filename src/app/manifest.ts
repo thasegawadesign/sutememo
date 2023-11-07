@@ -23,12 +23,6 @@ export default function manifest(): MetadataRoute.Manifest {
     prefer_related_applications: false,
     icons: [
       {
-        src: '/icons/badge-app-icon-60x60.png',
-        sizes: '60x60',
-        type: 'image/png',
-        purpose: 'badge',
-      },
-      {
         src: '/icons/maskable-app-icon-180x180.png',
         sizes: '180x180',
         type: 'image/png',
