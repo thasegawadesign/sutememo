@@ -1,11 +1,9 @@
-import { env } from 'process';
-
 import { MetadataRoute } from 'next';
 
 import { customGray } from '../../tailwind.config';
 
 export default function manifest(): MetadataRoute.Manifest {
-  const baseURL = env.BASE_URL;
+  const baseURL = process.env.BASE_URL;
   const id = '?utm_source=homescreen';
   return {
     name: 'Todoify',
