@@ -12,7 +12,7 @@ export async function GET() {
       <div
         style={{
           display: 'flex',
-          background: primary,
+          background: white,
           width: '100%',
           height: '100%',
           textAlign: 'center',
@@ -20,7 +20,7 @@ export async function GET() {
           alignItems: 'center',
         }}
       >
-        <RawIconSvg colorCode={white} />
+        <RawIconSvg colorCode={primary} />
       </div>
     ),
     {
