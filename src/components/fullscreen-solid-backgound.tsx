@@ -1,20 +1,17 @@
 import clsx from 'clsx';
+import { useContext } from 'react';
 
-import { Mode } from '@/contexts/theme-provider';
+import { ThemeContext } from '@/contexts/theme-provider';
+import { bgVariants } from '@/utils/colorVariants';
 
-type Props = {
-  mode: Mode;
-};
-
-export default function FullScreenSolidBackgound(props: Props) {
-  const { mode } = props;
+export default function FullScreenSolidBackgound() {
+  const { baseColor } = useContext(ThemeContext);
 
   return (
     <div
-      className={clsx('min-h-[100svh] w-full pwa:min-h-screen', {
-        'bg-customGray-9': mode === 'dark',
-        'bg-white-12': mode === 'light',
-      })}
+      className={clsx(
+        `min-h-[100svh] w-full pwa:min-h-screen ${bgVariants[baseColor]}`,
+      )}
     />
   );
 }
