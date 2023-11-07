@@ -23,25 +23,31 @@ export default function manifest(): MetadataRoute.Manifest {
     prefer_related_applications: false,
     icons: [
       {
-        src: '/icons/superellipse-icon-180x180.png',
+        src: '/icons/badge-app-icon-60x60.png',
+        sizes: '60x60',
+        type: 'image/png',
+        purpose: 'badge',
+      },
+      {
+        src: '/icons/maskable-app-icon-180x180.png',
         sizes: '180x180',
         type: 'image/png',
         purpose: 'any',
       },
       {
-        src: '/icons/superellipse-icon-192x192.png',
+        src: '/icons/maskable-app-icon-192x192.png',
         sizes: '192x192',
         type: 'image/png',
         purpose: 'any',
       },
       {
-        src: '/icons/superellipse-icon-512x512.png',
+        src: '/icons/maskable-app-icon-512x512.png',
         sizes: '512x512',
         type: 'image/png',
         purpose: 'any',
       },
       {
-        src: '/icons/superellipse-icon-1024x1024.png',
+        src: '/icons/maskable-app-icon-1024x1024.png',
         sizes: '1024x1024',
         type: 'image/png',
         purpose: 'any',
