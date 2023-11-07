@@ -25,13 +25,13 @@ export default function manifest(): MetadataRoute.Manifest {
     prefer_related_applications: false,
     icons: [
       {
-        src: '/icons/icon-180x180.png',
+        src: '/icons/maskable-icon-180x180.png',
         sizes: '180x180',
         type: 'image/png',
-        purpose: 'any',
+        purpose: 'maskable',
       },
       {
-        src: '/icons/icon-192x192.png',
+        src: '/icons/maskable-icon-192x192.png',
         sizes: '192x192',
         type: 'image/png',
         purpose: 'maskable',
