@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next';
 import { customGray } from '../../tailwind.config';
 
 export default function manifest(): MetadataRoute.Manifest {
-  const baseURL = process.env.BASE_URL;
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
   const id = '?utm_source=homescreen';
   return {
     name: 'Todoify',
