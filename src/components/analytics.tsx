@@ -1,11 +1,9 @@
-import { env } from 'process';
-
 import { minify } from '@swc/core';
 import Script from 'next/script';
 
 export default async function Analytics() {
-  const COOKIE_DOMAIN = env.COOKIE_DOMAIN;
-  const ANALYTICS_ID = env.NEXT_PUBLIC_ANALYTICS_ID;
+  const COOKIE_DOMAIN = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
+  const ANALYTICS_ID = process.env.NEXT_PUBLIC_ANALYTICS_ID;
 
   const customGaScript = `
   window.dataLayer = window.dataLayer || [];
@@ -102,7 +100,7 @@ export default async function Analytics() {
   const result = await minify(customGaScript);
   const minifiedCode = result.code as string;
 
-  if (env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     return <></>;
   }
   if (!ANALYTICS_ID) {
