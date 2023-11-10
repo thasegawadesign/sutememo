@@ -333,7 +333,7 @@ export default function HeaderItem() {
                 <h2
                   className={clsx('select-none pl-5 text-lg font-semibold', {
                     'text-customGray-9': mode === 'light',
-                    'text-white-12': mode === 'dark',
+                    'text-white-9': mode === 'dark',
                   })}
                 >
                   設定
@@ -388,7 +388,7 @@ export default function HeaderItem() {
                   <div
                     className={clsx('flex items-center gap-4', {
                       'text-customGray-9': mode === 'light',
-                      'text-white-12': mode === 'dark',
+                      'text-white-9': mode === 'dark',
                     })}
                   >
                     <span
@@ -419,7 +419,7 @@ export default function HeaderItem() {
                       <h3
                         className={clsx('text-base font-semibold', {
                           'text-customGray-9': mode === 'light',
-                          'text-white-12': mode === 'dark',
+                          'text-white-9': mode === 'dark',
                         })}
                       >
                         ダークモード
@@ -446,7 +446,7 @@ export default function HeaderItem() {
                       <h3
                         className={clsx('text-base font-semibold', {
                           'text-customGray-9': mode === 'light',
-                          'text-white-12': mode === 'dark',
+                          'text-white-9': mode === 'dark',
                         })}
                       >
                         端末の設定を使う
@@ -748,7 +748,7 @@ export default function HeaderItem() {
                   <div
                     className={clsx('flex items-center gap-4', {
                       'text-customGray-9': mode === 'light',
-                      'text-white-12': mode === 'dark',
+                      'text-white-9': mode === 'dark',
                     })}
                   >
                     <span
@@ -795,7 +795,7 @@ export default function HeaderItem() {
                   <div
                     className={clsx('flex items-center gap-4', {
                       'text-customGray-9': mode === 'light',
-                      'text-white-12': mode === 'dark',
+                      'text-white-9': mode === 'dark',
                     })}
                   >
                     <span
@@ -827,7 +827,7 @@ export default function HeaderItem() {
                         'flex items-center justify-between px-3',
                         {
                           'text-customGray-9': mode === 'light',
-                          'text-white-12': mode === 'dark',
+                          'text-white-9': mode === 'dark',
                         },
                       )}
                     >
