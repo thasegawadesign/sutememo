@@ -1,6 +1,5 @@
 import { COLOR_STEP } from '@/types/ColorStep';
-import { customColorList } from '@/utils/customColorList';
-import { radixColorList } from '@/utils/radixColorList';
+import { customColorList, radixColorList } from '@/utils/color';
 
 import { safeColorList } from '../../tailwind.config';
 
