@@ -28,6 +28,7 @@ type CustomSolidColorCode =
 export const safeColorList = [
   'white-12',
   `white-a${SETTINGS_DRAWER_OPACITY}`,
+  'black-1',
   `black-a${SETTINGS_DRAWER_OPACITY}`,
   'customGray-9',
   `customGray-a${SETTINGS_DRAWER_OPACITY}`,
