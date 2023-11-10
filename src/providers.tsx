@@ -25,7 +25,7 @@ const CustomTheme: CustomTheme = {
       base: {
         overlay: {
           height: 'h-screen',
-          backgroundColor: 'bg-black-1',
+          backgroundColor: 'bg-black-9',
         },
       },
     },
@@ -37,7 +37,7 @@ const CustomTheme: CustomTheme = {
           background: 'bg-radixGray-9',
         },
         circle: {
-          bg: 'bg-white-12',
+          bg: 'bg-white-9',
         },
       },
       colors: {},
