@@ -8,6 +8,10 @@ const withMT = require('@material-tailwind/react/utils/withMT');
 export const COLOR_STEP = 12;
 const SOLID_STEP = 9;
 
+export const SHIFT_AMOUNT_S = 1;
+export const SHIFT_AMOUNT_M = 2;
+export const SHIFT_AMOUNT_L = 3;
+
 export const WHITE = '#ffffff';
 export const BLACK = '#000000';
 export const CUSTOMGRAY = '#111111';
