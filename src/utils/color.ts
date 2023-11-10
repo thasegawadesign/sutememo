@@ -1,5 +1,5 @@
 import {
-  SETTINGS_DRAWER_OPACITY as OPACITY,
+  SETTINGS_DRAWER_ALPHA as ALPHA,
   COLOR_STEP as STEP,
   WHITE,
   BLACK,
@@ -9,7 +9,7 @@ import {
   TIGERSBLACK,
 } from '../../tailwind.config';
 
-export const SETTINGS_DRAWER_OPACITY = OPACITY;
+export const SETTINGS_DRAWER_ALPHA = ALPHA;
 
 export const COLOR_STEP = STEP;
 

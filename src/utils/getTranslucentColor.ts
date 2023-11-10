@@ -10,9 +10,9 @@ type ResultColor = RadixScaleAlpha | CustomScaleAlpha;
 
 export const getTranslucentColor = (
   colorName: SafeColorList,
-  opacity: COLOR_STEP,
+  alpha: COLOR_STEP,
 ) => {
   const colorType = colorName.split('-')[0] as RadixColorList;
-  const resultColor: ResultColor = `${colorType}-a${opacity}`;
+  const resultColor: ResultColor = `${colorType}-a${alpha}`;
   return resultColor;
 };
