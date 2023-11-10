@@ -26,17 +26,18 @@ type CustomSolidColorCode =
   | typeof TIGERSBLACK;
 
 export const safeColorList = [
-  'white-12',
+  `white-${SOLID_STEP}`,
   `white-a${SETTINGS_DRAWER_OPACITY}`,
-  'black-1',
+  `black-${SOLID_STEP}`,
   `black-a${SETTINGS_DRAWER_OPACITY}`,
-  'customGray-9',
+  `customGray-${SOLID_STEP}`,
   `customGray-a${SETTINGS_DRAWER_OPACITY}`,
+  `primary-${SOLID_STEP}`,
   'primary-8',
   'primary-a6',
-  'tigersYellow-9',
+  `tigersYellow-${SOLID_STEP}`,
   `tigersYellow-a${SETTINGS_DRAWER_OPACITY}`,
-  'tigersBlack-9',
+  `tigersBlack-${SOLID_STEP}`,
   `tigersBlack-a${SETTINGS_DRAWER_OPACITY}`,
   'radixGray-1',
   'radixGray-2',
