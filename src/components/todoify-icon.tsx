@@ -1,6 +1,7 @@
-import RawIconSvg from '@/components/raw-icon-svg';
 import { SafeColorList } from '@/types/ColorList';
 import { getColorCode } from '@/utils/getColorCode';
+
+import RawIconSvg from '@/components/raw-icon-svg';
 
 type Props = {
   colorName: SafeColorList;
