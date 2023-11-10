@@ -7,11 +7,18 @@ import {
   PRIMARY,
   TIGERSYELLOW,
   TIGERSBLACK,
+  SHIFT_AMOUNT_S as shiftAmountS,
+  SHIFT_AMOUNT_M as shiftAmountM,
+  SHIFT_AMOUNT_L as shiftAmountL,
 } from '../../tailwind.config';
 
 export const SETTINGS_DRAWER_ALPHA = ALPHA;
 
 export const COLOR_STEP = STEP;
+
+export const SHIFT_AMOUNT_S = shiftAmountS;
+export const SHIFT_AMOUNT_M = shiftAmountM;
+export const SHIFT_AMOUNT_L = shiftAmountL;
 
 export const WHITE_COLOR_CODE = WHITE;
 export const BLACK_COLOR_CODE = BLACK;
