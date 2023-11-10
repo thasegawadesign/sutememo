@@ -1,7 +1,6 @@
+import RawTodoifyIcon from '@/components/raw-todoify-icon';
 import { SafeColorList } from '@/types/ColorList';
 import { getColorCode } from '@/utils/getColorCode';
-
-import RawIconSvg from '@/components/raw-icon-svg';
 
 type Props = {
   colorName: SafeColorList;
@@ -12,5 +11,5 @@ export default function IconSvg(props: Props) {
 
   const colorCode = getColorCode(colorName);
 
-  return RawIconSvg({ colorCode });
+  return RawTodoifyIcon({ colorCode });
 }
