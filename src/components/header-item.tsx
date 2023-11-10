@@ -30,7 +30,7 @@ import { ThemeContext } from '@/contexts/theme-provider';
 import useWindowSize from '@/hooks/useWindowSize';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
 import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
-import { SETTINGS_DRAWER_OPACITY } from '@/utils/color';
+import { SETTINGS_DRAWER_ALPHA } from '@/utils/color';
 import {
   bgVariants,
   colorVariants,
@@ -53,7 +53,7 @@ export default function HeaderItem() {
 
   const baseTranslucentColor = getTranslucentColor(
     baseColor,
-    SETTINGS_DRAWER_OPACITY,
+    SETTINGS_DRAWER_ALPHA,
   );
 
   const labelName = 'theme-color';
