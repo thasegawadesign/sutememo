@@ -1,21 +1,22 @@
+import { COLOR_STEP } from '@/types/ColorStep';
 import { customColorList } from '@/utils/customColorList';
 import { radixColorList } from '@/utils/radixColorList';
 
 import { safeColorList } from '../../tailwind.config';
 
 type RadixColorList = (typeof radixColorList)[number];
-type RadixScaleOpaque = `${RadixColorList}-${number}`;
-type RadixScaleAlpha = `${RadixColorList}-a${number}`;
+type RadixScaleOpaque = `${RadixColorList}-${COLOR_STEP}`;
+type RadixScaleAlpha = `${RadixColorList}-a${COLOR_STEP}`;
 export type RadixScale = RadixScaleOpaque | RadixScaleAlpha;
 export type RadixScaleTailwind = `${TailwindPrefix}${RadixScale}`;
 
 type CustomColorList = (typeof customColorList)[number];
-type CustomScaleOpaque = `${CustomColorList}-${number}`;
-type CustomScaleAlpha = `${CustomColorList}-a${number}`;
+type CustomScaleOpaque = `${CustomColorList}-${COLOR_STEP}`;
+type CustomScaleAlpha = `${CustomColorList}-a${COLOR_STEP}`;
 export type CustomScale = CustomScaleOpaque | CustomScaleAlpha;
 export type CustomScaleTailwind = `${TailwindPrefix}${CustomScale}`;
 
-export type ColorList = CustomColorList | RadixScale;
+export type ColorList = CustomColorList | RadixColorList;
 export type SafeColorList = (typeof safeColorList)[number];
 export type SafeTailwind = `${TailwindPrefix}${SafeColorList}`;
 

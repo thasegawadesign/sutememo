@@ -1,14 +1,13 @@
 import { Mode } from '@/contexts/theme-provider';
 import { CustomColorList, SafeColorList } from '@/types/ColorList';
-import { customColorList } from '@/utils/customColorList';
-
 import {
-  black,
-  primary,
-  tigersBlack,
-  tigersYellow,
-  white,
-} from '../../tailwind.config';
+  BLACK_COLOR_CODE,
+  customColorList,
+  PRIMARY_COLOR_CODE,
+  TIGERSBLACK_COLOR_CODE,
+  TIGERSYELLOW_COLOR_CODE,
+  WHITE_COLOR_CODE,
+} from '@/utils/color';
 
 export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
   const metaDarkTheme = document.head.querySelector(
@@ -30,7 +29,7 @@ export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
   if (isCustomThemeColor) {
     switch (colorType as CustomColorList) {
       case 'white':
-        result = white;
+        result = WHITE_COLOR_CODE;
         if (mode === 'dark') {
           metaDarkTheme.content = result;
           metaDarkTheme.media = '(prefers-color-scheme: dark)';
@@ -43,7 +42,7 @@ export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
         }
         break;
       case 'black':
-        result = black;
+        result = BLACK_COLOR_CODE;
         if (mode === 'dark') {
           metaDarkTheme.content = result;
           metaDarkTheme.media = '(prefers-color-scheme: dark)';
@@ -56,7 +55,7 @@ export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
         }
         break;
       case 'primary':
-        result = primary;
+        result = PRIMARY_COLOR_CODE;
         if (mode === 'dark') {
           metaDarkTheme.content = result;
           metaDarkTheme.media = '(prefers-color-scheme: dark)';
@@ -69,7 +68,7 @@ export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
         }
         break;
       case 'tigersBlack':
-        result = tigersBlack;
+        result = TIGERSBLACK_COLOR_CODE;
         if (mode === 'dark') {
           metaDarkTheme.content = result;
           metaDarkTheme.media = '(prefers-color-scheme: dark)';
@@ -82,7 +81,7 @@ export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
         }
         break;
       case 'tigersYellow':
-        result = tigersYellow;
+        result = TIGERSYELLOW_COLOR_CODE;
         if (mode === 'dark') {
           metaDarkTheme.content = result;
           metaDarkTheme.media = '(prefers-color-scheme: dark)';

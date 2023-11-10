@@ -30,6 +30,7 @@ import { ThemeContext } from '@/contexts/theme-provider';
 import useWindowSize from '@/hooks/useWindowSize';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
 import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
+import { SETTINGS_DRAWER_OPACITY } from '@/utils/color';
 import {
   bgVariants,
   colorVariants,
@@ -50,7 +51,10 @@ export default function HeaderItem() {
 
   const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
 
-  const baseTranslucentColor = getTranslucentColor(baseColor);
+  const baseTranslucentColor = getTranslucentColor(
+    baseColor,
+    SETTINGS_DRAWER_OPACITY,
+  );
 
   const labelName = 'theme-color';
 
@@ -324,7 +328,7 @@ export default function HeaderItem() {
           >
             <div className="sticky top-0 z-[9999]">
               <div
-                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-2xl transition-drawer duration-themeChange ${bgVariants[baseTranslucentColor]}`}
+                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-3xl transition-drawer duration-themeChange ${bgVariants[baseTranslucentColor]}`}
               >
                 <h2
                   className={clsx('select-none pl-5 text-lg font-semibold', {
