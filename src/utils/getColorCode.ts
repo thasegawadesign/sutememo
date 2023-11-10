@@ -8,46 +8,43 @@ import {
   TIGERSYELLOW_COLOR_CODE,
   WHITE_COLOR_CODE,
 } from '@/utils/color';
+import { getColorType } from '@/utils/getColorType';
+import { judgeIsCustomThemeColor } from '@/utils/judgeIsCustomThemeColor';
 
 export const getColorCode = (colorName: SafeColorList) => {
-  const colorType = colorName.split('-')[0];
-  const isCustomThemeColor = customColorList.includes(
-    colorType as CustomColorList,
-  );
+  const colorType = getColorType(colorName);
+  const isCustomThemeColor = judgeIsCustomThemeColor(colorType);
 
-  let radixColorType: string;
-  let radixColorStep: number;
-
-  let resultColor = '';
+  let resultColorCode = '';
 
   if (isCustomThemeColor) {
     switch (colorType as never as CustomColorList) {
       case 'white':
-        resultColor = WHITE_COLOR_CODE;
+        resultColorCode = WHITE_COLOR_CODE;
         break;
       case 'black':
-        resultColor = BLACK_COLOR_CODE;
+        resultColorCode = BLACK_COLOR_CODE;
         break;
       case 'customGray':
-        resultColor = CUSTOMGRAY_COLOR_CODE;
+        resultColorCode = CUSTOMGRAY_COLOR_CODE;
         break;
       case 'primary':
-        resultColor = PRIMARY_COLOR_CODE;
+        resultColorCode = PRIMARY_COLOR_CODE;
         break;
       case 'tigersBlack':
-        resultColor = TIGERSBLACK_COLOR_CODE;
+        resultColorCode = TIGERSBLACK_COLOR_CODE;
         break;
       case 'tigersYellow':
-        resultColor = TIGERSYELLOW_COLOR_CODE;
+        resultColorCode = TIGERSYELLOW_COLOR_CODE;
         break;
     }
   } else {
-    radixColorType = colorType.split('radix')[1].toLowerCase();
-    radixColorStep = Number(colorName.split('-')[1]);
-    resultColor = getComputedStyle(document.documentElement).getPropertyValue(
-      `--${radixColorType}-${radixColorStep}`,
-    );
+    const radixColorType = colorType.split('radix')[1].toLowerCase();
+    const radixColorStep = Number(colorName.split('-')[1]);
+    resultColorCode = getComputedStyle(
+      document.documentElement,
+    ).getPropertyValue(`--${radixColorType}-${radixColorStep}`);
   }
 
-  return resultColor;
+  return resultColorCode;
 };
