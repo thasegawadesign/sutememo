@@ -13,8 +13,8 @@ import { VscSymbolColor } from 'react-icons/vsc';
 
 import AccorionIcon from '@/components/accordion-icon';
 import AppInstallButton from '@/components/app-install-button';
-import IconSvg from '@/components/icon-svg';
 import ThemeSelectButton from '@/components/theme-select-button';
+import TodoifyIcon from '@/components/todoify-icon';
 import { IsDarkModeSelectContext } from '@/contexts/is-dark-mode-select-provider';
 import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
 import {
@@ -271,7 +271,7 @@ export default function HeaderItem() {
           <div
             className={`hidden h-8 w-8 select-none items-center justify-center rounded-[24%] border p-2 text-center minimum:flex ${bgVariants[baseColor]} ${borderVariants[mainColor]}`}
           >
-            <IconSvg colorName={mainColor} />
+            <TodoifyIcon colorName={mainColor} />
           </div>
           <h1
             className={`select-none text-3xl ${colorVariants[mainColor]}`}

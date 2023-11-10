@@ -2,45 +2,21 @@ type Props = {
   colorCode: string;
 };
 
-export default function RawIconSvg(props: Props) {
+export default function RawTodoifyIcon(props: Props) {
   const { colorCode } = props;
 
   return (
     <svg
-      height={206.83}
+      id="todoify-icon"
       style={{ maxWidth: '100%', maxHeight: '100%' }}
-      viewBox="0 0 263.41 206.83"
-      width={263.41}
+      viewBox="0 0 536.8 423.6"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g id="layer">
-        <g id="group">
-          <g id="l">
-            <rect
-              height="140.67"
-              rx="12"
-              ry="12"
-              style={{ fill: colorCode, strokeWidth: '0' }}
-              transform="translate(-79.81 88.1) rotate(-45)"
-              width="61.31"
-              x="35.79"
-              y="70.05"
-            />
-          </g>
-          <g id="r">
-            <rect
-              height="61.31"
-              rx="12"
-              ry="12"
-              style={{ fill: colorCode, strokeWidth: '0' }}
-              transform="translate(-26.26 143.42) rotate(-45)"
-              width="245.24"
-              x="37.37"
-              y="72.76"
-            />
-          </g>
-        </g>
-      </g>
+      <path
+        fill={colorCode}
+        d="M533.2,73.2L463.5,3.5c-4.7-4.7-12.3-4.7-17,0L194.4,255.6L90.2,151.4c-4.7-4.7-12.3-4.7-17,0L3.5,221.1
+		c-4.7,4.7-4.7,12.3,0,17l182,182c2.5,2.5,5.7,3.6,8.9,3.5c3.2,0.1,6.5-1,8.9-3.5L533.2,90.2C537.9,85.5,537.9,77.9,533.2,73.2z"
+      />
     </svg>
   );
 }
