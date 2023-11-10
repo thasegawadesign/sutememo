@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-import RawIconSvg from '@/components/raw-icon-svg';
+import RawTodoifyIconSvg from '@/components/raw-todoify-icon';
 
 import { primary, white } from '../../../../tailwind.config';
 
@@ -20,7 +20,7 @@ export async function GET() {
           alignItems: 'center',
         }}
       >
-        <RawIconSvg colorCode={primary} />
+        <RawTodoifyIconSvg colorCode={primary} />
       </div>
     ),
     {
