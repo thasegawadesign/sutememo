@@ -1,14 +1,13 @@
 import { CustomColorList, SafeColorList } from '@/types/ColorList';
-import { customColorList } from '@/utils/customColorList';
-
 import {
-  black,
-  customGray,
-  primary,
-  tigersBlack,
-  tigersYellow,
-  white,
-} from '../../tailwind.config';
+  customColorList,
+  BLACK_COLOR_CODE,
+  CUSTOMGRAY_COLOR_CODE,
+  PRIMARY_COLOR_CODE,
+  TIGERSBLACK_COLOR_CODE,
+  TIGERSYELLOW_COLOR_CODE,
+  WHITE_COLOR_CODE,
+} from '@/utils/color';
 
 export const getColorCode = (colorName: SafeColorList) => {
   const colorType = colorName.split('-')[0];
@@ -19,27 +18,27 @@ export const getColorCode = (colorName: SafeColorList) => {
   let radixColorType: string;
   let radixColorStep: number;
 
-  let resultColor: string;
+  let resultColor = '';
 
   if (isCustomThemeColor) {
     switch (colorType as never as CustomColorList) {
       case 'white':
-        resultColor = white;
+        resultColor = WHITE_COLOR_CODE;
         break;
       case 'black':
-        resultColor = black;
+        resultColor = BLACK_COLOR_CODE;
         break;
       case 'customGray':
-        resultColor = customGray;
+        resultColor = CUSTOMGRAY_COLOR_CODE;
         break;
       case 'primary':
-        resultColor = primary;
+        resultColor = PRIMARY_COLOR_CODE;
         break;
       case 'tigersBlack':
-        resultColor = tigersBlack;
+        resultColor = TIGERSBLACK_COLOR_CODE;
         break;
       case 'tigersYellow':
-        resultColor = tigersYellow;
+        resultColor = TIGERSYELLOW_COLOR_CODE;
         break;
     }
   } else {
