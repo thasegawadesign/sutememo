@@ -1,3 +1,4 @@
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { Viewport } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
 
@@ -135,14 +136,13 @@ export default function RootLayout({
 }) {
   return (
     <html className="overscroll-none" lang="ja">
-      <head>
-        <Analytics />
-      </head>
       <body
         className={`${notoSansJP.className} overscroll-none bg-radixGray-12 subpixel-antialiased`}
         role="application"
       >
         <Providers>{children}</Providers>
+        <Analytics />
+        <VercelAnalytics />
       </body>
     </html>
   );
