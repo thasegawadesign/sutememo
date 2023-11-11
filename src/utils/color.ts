@@ -3,7 +3,7 @@ import {
   COLOR_STEP as STEP,
   WHITE,
   BLACK,
-  CUSTOMGRAY,
+  MIDNIGHT,
   PRIMARY,
   TIGERSYELLOW,
   TIGERSBLACK,
@@ -22,7 +22,7 @@ export const SHIFT_AMOUNT_L = shiftAmountL;
 
 export const WHITE_COLOR_CODE = WHITE;
 export const BLACK_COLOR_CODE = BLACK;
-export const CUSTOMGRAY_COLOR_CODE = CUSTOMGRAY;
+export const MIDNIGHT_COLOR_CODE = MIDNIGHT;
 export const PRIMARY_COLOR_CODE = PRIMARY;
 export const TIGERSYELLOW_COLOR_CODE = TIGERSYELLOW;
 export const TIGERSBLACK_COLOR_CODE = TIGERSBLACK;
@@ -30,7 +30,7 @@ export const TIGERSBLACK_COLOR_CODE = TIGERSBLACK;
 export const customColorList = [
   'white',
   'black',
-  'customGray',
+  'midnight',
   'primary',
   'tigersYellow',
   'tigersBlack',
