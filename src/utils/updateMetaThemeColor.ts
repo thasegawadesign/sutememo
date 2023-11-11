@@ -34,96 +34,69 @@ export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
     switch (colorType as CustomColorList) {
       case 'white':
         resultColorCode = WHITE_COLOR_CODE;
-        if (mode === 'dark') {
-          metaDarkTheme.content = resultColorCode;
-          metaDarkTheme.media = '(prefers-color-scheme: dark)';
-          return;
-        }
-        if (mode === 'light') {
-          metaLightTheme.content = resultColorCode;
-          metaLightTheme.media = '(prefers-color-scheme: light)';
-          return;
-        }
-        break;
+        updateMetaTheme(mode, metaDarkTheme, metaLightTheme, resultColorCode);
+        return;
       case 'black':
         resultColorCode = BLACK_COLOR_CODE;
-        if (mode === 'dark') {
-          metaDarkTheme.content = resultColorCode;
-          metaDarkTheme.media = '(prefers-color-scheme: dark)';
-          return;
-        }
-        if (mode === 'light') {
-          metaLightTheme.content = resultColorCode;
-          metaLightTheme.media = '(prefers-color-scheme: light)';
-          return;
-        }
-        break;
+        updateMetaTheme(mode, metaDarkTheme, metaLightTheme, resultColorCode);
+        return;
       case 'midnight':
         resultColorCode = MIDNIGHT_COLOR_CODE;
-        if (mode === 'dark') {
-          metaDarkTheme.content = resultColorCode;
-          metaDarkTheme.media = '(prefers-color-scheme: dark)';
-          return;
-        }
-        if (mode === 'light') {
-          metaLightTheme.content = resultColorCode;
-          metaLightTheme.media = '(prefers-color-scheme: light)';
-          return;
-        }
+        updateMetaTheme(mode, metaDarkTheme, metaLightTheme, resultColorCode);
+        return;
       case 'primary':
         resultColorCode = PRIMARY_COLOR_CODE;
-        if (mode === 'dark') {
-          metaDarkTheme.content = resultColorCode;
-          metaDarkTheme.media = '(prefers-color-scheme: dark)';
-          return;
-        }
-        if (mode === 'light') {
-          metaLightTheme.content = resultColorCode;
-          metaLightTheme.media = '(prefers-color-scheme: light)';
-          return;
-        }
-        break;
+        updateMetaTheme(mode, metaDarkTheme, metaLightTheme, resultColorCode);
+        return;
       case 'tigersBlack':
         resultColorCode = TIGERSBLACK_COLOR_CODE;
-        if (mode === 'dark') {
-          metaDarkTheme.content = resultColorCode;
-          metaDarkTheme.media = '(prefers-color-scheme: dark)';
-          return;
-        }
-        if (mode === 'light') {
-          metaLightTheme.content = resultColorCode;
-          metaLightTheme.media = '(prefers-color-scheme: light)';
-          return;
-        }
-        break;
+        updateMetaTheme(mode, metaDarkTheme, metaLightTheme, resultColorCode);
+        return;
       case 'tigersYellow':
         resultColorCode = TIGERSYELLOW_COLOR_CODE;
-        if (mode === 'dark') {
-          metaDarkTheme.content = resultColorCode;
-          metaDarkTheme.media = '(prefers-color-scheme: dark)';
-          return;
-        }
-        if (mode === 'light') {
-          metaLightTheme.content = resultColorCode;
-          metaLightTheme.media = '(prefers-color-scheme: light)';
-          return;
-        }
-        break;
+        updateMetaTheme(mode, metaDarkTheme, metaLightTheme, resultColorCode);
+        return;
     }
   } else {
     const radixColorType = getRadixColorType(colorType as RadixColorList);
     resultColorCode = getComputedStyle(
       document.documentElement,
     ).getPropertyValue(`--${radixColorType}-${colorStep}`);
-    if (mode === 'dark') {
-      metaDarkTheme.content = resultColorCode;
-      metaDarkTheme.media = '(prefers-color-scheme: dark)';
-      return;
-    }
-    if (mode === 'light') {
-      metaLightTheme.content = resultColorCode;
-      metaLightTheme.media = '(prefers-color-scheme: light)';
-      return;
-    }
+    updateMetaTheme(mode, metaDarkTheme, metaLightTheme, resultColorCode);
+    return;
   }
 };
+
+function updateMetaTheme(
+  mode: Mode,
+  metaDarkTheme: HTMLMetaElement,
+  metaLightTheme: HTMLMetaElement,
+  resultColorCode: string,
+) {
+  switch (mode) {
+    case 'dark':
+      updateMetaDarkTheme(metaDarkTheme, resultColorCode);
+      return;
+    case 'light':
+      updateMetaLightTheme(metaLightTheme, resultColorCode);
+      return;
+  }
+}
+
+function updateMetaDarkTheme(
+  metaDarkTheme: HTMLMetaElement,
+  resultColorCode: string,
+) {
+  metaDarkTheme.content = resultColorCode;
+  metaDarkTheme.media = '(prefers-color-scheme: dark)';
+  return;
+}
+
+function updateMetaLightTheme(
+  metaLightTheme: HTMLMetaElement,
+  resultColorCode: string,
+) {
+  metaLightTheme.content = resultColorCode;
+  metaLightTheme.media = '(prefers-color-scheme: light)';
+  return;
+}
