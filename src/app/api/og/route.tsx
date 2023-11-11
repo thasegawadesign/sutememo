@@ -1,8 +1,7 @@
 import { ImageResponse } from 'next/og';
 
-import RawIconSvg from '@/components/raw-icon-svg';
-
-import { primary, white } from '../../../../tailwind.config';
+import RawTodoifyIconSvg from '@/components/raw-todoify-icon';
+import { PRIMARY_COLOR_CODE, WHITE_COLOR_CODE } from '@/utils/color';
 
 export const runtime = 'edge';
 
@@ -12,7 +11,7 @@ export async function GET() {
       <div
         style={{
           display: 'flex',
-          background: white,
+          background: WHITE_COLOR_CODE,
           width: '100%',
           height: '100%',
           textAlign: 'center',
@@ -20,7 +19,7 @@ export async function GET() {
           alignItems: 'center',
         }}
       >
-        <RawIconSvg colorCode={primary} />
+        <RawTodoifyIconSvg colorCode={PRIMARY_COLOR_CODE} />
       </div>
     ),
     {

@@ -13,8 +13,8 @@ import { VscSymbolColor } from 'react-icons/vsc';
 
 import AccorionIcon from '@/components/accordion-icon';
 import AppInstallButton from '@/components/app-install-button';
-import IconSvg from '@/components/icon-svg';
 import ThemeSelectButton from '@/components/theme-select-button';
+import TodoifyIcon from '@/components/todoify-icon';
 import { IsDarkModeSelectContext } from '@/contexts/is-dark-mode-select-provider';
 import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
 import {
@@ -30,6 +30,7 @@ import { ThemeContext } from '@/contexts/theme-provider';
 import useWindowSize from '@/hooks/useWindowSize';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
 import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
+import { SETTINGS_DRAWER_ALPHA } from '@/utils/color';
 import {
   bgVariants,
   colorVariants,
@@ -50,7 +51,10 @@ export default function HeaderItem() {
 
   const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
 
-  const baseTranslucentColor = getTranslucentColor(baseColor);
+  const baseTranslucentColor = getTranslucentColor(
+    baseColor,
+    SETTINGS_DRAWER_ALPHA,
+  );
 
   const labelName = 'theme-color';
 
@@ -271,7 +275,7 @@ export default function HeaderItem() {
           <div
             className={`hidden h-8 w-8 select-none items-center justify-center rounded-[24%] border p-2 text-center minimum:flex ${bgVariants[baseColor]} ${borderVariants[mainColor]}`}
           >
-            <IconSvg colorName={mainColor} />
+            <TodoifyIcon colorName={mainColor} />
           </div>
           <h1
             className={`select-none text-3xl ${colorVariants[mainColor]}`}
@@ -324,12 +328,12 @@ export default function HeaderItem() {
           >
             <div className="sticky top-0 z-[9999]">
               <div
-                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-2xl transition-drawer duration-themeChange ${bgVariants[baseTranslucentColor]}`}
+                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-3xl transition-drawer duration-themeChange ${bgVariants[baseTranslucentColor]}`}
               >
                 <h2
                   className={clsx('select-none pl-5 text-lg font-semibold', {
                     'text-customGray-9': mode === 'light',
-                    'text-white-12': mode === 'dark',
+                    'text-white-9': mode === 'dark',
                   })}
                 >
                   設定
@@ -384,7 +388,7 @@ export default function HeaderItem() {
                   <div
                     className={clsx('flex items-center gap-4', {
                       'text-customGray-9': mode === 'light',
-                      'text-white-12': mode === 'dark',
+                      'text-white-9': mode === 'dark',
                     })}
                   >
                     <span
@@ -415,7 +419,7 @@ export default function HeaderItem() {
                       <h3
                         className={clsx('text-base font-semibold', {
                           'text-customGray-9': mode === 'light',
-                          'text-white-12': mode === 'dark',
+                          'text-white-9': mode === 'dark',
                         })}
                       >
                         ダークモード
@@ -442,7 +446,7 @@ export default function HeaderItem() {
                       <h3
                         className={clsx('text-base font-semibold', {
                           'text-customGray-9': mode === 'light',
-                          'text-white-12': mode === 'dark',
+                          'text-white-9': mode === 'dark',
                         })}
                       >
                         端末の設定を使う
@@ -744,7 +748,7 @@ export default function HeaderItem() {
                   <div
                     className={clsx('flex items-center gap-4', {
                       'text-customGray-9': mode === 'light',
-                      'text-white-12': mode === 'dark',
+                      'text-white-9': mode === 'dark',
                     })}
                   >
                     <span
@@ -791,7 +795,7 @@ export default function HeaderItem() {
                   <div
                     className={clsx('flex items-center gap-4', {
                       'text-customGray-9': mode === 'light',
-                      'text-white-12': mode === 'dark',
+                      'text-white-9': mode === 'dark',
                     })}
                   >
                     <span
@@ -823,7 +827,7 @@ export default function HeaderItem() {
                         'flex items-center justify-between px-3',
                         {
                           'text-customGray-9': mode === 'light',
-                          'text-white-12': mode === 'dark',
+                          'text-white-9': mode === 'dark',
                         },
                       )}
                     >
