@@ -1,8 +1,6 @@
 import { MetadataRoute } from 'next';
 
-import { CUSTOMGRAY_COLOR_CODE } from '@/utils/color';
-
-// import { customGray } from '../../tailwind.config';
+import { MIDNIGHT_COLOR_CODE } from '@/utils/color';
 
 export default function manifest(): MetadataRoute.Manifest {
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -17,8 +15,8 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: `${baseURL}/${id}`,
     id: id,
     scope: baseURL,
-    theme_color: CUSTOMGRAY_COLOR_CODE,
-    background_color: CUSTOMGRAY_COLOR_CODE,
+    theme_color: MIDNIGHT_COLOR_CODE,
+    background_color: MIDNIGHT_COLOR_CODE,
     display_override: ['fullscreen', 'minimal-ui'],
     display: 'standalone',
     orientation: 'portrait',

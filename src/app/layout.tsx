@@ -4,7 +4,7 @@ import { Noto_Sans_JP } from 'next/font/google';
 import Analytics from '@/components/analytics';
 import '@/globals.css';
 import { Providers } from '@/providers';
-import { CUSTOMGRAY_COLOR_CODE, WHITE_COLOR_CODE } from '@/utils/color';
+import { MIDNIGHT_COLOR_CODE, WHITE_COLOR_CODE } from '@/utils/color';
 
 import type { Metadata } from 'next';
 
@@ -19,7 +19,7 @@ export const viewport: Viewport = {
   maximumScale: 1,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: CUSTOMGRAY_COLOR_CODE },
+    { media: '(prefers-color-scheme: dark)', color: MIDNIGHT_COLOR_CODE },
     { media: '(prefers-color-scheme: light)', color: WHITE_COLOR_CODE },
   ],
   colorScheme: 'dark light',

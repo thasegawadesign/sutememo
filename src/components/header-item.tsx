@@ -14,7 +14,6 @@ import { VscSymbolColor } from 'react-icons/vsc';
 import AccorionIcon from '@/components/accordion-icon';
 import AppInstallButton from '@/components/app-install-button';
 import ThemeSelectButton from '@/components/theme-select-button';
-import TodoifyIcon from '@/components/todoify-icon';
 import { IsDarkModeSelectContext } from '@/contexts/is-dark-mode-select-provider';
 import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-provider';
 import {
@@ -271,19 +270,12 @@ export default function HeaderItem() {
   return (
     <>
       <div className="flex items-center justify-between pb-5 pl-[22px] pr-3 pt-2">
-        <div className="flex items-center gap-2.5">
-          <div
-            className={`hidden h-8 w-8 select-none items-center justify-center rounded-[24%] border p-2 text-center minimum:flex ${bgVariants[baseColor]} ${borderVariants[mainColor]}`}
-          >
-            <TodoifyIcon colorName={mainColor} />
-          </div>
-          <h1
-            className={`select-none text-3xl ${colorVariants[mainColor]}`}
-            style={{ fontWeight: 800 }}
-          >
-            ToDo
-          </h1>
-        </div>
+        <h1
+          className={`select-none text-3xl ${colorVariants[mainColor]}`}
+          style={{ fontWeight: 800 }}
+        >
+          ToDo
+        </h1>
         <div className="flex items-center gap-0.5">
           <AppInstallButton
             handleAppInstallButtonClick={handleAppInstallButtonClick}
@@ -332,7 +324,7 @@ export default function HeaderItem() {
               >
                 <h2
                   className={clsx('select-none pl-5 text-lg font-semibold', {
-                    'text-customGray-9': mode === 'light',
+                    'text-midnight-9': mode === 'light',
                     'text-white-9': mode === 'dark',
                   })}
                 >
@@ -387,7 +379,7 @@ export default function HeaderItem() {
                 >
                   <div
                     className={clsx('flex items-center gap-4', {
-                      'text-customGray-9': mode === 'light',
+                      'text-midnight-9': mode === 'light',
                       'text-white-9': mode === 'dark',
                     })}
                   >
@@ -418,7 +410,7 @@ export default function HeaderItem() {
                     <div className="flex items-center justify-between">
                       <h3
                         className={clsx('text-base font-semibold', {
-                          'text-customGray-9': mode === 'light',
+                          'text-midnight-9': mode === 'light',
                           'text-white-9': mode === 'dark',
                         })}
                       >
@@ -445,7 +437,7 @@ export default function HeaderItem() {
                     <div className="flex items-center justify-between">
                       <h3
                         className={clsx('text-base font-semibold', {
-                          'text-customGray-9': mode === 'light',
+                          'text-midnight-9': mode === 'light',
                           'text-white-9': mode === 'dark',
                         })}
                       >
@@ -747,7 +739,7 @@ export default function HeaderItem() {
                 >
                   <div
                     className={clsx('flex items-center gap-4', {
-                      'text-customGray-9': mode === 'light',
+                      'text-midnight-9': mode === 'light',
                       'text-white-9': mode === 'dark',
                     })}
                   >
@@ -794,7 +786,7 @@ export default function HeaderItem() {
                 >
                   <div
                     className={clsx('flex items-center gap-4', {
-                      'text-customGray-9': mode === 'light',
+                      'text-midnight-9': mode === 'light',
                       'text-white-9': mode === 'dark',
                     })}
                   >
@@ -826,7 +818,7 @@ export default function HeaderItem() {
                       className={clsx(
                         'flex items-center justify-between px-3',
                         {
-                          'text-customGray-9': mode === 'light',
+                          'text-midnight-9': mode === 'light',
                           'text-white-9': mode === 'dark',
                         },
                       )}
