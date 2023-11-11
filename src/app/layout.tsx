@@ -94,7 +94,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/favicon.ico',
-    apple: '/icons/apple-touch-icon.png',
+    apple: [
+      { url: '/icons/apple-touch-icon.png', sizes: '180x180' },
+      { url: '/icons/apple-touch-icon-1024x1024.png', sizes: '1024x1024' },
+    ],
   },
   publisher: authorName,
   authors: [
