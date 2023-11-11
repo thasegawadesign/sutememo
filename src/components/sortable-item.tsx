@@ -1,6 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
+import { format } from 'date-fns';
 import {
   Dispatch,
   FocusEvent,
@@ -35,6 +36,7 @@ type Props = {
   updatePartialIndexedDB: (
     id: string,
     updatedText: string,
+    updatedAt: string,
   ) => Promise<IndexedDBResult>;
   updateAllIndexedDB: (todos: Todo[]) => Promise<IndexedDBResult>;
   deleteIndexedDB: (id: string) => Promise<IndexedDBResult>;
@@ -92,6 +94,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
   };
 
   const handleBlurContentEditable = async function (event: FocusEvent) {
+    const now = format(new Date(), 'yyyy-dd-MM-kk-mm');
     const targetId = id;
     const targetText = name;
     const prevTodos = todos.map((todo) => todo);
@@ -102,9 +105,9 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       const updatedTodos: Todo[] = prevTodos.map((todo) =>
         todo.id === targetId
           ? {
-              id: todo.id,
-              displayOrder: todo.displayOrder,
+              ...todo,
               name: updatedText,
+              updatedAt: now,
             }
           : todo,
       );
@@ -114,7 +117,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       setCanUndo(true);
       setCanRedo(false);
       try {
-        updatePartialIndexedDB(targetId, updatedText);
+        updatePartialIndexedDB(targetId, updatedText, now);
       } catch (error) {
         console.error(error);
         setTodos(prevTodos);

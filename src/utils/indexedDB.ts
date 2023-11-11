@@ -1,5 +1,5 @@
 import { IndexedDBResult } from '@/types/IndexedDBResult';
-import { Todo } from '@/types/Todo';
+import { Priority, Progress, Todo } from '@/types/Todo';
 import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
 
 const dbVer = 1;
@@ -8,6 +8,13 @@ const dbStore = 'todos';
 const dbKeyPath = 'id';
 const dbToDoNameKey = 'name';
 const dbToDoDisplayOrderKey = 'displayOrder';
+const dbToDoCreatedAtKey = 'createdAt';
+const dbToDoUpdatedAtKey = 'updatedAt';
+const dbToDoPriorityKey = 'priority';
+const dbToDoProgressKey = 'progress';
+const dbToDoDeadlineKey = 'deadline';
+const dbToDoNotificationDateKey = 'notificationDate';
+const dbToDoNotificationLocationKey = 'notificationLocation';
 
 export const createIndexedDB: () => Promise<IndexedDBResult> = async () => {
   return new Promise((resolve, reject) => {
@@ -28,6 +35,35 @@ export const createIndexedDB: () => Promise<IndexedDBResult> = async () => {
         objectStore.createIndex(dbToDoDisplayOrderKey, dbToDoDisplayOrderKey, {
           unique: false,
         });
+        objectStore.createIndex(dbToDoCreatedAtKey, dbToDoCreatedAtKey, {
+          unique: false,
+        });
+        objectStore.createIndex(dbToDoUpdatedAtKey, dbToDoUpdatedAtKey, {
+          unique: false,
+        });
+        objectStore.createIndex(dbToDoPriorityKey, dbToDoPriorityKey, {
+          unique: false,
+        });
+        objectStore.createIndex(dbToDoProgressKey, dbToDoProgressKey, {
+          unique: false,
+        });
+        objectStore.createIndex(dbToDoDeadlineKey, dbToDoDeadlineKey, {
+          unique: false,
+        });
+        objectStore.createIndex(
+          dbToDoNotificationDateKey,
+          dbToDoNotificationDateKey,
+          {
+            unique: false,
+          },
+        );
+        objectStore.createIndex(
+          dbToDoNotificationLocationKey,
+          dbToDoNotificationLocationKey,
+          {
+            unique: false,
+          },
+        );
         objectStore.createIndex(dbKeyPath, dbKeyPath, { unique: true });
         objectStore.transaction.oncomplete = () => {
           console.log('createIndexedDB onupgradeneeded called');
@@ -107,8 +143,13 @@ export const fetchIndexedDB: () => Promise<Todo[]> = async () => {
 
 export const updatePartialIndexedDB: (
   id: string,
-  updatedText: string,
-) => Promise<IndexedDBResult> = async (id: string, updatedText: string) => {
+  updatedName: string,
+  updatedUpdatedAt: string,
+) => Promise<IndexedDBResult> = async (
+  id: string,
+  updatedName: string,
+  updatedUpdatedAt: string,
+) => {
   return new Promise((resolve, reject) => {
     if (!globalThis.window) {
       reject(new Error('IndexedDB is not working this environment'));
@@ -119,18 +160,56 @@ export const updatePartialIndexedDB: (
       const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
       const transaction = db.transaction([dbStore], 'readwrite');
       const objectStore = transaction.objectStore(dbStore);
-      const getResult: Todo = { id: '', displayOrder: -1, name: '' };
+      const getResult: Todo = {
+        id: '',
+        displayOrder: -1,
+        name: '',
+        createdAt: '',
+        updatedAt: '',
+        priority: 'auto',
+        progress: 'not started',
+        deadline: '',
+        notificationSettings: {
+          date: '',
+          location: '',
+        },
+      };
       const getRequest = objectStore.get(id);
       getRequest.onsuccess = (event) => {
-        const { id, displayOrder, name } = (event.target as IDBRequest)
-          .result as Todo;
+        const {
+          id,
+          displayOrder,
+          name,
+          createdAt,
+          updatedAt,
+          priority,
+          progress,
+          deadline,
+          notificationSettings,
+        } = (event.target as IDBRequest).result as Todo;
         getResult.id = id;
         getResult.displayOrder = displayOrder;
         getResult.name = name;
+        getResult.createdAt = createdAt;
+        getResult.updatedAt = updatedAt;
+        getResult.priority = priority;
+        getResult.progress = progress;
+        getResult.deadline = deadline;
+        getResult.notificationSettings.date = notificationSettings.date;
+        getResult.notificationSettings.location = notificationSettings.location;
         const updatedTodo: Todo = {
           id: getResult.id,
           displayOrder: getResult.displayOrder,
-          name: updatedText,
+          name: updatedName,
+          createdAt: getResult.createdAt,
+          updatedAt: updatedUpdatedAt,
+          priority: getResult.priority,
+          progress: getResult.progress,
+          deadline: getResult.deadline,
+          notificationSettings: {
+            date: getResult.notificationSettings.date,
+            location: getResult.notificationSettings.location,
+          },
         };
         const putRequest = objectStore.put(updatedTodo);
         putRequest.onsuccess = () => {
@@ -210,10 +289,28 @@ export const insertIndexedDB: (
   id: string,
   displayOrder: number,
   name: string,
+  createdAt: string,
+  updatedAt: string,
+  priority: Priority,
+  progress: Progress,
+  deadline: string,
+  notificationSettings: {
+    date: string;
+    location: string;
+  },
 ) => Promise<IndexedDBResult> = async (
   id: string,
   displayOrder: number,
   name: string,
+  createdAt: string,
+  updatedAt: string,
+  priority: Priority,
+  progress: Progress,
+  deadline: string,
+  notificationSettings: {
+    date: string;
+    location: string;
+  },
 ) => {
   return new Promise((resolve, reject) => {
     if (!globalThis.window) {
@@ -224,6 +321,12 @@ export const insertIndexedDB: (
       id,
       displayOrder,
       name,
+      createdAt,
+      updatedAt,
+      priority,
+      progress,
+      deadline,
+      notificationSettings,
     };
     const DBOpenRequest = window.indexedDB.open(dbName, dbVer);
     DBOpenRequest.onsuccess = (event) => {

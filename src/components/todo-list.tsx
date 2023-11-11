@@ -51,6 +51,7 @@ type Props = {
   updatePartialIndexedDB: (
     id: string,
     updatedText: string,
+    updatedAt: string,
   ) => Promise<IndexedDBResult>;
   updateAllIndexedDB: (todos: Todo[]) => Promise<IndexedDBResult>;
   deleteIndexedDB: (id: string) => Promise<IndexedDBResult>;
