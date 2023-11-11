@@ -195,8 +195,12 @@ export const updatePartialIndexedDB: (
         getResult.priority = priority;
         getResult.progress = progress;
         getResult.deadline = deadline;
-        getResult.notificationSettings.date = notificationSettings.date;
-        getResult.notificationSettings.location = notificationSettings.location;
+        getResult.notificationSettings.date = notificationSettings
+          ? notificationSettings.date
+          : '';
+        getResult.notificationSettings.location = notificationSettings
+          ? notificationSettings.location
+          : '';
         const updatedTodo: Todo = {
           id: getResult.id,
           displayOrder: getResult.displayOrder,
