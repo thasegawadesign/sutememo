@@ -2,7 +2,7 @@ import { CustomColorList, SafeColorList } from '@/types/ColorList';
 import {
   customColorList,
   BLACK_COLOR_CODE,
-  CUSTOMGRAY_COLOR_CODE,
+  MIDNIGHT_COLOR_CODE,
   PRIMARY_COLOR_CODE,
   TIGERSBLACK_COLOR_CODE,
   TIGERSYELLOW_COLOR_CODE,
@@ -25,8 +25,8 @@ export const getColorCode = (colorName: SafeColorList) => {
       case 'black':
         resultColorCode = BLACK_COLOR_CODE;
         break;
-      case 'customGray':
-        resultColorCode = CUSTOMGRAY_COLOR_CODE;
+      case 'midnight':
+        resultColorCode = MIDNIGHT_COLOR_CODE;
         break;
       case 'primary':
         resultColorCode = PRIMARY_COLOR_CODE;
