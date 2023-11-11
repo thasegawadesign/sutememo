@@ -2,7 +2,7 @@ import { IndexedDBResult } from '@/types/IndexedDBResult';
 import { Priority, Progress, Todo } from '@/types/Todo';
 import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
 
-const dbVer = 1;
+const dbVer = 2;
 const dbName = 'TodoDB';
 const dbStore = 'todos';
 const dbKeyPath = 'id';
