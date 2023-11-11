@@ -13,6 +13,7 @@ import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-prov
 import { ThemeContext } from '@/contexts/theme-provider';
 import { bgVariants } from '@/utils/colorVariants';
 import { updateBodyBackgroundColor } from '@/utils/updateBodyBackgroundColor';
+import { updateHtmlColorScheme } from '@/utils/updateHtmlColorScheme';
 import { updateMetaThemeColor } from '@/utils/updateMetaThemeColor';
 
 export default function Screen({ children }: { children: React.ReactNode }) {
@@ -22,20 +23,7 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const HTML = document.querySelector('html');
-    if (!HTML) return;
-    switch (mode) {
-      case 'light':
-        HTML.style.colorScheme = 'light';
-        HTML.classList.remove('dark-theme');
-        HTML.classList.add('light-theme');
-        break;
-      case 'dark':
-        HTML.style.colorScheme = 'dark';
-        HTML.classList.remove('light-theme');
-        HTML.classList.add('dark-theme');
-        break;
-    }
+    updateHtmlColorScheme(mode);
   }, [mode]);
 
   useEffect(() => {
