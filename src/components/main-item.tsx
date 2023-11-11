@@ -37,9 +37,6 @@ export default function MainItem() {
     });
   };
 
-  console.log(new Date());
-  console.log(format(new Date(), 'yyyy-dd-MM-kk-mm'));
-
   const handleUndoClick = async function () {
     const isOldest = todosHistoryCurrentIndex.current - 1 < 0;
     todosHistoryCurrentIndex.current = isOldest
