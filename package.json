@@ -1,6 +1,6 @@
 {
   "name": "todoify",
-  "version": "1.7.15",
+  "version": "1.7.16",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -28,6 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@vercel/analytics": "^1",
     "@vercel/og": "~0.5",
     "autoprefixer": "^10",
     "clsx": "^2",
