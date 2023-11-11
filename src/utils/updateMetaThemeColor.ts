@@ -6,12 +6,13 @@ import {
 } from '@/types/ColorList';
 import {
   BLACK_COLOR_CODE,
+  MIDNIGHT_COLOR_CODE,
   PRIMARY_COLOR_CODE,
   TIGERSBLACK_COLOR_CODE,
   TIGERSYELLOW_COLOR_CODE,
   WHITE_COLOR_CODE,
 } from '@/utils/color';
-import { getRadixColorStep } from '@/utils/getColorStep';
+import { getColorStep } from '@/utils/getColorStep';
 import { getColorType, getRadixColorType } from '@/utils/getColorType';
 import { judgeIsCustomThemeColor } from '@/utils/judgeIsCustomThemeColor';
 
@@ -26,6 +27,7 @@ export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
   let resultColorCode = '';
 
   const colorType = getColorType(themeColor);
+  const colorStep = getColorStep(themeColor);
   const isCustomThemeColor = judgeIsCustomThemeColor(colorType);
 
   if (isCustomThemeColor) {
@@ -56,6 +58,18 @@ export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
           return;
         }
         break;
+      case 'midnight':
+        resultColorCode = MIDNIGHT_COLOR_CODE;
+        if (mode === 'dark') {
+          metaDarkTheme.content = resultColorCode;
+          metaDarkTheme.media = '(prefers-color-scheme: dark)';
+          return;
+        }
+        if (mode === 'light') {
+          metaLightTheme.content = resultColorCode;
+          metaLightTheme.media = '(prefers-color-scheme: light)';
+          return;
+        }
       case 'primary':
         resultColorCode = PRIMARY_COLOR_CODE;
         if (mode === 'dark') {
@@ -98,10 +112,9 @@ export const updateMetaThemeColor = (themeColor: SafeColorList, mode: Mode) => {
     }
   } else {
     const radixColorType = getRadixColorType(colorType as RadixColorList);
-    const radixColorStep = getRadixColorStep(colorType as RadixColorList);
     resultColorCode = getComputedStyle(
       document.documentElement,
-    ).getPropertyValue(`--${radixColorType}-${radixColorStep}`);
+    ).getPropertyValue(`--${radixColorType}-${colorStep}`);
     if (mode === 'dark') {
       metaDarkTheme.content = resultColorCode;
       metaDarkTheme.media = '(prefers-color-scheme: dark)';
