@@ -14,7 +14,7 @@ export const SHIFT_AMOUNT_L = 3;
 
 export const WHITE = '#ffffff';
 export const BLACK = '#000000';
-export const CUSTOMGRAY = '#111111';
+export const MIDNIGHT = '#111111';
 export const PRIMARY = '#208cd8';
 export const TIGERSYELLOW = '#f7da07';
 export const TIGERSBLACK = '#060606';
@@ -24,7 +24,7 @@ export const SETTINGS_DRAWER_ALPHA = 1;
 type CustomSolidColorCode =
   | typeof WHITE
   | typeof BLACK
-  | typeof CUSTOMGRAY
+  | typeof MIDNIGHT
   | typeof PRIMARY
   | typeof TIGERSYELLOW
   | typeof TIGERSBLACK;
@@ -34,8 +34,8 @@ export const safeColorList = [
   `white-a${SETTINGS_DRAWER_ALPHA}`,
   `black-${SOLID_STEP}`,
   `black-a${SETTINGS_DRAWER_ALPHA}`,
-  `customGray-${SOLID_STEP}`,
-  `customGray-a${SETTINGS_DRAWER_ALPHA}`,
+  `midnight-${SOLID_STEP}`,
+  `midnight-a${SETTINGS_DRAWER_ALPHA}`,
   `primary-${SOLID_STEP}`,
   'primary-8',
   'primary-a6',
@@ -134,7 +134,7 @@ const config: Config = withMT({
       colors: {
         white: generateCustomeScale(WHITE),
         black: generateCustomeScale(BLACK),
-        customGray: generateCustomeScale(CUSTOMGRAY),
+        midnight: generateCustomeScale(MIDNIGHT),
         primary: generateCustomeScale(PRIMARY),
         tigersYellow: generateCustomeScale(TIGERSYELLOW),
         tigersBlack: generateCustomeScale(TIGERSBLACK),
