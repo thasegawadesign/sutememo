@@ -1,5 +1,6 @@
 'use client';
 
+import { format } from 'date-fns';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -35,6 +36,9 @@ export default function MainItem() {
       block: 'end',
     });
   };
+
+  console.log(new Date());
+  console.log(format(new Date(), 'yyyy-dd-MM-kk-mm'));
 
   const handleUndoClick = async function () {
     const isOldest = todosHistoryCurrentIndex.current - 1 < 0;
@@ -104,6 +108,7 @@ export default function MainItem() {
       if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
       if (event.key === 'Enter') {
         const target = event.target as HTMLElement;
+        const now = format(new Date(), 'yyyy-dd-MM-kk-mm');
         const insertID = uuidv4();
         const prevTodos: Todo[] = todos.map((todo) => todo);
         const isEditing = target.contentEditable === 'true';
@@ -115,9 +120,35 @@ export default function MainItem() {
           try {
             setTodos([
               ...prevTodos,
-              { id: insertID, displayOrder: prevTodos.length, name: '' },
+              {
+                id: insertID,
+                displayOrder: prevTodos.length,
+                name: '',
+                createdAt: now,
+                updatedAt: now,
+                priority: 'auto',
+                progress: 'not started',
+                deadline: '',
+                notificationSettings: {
+                  date: '',
+                  location: '',
+                },
+              },
             ]);
-            await insertIndexedDB(insertID, prevTodos.length, '');
+            await insertIndexedDB(
+              insertID,
+              prevTodos.length,
+              '',
+              now,
+              now,
+              'auto',
+              'not started',
+              '',
+              {
+                date: '',
+                location: '',
+              },
+            );
             scrollToBottom();
             editableRef.current?.focus();
           } catch (error) {
@@ -131,19 +162,59 @@ export default function MainItem() {
   );
 
   const handleAddButtonMouseUp = useCallback(async () => {
+    const now = format(new Date(), 'yyyy-dd-MM-kk-mm');
     const insertID = uuidv4();
     const prevTodos: Todo[] = todos.map((todo) => todo);
     todosHistoryRef.current.push([
       ...prevTodos,
-      { id: insertID, displayOrder: prevTodos.length, name: '' },
+      {
+        id: insertID,
+        displayOrder: prevTodos.length,
+        name: '',
+        createdAt: now,
+        updatedAt: now,
+        priority: 'auto',
+        progress: 'not started',
+        deadline: '',
+        notificationSettings: {
+          date: '',
+          location: '',
+        },
+      },
     ]);
     todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
     try {
       setTodos([
         ...prevTodos,
-        { id: insertID, displayOrder: prevTodos.length, name: '' },
+        {
+          id: insertID,
+          displayOrder: prevTodos.length,
+          name: '',
+          createdAt: now,
+          updatedAt: now,
+          priority: 'auto',
+          progress: 'not started',
+          deadline: '',
+          notificationSettings: {
+            date: '',
+            location: '',
+          },
+        },
       ]);
-      insertIndexedDB(insertID, prevTodos.length, '');
+      insertIndexedDB(
+        insertID,
+        prevTodos.length,
+        '',
+        now,
+        now,
+        'auto',
+        'not started',
+        '',
+        {
+          date: '',
+          location: '',
+        },
+      );
     } catch (error) {
       console.error(error);
       setTodos(prevTodos);
