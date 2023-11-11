@@ -8,103 +8,96 @@ const withMT = require('@material-tailwind/react/utils/withMT');
 export const COLOR_STEP = 12;
 const SOLID_STEP = 9;
 
-export const white = '#ffffff';
-export const black = '#000000';
-export const customGray = '#111111';
-export const primary = '#208cd8';
-export const tigersYellow = '#f7da07';
-export const tigersBlack = '#060606';
+export const SHIFT_AMOUNT_S = 1;
+export const SHIFT_AMOUNT_M = 2;
+export const SHIFT_AMOUNT_L = 3;
 
-export const defaultTranslucentColor = 'black-a5';
+export const WHITE = '#ffffff';
+export const BLACK = '#000000';
+export const CUSTOMGRAY = '#111111';
+export const PRIMARY = '#208cd8';
+export const TIGERSYELLOW = '#f7da07';
+export const TIGERSBLACK = '#060606';
+
+export const SETTINGS_DRAWER_ALPHA = 1;
 
 type CustomSolidColorCode =
-  | typeof white
-  | typeof black
-  | typeof customGray
-  | typeof primary
-  | typeof tigersYellow
-  | typeof tigersBlack;
+  | typeof WHITE
+  | typeof BLACK
+  | typeof CUSTOMGRAY
+  | typeof PRIMARY
+  | typeof TIGERSYELLOW
+  | typeof TIGERSBLACK;
 
 export const safeColorList = [
-  'white-12',
-  'black-12',
-  'black-a5',
-  'black-a6',
-  'customGray-9',
-  'customGray-a6',
+  `white-${SOLID_STEP}`,
+  `white-a${SETTINGS_DRAWER_ALPHA}`,
+  `black-${SOLID_STEP}`,
+  `black-a${SETTINGS_DRAWER_ALPHA}`,
+  `customGray-${SOLID_STEP}`,
+  `customGray-a${SETTINGS_DRAWER_ALPHA}`,
+  `primary-${SOLID_STEP}`,
   'primary-8',
   'primary-a6',
-  'tigersYellow-9',
-  'tigersYellow-a6',
-  'tigersBlack-9',
-  'tigersBlack-a6',
+  `tigersYellow-${SOLID_STEP}`,
+  `tigersYellow-a${SETTINGS_DRAWER_ALPHA}`,
+  `tigersBlack-${SOLID_STEP}`,
+  `tigersBlack-a${SETTINGS_DRAWER_ALPHA}`,
   'radixGray-1',
-  'radixGray-a1',
   'radixGray-2',
-  'radixGray-a2',
   'radixGray-3',
   'radixGray-7',
-  'radixGray-a4',
   'radixGray-9',
   'radixGray-12',
-  'radixGray-a6',
+  `radixGray-a${SETTINGS_DRAWER_ALPHA}`,
   'radixSage-5',
-  'radixSage-a3',
   'radixSage-12',
-  'radixSage-a6',
+  `radixSage-a${SETTINGS_DRAWER_ALPHA}`,
   'radixOlive-5',
-  'radixOlive-a3',
   'radixOlive-11',
-  'radixOlive-a5',
+  `radixOlive-a${SETTINGS_DRAWER_ALPHA}`,
   'radixTomato-11',
-  'radixTomato-a5',
+  `radixTomato-a${SETTINGS_DRAWER_ALPHA}`,
   'radixRuby-3',
   'radixRuby-10',
-  'radixRuby-a4',
+  `radixRuby-a${SETTINGS_DRAWER_ALPHA}`,
   'radixCrimson-11',
-  'radixCrimson-a5',
+  `radixCrimson-a${SETTINGS_DRAWER_ALPHA}`,
   'radixPlum-4',
-  'radixPlum-a2',
   'radixPlum-12',
-  'radixPlum-a6',
+  `radixPlum-a${SETTINGS_DRAWER_ALPHA}`,
   'radixViolet-11',
-  'radixViolet-a5',
+  `radixViolet-a${SETTINGS_DRAWER_ALPHA}`,
   'radixJade-3',
   'radixJade-12',
-  'radixJade-a6',
+  `radixJade-a${SETTINGS_DRAWER_ALPHA}`,
   'radixGrass-5',
-  'radixGrass-a3',
   'radixGrass-10',
-  'radixGrass-a4',
-  'radixGrass-a4',
   'radixGrass-11',
+  `radixGrass-a${SETTINGS_DRAWER_ALPHA}`,
   'radixSand-10',
-  'radixSand-a4',
+  `radixSand-a${SETTINGS_DRAWER_ALPHA}`,
   'radixIris-9',
-  'radixIris-a6',
+  `radixIris-a${SETTINGS_DRAWER_ALPHA}`,
   'radixGold-10',
-  'radixGold-a4',
+  `radixGold-a${SETTINGS_DRAWER_ALPHA}`,
   'radixBrown-4',
-  'radixBrown-a2',
   'radixBrown-12',
-  'radixBrown-a6',
+  `radixBrown-a${SETTINGS_DRAWER_ALPHA}`,
   'radixOrange-10',
-  'radixOrange-a4',
+  `radixOrange-a${SETTINGS_DRAWER_ALPHA}`,
   'radixLime-4',
-  'radixLime-a2',
   'radixLime-12',
-  'radixLime-a6',
+  `radixLime-a${SETTINGS_DRAWER_ALPHA}`,
   'radixMint-3',
   'radixMint-11',
-  'radixMint-a5',
+  `radixMint-a${SETTINGS_DRAWER_ALPHA}`,
   'radixAmber-3',
-  'radixAmber-a1',
   'radixAmber-12',
-  'radixAmber-a6',
+  `radixAmber-a${SETTINGS_DRAWER_ALPHA}`,
   'radixSky-3',
-  'radixSky-a1',
   'radixSky-11',
-  'radixSky-a5',
+  `radixSky-a${SETTINGS_DRAWER_ALPHA}`,
 ] as const;
 
 const variants: TailwindPrefix[] = [
@@ -139,12 +132,12 @@ const config: Config = withMT({
         xs: '480px',
       },
       colors: {
-        white: generateCustomeScale(white),
-        black: generateCustomeScale(black),
-        customGray: generateCustomeScale(customGray),
-        primary: generateCustomeScale(primary),
-        tigersYellow: generateCustomeScale(tigersYellow),
-        tigersBlack: generateCustomeScale(tigersBlack),
+        white: generateCustomeScale(WHITE),
+        black: generateCustomeScale(BLACK),
+        customGray: generateCustomeScale(CUSTOMGRAY),
+        primary: generateCustomeScale(PRIMARY),
+        tigersYellow: generateCustomeScale(TIGERSYELLOW),
+        tigersBlack: generateCustomeScale(TIGERSBLACK),
         radixGray: generateRadixScale('gray'),
         radixMauve: generateRadixScale('mauve'),
         radixSlate: generateRadixScale('slate'),
