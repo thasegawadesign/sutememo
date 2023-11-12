@@ -4,10 +4,11 @@ import { Noto_Sans_JP } from 'next/font/google';
 import { cookies } from 'next/headers';
 
 import Analytics from '@/components/analytics';
-import { defaultMode } from '@/contexts/theme-provider';
+import { defaultBaseColor, defaultMode } from '@/contexts/theme-provider';
 import '@/globals.css';
 import { Providers } from '@/providers';
 import { MIDNIGHT_COLOR_CODE } from '@/utils/color';
+import { bgVariants } from '@/utils/colorVariants';
 
 import type { Metadata } from 'next';
 
@@ -144,6 +145,8 @@ export default async function RootLayout({
   const cookieStore = cookies();
   const mode = String(cookieStore.get('mode')?.value) ?? defaultMode;
   const theme = `${mode}-theme`;
+  const baseColor =
+    String(cookieStore.get('baseColor')?.value) ?? defaultBaseColor;
 
   return (
     <html
@@ -152,7 +155,7 @@ export default async function RootLayout({
       style={{ colorScheme: mode }}
     >
       <body
-        className={`${notoSansJP.className} overscroll-none bg-radixGray-12 subpixel-antialiased`}
+        className={`${notoSansJP.className} overscroll-none subpixel-antialiased ${bgVariants[baseColor]}`}
         role="application"
       >
         <Providers>{children}</Providers>

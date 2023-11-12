@@ -15,7 +15,7 @@ interface ThemeContextType extends ThemeType {
   setTheme: Dispatch<SetStateAction<ThemeType>>;
 }
 
-const defaultBaseColor: SafeColorList = 'radixGray-1';
+export const defaultBaseColor: SafeColorList = 'radixGray-1';
 const defaultMainColor: SafeColorList = 'radixGray-12';
 export const defaultMode: Mode = 'dark';
 
