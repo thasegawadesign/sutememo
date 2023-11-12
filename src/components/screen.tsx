@@ -70,7 +70,7 @@ export default function Screen({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     updateBodyBackgroundColor(baseColor);
-    updateMetaThemeColor(baseColor, mode);
+    updateMetaThemeColor(baseColor);
   }, [baseColor, mode]);
 
   useEffect(() => {
