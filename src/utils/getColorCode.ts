@@ -1,6 +1,5 @@
 import { CustomColorList, SafeColorList } from '@/types/ColorList';
 import {
-  customColorList,
   BLACK_COLOR_CODE,
   MIDNIGHT_COLOR_CODE,
   PRIMARY_COLOR_CODE,
