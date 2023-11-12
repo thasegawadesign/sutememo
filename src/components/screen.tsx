@@ -62,18 +62,18 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   ]);
 
   useEffect(() => {
-    const themeColorCode = getColorCode(baseColor);
-    setCookiesUserTheme(themeColorCode, baseColor, mainColor, mode);
-    updateMetaThemeColor(baseColor);
-  }, [baseColor, mainColor, mode]);
-
-  useEffect(() => {
     updateHtmlColorScheme(mode);
   }, [mode]);
 
   useEffect(() => {
     updateBodyBackgroundColor(baseColor);
   }, [baseColor]);
+
+  useEffect(() => {
+    const themeColorCode = getColorCode(baseColor);
+    setCookiesUserTheme(themeColorCode, baseColor, mainColor, mode);
+    updateMetaThemeColor(themeColorCode);
+  }, [baseColor, mainColor, mode]);
 
   useEffect(() => {
     setCookiesIsDarkModeSelect(isDarkModeSelect);
