@@ -64,6 +64,7 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const themeColorCode = getColorCode(baseColor);
     setCookiesUserTheme(themeColorCode, baseColor, mainColor, mode);
+    updateMetaThemeColor(baseColor);
   }, [baseColor, mainColor, mode]);
 
   useEffect(() => {
@@ -72,7 +73,6 @@ export default function Screen({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     updateBodyBackgroundColor(baseColor);
-    updateMetaThemeColor(baseColor);
   }, [baseColor]);
 
   useEffect(() => {
