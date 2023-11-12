@@ -1,7 +1,7 @@
 import { Mode } from '@/contexts/theme-provider';
 
 export const updateHtmlColorScheme = (mode: Mode) => {
-  const HTML = document.querySelector('html');
+  const HTML = document.documentElement;
   if (!HTML) return;
   switch (mode) {
     case 'light':

@@ -26,15 +26,12 @@ import {
 } from '@/contexts/material-providers';
 import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
+import useMediaPrefersColorScheme from '@/hooks/useMediaPrefersColorScheme';
 import useWindowSize from '@/hooks/useWindowSize';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
 import { checkedThemeOptionVariant } from '@/utils/checkedThemeOptionVariant';
 import { SETTINGS_DRAWER_ALPHA } from '@/utils/color';
-import {
-  bgVariants,
-  colorVariants,
-  borderVariants,
-} from '@/utils/colorVariants';
+import { bgVariants, colorVariants } from '@/utils/colorVariants';
 import { getTranslucentColor } from '@/utils/getTranslucentColor';
 
 export default function HeaderItem() {
@@ -76,54 +73,28 @@ export default function HeaderItem() {
     IsSystemModeSelectContext,
   );
 
-  const syncSystemMode = useCallback(() => {
-    if (matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme({
-        baseColor,
-        mainColor,
-        mode: 'dark',
-      });
-      if (!isDarkModeSelect) setIsDarkModeSelect(true);
-    }
-    if (matchMedia('(prefers-color-scheme: light)').matches) {
-      setTheme({
-        baseColor,
-        mainColor,
-        mode: 'light',
-      });
-      if (isDarkModeSelect) setIsDarkModeSelect(false);
-    }
-  }, [baseColor, isDarkModeSelect, mainColor, setIsDarkModeSelect, setTheme]);
+  const prefersColorScheme = useMediaPrefersColorScheme();
 
   const handleDarkModeSwitchChange = useCallback(
     (event: ChangeEvent) => {
       const toggleSwitch = event.target as HTMLInputElement;
       const isRequestDarkMode = toggleSwitch.checked;
       setIsDarkModeSelect(isRequestDarkMode);
-      if (
-        isRequestDarkMode &&
-        matchMedia('(prefers-color-scheme: dark)').matches
-      ) {
+      if (isRequestDarkMode && prefersColorScheme === 'dark') {
         setTheme({
           baseColor,
           mainColor,
           mode: 'dark',
         });
       }
-      if (
-        !isRequestDarkMode &&
-        matchMedia('(prefers-color-scheme: light)').matches
-      ) {
+      if (!isRequestDarkMode && prefersColorScheme === 'light') {
         setTheme({
           baseColor,
           mainColor,
           mode: 'light',
         });
       }
-      if (
-        isRequestDarkMode &&
-        matchMedia('(prefers-color-scheme: light)').matches
-      ) {
+      if (isRequestDarkMode && prefersColorScheme === 'light') {
         setTheme({
           baseColor,
           mainColor,
@@ -131,10 +102,7 @@ export default function HeaderItem() {
         });
         setIsSystemModeSelect(false);
       }
-      if (
-        !isRequestDarkMode &&
-        matchMedia('(prefers-color-scheme: dark)').matches
-      ) {
+      if (!isRequestDarkMode && prefersColorScheme === 'dark') {
         setTheme({
           baseColor,
           mainColor,
@@ -146,6 +114,7 @@ export default function HeaderItem() {
     [
       baseColor,
       mainColor,
+      prefersColorScheme,
       setIsDarkModeSelect,
       setIsSystemModeSelect,
       setTheme,
@@ -156,7 +125,7 @@ export default function HeaderItem() {
     (event: ChangeEvent) => {
       const toggleSwitch = event.target as HTMLInputElement;
       setIsSystemModeSelect(toggleSwitch.checked);
-      if (matchMedia('(prefers-color-scheme: dark)').matches) {
+      if (prefersColorScheme === 'dark') {
         setTheme({
           baseColor,
           mainColor,
@@ -164,7 +133,7 @@ export default function HeaderItem() {
         });
         setIsDarkModeSelect(true);
       }
-      if (matchMedia('(prefers-color-scheme: light)').matches) {
+      if (prefersColorScheme === 'light') {
         setTheme({
           baseColor,
           mainColor,
@@ -176,6 +145,7 @@ export default function HeaderItem() {
     [
       baseColor,
       mainColor,
+      prefersColorScheme,
       setIsDarkModeSelect,
       setIsSystemModeSelect,
       setTheme,
@@ -227,29 +197,6 @@ export default function HeaderItem() {
   const handleReloadButtonClick = useCallback(() => {
     location.reload();
   }, []);
-
-  const handleVisibilityChange = useCallback(async () => {
-    if (!isSystemModeSelect) return;
-    syncSystemMode();
-  }, [isSystemModeSelect, syncSystemMode]);
-
-  const handleWindowFocus = useCallback(async () => {
-    if (!isSystemModeSelect) return;
-    syncSystemMode();
-  }, [isSystemModeSelect, syncSystemMode]);
-
-  useEffect(() => {
-    if (!globalThis.window) return;
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () =>
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [handleVisibilityChange]);
-
-  useEffect(() => {
-    if (!globalThis.window) return;
-    window.addEventListener('focus', handleWindowFocus);
-    return () => window.removeEventListener('focus', handleWindowFocus);
-  }, [handleWindowFocus]);
 
   useEffect(() => {
     if (!globalThis.window) return;
