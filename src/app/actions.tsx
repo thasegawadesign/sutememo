@@ -8,10 +8,20 @@ import { SafeColorList } from '@/types/ColorList';
 const oneDay = 24 * 60 * 60 * 1000;
 
 export async function setCookiesUserTheme(
+  themeColorCode: string,
   baseColor: SafeColorList,
   mainColor: SafeColorList,
   mode: Mode,
 ) {
+  cookies().set({
+    name: 'themeColorCode',
+    value: themeColorCode,
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+    maxAge: oneDay * 14,
+    path: '/',
+  });
   cookies().set({
     name: 'baseColor',
     value: baseColor,

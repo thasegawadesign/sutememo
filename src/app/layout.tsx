@@ -1,11 +1,12 @@
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { Viewport } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
+import { cookies } from 'next/headers';
 
 import Analytics from '@/components/analytics';
 import '@/globals.css';
 import { Providers } from '@/providers';
-import { MIDNIGHT_COLOR_CODE, WHITE_COLOR_CODE } from '@/utils/color';
+import { MIDNIGHT_COLOR_CODE } from '@/utils/color';
 
 import type { Metadata } from 'next';
 
@@ -14,12 +15,16 @@ const creator = process.env.NEXT_PUBLIC_CREATOR;
 const authorName = process.env.NEXT_PUBLIC_ATHOR_NAME;
 const authorURL = process.env.NEXT_PUBLIC_ATHOR_URL;
 
+const cookieStore = cookies();
+const themeColorCode =
+  cookieStore.get('themeColorCode')?.value ?? MIDNIGHT_COLOR_CODE;
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: MIDNIGHT_COLOR_CODE,
+  themeColor: themeColorCode,
   colorScheme: 'dark light',
 };
 
