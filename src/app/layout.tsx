@@ -44,7 +44,7 @@ export function generateMetadata(): Metadata {
     appleWebApp: {
       title: 'Todoify',
       capable: true,
-      statusBarStyle: 'black-translucent',
+      statusBarStyle: 'default',
       startupImage: [
         '/splashscreens/ipad_splash.png',
         {
@@ -142,7 +142,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = cookies();
-  const mode = cookieStore.get('mode')?.value ?? defaultMode;
+  const mode = String(cookieStore.get('mode')?.value) ?? defaultMode;
   const theme = `${mode}-theme`;
 
   return (
