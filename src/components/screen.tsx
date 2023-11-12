@@ -13,6 +13,7 @@ import { IsSystemModeSelectContext } from '@/contexts/is-system-mode-select-prov
 import { ThemeContext } from '@/contexts/theme-provider';
 import useMediaPrefersColorScheme from '@/hooks/useMediaPrefersColorScheme';
 import { bgVariants } from '@/utils/colorVariants';
+import { getColorCode } from '@/utils/getColorCode';
 import { handlePrefersColorSchemeChange } from '@/utils/handlePrefersColorSchemeChange';
 import { updateBodyBackgroundColor } from '@/utils/updateBodyBackgroundColor';
 import { updateHtmlColorScheme } from '@/utils/updateHtmlColorScheme';
@@ -53,9 +54,9 @@ export default function Screen({ children }: { children: React.ReactNode }) {
         );
   }, [
     baseColor,
-    isSystemModeSelect,
     mainColor,
     prefersColorScheme,
+    isSystemModeSelect,
     setIsDarkModeSelect,
     setTheme,
   ]);
@@ -65,13 +66,14 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   }, [mode]);
 
   useEffect(() => {
-    setCookiesUserTheme(baseColor, mainColor, mode);
-  }, [baseColor, mainColor, mode]);
+    updateBodyBackgroundColor(baseColor);
+  }, [baseColor]);
 
   useEffect(() => {
-    updateBodyBackgroundColor(baseColor);
-    updateMetaThemeColor(baseColor, mode);
-  }, [baseColor, mode]);
+    const themeColorCode = getColorCode(baseColor);
+    setCookiesUserTheme(themeColorCode, baseColor, mainColor, mode);
+    updateMetaThemeColor(themeColorCode);
+  }, [baseColor, mainColor, mode]);
 
   useEffect(() => {
     setCookiesIsDarkModeSelect(isDarkModeSelect);
