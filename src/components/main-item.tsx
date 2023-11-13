@@ -279,34 +279,42 @@ export default function MainItem() {
 
   return (
     <>
-      {todos.length > 0 && (
-        <>
-          <TodoList
-            deleteIndexedDB={deleteIndexedDB}
-            editableRef={editableRef}
-            setCanRedo={setCanRedo}
-            setCanUndo={setCanUndo}
-            setTodos={setTodos}
-            todos={todos}
-            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
-            todosHistoryRef={todosHistoryRef}
-            updateAllIndexedDB={updateAllIndexedDB}
-            updatePartialIndexedDB={updatePartialIndexedDB}
+      {todos.length > 0 ? (
+        <TodoList
+          deleteIndexedDB={deleteIndexedDB}
+          editableRef={editableRef}
+          setCanRedo={setCanRedo}
+          setCanUndo={setCanUndo}
+          setTodos={setTodos}
+          todos={todos}
+          todosHistoryCurrentIndex={todosHistoryCurrentIndex}
+          todosHistoryRef={todosHistoryRef}
+          updateAllIndexedDB={updateAllIndexedDB}
+          updatePartialIndexedDB={updatePartialIndexedDB}
+        />
+      ) : null}
+      <menu>
+        <li className="fixed bottom-[max(calc(env(safe-area-inset-bottom)+64px),84px)] left-[16px]">
+          <Undo canUndo={canUndo} handleUndoClick={handleUndoClick} />
+        </li>
+        <li className="fixed bottom-[max(calc(env(safe-area-inset-bottom)+64px),84px)] right-[16px]">
+          <Redo canRedo={canRedo} handleRedoClick={handleRedoClick} />
+        </li>
+      </menu>
+      <menu>
+        <li className="fixed bottom-5 left-0 right-0 mx-auto w-[calc(100%-40px)] pwa:bottom-[max(env(safe-area-inset-bottom),20px)]">
+          <AddButton
+            handleAddButtonClick={handleAddButtonClick}
+            handleAddButtonMouseUp={handleAddButtonMouseUp}
           />
-        </>
-      )}
-      <Undo canUndo={canUndo} handleUndoClick={handleUndoClick} />
-      <Redo canRedo={canRedo} handleRedoClick={handleRedoClick} />
-      <AddButton
-        handleAddButtonClick={handleAddButtonClick}
-        handleAddButtonMouseUp={handleAddButtonMouseUp}
-      />
-      {todos.length > 0 && (
+        </li>
+      </menu>
+      {todos.length > 0 ? (
         <div
           ref={scrollBottomRef}
           className="h-[calc(env(safe-area-inset-bottom)+224px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+204px),224px)]"
         />
-      )}
+      ) : null}
     </>
   );
 }

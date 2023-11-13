@@ -1,8 +1,8 @@
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { Viewport } from 'next';
-import { Noto_Sans_JP } from 'next/font/google';
 import { cookies } from 'next/headers';
 
+import { notoSansJP } from '@/app/fonts';
 import Analytics from '@/components/analytics';
 import { defaultBaseColor, defaultMode } from '@/contexts/theme-provider';
 import '@/globals.css';
@@ -133,10 +133,6 @@ export function generateMetadata(): Metadata {
   };
 }
 
-const notoSansJP = Noto_Sans_JP({
-  subsets: ['latin'],
-});
-
 export default async function RootLayout({
   children,
 }: {
@@ -150,15 +146,15 @@ export default async function RootLayout({
 
   return (
     <html
-      className={`overscroll-none ${theme}`}
+      className={`${notoSansJP.className} overscroll-none ${theme}`}
       lang="ja"
       style={{ colorScheme: mode }}
     >
       <body
         role="application"
-        className={`${
-          notoSansJP.className
-        } overscroll-none subpixel-antialiased ${bgVariants[`${baseColor}`]}`}
+        className={`overscroll-none subpixel-antialiased ${
+          bgVariants[`${baseColor}`]
+        }`}
       >
         <Providers>{children}</Providers>
         <Analytics />
