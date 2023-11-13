@@ -24,7 +24,7 @@ export default forwardRef(function AddButton(props: Props, _ref) {
         role="button"
         tabIndex={0}
         className={clsx(
-          `text-white rounded-lg py-2.5 text-3xl !shadow-none transition ${
+          `text-white rounded-lg py-2.5 text-3xl !shadow-none ${
             bgVariants[`${mainColor}`]
           } ${colorVariants[`${baseColor}`]}`,
           {
