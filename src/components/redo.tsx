@@ -27,7 +27,7 @@ export default function Redo(props: Props) {
         role="button"
         tabIndex={0}
         className={clsx(
-          `!fixed bottom-[max(calc(env(safe-area-inset-bottom)+64px),84px)] right-[16px] -scale-x-100 rounded-full p-5 text-xl !shadow-none xs:p-7 xs:text-xl ${bgVariants[baseColor]} ${colorVariants[mainColor]}`,
+          `!fixed bottom-[max(calc(env(safe-area-inset-bottom)+64px),84px)] right-[16px] -scale-x-100 rounded-full p-5 text-xl !shadow-none xs:p-7 xs:text-xl ${bgVariants[`${baseColor}`]} ${colorVariants[`${mainColor}`]}`,
           {
             'hover:brightness-95 active:brightness-90':
               canRedo && mode === 'light',

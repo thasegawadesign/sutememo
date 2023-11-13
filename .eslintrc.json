@@ -1,5 +1,10 @@
 {
-  "extends": ["next", "plugin:jsx-a11y/recommended", "prettier"],
+  "extends": [
+    "plugin:security/recommended",
+    "plugin:jsx-a11y/recommended",
+    "next/core-web-vitals",
+    "prettier"
+  ],
   "rules": {
     "import/order": [
       "warn",
