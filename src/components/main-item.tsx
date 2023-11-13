@@ -295,12 +295,22 @@ export default function MainItem() {
           />
         </>
       )}
-      <Undo canUndo={canUndo} handleUndoClick={handleUndoClick} />
-      <Redo canRedo={canRedo} handleRedoClick={handleRedoClick} />
-      <AddButton
-        handleAddButtonClick={handleAddButtonClick}
-        handleAddButtonMouseUp={handleAddButtonMouseUp}
-      />
+      <menu>
+        <li>
+          <Undo canUndo={canUndo} handleUndoClick={handleUndoClick} />
+        </li>
+        <li>
+          <Redo canRedo={canRedo} handleRedoClick={handleRedoClick} />
+        </li>
+      </menu>
+      <menu>
+        <li>
+          <AddButton
+            handleAddButtonClick={handleAddButtonClick}
+            handleAddButtonMouseUp={handleAddButtonMouseUp}
+          />
+        </li>
+      </menu>
       {todos.length > 0 && (
         <div
           ref={scrollBottomRef}
