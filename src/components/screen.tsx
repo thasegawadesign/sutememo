@@ -25,7 +25,14 @@ export default function Screen({ children }: { children: React.ReactNode }) {
     IsDarkModeSelectContext,
   );
   const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
-  const [isLoading, setIsLoading] = useState(true);
+
+  const [isSettingInitialUI, setIsSettingInitialUI] = useState(true);
+  const [isSettings, setIsSettings] = useState({
+    updateHtmlColorScheme: true,
+    updateMetaThemeColor: true,
+    updateBodyBackgroundColor: true,
+  });
+
   const prefersColorScheme = useMediaPrefersColorScheme();
 
   useEffect(() => {
@@ -63,16 +70,34 @@ export default function Screen({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     updateHtmlColorScheme(mode);
+    setIsSettings((state) => {
+      return {
+        ...state,
+        updateHtmlColorScheme: false,
+      };
+    });
   }, [mode]);
 
   useEffect(() => {
     updateBodyBackgroundColor(baseColor);
+    setIsSettings((state) => {
+      return {
+        ...state,
+        updateBodyBackgroundColor: false,
+      };
+    });
   }, [baseColor]);
 
   useEffect(() => {
     const themeColorCode = getColorCode(baseColor);
     setCookiesUserTheme(themeColorCode, baseColor, mainColor, mode);
     updateMetaThemeColor(themeColorCode);
+    setIsSettings((state) => {
+      return {
+        ...state,
+        updateMetaThemeColor: false,
+      };
+    });
   }, [baseColor, mainColor, mode]);
 
   useEffect(() => {
@@ -84,12 +109,18 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   }, [isSystemModeSelect]);
 
   useEffect(() => {
-    setIsLoading(false);
-  }, []);
+    const isAllDone =
+      !isSettings.updateHtmlColorScheme &&
+      !isSettings.updateMetaThemeColor &&
+      !isSettings.updateMetaThemeColor;
+    if (isAllDone) {
+      setIsSettingInitialUI(false);
+    }
+  }, [isSettings]);
 
   return (
     <>
-      {isLoading ? (
+      {isSettingInitialUI ? (
         <FullScreenSolidBackgound colorName="midnight-9" />
       ) : (
         <div
