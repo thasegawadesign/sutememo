@@ -40,8 +40,9 @@ export default function HeaderItem() {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
 
-  const appInstallButtonContext = useContext(ShowAppInstallButtonContext);
-  const { setShowAppInstallButton } = appInstallButtonContext;
+  const { showAppInstallButton, setShowAppInstallButton } = useContext(
+    ShowAppInstallButtonContext,
+  );
 
   const [width, height] = useWindowSize();
 
@@ -223,40 +224,52 @@ export default function HeaderItem() {
         >
           ToDo
         </h1>
-        <div className="flex items-center gap-0.5">
-          <AppInstallButton
-            handleAppInstallButtonClick={handleAppInstallButtonClick}
-          />
-          <Button
-            ripple={false}
-            variant="text"
-            className={clsx(
-              `group rounded-full p-3 text-[28px] ${colorVariants[`${mainColor}`]} active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
-              {
-                'hover:brightness-95 active:brightness-90': mode === 'light',
-                'hover:brightness-125 active:brightness-150': mode === 'dark',
-                'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
-              },
-            )}
-            onClick={openDrawer}
-          >
-            <span
-              className={clsx('', {
-                'group-hover:brightness-105 group-active:brightness-[1.11]':
-                  mode === 'light',
-                'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
-                  mode === 'dark',
-              })}
+        <menu className="flex items-center gap-0.5">
+          {showAppInstallButton ? (
+            <li>
+              <AppInstallButton
+                handleAppInstallButtonClick={handleAppInstallButtonClick}
+              />
+            </li>
+          ) : null}
+          <li>
+            <Button
+              ripple={false}
+              variant="text"
+              className={clsx(
+                `group rounded-full p-3 text-[28px] ${
+                  colorVariants[`${mainColor}`]
+                } active:${bgVariants[`${baseColor}`]} hover:${
+                  bgVariants[`${baseColor}`]
+                }`,
+                {
+                  'hover:brightness-95 active:brightness-90': mode === 'light',
+                  'hover:brightness-125 active:brightness-150': mode === 'dark',
+                  'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
+                },
+              )}
+              onClick={openDrawer}
             >
-              <GoGear />
-            </span>
-          </Button>
+              <span
+                className={clsx('', {
+                  'group-hover:brightness-105 group-active:brightness-[1.11]':
+                    mode === 'light',
+                  'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
+                    mode === 'dark',
+                })}
+              >
+                <GoGear />
+              </span>
+            </Button>
+          </li>
           <Drawer
             open={isOpenDrawer}
             placement="bottom"
             size={height}
             className={clsx(
-              `overflow-y-auto overscroll-none rounded-3xl transition-drawer duration-themeChange ${bgVariants[`${baseColor}`]}`,
+              `overflow-y-auto overscroll-none rounded-3xl transition-drawer duration-themeChange ${
+                bgVariants[`${baseColor}`]
+              }`,
               {
                 '!translate-y-[max(env(safe-area-inset-top),32px)]':
                   isOpenDrawer === true,
@@ -267,7 +280,9 @@ export default function HeaderItem() {
           >
             <div className="sticky top-0 z-[9999]">
               <div
-                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-3xl transition-drawer duration-themeChange ${bgVariants[`${baseTranslucentColor}`]}`}
+                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-3xl transition-drawer duration-themeChange ${
+                  bgVariants[`${baseTranslucentColor}`]
+                }`}
               >
                 <h2
                   className={clsx('select-none pl-5 text-lg font-semibold', {
@@ -282,7 +297,9 @@ export default function HeaderItem() {
                   size="md"
                   variant="text"
                   className={clsx(
-                    `group rounded-full active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
+                    `group rounded-full active:${
+                      bgVariants[`${baseColor}`]
+                    } hover:${bgVariants[`${baseColor}`]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
@@ -313,7 +330,11 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `group rounded-lg border-none px-3 ${colorVariants[`${mainColor}`]} hover:${colorVariants[`${mainColor}`]} active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
+                    `group rounded-lg border-none px-3 ${
+                      colorVariants[`${mainColor}`]
+                    } hover:${colorVariants[`${mainColor}`]} active:${
+                      bgVariants[`${baseColor}`]
+                    } hover:${bgVariants[`${baseColor}`]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
@@ -673,7 +694,11 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `group rounded-lg border-none px-3 ${colorVariants[`${mainColor}`]} hover:${colorVariants[`${mainColor}`]} active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
+                    `group rounded-lg border-none px-3 ${
+                      colorVariants[`${mainColor}`]
+                    } hover:${colorVariants[`${mainColor}`]} active:${
+                      bgVariants[`${baseColor}`]
+                    } hover:${bgVariants[`${baseColor}`]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
@@ -720,7 +745,11 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `group rounded-lg border-none px-3 ${colorVariants[`${mainColor}`]} hover:${colorVariants[`${mainColor}`]} active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
+                    `group rounded-lg border-none px-3 ${
+                      colorVariants[`${mainColor}`]
+                    } hover:${colorVariants[`${mainColor}`]} active:${
+                      bgVariants[`${baseColor}`]
+                    } hover:${bgVariants[`${baseColor}`]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
@@ -779,7 +808,11 @@ export default function HeaderItem() {
                       ripple={false}
                       variant="text"
                       className={clsx(
-                        `flex items-center justify-center gap-3 px-3 py-3.5 text-${baseColor} ${bgVariants[`${mainColor}`]} hover:${bgVariants[`${mainColor}`]} active:${bgVariants[`${mainColor}`]}`,
+                        `flex items-center justify-center gap-3 px-3 py-3.5 text-${baseColor} ${
+                          bgVariants[`${mainColor}`]
+                        } hover:${bgVariants[`${mainColor}`]} active:${
+                          bgVariants[`${mainColor}`]
+                        }`,
                         {
                           'hover:brightness-95 active:brightness-90':
                             mode === 'light',
@@ -798,7 +831,7 @@ export default function HeaderItem() {
               </Accordion>
             </div>
           </Drawer>
-        </div>
+        </menu>
       </div>
     </>
   );
