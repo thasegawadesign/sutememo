@@ -155,7 +155,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       role="list"
       style={style}
       className={clsx(
-        `flex items-center justify-between gap-1.5 rounded-[10px] px-1.5 py-2 sm:gap-2.5 sm:px-2 ${bgVariants[baseColor]}`,
+        `flex items-center justify-between gap-1.5 rounded-[10px] px-1.5 py-2 sm:gap-2.5 sm:px-2 ${bgVariants[`${baseColor}`]}`,
         {
           'opacity-30': isDragging === true,
           'text-gray-800 brightness-[1.03]': mode === 'light',
@@ -171,7 +171,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           {...listeners}
           disabled={window.matchMedia('(display-mode: standalone)').matches}
           className={clsx(
-            `select-none self-stretch rounded bg-transparent px-3 py-4 text-[26px] hover:cursor-grab sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+            `select-none self-stretch rounded bg-transparent px-3 py-4 text-[26px] hover:cursor-grab sm:px-4 sm:py-5 active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
             {
               'text-gray-800 hover:brightness-95 active:brightness-90':
                 mode === 'light',
@@ -192,7 +192,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           tabIndex={0}
           className={clsx(
-            `max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-lg leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-190px)] sm:rounded ${ringVariants[mainColor]}`,
+            `max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-lg leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-190px)] sm:rounded ${ringVariants[`${mainColor}`]}`,
             {
               'text-gray-900': mode === 'light',
               'text-gray-300': mode === 'dark',
@@ -216,7 +216,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       <button
         aria-label={'Delete'}
         className={clsx(
-          `select-none rounded px-3 py-4 text-xl hover:cursor-pointer sm:px-4 sm:py-5 active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+          `select-none rounded px-3 py-4 text-xl hover:cursor-pointer sm:px-4 sm:py-5 active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
           {
             'self-stretch': isDesktop === true,
             'text-gray-800 hover:brightness-95 active:brightness-90':

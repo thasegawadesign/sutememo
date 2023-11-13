@@ -10,7 +10,7 @@ export default function FullScreenSolidBackgound(props: Props) {
 
   return (
     <div
-      className={`min-h-[100svh] w-full pwa:min-h-screen ${bgVariants[colorName]}`}
+      className={`min-h-[100svh] w-full pwa:min-h-screen ${bgVariants[`${colorName}`]}`}
     />
   );
 }

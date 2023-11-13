@@ -23,7 +23,7 @@ export default function AppInstallButton(props: Props) {
         <Button
           ref={appInstallButtonRef}
           className={clsx(
-            `flex items-center gap-0.5 rounded-full px-6 py-1.5 font-semibold !shadow-none transition ${bgVariants[mainColor]} ${colorVariants[baseColor]}`,
+            `flex items-center gap-0.5 rounded-full px-6 py-1.5 font-semibold !shadow-none transition ${bgVariants[`${mainColor}`]} ${colorVariants[`${baseColor}`]}`,
             {
               'hover:brightness-110 active:brightness-125': mode === 'light',
               'hover:brightness-95 active:brightness-90': mode === 'dark',
