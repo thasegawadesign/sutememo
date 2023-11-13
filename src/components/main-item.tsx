@@ -279,22 +279,20 @@ export default function MainItem() {
 
   return (
     <>
-      {todos.length > 0 && (
-        <>
-          <TodoList
-            deleteIndexedDB={deleteIndexedDB}
-            editableRef={editableRef}
-            setCanRedo={setCanRedo}
-            setCanUndo={setCanUndo}
-            setTodos={setTodos}
-            todos={todos}
-            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
-            todosHistoryRef={todosHistoryRef}
-            updateAllIndexedDB={updateAllIndexedDB}
-            updatePartialIndexedDB={updatePartialIndexedDB}
-          />
-        </>
-      )}
+      {todos.length > 0 ? (
+        <TodoList
+          deleteIndexedDB={deleteIndexedDB}
+          editableRef={editableRef}
+          setCanRedo={setCanRedo}
+          setCanUndo={setCanUndo}
+          setTodos={setTodos}
+          todos={todos}
+          todosHistoryCurrentIndex={todosHistoryCurrentIndex}
+          todosHistoryRef={todosHistoryRef}
+          updateAllIndexedDB={updateAllIndexedDB}
+          updatePartialIndexedDB={updatePartialIndexedDB}
+        />
+      ) : null}
       <menu>
         <li className="fixed bottom-[max(calc(env(safe-area-inset-bottom)+64px),84px)] left-[16px]">
           <Undo canUndo={canUndo} handleUndoClick={handleUndoClick} />
@@ -311,12 +309,12 @@ export default function MainItem() {
           />
         </li>
       </menu>
-      {todos.length > 0 && (
+      {todos.length > 0 ? (
         <div
           ref={scrollBottomRef}
           className="h-[calc(env(safe-area-inset-bottom)+224px)] pwa:h-[max(calc(env(safe-area-inset-bottom)+204px),224px)]"
         />
-      )}
+      ) : null}
     </>
   );
 }
