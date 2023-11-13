@@ -218,7 +218,7 @@ export default function HeaderItem() {
     <>
       <div className="flex items-center justify-between pb-5 pl-[22px] pr-3 pt-2">
         <h1
-          className={`select-none text-3xl ${colorVariants[mainColor]}`}
+          className={`select-none text-3xl ${colorVariants[`${mainColor}`]}`}
           style={{ fontWeight: 800 }}
         >
           ToDo
@@ -231,7 +231,7 @@ export default function HeaderItem() {
             ripple={false}
             variant="text"
             className={clsx(
-              `group rounded-full p-3 text-[28px] ${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+              `group rounded-full p-3 text-[28px] ${colorVariants[`${mainColor}`]} active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
               {
                 'hover:brightness-95 active:brightness-90': mode === 'light',
                 'hover:brightness-125 active:brightness-150': mode === 'dark',
@@ -256,7 +256,7 @@ export default function HeaderItem() {
             placement="bottom"
             size={height}
             className={clsx(
-              `overflow-y-auto overscroll-none rounded-3xl transition-drawer duration-themeChange ${bgVariants[baseColor]}`,
+              `overflow-y-auto overscroll-none rounded-3xl transition-drawer duration-themeChange ${bgVariants[`${baseColor}`]}`,
               {
                 '!translate-y-[max(env(safe-area-inset-top),32px)]':
                   isOpenDrawer === true,
@@ -267,7 +267,7 @@ export default function HeaderItem() {
           >
             <div className="sticky top-0 z-[9999]">
               <div
-                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-3xl transition-drawer duration-themeChange ${bgVariants[baseTranslucentColor]}`}
+                className={`mb-5 flex items-center justify-between px-2 py-3 backdrop-blur-3xl transition-drawer duration-themeChange ${bgVariants[`${baseTranslucentColor}`]}`}
               >
                 <h2
                   className={clsx('select-none pl-5 text-lg font-semibold', {
@@ -282,7 +282,7 @@ export default function HeaderItem() {
                   size="md"
                   variant="text"
                   className={clsx(
-                    `group rounded-full active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    `group rounded-full active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
@@ -313,7 +313,7 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `group rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    `group rounded-lg border-none px-3 ${colorVariants[`${mainColor}`]} hover:${colorVariants[`${mainColor}`]} active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
@@ -673,7 +673,7 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `group rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    `group rounded-lg border-none px-3 ${colorVariants[`${mainColor}`]} hover:${colorVariants[`${mainColor}`]} active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
@@ -720,7 +720,7 @@ export default function HeaderItem() {
               >
                 <AccordionHeader
                   className={clsx(
-                    `group rounded-lg border-none px-3 ${colorVariants[mainColor]} hover:${colorVariants[mainColor]} active:${bgVariants[baseColor]} hover:${bgVariants[baseColor]}`,
+                    `group rounded-lg border-none px-3 ${colorVariants[`${mainColor}`]} hover:${colorVariants[`${mainColor}`]} active:${bgVariants[`${baseColor}`]} hover:${bgVariants[`${baseColor}`]}`,
                     {
                       'hover:brightness-95 active:brightness-90':
                         mode === 'light',
@@ -779,7 +779,7 @@ export default function HeaderItem() {
                       ripple={false}
                       variant="text"
                       className={clsx(
-                        `flex items-center justify-center gap-3 px-3 py-3.5 text-${baseColor} ${bgVariants[mainColor]} hover:${bgVariants[mainColor]} active:${bgVariants[mainColor]}`,
+                        `flex items-center justify-center gap-3 px-3 py-3.5 text-${baseColor} ${bgVariants[`${mainColor}`]} hover:${bgVariants[`${mainColor}`]} active:${bgVariants[`${mainColor}`]}`,
                         {
                           'hover:brightness-95 active:brightness-90':
                             mode === 'light',

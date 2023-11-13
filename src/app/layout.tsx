@@ -155,8 +155,10 @@ export default async function RootLayout({
       style={{ colorScheme: mode }}
     >
       <body
-        className={`${notoSansJP.className} overscroll-none subpixel-antialiased ${bgVariants[baseColor]}`}
         role="application"
+        className={`${
+          notoSansJP.className
+        } overscroll-none subpixel-antialiased ${bgVariants[`${baseColor}`]}`}
       >
         <Providers>{children}</Providers>
         <Analytics />
