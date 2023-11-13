@@ -2,14 +2,13 @@ import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { Viewport } from 'next';
 import { cookies } from 'next/headers';
 
+import { notoSansJP } from '@/app/fonts';
 import Analytics from '@/components/analytics';
 import { defaultBaseColor, defaultMode } from '@/contexts/theme-provider';
 import '@/globals.css';
 import { Providers } from '@/providers';
 import { MIDNIGHT_COLOR_CODE } from '@/utils/color';
 import { bgVariants } from '@/utils/colorVariants';
-
-import { notoSansJP } from './fonts';
 
 import type { Metadata } from 'next';
 
