@@ -27,7 +27,7 @@ export default function Undo(props: Props) {
         role="button"
         tabIndex={0}
         className={clsx(
-          `!fixed bottom-[max(calc(env(safe-area-inset-bottom)+64px),84px)] left-[16px] rounded-full p-5 text-xl !shadow-none xs:p-7 xs:text-xl ${
+          `rounded-full p-5 text-xl !shadow-none xs:p-7 xs:text-xl ${
             bgVariants[`${baseColor}`]
           } ${colorVariants[`${mainColor}`]}`,
           {
