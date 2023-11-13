@@ -76,10 +76,14 @@ export default function ThemeSelectButton(props: Props) {
         label={
           <div className={'grid rounded-full border border-radixGray-6'}>
             <div
-              className={`h-6 w-12 rounded-t-full ${bgVariants[baseColor]}`}
+              className={`h-6 w-12 rounded-t-full ${
+                bgVariants[`${baseColor}`]
+              }`}
             />
             <div
-              className={`h-6 w-12 rounded-b-full ${bgVariants[mainColor]}`}
+              className={`h-6 w-12 rounded-b-full ${
+                bgVariants[`${mainColor}`]
+              }`}
             />
           </div>
         }
