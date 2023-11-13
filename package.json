@@ -1,6 +1,6 @@
 {
   "name": "todoify",
-  "version": "1.8.7",
+  "version": "1.8.8",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -49,6 +49,7 @@
     "eslint": "^8",
     "eslint-config-next": "^14",
     "eslint-config-prettier": "^9",
+    "eslint-plugin-security": "^1",
     "husky": "^8",
     "lint-staged": "^15",
     "prettier": "^3",

@@ -10,5 +10,5 @@ export const updateBodyBackgroundColor = (backgroundColor: SafeColorList) => {
     matchedClassName = className.match(regEx)?.input;
     BODY.classList.remove(String(matchedClassName));
   });
-  BODY.classList.add(`${bgVariants[backgroundColor]}`);
+  BODY.classList.add(`${bgVariants[`${backgroundColor}`]}`);
 };
