@@ -7,6 +7,7 @@ import Header from '@/components/header';
 import HeaderItem from '@/components/header-item';
 import Main from '@/components/main';
 import MainItem from '@/components/main-item';
+import { themeChangeDurationMs } from '@/utils/themeChange';
 
 export default function ContentsWrapper() {
   const router = useRouter();
@@ -15,10 +16,11 @@ export default function ContentsWrapper() {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const openDrawer = () => setIsOpenDrawer(true);
   const closeDrawer = () => {
+    const bufferTimeMs = 300;
     setIsOpenDrawer(false);
     setTimeout(() => {
       router.push('/');
-    }, 540);
+    }, themeChangeDurationMs + bufferTimeMs);
   };
 
   useEffect(() => {
