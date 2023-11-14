@@ -17,6 +17,7 @@ import {
   Drawer,
   Switch,
 } from '@/contexts/material-providers';
+import { SettingsDrawerContext } from '@/contexts/settings-drawer-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
 import useMediaPrefersColorScheme from '@/hooks/useMediaPrefersColorScheme';
 import useWindowSize from '@/hooks/useWindowSize';
@@ -25,13 +26,8 @@ import { SETTINGS_DRAWER_ALPHA } from '@/utils/color';
 import { bgVariants, colorVariants } from '@/utils/colorVariants';
 import { getTranslucentColor } from '@/utils/getTranslucentColor';
 
-type Props = {
-  isOpenDrawer: boolean;
-  closeDrawer: () => void;
-};
-
-export default function SettingsDrawer(props: Props) {
-  const { isOpenDrawer, closeDrawer } = props;
+export default function SettingsDrawer() {
+  const { isOpenDrawer, closeDrawer } = useContext(SettingsDrawerContext);
 
   const appVersion = process.env.NEXT_PUBLIC_APP_VERSION;
 

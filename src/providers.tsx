@@ -6,6 +6,7 @@ import React from 'react';
 import IsDarkModeSelectProvider from '@/contexts/is-dark-mode-select-provider';
 import IsSystemModeSelectProvider from '@/contexts/is-system-mode-select-provider';
 import { ThemeProvider as MaterialThemeProvider } from '@/contexts/material-providers';
+import SettingsDrawerProvider from '@/contexts/settings-drawer-provider';
 import ShowAppInstallButtonProvider from '@/contexts/show-app-install-button-provider';
 import ThemeProvider from '@/contexts/theme-provider';
 
@@ -58,9 +59,11 @@ export async function Providers({ children }: { children: React.ReactNode }) {
       <IsDarkModeSelectProvider isChecked={isDarkModeSelect}>
         <ThemeProvider baseColor={baseColor} mainColor={mainColor} mode={mode}>
           <ShowAppInstallButtonProvider>
-            <MaterialThemeProvider value={CustomTheme}>
-              {children}
-            </MaterialThemeProvider>
+            <SettingsDrawerProvider>
+              <MaterialThemeProvider value={CustomTheme}>
+                {children}
+              </MaterialThemeProvider>
+            </SettingsDrawerProvider>
           </ShowAppInstallButtonProvider>
         </ThemeProvider>
       </IsDarkModeSelectProvider>
