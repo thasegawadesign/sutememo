@@ -31,12 +31,7 @@ export default function ContentsWrapper() {
         <HeaderItem openDrawer={openDrawer} />
       </Header>
       <Main>
-        <MainItem
-          closeDrawer={closeDrawer}
-          isOpenDrawer={isOpenDrawer}
-          openDrawer={openDrawer}
-          setIsOpenDrawer={setIsOpenDrawer}
-        />
+        <MainItem closeDrawer={closeDrawer} isOpenDrawer={isOpenDrawer} />
       </Main>
     </>
   );
