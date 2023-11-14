@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 
 import { notoSansJP } from '@/app/fonts';
 import Analytics from '@/components/analytics';
+import Screen from '@/components/screen';
 import { defaultBaseColor, defaultMode } from '@/contexts/theme-provider';
 import '@/globals.css';
 import { Providers } from '@/providers';
@@ -156,7 +157,9 @@ export default async function RootLayout({
           bgVariants[`${baseColor}`]
         }`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <Screen>{children}</Screen>
+        </Providers>
         <Analytics />
         <VercelAnalytics />
       </body>
