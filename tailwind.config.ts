@@ -21,6 +21,8 @@ export const TIGERSBLACK = '#060606';
 
 export const SETTINGS_DRAWER_ALPHA = 1;
 
+export const themeChangeDurationMs = 240;
+
 type CustomSolidColorCode =
   | typeof WHITE
   | typeof BLACK
@@ -173,7 +175,7 @@ const config: Config = withMT({
         radixWhite: generateRadixScale('white'),
       },
       transitionDuration: {
-        themeChange: '240ms',
+        themeChange: `${themeChangeDurationMs}ms`,
       },
       transitionProperty: {
         drawer:
