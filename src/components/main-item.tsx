@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import AddButton from '@/components/add-button';
 import Redo from '@/components/redo';
-import SettingsDrawer from '@/components/settings-drawer';
 import TodoList from '@/components/todo-list';
 import Undo from '@/components/undo';
 import { SettingsDrawerContext } from '@/contexts/settings-drawer-provider';
