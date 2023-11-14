@@ -1,11 +1,13 @@
 'use client';
 
 import { format } from 'date-fns';
+import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import AddButton from '@/components/add-button';
 import Redo from '@/components/redo';
+import SettingsDrawer from '@/components/settings-drawer';
 import TodoList from '@/components/todo-list';
 import Undo from '@/components/undo';
 import { Todo } from '@/types/Todo';
@@ -20,7 +22,16 @@ import {
 } from '@/utils/indexedDB';
 import { registerServiceWorker } from '@/utils/registerServiceWorker';
 
-export default function MainItem() {
+type Props = {
+  isOpenDrawer: boolean;
+  closeDrawer: () => void;
+};
+
+export default function MainItem(props: Props) {
+  const { isOpenDrawer, closeDrawer } = props;
+
+  const pathname = usePathname();
+
   const [todos, setTodos] = useState<Todo[]>([]);
   const editableRef = useRef<HTMLSpanElement>(null);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
@@ -279,6 +290,14 @@ export default function MainItem() {
 
   return (
     <>
+      {pathname === '/settings' ? (
+        <div className="absolute bottom-0 left-0 right-0 z-[9999] h-[100vh] w-full">
+          <SettingsDrawer
+            closeDrawer={closeDrawer}
+            isOpenDrawer={isOpenDrawer}
+          />
+        </div>
+      ) : null}
       {todos.length > 0 ? (
         <TodoList
           deleteIndexedDB={deleteIndexedDB}
