@@ -157,7 +157,8 @@ export default function SettingsDrawer(props: Props) {
           {
             '!translate-y-[max(env(safe-area-inset-top),32px)]':
               isOpenDrawer === true,
-            '!translate-y-full': isOpenDrawer === false,
+            '!translate-y-[calc(100%+max(env(safe-area-inset-top),32px))]':
+              isOpenDrawer === false,
           },
         )}
         onClose={closeDrawer}
