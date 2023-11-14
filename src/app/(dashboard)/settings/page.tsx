@@ -1,4 +1,10 @@
+import { Metadata } from 'next';
+
 import SettingsDrawer from '@/components/settings-drawer';
+
+export const metadata: Metadata = {
+  title: '設定 | Todoify',
+};
 
 export default function Settings() {
   return (
