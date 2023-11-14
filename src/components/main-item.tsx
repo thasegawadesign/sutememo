@@ -2,14 +2,14 @@
 
 import { format } from 'date-fns';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import AddButton from '@/components/add-button';
 import Redo from '@/components/redo';
-import SettingsDrawer from '@/components/settings-drawer';
 import TodoList from '@/components/todo-list';
 import Undo from '@/components/undo';
+import { SettingsDrawerContext } from '@/contexts/settings-drawer-provider';
 import { Todo } from '@/types/Todo';
 import {
   clearIndexedDB,
@@ -23,14 +23,16 @@ import {
 import { registerServiceWorker } from '@/utils/registerServiceWorker';
 
 type Props = {
-  isOpenDrawer: boolean;
-  closeDrawer: () => void;
+  appendedNode: React.ReactNode;
 };
 
 export default function MainItem(props: Props) {
-  const { isOpenDrawer, closeDrawer } = props;
+  const { appendedNode } = props;
 
   const pathname = usePathname();
+
+  const { openDrawer, isExit, isOpenDrawer, setIsOpenDrawer, setIsExit } =
+    useContext(SettingsDrawerContext);
 
   const [todos, setTodos] = useState<Todo[]>([]);
   const editableRef = useRef<HTMLSpanElement>(null);
@@ -274,6 +276,18 @@ export default function MainItem(props: Props) {
   }, [handleWindowFocus]);
 
   useEffect(() => {
+    if (pathname !== '/settings') {
+      setIsExit(false);
+    }
+  }, [pathname, setIsExit]);
+
+  useEffect(() => {
+    if (!isOpenDrawer && !isExit) {
+      setIsOpenDrawer(pathname === '/settings' ? true : false);
+    }
+  }, [isExit, isOpenDrawer, openDrawer, pathname, setIsOpenDrawer]);
+
+  useEffect(() => {
     const init = async () => {
       try {
         await createIndexedDB();
@@ -290,14 +304,7 @@ export default function MainItem(props: Props) {
 
   return (
     <>
-      {pathname === '/settings' ? (
-        <div className="absolute bottom-0 left-0 right-0 z-[9999] h-[100vh] w-full">
-          <SettingsDrawer
-            closeDrawer={closeDrawer}
-            isOpenDrawer={isOpenDrawer}
-          />
-        </div>
-      ) : null}
+      {pathname === '/settings' ? appendedNode : null}
       {todos.length > 0 ? (
         <TodoList
           deleteIndexedDB={deleteIndexedDB}
