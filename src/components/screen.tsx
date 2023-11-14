@@ -123,11 +123,7 @@ export default function Screen({ children }: { children: React.ReactNode }) {
       {isSettingInitialUI ? (
         <FullScreenSolidBackgound colorName="midnight-9" />
       ) : (
-        <div
-          className={`min-h-[100svh] pt-[env(safe-area-inset-top)] pwa:min-h-screen ${
-            bgVariants[`${baseColor}`]
-          }`}
-        >
+        <div className={`min-h-[100svh] ${bgVariants[`${baseColor}`]}`}>
           {children}
         </div>
       )}
