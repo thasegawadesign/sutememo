@@ -32,13 +32,11 @@ import { registerServiceWorker } from '@/utils/registerServiceWorker';
 
 type Props = {
   isOpenDrawer: boolean;
-  setIsOpenDrawer: Dispatch<SetStateAction<boolean>>;
-  openDrawer: () => void;
   closeDrawer: () => void;
 };
 
 export default function MainItem(props: Props) {
-  const { isOpenDrawer, setIsOpenDrawer, openDrawer, closeDrawer } = props;
+  const { isOpenDrawer, closeDrawer } = props;
 
   const pathname = usePathname();
 
