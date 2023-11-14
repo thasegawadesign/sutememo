@@ -33,7 +33,6 @@
     "autoprefixer": "^10",
     "clsx": "^2",
     "date-fns": "^2",
-    "framer-motion": "^10",
     "next": "^14",
     "next-pwa": "^5",
     "postcss": "^8",

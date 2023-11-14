@@ -1,16 +1,8 @@
 'use client';
 
 import { format } from 'date-fns';
-import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import AddButton from '@/components/add-button';
@@ -299,12 +291,12 @@ export default function MainItem(props: Props) {
   return (
     <>
       {pathname === '/settings' ? (
-        <motion.div className="absolute bottom-0 left-0 right-0 z-[9999] h-[100vh] w-full">
+        <div className="absolute bottom-0 left-0 right-0 z-[9999] h-[100vh] w-full">
           <SettingsDrawer
             closeDrawer={closeDrawer}
             isOpenDrawer={isOpenDrawer}
           />
-        </motion.div>
+        </div>
       ) : null}
       {todos.length > 0 ? (
         <TodoList
