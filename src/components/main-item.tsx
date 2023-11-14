@@ -23,7 +23,13 @@ import {
 } from '@/utils/indexedDB';
 import { registerServiceWorker } from '@/utils/registerServiceWorker';
 
-export default function MainItem() {
+type Props = {
+  appendedNode: React.ReactNode;
+};
+
+export default function MainItem(props: Props) {
+  const { appendedNode } = props;
+
   const pathname = usePathname();
 
   const { openDrawer, isExit, isOpenDrawer, setIsOpenDrawer, setIsExit } =
@@ -299,11 +305,7 @@ export default function MainItem() {
 
   return (
     <>
-      {pathname === '/settings' ? (
-        <div className="absolute bottom-0 left-0 right-0 z-[9999] h-[100vh] w-full">
-          <SettingsDrawer />
-        </div>
-      ) : null}
+      {pathname === '/settings' ? appendedNode : null}
       {todos.length > 0 ? (
         <TodoList
           deleteIndexedDB={deleteIndexedDB}
