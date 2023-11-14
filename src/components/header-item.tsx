@@ -12,13 +12,7 @@ import { ThemeContext } from '@/contexts/theme-provider';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
 import { bgVariants, colorVariants } from '@/utils/colorVariants';
 
-type Props = {
-  openDrawer: () => void;
-};
-
-export default function HeaderItem(props: Props) {
-  const { openDrawer } = props;
-
+export default function HeaderItem() {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
 
@@ -122,7 +116,6 @@ export default function HeaderItem(props: Props) {
                     'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
                   },
                 )}
-                onClick={openDrawer}
               >
                 <span
                   className={clsx('', {
