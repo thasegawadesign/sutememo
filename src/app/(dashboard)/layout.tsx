@@ -1,11 +1,15 @@
 import ContentsWrapper from '@/components/contents-wrapper';
 import Screen from '@/components/screen';
 
-export default function DashboardLayout() {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <Screen>
-        <ContentsWrapper />
+        <ContentsWrapper>{children}</ContentsWrapper>
       </Screen>
     </>
   );
