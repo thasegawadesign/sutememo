@@ -124,7 +124,7 @@ export default function Screen({ children }: { children: React.ReactNode }) {
         <FullScreenSolidBackgound colorName="midnight-9" />
       ) : (
         <div
-          className={`min-h-[100svh] pt-[env(safe-area-inset-top)] ${
+          className={`min-h-[100dvh] pt-[env(safe-area-inset-top)] ${
             bgVariants[`${baseColor}`]
           }`}
         >
