@@ -121,7 +121,7 @@ export function generateMetadata(): Metadata {
     openGraph: {
       type: 'website',
       url: baseURL,
-      title: 'Todoify',
+      title: 'Todoify - ToDoアプリケーション',
       description: 'ToDoアプリケーション',
       siteName: 'Todoify',
       images: [
