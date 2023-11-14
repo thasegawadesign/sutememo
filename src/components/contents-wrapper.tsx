@@ -3,14 +3,18 @@ import HeaderItem from '@/components/header-item';
 import Main from '@/components/main';
 import MainItem from '@/components/main-item';
 
-export default function ContentsWrapper() {
+export default function ContentsWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <Header>
         <HeaderItem />
       </Header>
       <Main>
-        <MainItem />
+        <MainItem appendedNode={children} />
       </Main>
     </>
   );
