@@ -167,7 +167,7 @@ export const updatePartialIndexedDB: (
         createdAt: '',
         updatedAt: '',
         priority: 'auto',
-        progress: 'not started',
+        progress: 'notStarted',
         deadline: '',
         notificationSettings: {
           date: '',
