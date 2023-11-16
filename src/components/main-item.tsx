@@ -11,6 +11,7 @@ import TodoList from '@/components/todo-list';
 import Undo from '@/components/undo';
 import { SettingsDrawerContext } from '@/contexts/settings-drawer-provider';
 import { Todo } from '@/types/Todo';
+import { formatPattern } from '@/utils/date';
 import {
   clearIndexedDB,
   createIndexedDB,
@@ -118,7 +119,7 @@ export default function MainItem(props: Props) {
       if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return;
       if (event.key === 'Enter') {
         const target = event.target as HTMLElement;
-        const now = format(new Date(), 'yyyy-dd-MM-kk-mm');
+        const now = format(new Date(), formatPattern);
         const insertID = uuidv4();
         const prevTodos: Todo[] = todos.map((todo) => todo);
         const isEditing = target.contentEditable === 'true';
@@ -137,7 +138,7 @@ export default function MainItem(props: Props) {
                 createdAt: now,
                 updatedAt: now,
                 priority: 'auto',
-                progress: 'not started',
+                progress: 'notStarted',
                 deadline: '',
                 notificationSettings: {
                   date: '',
@@ -152,7 +153,7 @@ export default function MainItem(props: Props) {
               now,
               now,
               'auto',
-              'not started',
+              'notStarted',
               '',
               {
                 date: '',
@@ -172,7 +173,7 @@ export default function MainItem(props: Props) {
   );
 
   const handleAddButtonMouseUp = useCallback(async () => {
-    const now = format(new Date(), 'yyyy-dd-MM-kk-mm');
+    const now = format(new Date(), formatPattern);
     const insertID = uuidv4();
     const prevTodos: Todo[] = todos.map((todo) => todo);
     todosHistoryRef.current.push([
@@ -184,7 +185,7 @@ export default function MainItem(props: Props) {
         createdAt: now,
         updatedAt: now,
         priority: 'auto',
-        progress: 'not started',
+        progress: 'notStarted',
         deadline: '',
         notificationSettings: {
           date: '',
@@ -203,7 +204,7 @@ export default function MainItem(props: Props) {
           createdAt: now,
           updatedAt: now,
           priority: 'auto',
-          progress: 'not started',
+          progress: 'notStarted',
           deadline: '',
           notificationSettings: {
             date: '',
@@ -218,7 +219,7 @@ export default function MainItem(props: Props) {
         now,
         now,
         'auto',
-        'not started',
+        'notStarted',
         '',
         {
           date: '',
