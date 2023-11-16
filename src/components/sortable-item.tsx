@@ -19,6 +19,7 @@ import { GoGrabber, GoX } from 'react-icons/go';
 import { ThemeContext } from '@/contexts/theme-provider';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
 import { Todo } from '@/types/Todo';
+import { ariaLabel } from '@/utils/ariaLabel';
 import { bgVariants, ringVariants } from '@/utils/colorVariants';
 import { formatPattern } from '@/utils/date';
 import { sortTodosOrderByDisplayOrder } from '@/utils/sortTodosOrderByDisplayOrder';
@@ -221,7 +222,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         )}
       </div>
       <button
-        aria-label={'Delete'}
+        aria-label={ariaLabel.deleteButton}
         className={clsx(
           `select-none rounded px-3 py-4 text-xl hover:cursor-pointer sm:px-4 sm:py-5 active:${
             bgVariants[`${baseColor}`]

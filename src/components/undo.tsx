@@ -4,6 +4,7 @@ import { GoReply } from 'react-icons/go';
 
 import { Button } from '@/contexts/material-providers';
 import { ThemeContext } from '@/contexts/theme-provider';
+import { ariaLabel } from '@/utils/ariaLabel';
 import { bgVariants, colorVariants } from '@/utils/colorVariants';
 
 type Props = {
@@ -20,7 +21,7 @@ export default function Undo(props: Props) {
   return (
     <>
       <Button
-        aria-label="Undo"
+        aria-label={ariaLabel.undoButton}
         color="white"
         disabled={!canUndo}
         ripple={canUndo}
