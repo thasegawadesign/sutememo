@@ -42,7 +42,7 @@ export default function SettingsDrawerProvider(props: Props) {
     setIsOpenDrawer(true);
   };
   const closeDrawer = () => {
-    const bufferTimeMs = 480;
+    const bufferTimeMs = 1000 / 24;
     setIsExit(true);
     setIsOpenDrawer(false);
     setTimeout(() => {
