@@ -4,6 +4,7 @@ import { GoReply } from 'react-icons/go';
 
 import { Button } from '@/contexts/material-providers';
 import { ThemeContext } from '@/contexts/theme-provider';
+import { ariaLabel } from '@/utils/ariaLabel';
 import { bgVariants, colorVariants } from '@/utils/colorVariants';
 
 type Props = {
@@ -20,7 +21,7 @@ export default function Redo(props: Props) {
   return (
     <>
       <Button
-        aria-label="Redo"
+        aria-label={ariaLabel.redoButton}
         color="white"
         disabled={!canRedo}
         ripple={canRedo}

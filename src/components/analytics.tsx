@@ -1,6 +1,8 @@
 import { minify } from '@swc/core';
 import Script from 'next/script';
 
+import { ariaLabel } from '@/utils/ariaLabel';
+
 export default async function Analytics() {
   const COOKIE_DOMAIN = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
   const ANALYTICS_ID = process.env.NEXT_PUBLIC_ANALYTICS_ID;
@@ -25,19 +27,19 @@ export default async function Analytics() {
     },
     true,
   );
-  document.querySelector('[aria-label="Add"]')?.addEventListener('click', (event) => {
+  document.querySelector('[aria-label="${ariaLabel.addButton}"]')?.addEventListener('click', (event) => {
     gtag('event', 'add_todo', {
       event_category: 'Add',
       event_label: 'Click',
     });
   });
-  document.querySelector('[aria-label="Undo"]')?.addEventListener('click', (event) => {
+  document.querySelector('[aria-label="${ariaLabel.undoButton}"]')?.addEventListener('click', (event) => {
     gtag('event', 'undo', {
       event_category: 'Undo',
       event_label: 'Click',
     });
   });
-  document.querySelector('[aria-label="Redo"]')?.addEventListener('click', (event) => {
+  document.querySelector('[aria-label="${ariaLabel.redoButton}"]')?.addEventListener('click', (event) => {
     gtag('event', 'redo', {
       event_category: 'Redo',
       event_label: 'Click',
@@ -60,7 +62,7 @@ export default async function Analytics() {
     const isButton = event.target.localName === 'button';
     const target =
       (isSVG && event.target.parentElement) || (isButton && event.target);
-    const isDeleteButton = target.ariaLabel === 'Delete';
+    const isDeleteButton = target.ariaLabel === '${ariaLabel.deleteButton}';
     if (isDeleteButton) gtag('event', 'delete_todo');
   });
   document.addEventListener('mouseup', (event) => {
