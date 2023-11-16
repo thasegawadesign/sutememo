@@ -4,6 +4,7 @@ import { GoPlus } from 'react-icons/go';
 
 import { Button } from '@/contexts/material-providers';
 import { ThemeContext } from '@/contexts/theme-provider';
+import { ariaLabel } from '@/utils/ariaLabel';
 import { bgVariants, colorVariants } from '@/utils/colorVariants';
 
 type Props = {
@@ -20,7 +21,7 @@ export default forwardRef(function AddButton(props: Props, _ref) {
     <>
       <Button
         fullWidth
-        aria-label="Add"
+        aria-label={ariaLabel.addButton}
         role="button"
         tabIndex={0}
         className={clsx(
