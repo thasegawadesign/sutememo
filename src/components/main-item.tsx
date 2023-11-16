@@ -138,7 +138,7 @@ export default function MainItem(props: Props) {
                 createdAt: now,
                 updatedAt: now,
                 priority: 'auto',
-                progress: 'not started',
+                progress: 'notStarted',
                 deadline: '',
                 notificationSettings: {
                   date: '',
@@ -153,7 +153,7 @@ export default function MainItem(props: Props) {
               now,
               now,
               'auto',
-              'not started',
+              'notStarted',
               '',
               {
                 date: '',
@@ -185,7 +185,7 @@ export default function MainItem(props: Props) {
         createdAt: now,
         updatedAt: now,
         priority: 'auto',
-        progress: 'not started',
+        progress: 'notStarted',
         deadline: '',
         notificationSettings: {
           date: '',
@@ -204,7 +204,7 @@ export default function MainItem(props: Props) {
           createdAt: now,
           updatedAt: now,
           priority: 'auto',
-          progress: 'not started',
+          progress: 'notStarted',
           deadline: '',
           notificationSettings: {
             date: '',
@@ -219,7 +219,7 @@ export default function MainItem(props: Props) {
         now,
         now,
         'auto',
-        'not started',
+        'notStarted',
         '',
         {
           date: '',
