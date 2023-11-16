@@ -1,5 +1,5 @@
 export type Priority = 'auto' | 'high' | 'medium' | 'low';
-export type Progress = 'not started' | 'in progress' | 'done';
+export type Progress = 'notStarted' | 'inProgress' | 'done';
 
 export interface Todo {
   id: string;
