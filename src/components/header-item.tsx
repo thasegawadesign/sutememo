@@ -6,7 +6,6 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { GoGear } from 'react-icons/go';
 
 import AppInstallButton from '@/components/app-install-button';
-import { Button } from '@/contexts/material-providers';
 import { ShowAppInstallButtonContext } from '@/contexts/show-app-install-button-provider';
 import { ThemeContext } from '@/contexts/theme-provider';
 import { BeforeInstallPromptEvent } from '@/types/BeforeInstallPromptEvent';
@@ -89,7 +88,7 @@ export default function HeaderItem() {
         >
           ToDo
         </h1>
-        <menu className="flex items-center gap-0.5">
+        <ul className="flex items-center gap-0.5">
           {showAppInstallButton ? (
             <li>
               <AppInstallButton
@@ -98,39 +97,35 @@ export default function HeaderItem() {
             </li>
           ) : null}
           <li>
-            <Link className="block" href="/settings">
-              <Button
-                ripple={false}
-                variant="text"
-                className={clsx(
-                  `group rounded-full p-3 text-[28px] ${
-                    colorVariants[`${mainColor}`]
-                  } active:${bgVariants[`${baseColor}`]} hover:${
-                    bgVariants[`${baseColor}`]
-                  }`,
-                  {
-                    'hover:brightness-95 active:brightness-90':
-                      mode === 'light',
-                    'hover:brightness-125 active:brightness-150':
-                      mode === 'dark',
-                    'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
-                  },
-                )}
+            <Link
+              aria-label="設定"
+              href="/settings"
+              className={clsx(
+                `group block rounded-full p-3 text-[28px] ${
+                  colorVariants[`${mainColor}`]
+                } active:${bgVariants[`${baseColor}`]} hover:${
+                  bgVariants[`${baseColor}`]
+                }`,
+                {
+                  'hover:brightness-95 active:brightness-90': mode === 'light',
+                  'hover:brightness-125 active:brightness-150': mode === 'dark',
+                  'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
+                },
+              )}
+            >
+              <span
+                className={clsx('', {
+                  'group-hover:brightness-105 group-active:brightness-[1.11]':
+                    mode === 'light',
+                  'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
+                    mode === 'dark',
+                })}
               >
-                <span
-                  className={clsx('', {
-                    'group-hover:brightness-105 group-active:brightness-[1.11]':
-                      mode === 'light',
-                    'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
-                      mode === 'dark',
-                  })}
-                >
-                  <GoGear />
-                </span>
-              </Button>
+                <GoGear />
+              </span>
             </Link>
           </li>
-        </menu>
+        </ul>
       </div>
     </>
   );
