@@ -9,5 +9,12 @@ function updateMetaThemeColorContent(
   metaThemeColorElement: HTMLMetaElement,
   resultColorCode: string,
 ) {
-  metaThemeColorElement.content = resultColorCode;
+  if (!metaThemeColorElement) {
+    const metaElement = document.createElement('meta');
+    metaElement.setAttribute('name', 'theme-color');
+    metaElement.content = resultColorCode;
+    document.head.appendChild(metaElement);
+  } else {
+    metaThemeColorElement.content = resultColorCode;
+  }
 }
