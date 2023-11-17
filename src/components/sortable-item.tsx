@@ -18,6 +18,7 @@ import { GoGrabber, GoX } from 'react-icons/go';
 
 import { ThemeContext } from '@/contexts/theme-provider';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
+import { ScrollAmount } from '@/types/ScrollAmount';
 import { Todo } from '@/types/Todo';
 import { ariaLabel } from '@/utils/ariaLabel';
 import { bgVariants, ringVariants } from '@/utils/colorVariants';
@@ -31,7 +32,8 @@ type Props = {
   todos: Todo[];
   editableRef: RefObject<HTMLSpanElement>;
   todosHistoryRef: MutableRefObject<Todo[][]>;
-  todosHistoryCurrentIndex: MutableRefObject<number>;
+  historyCurrentIndex: MutableRefObject<number>;
+  scrollAmountHistoryRef: MutableRefObject<ScrollAmount[]>;
   setCanUndo: Dispatch<SetStateAction<boolean>>;
   setCanRedo: Dispatch<SetStateAction<boolean>>;
   setTodos: Dispatch<SetStateAction<Todo[]>>;
@@ -51,7 +53,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     todos,
     editableRef,
     todosHistoryRef,
-    todosHistoryCurrentIndex,
+    historyCurrentIndex,
+    scrollAmountHistoryRef,
     setCanUndo,
     setCanRedo,
     setTodos,
@@ -75,7 +78,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
 
   const { mainColor, baseColor, mode } = useContext(ThemeContext);
 
-  const handleDeleteButtonClick = async function () {
+  const handleDeleteButtonClick = async () => {
     const targetId = id;
     const prevTodos = todos.map((todo) => todo);
     const filterdTodos: Todo[] = prevTodos.filter(
@@ -83,8 +86,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     );
     const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
     setTodos(sortedTodos);
+    scrollAmountHistoryRef.current.push({
+      x: window.scrollX,
+      y: window.scrollY,
+    });
     todosHistoryRef.current.push(sortedTodos);
-    todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+    historyCurrentIndex.current = historyCurrentIndex.current + 1;
     setCanUndo(true);
     try {
       await deleteIndexedDB(targetId);
@@ -95,7 +102,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     }
   };
 
-  const handleBlurContentEditable = async function (event: FocusEvent) {
+  const handleBlurContentEditable = async (event: FocusEvent) => {
     const now = format(new Date(), formatPattern);
     const targetId = id;
     const targetText = name;
@@ -114,8 +121,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           : todo,
       );
       setTodos(updatedTodos);
+      scrollAmountHistoryRef.current.push({
+        x: window.scrollX,
+        y: window.scrollY,
+      });
       todosHistoryRef.current.push(updatedTodos);
-      todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+      historyCurrentIndex.current = historyCurrentIndex.current + 1;
       setCanUndo(true);
       setCanRedo(false);
       try {
@@ -130,8 +141,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       );
       const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
       setTodos(sortedTodos);
+      scrollAmountHistoryRef.current.push({
+        x: window.scrollX,
+        y: window.scrollY,
+      });
       todosHistoryRef.current.push(sortedTodos);
-      todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+      historyCurrentIndex.current = historyCurrentIndex.current + 1;
       setCanUndo(true);
       setCanRedo(false);
       try {
