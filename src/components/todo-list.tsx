@@ -31,6 +31,7 @@ import { isMobile } from 'react-device-detect';
 
 import SortableItem from '@/components/sortable-item';
 import { IndexedDBResult } from '@/types/IndexedDBResult';
+import { ScrollAmount } from '@/types/ScrollAmount';
 import {
   findDisplayOrder,
   findIndex,
@@ -44,7 +45,8 @@ type Props = {
   todos: Todo[];
   editableRef: RefObject<HTMLSpanElement>;
   todosHistoryRef: MutableRefObject<Todo[][]>;
-  todosHistoryCurrentIndex: MutableRefObject<number>;
+  scrollAmountHistoryRef: MutableRefObject<ScrollAmount[]>;
+  historyCurrentIndex: MutableRefObject<number>;
   setCanUndo: Dispatch<SetStateAction<boolean>>;
   setCanRedo: Dispatch<SetStateAction<boolean>>;
   setTodos: Dispatch<SetStateAction<Todo[]>>;
@@ -62,7 +64,8 @@ export default function TodoList(props: Props) {
     todos,
     editableRef,
     todosHistoryRef,
-    todosHistoryCurrentIndex,
+    historyCurrentIndex,
+    scrollAmountHistoryRef,
     setCanUndo,
     setCanRedo,
     setTodos,
@@ -106,8 +109,12 @@ export default function TodoList(props: Props) {
         arrayMove(todos, oldIndex, newIndex),
       );
       setTodos(sortedTodos);
+      scrollAmountHistoryRef.current.push({
+        x: window.scrollX,
+        y: window.scrollY,
+      });
       todosHistoryRef.current.push(sortedTodos);
-      todosHistoryCurrentIndex.current = todosHistoryCurrentIndex.current + 1;
+      historyCurrentIndex.current = historyCurrentIndex.current + 1;
       setCanUndo(true);
       setCanRedo(false);
       try {
@@ -136,13 +143,14 @@ export default function TodoList(props: Props) {
                 deleteIndexedDB={deleteIndexedDB}
                 displayOrder={todo.displayOrder}
                 editableRef={editableRef}
+                historyCurrentIndex={historyCurrentIndex}
                 id={todo.id}
                 name={todo.name}
+                scrollAmountHistoryRef={scrollAmountHistoryRef}
                 setCanRedo={setCanRedo}
                 setCanUndo={setCanUndo}
                 setTodos={setTodos}
                 todos={todos}
-                todosHistoryCurrentIndex={todosHistoryCurrentIndex}
                 todosHistoryRef={todosHistoryRef}
                 updateAllIndexedDB={updateAllIndexedDB}
                 updatePartialIndexedDB={updatePartialIndexedDB}
@@ -162,13 +170,14 @@ export default function TodoList(props: Props) {
             deleteIndexedDB={deleteIndexedDB}
             displayOrder={findDisplayOrder(todos, activeId)}
             editableRef={editableRef}
+            historyCurrentIndex={historyCurrentIndex}
             id={activeId}
             name={findName(todos, activeId)}
+            scrollAmountHistoryRef={scrollAmountHistoryRef}
             setCanRedo={setCanRedo}
             setCanUndo={setCanUndo}
             setTodos={setTodos}
             todos={todos}
-            todosHistoryCurrentIndex={todosHistoryCurrentIndex}
             todosHistoryRef={todosHistoryRef}
             updateAllIndexedDB={updateAllIndexedDB}
             updatePartialIndexedDB={updatePartialIndexedDB}
