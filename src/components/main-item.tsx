@@ -76,7 +76,7 @@ export default function MainItem(props: Props) {
         updateAllIndexedDB(prevTodos);
         setTodos(prevTodos);
         const { x, y } = scrollAmountHistoryRef.current.at(
-          historyCurrentIndex.current + 1,
+          historyCurrentIndex.current,
         ) ?? { x: window.scrollX, y: window.scrollY };
         scrollTo(x, y);
       } catch (error) {
@@ -110,7 +110,7 @@ export default function MainItem(props: Props) {
         updateAllIndexedDB(nextTodos);
         setTodos(nextTodos);
         const { x, y } = scrollAmountHistoryRef.current.at(
-          historyCurrentIndex.current - 1,
+          historyCurrentIndex.current,
         ) ?? { x: window.scrollX, y: window.scrollY };
         scrollTo(x, y);
       } catch (error) {
@@ -137,6 +137,23 @@ export default function MainItem(props: Props) {
         }
         if (target.nodeName === 'BODY') {
           try {
+            setTodos([
+              ...prevTodos,
+              {
+                id: insertID,
+                displayOrder: prevTodos.length,
+                name: '',
+                createdAt: now,
+                updatedAt: now,
+                priority: 'auto',
+                progress: 'notStarted',
+                deadline: '',
+                notificationSettings: {
+                  date: '',
+                  location: '',
+                },
+              },
+            ]);
             scrollAmountHistoryRef.current.push({
               x: window.scrollX,
               y: window.scrollY,
@@ -158,24 +175,8 @@ export default function MainItem(props: Props) {
                 },
               },
             ]);
-            historyCurrentIndex.current = historyCurrentIndex.current + 1;
-            setTodos([
-              ...prevTodos,
-              {
-                id: insertID,
-                displayOrder: prevTodos.length,
-                name: '',
-                createdAt: now,
-                updatedAt: now,
-                priority: 'auto',
-                progress: 'notStarted',
-                deadline: '',
-                notificationSettings: {
-                  date: '',
-                  location: '',
-                },
-              },
-            ]);
+            const lastIndex = todosHistoryRef.current.length - 1;
+            historyCurrentIndex.current = lastIndex;
             await insertIndexedDB(
               insertID,
               prevTodos.length,
@@ -206,28 +207,6 @@ export default function MainItem(props: Props) {
     const now = format(new Date(), formatPattern);
     const insertID = uuidv4();
     const prevTodos: Todo[] = todos.map((todo) => todo);
-    scrollAmountHistoryRef.current.push({
-      x: window.scrollX,
-      y: window.scrollY,
-    });
-    todosHistoryRef.current.push([
-      ...prevTodos,
-      {
-        id: insertID,
-        displayOrder: prevTodos.length,
-        name: '',
-        createdAt: now,
-        updatedAt: now,
-        priority: 'auto',
-        progress: 'notStarted',
-        deadline: '',
-        notificationSettings: {
-          date: '',
-          location: '',
-        },
-      },
-    ]);
-    historyCurrentIndex.current = historyCurrentIndex.current + 1;
     try {
       setTodos([
         ...prevTodos,
@@ -260,6 +239,29 @@ export default function MainItem(props: Props) {
           location: '',
         },
       );
+      scrollAmountHistoryRef.current.push({
+        x: window.scrollX,
+        y: window.scrollY,
+      });
+      todosHistoryRef.current.push([
+        ...prevTodos,
+        {
+          id: insertID,
+          displayOrder: prevTodos.length,
+          name: '',
+          createdAt: now,
+          updatedAt: now,
+          priority: 'auto',
+          progress: 'notStarted',
+          deadline: '',
+          notificationSettings: {
+            date: '',
+            location: '',
+          },
+        },
+      ]);
+      const lastIndex = todosHistoryRef.current.length - 1;
+      historyCurrentIndex.current = lastIndex;
     } catch (error) {
       console.error(error);
       setTodos(prevTodos);
