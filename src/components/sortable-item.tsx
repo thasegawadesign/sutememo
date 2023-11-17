@@ -91,7 +91,11 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       y: window.scrollY,
     });
     todosHistoryRef.current.push(sortedTodos);
-    historyCurrentIndex.current = historyCurrentIndex.current + 1;
+    const lastIndex = todosHistoryRef.current.length - 1;
+    historyCurrentIndex.current =
+      lastIndex === historyCurrentIndex.current + 1
+        ? lastIndex
+        : historyCurrentIndex.current + 1;
     setCanUndo(true);
     try {
       await deleteIndexedDB(targetId);
@@ -126,7 +130,8 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         y: window.scrollY,
       });
       todosHistoryRef.current.push(updatedTodos);
-      historyCurrentIndex.current = historyCurrentIndex.current + 1;
+      const lastIndex = todosHistoryRef.current.length - 1;
+      historyCurrentIndex.current = lastIndex;
       setCanUndo(true);
       setCanRedo(false);
       try {
@@ -146,7 +151,11 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         y: window.scrollY,
       });
       todosHistoryRef.current.push(sortedTodos);
-      historyCurrentIndex.current = historyCurrentIndex.current + 1;
+      const lastIndex = todosHistoryRef.current.length - 1;
+      historyCurrentIndex.current =
+        lastIndex === historyCurrentIndex.current + 1
+          ? lastIndex
+          : historyCurrentIndex.current + 1;
       setCanUndo(true);
       setCanRedo(false);
       try {
