@@ -175,7 +175,8 @@ export default function MainItem(props: Props) {
                 },
               },
             ]);
-            historyCurrentIndex.current = historyCurrentIndex.current + 1;
+            const lastIndex = todosHistoryRef.current.length - 1;
+            historyCurrentIndex.current = lastIndex;
             await insertIndexedDB(
               insertID,
               prevTodos.length,
@@ -259,7 +260,8 @@ export default function MainItem(props: Props) {
           },
         },
       ]);
-      historyCurrentIndex.current = historyCurrentIndex.current + 1;
+      const lastIndex = todosHistoryRef.current.length - 1;
+      historyCurrentIndex.current = lastIndex;
     } catch (error) {
       console.error(error);
       setTodos(prevTodos);
