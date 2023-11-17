@@ -37,9 +37,9 @@ export default function ThemeProvider(props: Props) {
   const { children, baseColor, mainColor, mode } = props;
 
   const [theme, setTheme] = useState<ThemeType>({
-    baseColor: baseColor ? (baseColor as SafeColorList) : defaultBaseColor,
-    mainColor: mainColor ? (mainColor as SafeColorList) : defaultMainColor,
-    mode: mode ? (mode as Mode) : defaultMode,
+    baseColor: (baseColor as SafeColorList) ?? defaultBaseColor,
+    mainColor: (mainColor as SafeColorList) ?? defaultMainColor,
+    mode: (mode as Mode) ?? defaultMode,
   });
 
   return (
