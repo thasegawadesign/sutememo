@@ -68,7 +68,10 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
 
   const handleDeleteButtonClick = function () {
     const targetId = id;
-    const filterdTodos: Todo[] = todos.filter((todo) => todo.id !== targetId);
+    const prevTodos = todos;
+    const filterdTodos: Todo[] = prevTodos.filter(
+      (todo) => todo.id !== targetId,
+    );
     const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
     setTodos(sortedTodos);
     todosHistoryRef.current.push(sortedTodos);
@@ -79,17 +82,19 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       updateAllIndexedDB(sortedTodos);
     } catch (error) {
       console.error(error);
+      setTodos(prevTodos);
     }
   };
 
   const handleBlurContentEditable = function (event: FocusEvent) {
     const targetId = id;
     const targetText = name;
+    const prevTodos = todos;
     const updatedText = (event.target as HTMLElement).innerText;
     const isEdited = targetText !== updatedText;
     if (updatedText) {
       if (!isEdited) return;
-      const updatedTodos: Todo[] = todos.map((todo) =>
+      const updatedTodos: Todo[] = prevTodos.map((todo) =>
         todo.id === targetId
           ? {
               id: todo.id,
@@ -107,9 +112,12 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         updatePartialIndexedDB(targetId, updatedText);
       } catch (error) {
         console.error(error);
+        setTodos(prevTodos);
       }
     } else {
-      const filterdTodos: Todo[] = todos.filter((todo) => todo.id !== targetId);
+      const filterdTodos: Todo[] = prevTodos.filter(
+        (todo) => todo.id !== targetId,
+      );
       const sortedTodos: Todo[] = sortTodosOrderByDisplayOrder(filterdTodos);
       setTodos(sortedTodos);
       todosHistoryRef.current.push(sortedTodos);
@@ -121,6 +129,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
         updateAllIndexedDB(sortedTodos);
       } catch (error) {
         console.error(error);
+        setTodos(prevTodos);
       }
     }
   };
