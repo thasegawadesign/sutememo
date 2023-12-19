@@ -55,6 +55,10 @@ export default function Home() {
     if (document.visibilityState === 'visible') readIndexedDB();
   }, []);
 
+  const handleWindowFocus = useCallback(() => {
+    readIndexedDB();
+  }, []);
+
   const dbVer = 1;
   const dbName = 'TodoDB';
   const dbStore = 'todos';
@@ -280,6 +284,12 @@ export default function Home() {
     return () =>
       document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, [handleVisibilityChange]);
+
+  useEffect(() => {
+    if (!globalThis.window) return;
+    window.addEventListener('focus', handleWindowFocus);
+    return () => window.removeEventListener('focus', handleWindowFocus);
+  }, [handleWindowFocus]);
 
   useEffect(() => {
     updateAllIndexedDB(todos);
