@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Button from './components/button';
-import TodoList from './components/todoList';
+import Button from './components/Button';
+import TodoList from './components/TodoList';
 import { Todo } from '@/types/Todo';
 import { registerServiceWorker } from './utils/registerServiceWorker';
 import AppInstallButton from './components/AppInstallButton';
@@ -16,6 +16,8 @@ import {
   updateAllIndexedDB,
   updatePartialIndexedDB,
 } from './utils/indexedDB';
+import Undo from './components/Undo';
+import Redo from './components/Redo';
 
 declare global {
   interface Window {
@@ -214,6 +216,8 @@ export default function Home() {
           />
         </>
       )}
+      <Undo />
+      <Redo />
       <Button
         handleAddButtonClick={handleAddButtonClick}
         handleAddButtonMouseUp={handleAddButtonMouseUp}
