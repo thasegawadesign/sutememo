@@ -203,8 +203,8 @@ export default function HeaderItem() {
                     <li>
                       <ThemeSelectButton
                         name={labelName}
-                        id="primary-white-light-theme"
-                        mainColor="primary"
+                        id="primary-a10-white-light-theme"
+                        mainColor="primary-a10"
                         baseColor="white"
                         mode="light"
                         checkedThemeOption={checkedThemeOption}
@@ -214,8 +214,8 @@ export default function HeaderItem() {
                     <li>
                       <ThemeSelectButton
                         name={labelName}
-                        id="primary-radixGray-12-dark-theme"
-                        mainColor="primary"
+                        id="primary-a10-radixGray-12-dark-theme"
+                        mainColor="primary-a10"
                         baseColor="radixGray-12"
                         mode="dark"
                         checkedThemeOption={checkedThemeOption}
@@ -390,9 +390,9 @@ export default function HeaderItem() {
                     <li>
                       <ThemeSelectButton
                         name={labelName}
-                        id="tigersYellow-tigersBlack-dark-theme"
-                        mainColor="tigersYellow"
-                        baseColor="tigersBlack"
+                        id="tigersYellow-a10-tigersBlack-a10-dark-theme"
+                        mainColor="tigersYellow-a10"
+                        baseColor="tigersBlack-a10"
                         mode="dark"
                         checkedThemeOption={checkedThemeOption}
                         setCheckedThemeOption={setCheckedThemeOption}

@@ -3,10 +3,11 @@ import type { Config } from 'tailwindcss';
 const withMT = require('@material-tailwind/react/utils/withMT');
 
 export const safeColorList = [
-  'primary',
   'white',
-  'tigersYellow',
-  'tigersBlack',
+  'black',
+  'primary-a10',
+  'tigersYellow-a10',
+  'tigersBlack-a10',
   'radixGray-7',
   'radixGray-12',
   'radixOlive-8',
@@ -52,6 +53,12 @@ for (const color of safeColorList) {
   }
 }
 
+const white = '#ffffff';
+const black = '#000000';
+const primary = '#208cd8';
+const tigersYellow = '#f7da07';
+const tigersBlack = '#060606';
+
 const config: Config = withMT({
   content: [
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
@@ -68,42 +75,42 @@ const config: Config = withMT({
         xs: '480px',
       },
       colors: {
-        primary: '#208cd8',
-        tigersYellow: '#f7da07',
-        tigersBlack: '#060606',
-        radixGray: generateScale('gray'),
-        radixMauve: generateScale('mauve'),
-        radixSlate: generateScale('slate'),
-        radixSage: generateScale('sage'),
-        radixOlive: generateScale('olive'),
-        radixSand: generateScale('sand'),
-        radixTomato: generateScale('tomato'),
-        radixRed: generateScale('red'),
-        radixRuby: generateScale('ruby'),
-        radixCrimson: generateScale('crimson'),
-        radixPink: generateScale('pink'),
-        radixPlum: generateScale('plum'),
-        radixPurple: generateScale('purple'),
-        radixViolet: generateScale('violet'),
-        radixIris: generateScale('iris'),
-        radixIndigo: generateScale('indigo'),
-        radixBlue: generateScale('blue'),
-        radixCyan: generateScale('cyan'),
-        radixTeal: generateScale('teal'),
-        radixJade: generateScale('jade'),
-        radixGreen: generateScale('green'),
-        radixGrass: generateScale('grass'),
-        radixBronze: generateScale('bronze'),
-        radixGold: generateScale('gold'),
-        radixBrown: generateScale('brown'),
-        radixOrange: generateScale('orange'),
-        radixAmber: generateScale('amber'),
-        radixYellow: generateScale('yellow'),
-        radixLime: generateScale('lime'),
-        radixMint: generateScale('mint'),
-        radixSky: generateScale('sky'),
-        radixBlack: generateScale('black'),
-        radixWhite: generateScale('white'),
+        primary: generateCustomeScale(primary),
+        tigersYellow: generateCustomeScale(tigersYellow),
+        tigersBlack: generateCustomeScale(tigersBlack),
+        radixGray: generateRadixScale('gray'),
+        radixMauve: generateRadixScale('mauve'),
+        radixSlate: generateRadixScale('slate'),
+        radixSage: generateRadixScale('sage'),
+        radixOlive: generateRadixScale('olive'),
+        radixSand: generateRadixScale('sand'),
+        radixTomato: generateRadixScale('tomato'),
+        radixRed: generateRadixScale('red'),
+        radixRuby: generateRadixScale('ruby'),
+        radixCrimson: generateRadixScale('crimson'),
+        radixPink: generateRadixScale('pink'),
+        radixPlum: generateRadixScale('plum'),
+        radixPurple: generateRadixScale('purple'),
+        radixViolet: generateRadixScale('violet'),
+        radixIris: generateRadixScale('iris'),
+        radixIndigo: generateRadixScale('indigo'),
+        radixBlue: generateRadixScale('blue'),
+        radixCyan: generateRadixScale('cyan'),
+        radixTeal: generateRadixScale('teal'),
+        radixJade: generateRadixScale('jade'),
+        radixGreen: generateRadixScale('green'),
+        radixGrass: generateRadixScale('grass'),
+        radixBronze: generateRadixScale('bronze'),
+        radixGold: generateRadixScale('gold'),
+        radixBrown: generateRadixScale('brown'),
+        radixOrange: generateRadixScale('orange'),
+        radixAmber: generateRadixScale('amber'),
+        radixYellow: generateRadixScale('yellow'),
+        radixLime: generateRadixScale('lime'),
+        radixMint: generateRadixScale('mint'),
+        radixSky: generateRadixScale('sky'),
+        radixBlack: generateRadixScale('black'),
+        radixWhite: generateRadixScale('white'),
       },
       transitionDuration: {
         themeChange: '240ms',
@@ -121,7 +128,7 @@ const config: Config = withMT({
 });
 export default config;
 
-export function generateScale(name: string) {
+function generateRadixScale(name: string) {
   let scale = Array.from({ length: 12 }, (_, i) => {
     let id = i + 1;
     return [
@@ -129,6 +136,39 @@ export function generateScale(name: string) {
       [`a${id}`, `var(--${name}-a${id})`],
     ];
   }).flat();
-
   return Object.fromEntries(scale);
+}
+
+function generateCustomeScale(color: string) {
+  let scale = Array.from({ length: 10 }, (_, i) => {
+    let id = i + 1;
+    return getCustomOpacity(id, color);
+  });
+  return Object.fromEntries(scale);
+}
+
+function getCustomOpacity(id: number, color: string) {
+  switch (id) {
+    case 1:
+      return [`a${id}`, `${color}1a`];
+    case 2:
+      return [`a${id}`, `${color}33`];
+    case 3:
+      return [`a${id}`, `${color}4d`];
+    case 4:
+      return [`a${id}`, `${color}66`];
+    case 5:
+      return [`a${id}`, `${color}80`];
+    case 6:
+      return [`a${id}`, `${color}99`];
+    case 7:
+      return [`a${id}`, `${color}b3`];
+    case 8:
+      return [`a${id}`, `${color}cc`];
+    case 9:
+      return [`a${id}`, `${color}e6`];
+    case 10:
+      return [`a${id}`, `${color}ff`];
+  }
+  return ['a10', `${color}ff`];
 }

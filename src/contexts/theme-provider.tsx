@@ -16,7 +16,7 @@ interface ThemeContextType extends ThemeType {
 
 export const ThemeContext = createContext<ThemeContextType>({
   baseColor: 'white',
-  mainColor: 'primary',
+  mainColor: 'primary-a10',
   mode: 'light',
   setTheme: () => {},
 });
@@ -28,7 +28,7 @@ export default function ThemeProvider({
 }) {
   const [theme, setTheme] = useState<ThemeType>({
     baseColor: 'white',
-    mainColor: 'primary',
+    mainColor: 'primary-a10',
     mode: 'light',
   });
 
