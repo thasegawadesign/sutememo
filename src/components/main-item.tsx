@@ -296,15 +296,15 @@ export default function MainItem() {
         </>
       )}
       <menu>
-        <li>
+        <li className="fixed bottom-[max(calc(env(safe-area-inset-bottom)+64px),84px)] left-[16px]">
           <Undo canUndo={canUndo} handleUndoClick={handleUndoClick} />
         </li>
-        <li>
+        <li className="fixed bottom-[max(calc(env(safe-area-inset-bottom)+64px),84px)] right-[16px]">
           <Redo canRedo={canRedo} handleRedoClick={handleRedoClick} />
         </li>
       </menu>
       <menu>
-        <li>
+        <li className="fixed bottom-5 left-0 right-0 mx-auto w-[calc(100%-40px)] pwa:bottom-[max(env(safe-area-inset-bottom),20px)]">
           <AddButton
             handleAddButtonClick={handleAddButtonClick}
             handleAddButtonMouseUp={handleAddButtonMouseUp}
