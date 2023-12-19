@@ -9,10 +9,10 @@ import { customGray, white } from '../../tailwind.config';
 
 import type { Metadata } from 'next';
 
-const baseURL = process.env.BASE_URL;
-const creator = process.env.CREATOR;
-const authorName = process.env.ATHOR_NAME;
-const authorURL = process.env.ATHOR_URL;
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+const creator = process.env.NEXT_PUBLIC_CREATOR;
+const authorName = process.env.NEXT_PUBLIC_ATHOR_NAME;
+const authorURL = process.env.NEXT_PUBLIC_ATHOR_URL;
 
 export const viewport: Viewport = {
   width: 'device-width',
