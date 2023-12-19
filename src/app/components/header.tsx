@@ -108,6 +108,8 @@ export default function Header() {
     return () => window.removeEventListener('appinstalled', handleAppInstalled);
   }, [handleAppInstalled]);
 
+  console.log(bgVariants);
+
   return (
     <header className="flex items-center justify-between px-[22px] pb-5 pt-3">
       <div className="flex items-center gap-2.5">
@@ -142,7 +144,7 @@ export default function Header() {
           size={height}
           open={isOpenDrawer}
           onClose={closeDrawer}
-          className={`transition-drawer duration-themeChange rounded-3xl ${
+          className={`rounded-3xl transition-drawer duration-themeChange ${
             bgVariants[baseColor]
           } ${colorVariants[mainColor]} ${
             isOpenDrawer
@@ -206,9 +208,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="primary-themeBlack-dark-theme"
+                      id="primary-radixGray-12-dark-theme"
                       mainColor="primary"
-                      baseColor="themeBlack"
+                      baseColor="radixGray-12"
                       mode="dark"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -228,9 +230,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="tomato-themeBlack-dark-theme"
+                      id="tomato-radixGray-12-dark-theme"
                       mainColor="tomato"
-                      baseColor="themeBlack"
+                      baseColor="radixGray-12"
                       mode="dark"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
@@ -250,9 +252,9 @@ export default function Header() {
                   <li>
                     <ThemeSelectButton
                       name="theme-color"
-                      id="ruby-themeBlack-dark-theme"
+                      id="ruby-radixGray-12-dark-theme"
                       mainColor="ruby"
-                      baseColor="themeBlack"
+                      baseColor="radixGray-12"
                       mode="dark"
                       checkedThemeOption={checkedThemeOption}
                       setCheckedThemeOption={setCheckedThemeOption}
