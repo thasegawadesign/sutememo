@@ -17,22 +17,41 @@ const config: Config = withMT({
       },
       colors: {
         primary: '#208cd8',
-        dark: '#18191b',
-        orange: '#f66b15',
-        tomato: '#e54d2e',
-        ruby: '#e64566',
-        gold: '#978365',
-        bronze: 'a#18072',
-        brown: '#ad7f58',
-        grass: '#46a758',
-        mint: '#86ead4',
-        sand: '#6f6d66',
-        olive: '#697066',
-        deepGreen: '#2f693c',
         tigersYellow: '#f7da07',
         tigersBlack: '#060606',
-        themeBlack: '#18191b',
-        stone: '#1c1917',
+        radixGray: generateScale('gray'),
+        radixMauve: generateScale('mauve'),
+        radixSlate: generateScale('slate'),
+        radixSage: generateScale('sage'),
+        radixOlive: generateScale('olive'),
+        radixSand: generateScale('sand'),
+        radixTomato: generateScale('tomato'),
+        radixRed: generateScale('red'),
+        radixRuby: generateScale('ruby'),
+        radixCrimson: generateScale('crimson'),
+        radixPink: generateScale('pink'),
+        radixPlum: generateScale('plum'),
+        radixPurple: generateScale('purple'),
+        radixViolet: generateScale('violet'),
+        radixIris: generateScale('iris'),
+        radixIndigo: generateScale('indigo'),
+        radixBlue: generateScale('blue'),
+        radixCyan: generateScale('cyan'),
+        radixTeal: generateScale('teal'),
+        radixJade: generateScale('jade'),
+        radixGreen: generateScale('green'),
+        radixGrass: generateScale('grass'),
+        radixBronze: generateScale('bronze'),
+        radixGold: generateScale('gold'),
+        radixBrown: generateScale('brown'),
+        radixOrange: generateScale('orange'),
+        radixAmber: generateScale('amber'),
+        radixYellow: generateScale('yellow'),
+        radixLime: generateScale('lime'),
+        radixMint: generateScale('mint'),
+        radixSky: generateScale('sky'),
+        radixBlack: generateScale('black'),
+        radixWhite: generateScale('white'),
       },
       transitionDuration: {
         themeChange: '240ms',
@@ -49,3 +68,15 @@ const config: Config = withMT({
   plugins: [],
 });
 export default config;
+
+function generateScale(name: string) {
+  let scale = Array.from({ length: 12 }, (_, i) => {
+    let id = i + 1;
+    return [
+      [id, `var(--${name}-${id})`],
+      [`a${id}`, `var(--${name}-a${id})`],
+    ];
+  }).flat();
+
+  return Object.fromEntries(scale);
+}
