@@ -33,7 +33,7 @@
     "autoprefixer": "^10",
     "clsx": "^2",
     "date-fns": "^2",
-    "next": "^14",
+    "next": "14.0.4",
     "next-pwa": "^5",
     "postcss": "^8",
     "react": "^18",
