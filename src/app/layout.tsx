@@ -13,9 +13,9 @@ import { bgVariants } from '@/utils/colorVariants';
 import type { Metadata } from 'next';
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-const creator = process.env.NEXT_PUBLIC_CREATOR;
-const authorName = process.env.NEXT_PUBLIC_ATHOR_NAME;
-const authorURL = process.env.NEXT_PUBLIC_ATHOR_URL;
+const creator = 'thasegawa_';
+const authorName = 'Tatsuya Hasegawa';
+const authorURL = '';
 
 export async function generateViewport(): Promise<Viewport> {
   const cookieStore = cookies();
