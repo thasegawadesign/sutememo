@@ -3,6 +3,7 @@ import { Viewport } from 'next';
 import { cookies } from 'next/headers';
 
 import { notoSansJP } from '@/app/fonts';
+import { appAbstract, appDescription, appName } from '@/common/constants';
 import Analytics from '@/components/analytics';
 import { defaultBaseColor, defaultMode } from '@/contexts/theme-provider';
 import '@/globals.css';
@@ -34,16 +35,16 @@ export async function generateViewport(): Promise<Viewport> {
 
 export function generateMetadata(): Metadata {
   return {
-    title: 'Todoify',
-    description: 'ToDoアプリケーション',
-    abstract: 'ToDoアプリケーション',
-    keywords: ['Todoify', 'ToDoアプリ', 'ToDoリスト'],
+    title: appName,
+    description: appDescription,
+    abstract: appAbstract,
+    keywords: [appName, appAbstract],
     category: 'productivity',
     metadataBase: new URL(baseURL as string),
     manifest: `${baseURL}/manifest.webmanifest`,
-    applicationName: 'Todoify',
+    applicationName: appName,
     appleWebApp: {
-      title: 'Todoify',
+      title: appName,
       capable: true,
       statusBarStyle: 'default',
       startupImage: [
@@ -121,9 +122,9 @@ export function generateMetadata(): Metadata {
     openGraph: {
       type: 'website',
       url: baseURL,
-      title: 'Todoify - ToDoアプリケーション',
-      description: 'ToDoアプリケーション',
-      siteName: 'Todoify',
+      title: appName,
+      description: appDescription,
+      siteName: appName,
       images: [
         {
           url: `${baseURL}/api/og`,
