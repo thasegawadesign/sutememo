@@ -1,12 +1,18 @@
-# Todoify - ToDoアプリケーション (Web版)
+# ステメモ - サッと書いて捨てるメモ・素敵なメモ
 
-本番環境：https://todoify.gojiyuniotorikudasai.com
+## ご自由にお取りください.com - 第1弾 ステメモ
 
-[![App icon](https://github.com/thasegawakaihatsu/todoify/blob/develop/public/icons/rounded-app-icon-192x192.png)](https://todoify.gojiyuniotorikudasai.com)
+- URL：https://sutememo.gojiyuuniotorikudasai.com
+
+[![ステメモのアイコン](https://github.com/thasegawakaihatsu/sutememo/blob/main/public/icons/rounded-app-icon-192x192.png)](https://sutememo.gojiyuuniotorikudasai.com)
 
 ## 開発について
 
 ```bash
+# インストール
+npm install
+
+# 開発サーバー起動
 npm run dev
 ```
 
