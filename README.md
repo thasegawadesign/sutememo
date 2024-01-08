@@ -1,8 +1,12 @@
-# ステメモ - サッと書いて捨てるメモ・素敵なメモ
+# ご自由にお取りください.com - 第1弾 ステメモ
 
-## ご自由にお取りください.com - 第1弾 ステメモ
+## サッと書いて捨てる、簡易メモアプリ。
+
+お買い物 や ちょっとした用事のメモにどうぞ。
 
 - URL：https://sutememo.gojiyuuniotorikudasai.com
+- 形式：プログレッシブウェブアプリ (PWA)
+- データ保存場所：IndexedDB
 
 [![ステメモのアイコン](https://github.com/thasegawakaihatsu/sutememo/blob/main/public/icons/rounded-app-icon-192x192.png)](https://sutememo.gojiyuuniotorikudasai.com)
 
