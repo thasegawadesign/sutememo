@@ -1,14 +1,15 @@
 import { MetadataRoute } from 'next';
 
+import { appDescription, appName } from '@/common/constants';
 import { MIDNIGHT_COLOR_CODE } from '@/utils/color';
 
 export default function manifest(): MetadataRoute.Manifest {
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
   const id = '?utm_source=homescreen';
   return {
-    name: 'Todoify',
-    short_name: 'Todoify',
-    description: 'Todoアプリケーション',
+    name: appName,
+    short_name: appName,
+    description: appDescription,
     categories: ['productivity'],
     lang: 'ja',
     dir: 'ltr',

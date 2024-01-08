@@ -86,7 +86,7 @@ export default function HeaderItem() {
           className={`select-none text-3xl ${colorVariants[`${mainColor}`]}`}
           style={{ fontWeight: 800 }}
         >
-          ToDo
+          メモ
         </h1>
         <ul className="flex items-center gap-0.5">
           {showAppInstallButton ? (
