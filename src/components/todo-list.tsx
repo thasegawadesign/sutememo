@@ -135,7 +135,7 @@ export default function TodoList(props: Props) {
       onDragStart={handleDragStart}
     >
       <SortableContext items={todos} strategy={verticalListSortingStrategy}>
-        <div className="px-[22px]">
+        <div className="px-2">
           <ul className="grid touch-none gap-4">
             {todos.map((todo) => (
               <SortableItem

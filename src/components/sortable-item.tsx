@@ -222,7 +222,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
           role="textbox"
           tabIndex={0}
           className={clsx(
-            `max-w-[calc(100svw-162px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-lg leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-190px)] sm:rounded ${
+            `max-w-[calc(100svw-130px)] whitespace-break-spaces break-words rounded-sm px-1.5 py-1 text-lg leading-snug ring-0 focus:w-full focus:outline-none focus-visible:ring-2 sm:max-w-[calc(100svw-136px)] sm:rounded ${
               ringVariants[`${mainColor}`]
             }`,
             {
