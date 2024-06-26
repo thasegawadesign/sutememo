@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { useCallback, useContext, useState, ChangeEvent } from 'react';
+import { ChangeEvent, useCallback, useContext, useState } from 'react';
 import { GoInfo, GoZoomIn } from 'react-icons/go';
 import { VscSymbolColor } from 'react-icons/vsc';
 
@@ -307,7 +307,7 @@ export default function SettingsDrawer() {
                   />
                 </div>
               </div>
-              <ul className="grid grid-cols-1 gap-5 pr-8 minimum:grid-cols-2 xxs:grid-cols-3">
+              <ul className="grid grid-cols-3 gap-5 pr-8 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
                 <li>
                   <ThemeSelectButton
                     baseColor="radixGray-1"
