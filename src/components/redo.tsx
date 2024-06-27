@@ -28,7 +28,7 @@ export default function Redo(props: Props) {
         role="button"
         tabIndex={0}
         className={clsx(
-          `-scale-x-100 rounded-full p-5 text-xl !shadow-none xs:p-7 xs:text-xl ${
+          `-scale-x-100 rounded-full p-5 text-xl !shadow-none xs:text-xl ${
             bgVariants[`${baseColor}`]
           } ${colorVariants[`${mainColor}`]}`,
           {
