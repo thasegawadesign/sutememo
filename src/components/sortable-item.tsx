@@ -6,14 +6,14 @@ import {
   Dispatch,
   FocusEvent,
   KeyboardEvent,
+  MutableRefObject,
   RefObject,
   SetStateAction,
   forwardRef,
   useCallback,
-  MutableRefObject,
   useContext,
 } from 'react';
-import { isMobile, isTablet, isDesktop } from 'react-device-detect';
+import { isDesktop, isMobile, isTablet } from 'react-device-detect';
 import { GoGrabber, GoX } from 'react-icons/go';
 
 import { ThemeContext } from '@/contexts/theme-provider';
@@ -181,7 +181,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       role="list"
       style={style}
       className={clsx(
-        `flex items-center justify-between gap-1.5 rounded-[10px] px-1.5 py-2 sm:gap-2.5 sm:px-2 ${
+        `flex items-center justify-between gap-1.5 rounded-md px-1.5 py-2 sm:gap-2.5 sm:px-2 ${
           bgVariants[`${baseColor}`]
         }`,
         {

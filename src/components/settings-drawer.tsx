@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { ChangeEvent, useCallback, useContext, useState } from 'react';
-import { GoInfo, GoZoomIn } from 'react-icons/go';
+import { GoInfo } from 'react-icons/go';
 import { VscSymbolColor } from 'react-icons/vsc';
 
 import AccorionIcon from '@/components/accordion-icon';
@@ -583,55 +583,6 @@ export default function SettingsDrawer() {
                 },
               )}
               onClick={() => handleOpenAccordion(2)}
-            >
-              <div
-                className={clsx('flex items-center gap-4', {
-                  'text-midnight-9': mode === 'light',
-                  'text-white-9': mode === 'dark',
-                })}
-              >
-                <span
-                  className={clsx('shrink-0', {
-                    'group-hover:brightness-105 group-active:brightness-[1.11]':
-                      mode === 'light',
-                    'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
-                      mode === 'dark',
-                  })}
-                >
-                  <GoZoomIn />
-                </span>
-                <span
-                  className={clsx('text-base', {
-                    'group-hover:brightness-105 group-active:brightness-[1.11]':
-                      mode === 'light',
-                    'group-hover:brightness-[0.8] group-active:brightness-[0.66]':
-                      mode === 'dark',
-                  })}
-                >
-                  文字サイズ
-                </span>
-              </div>
-            </AccordionHeader>
-            {/* <AccordionBody></AccordionBody> */}
-          </Accordion>
-          <Accordion
-            icon={<AccorionIcon id={3} open={openAccordion} />}
-            open={openAccordion === 3}
-          >
-            <AccordionHeader
-              className={clsx(
-                `group rounded-lg border-none px-3 ${
-                  colorVariants[`${mainColor}`]
-                } hover:${colorVariants[`${mainColor}`]} active:${
-                  bgVariants[`${baseColor}`]
-                } hover:${bgVariants[`${baseColor}`]}`,
-                {
-                  'hover:brightness-95 active:brightness-90': mode === 'light',
-                  'hover:brightness-125 active:brightness-150': mode === 'dark',
-                  'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
-                },
-              )}
-              onClick={() => handleOpenAccordion(3)}
             >
               <div
                 className={clsx('flex items-center gap-4', {
