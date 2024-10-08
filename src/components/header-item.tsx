@@ -109,7 +109,6 @@ export default function HeaderItem() {
                 {
                   'hover:brightness-95 active:brightness-90': mode === 'light',
                   'hover:brightness-125 active:brightness-150': mode === 'dark',
-                  'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
                 },
               )}
             >

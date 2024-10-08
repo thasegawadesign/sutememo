@@ -37,7 +37,6 @@ export default function Undo(props: Props) {
             'hover:brightness-125 active:brightness-150':
               canUndo && mode === 'dark',
             'opacity-30': canUndo === false,
-            'hover:bg-radixGray-1': canUndo && baseColor === 'tigersBlack-9',
           },
         )}
         onClick={handleUndoClick}
