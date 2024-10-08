@@ -3,8 +3,6 @@ import {
   BLACK_COLOR_CODE,
   MIDNIGHT_COLOR_CODE,
   PRIMARY_COLOR_CODE,
-  TIGERSBLACK_COLOR_CODE,
-  TIGERSYELLOW_COLOR_CODE,
   WHITE_COLOR_CODE,
 } from '@/utils/color';
 import { getColorType } from '@/utils/getColorType';
@@ -29,12 +27,6 @@ export const getColorCode = (colorName: SafeColorList) => {
         break;
       case 'primary':
         resultColorCode = PRIMARY_COLOR_CODE;
-        break;
-      case 'tigersBlack':
-        resultColorCode = TIGERSBLACK_COLOR_CODE;
-        break;
-      case 'tigersYellow':
-        resultColorCode = TIGERSYELLOW_COLOR_CODE;
         break;
     }
   } else {
