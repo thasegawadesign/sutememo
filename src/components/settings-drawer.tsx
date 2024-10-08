@@ -184,7 +184,6 @@ export default function SettingsDrawer() {
                 {
                   'hover:brightness-95 active:brightness-90': mode === 'light',
                   'hover:brightness-125 active:brightness-150': mode === 'dark',
-                  'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
                 },
               )}
               onClick={closeDrawer}
@@ -217,7 +216,6 @@ export default function SettingsDrawer() {
                 {
                   'hover:brightness-95 active:brightness-90': mode === 'light',
                   'hover:brightness-125 active:brightness-150': mode === 'dark',
-                  'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
                 },
               )}
               onClick={() => handleOpenAccordion(1)}
@@ -272,10 +270,6 @@ export default function SettingsDrawer() {
                     containerProps={{
                       className: 'w-11 h-6 scale-[1.25]',
                     }}
-                    disabled={
-                      baseColor === 'tigersBlack-9' ||
-                      baseColor === 'tigersYellow-9'
-                    }
                     onChange={handleDarkModeSwitchChange}
                   />
                 </div>
@@ -299,10 +293,6 @@ export default function SettingsDrawer() {
                     containerProps={{
                       className: 'w-11 h-6 scale-[1.25]',
                     }}
-                    disabled={
-                      baseColor === 'tigersBlack-9' ||
-                      baseColor === 'tigersYellow-9'
-                    }
                     onChange={handleUseSystemModeChange}
                   />
                 </div>
@@ -539,29 +529,6 @@ export default function SettingsDrawer() {
                     setCheckedThemeOption={setCheckedThemeOption}
                   />
                 </li>
-                <li>
-                  {mode === 'dark' ? (
-                    <ThemeSelectButton
-                      baseColor="tigersBlack-9"
-                      checkedThemeOption={checkedThemeOption}
-                      id="tigersYellow-9-tigersBlack-9-dark-theme"
-                      mainColor="tigersYellow-9"
-                      mode="dark"
-                      name={labelName}
-                      setCheckedThemeOption={setCheckedThemeOption}
-                    />
-                  ) : (
-                    <ThemeSelectButton
-                      baseColor="tigersYellow-9"
-                      checkedThemeOption={checkedThemeOption}
-                      id="tigersBlack-9-tigersYellow-9-light-theme"
-                      mainColor="tigersBlack-9"
-                      mode="light"
-                      name={labelName}
-                      setCheckedThemeOption={setCheckedThemeOption}
-                    />
-                  )}
-                </li>
               </ul>
             </AccordionBody>
           </Accordion>
@@ -579,7 +546,6 @@ export default function SettingsDrawer() {
                 {
                   'hover:brightness-95 active:brightness-90': mode === 'light',
                   'hover:brightness-125 active:brightness-150': mode === 'dark',
-                  'hover:bg-radixGray-1': baseColor === 'tigersBlack-9',
                 },
               )}
               onClick={() => handleOpenAccordion(2)}
