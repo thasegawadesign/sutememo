@@ -1,6 +1,6 @@
 {
   "name": "sutememo",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -23,6 +23,7 @@
     "@dnd-kit/sortable": "^7",
     "@dnd-kit/utilities": "^3",
     "@material-tailwind/react": "^2",
+    "@next/third-parties": "^15.4.6",
     "@radix-ui/colors": "^3",
     "@radix-ui/react-icons": "^1",
     "@types/node": "^20",
