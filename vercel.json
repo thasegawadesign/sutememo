@@ -1,7 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "env": {
-    "ENABLE_EXPERIMENTAL_COREPACK": "1"
-  },
-  "installCommand": "corepack enable && pnpm install"
+  "installCommand": "npm install -g pnpm@11.5.0 --force && pnpm install --frozen-lockfile"
 }
