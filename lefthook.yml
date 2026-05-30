@@ -1,0 +1,13 @@
+pre-commit:
+  parallel: false
+  commands:
+    format-check:
+      glob: '*.{ts,tsx}'
+      run: ./node_modules/.bin/prettier --check {staged_files}
+    format-fix:
+      glob: '*.{ts,tsx}'
+      run: ./node_modules/.bin/prettier --write {staged_files}
+      stage_fixed: true
+    lint:
+      glob: '*.{ts,tsx}'
+      run: ./node_modules/.bin/eslint {staged_files}

@@ -27,10 +27,10 @@ export default function IsDarkModeSelectProvider(props: Props) {
     isChecked === undefined
       ? true
       : isChecked === true
-      ? true
-      : isChecked === false
-      ? false
-      : JSON.parse(isChecked),
+        ? true
+        : isChecked === false
+          ? false
+          : JSON.parse(isChecked),
   );
 
   return (

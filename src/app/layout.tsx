@@ -19,7 +19,7 @@ const authorName = 'Tatsuya Hasegawa';
 const authorURL = '';
 
 export async function generateViewport(): Promise<Viewport> {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const themeColorCode =
     cookieStore.get('themeColorCode')?.value ?? MIDNIGHT_COLOR_CODE;
 
@@ -139,7 +139,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const mode = String(cookieStore.get('mode')?.value) ?? defaultMode;
   const theme = `${mode}-theme`;
   const baseColor =

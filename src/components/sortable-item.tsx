@@ -30,9 +30,9 @@ type Props = {
   displayOrder: number;
   name: string;
   todos: Todo[];
-  editableRef: RefObject<HTMLSpanElement>;
+  editableRef: RefObject<HTMLSpanElement | null>;
   todosHistoryRef: MutableRefObject<Todo[][]>;
-  historyCurrentIndex: MutableRefObject<number>;
+  historyCurrentIndexRef: MutableRefObject<number>;
   scrollAmountHistoryRef: MutableRefObject<ScrollAmount[]>;
   setCanUndo: Dispatch<SetStateAction<boolean>>;
   setCanRedo: Dispatch<SetStateAction<boolean>>;
@@ -53,7 +53,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     todos,
     editableRef,
     todosHistoryRef,
-    historyCurrentIndex,
+    historyCurrentIndexRef,
     scrollAmountHistoryRef,
     setCanUndo,
     setCanRedo,
@@ -92,10 +92,10 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
     });
     todosHistoryRef.current.push(sortedTodos);
     const lastIndex = todosHistoryRef.current.length - 1;
-    historyCurrentIndex.current =
-      lastIndex === historyCurrentIndex.current + 1
+    historyCurrentIndexRef.current =
+      lastIndex === historyCurrentIndexRef.current + 1
         ? lastIndex
-        : historyCurrentIndex.current + 1;
+        : historyCurrentIndexRef.current + 1;
     setCanUndo(true);
     try {
       await deleteIndexedDB(targetId);
@@ -131,7 +131,7 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       });
       todosHistoryRef.current.push(updatedTodos);
       const lastIndex = todosHistoryRef.current.length - 1;
-      historyCurrentIndex.current = lastIndex;
+      historyCurrentIndexRef.current = lastIndex;
       setCanUndo(true);
       setCanRedo(false);
       try {
@@ -152,10 +152,10 @@ export default forwardRef(function SortableItem(props: Props, _ref) {
       });
       todosHistoryRef.current.push(sortedTodos);
       const lastIndex = todosHistoryRef.current.length - 1;
-      historyCurrentIndex.current =
-        lastIndex === historyCurrentIndex.current + 1
+      historyCurrentIndexRef.current =
+        lastIndex === historyCurrentIndexRef.current + 1
           ? lastIndex
-          : historyCurrentIndex.current + 1;
+          : historyCurrentIndexRef.current + 1;
       setCanUndo(true);
       setCanRedo(false);
       try {

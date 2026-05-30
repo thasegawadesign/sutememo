@@ -46,7 +46,7 @@ export default function MainItem(props: Props) {
   const scrollAmountHistoryRef = useRef<ScrollAmount[]>([
     { x: window.scrollX, y: window.screenY },
   ]);
-  const historyCurrentIndex = useRef(0);
+  const historyCurrentIndexRef = useRef(0);
 
   const scrollToBottom = () => {
     scrollBottomRef.current?.scrollIntoView({
@@ -56,32 +56,32 @@ export default function MainItem(props: Props) {
   };
 
   const handleUndoClick = async () => {
-    const isOldest = historyCurrentIndex.current - 1 < 0;
-    historyCurrentIndex.current = isOldest
+    const isOldest = historyCurrentIndexRef.current - 1 < 0;
+    historyCurrentIndexRef.current = isOldest
       ? 0
-      : historyCurrentIndex.current - 1;
+      : historyCurrentIndexRef.current - 1;
     setCanUndo(
-      historyCurrentIndex.current > 0 && todosHistoryRef.current.length >= 2,
+      historyCurrentIndexRef.current > 0 && todosHistoryRef.current.length >= 2,
     );
     setCanRedo(
-      historyCurrentIndex.current < todosHistoryRef.current.length - 1 &&
+      historyCurrentIndexRef.current < todosHistoryRef.current.length - 1 &&
         todosHistoryRef.current.length >= 2,
     );
-    const prevTodos = todosHistoryRef.current[historyCurrentIndex.current];
+    const prevTodos = todosHistoryRef.current[historyCurrentIndexRef.current];
     const currentTodos =
-      todosHistoryRef.current[historyCurrentIndex.current + 1];
+      todosHistoryRef.current[historyCurrentIndexRef.current + 1];
     if (canUndo) {
       try {
         await clearIndexedDB();
         updateAllIndexedDB(prevTodos);
         setTodos(prevTodos);
         const { x, y } = scrollAmountHistoryRef.current.at(
-          historyCurrentIndex.current,
+          historyCurrentIndexRef.current,
         ) ?? { x: window.scrollX, y: window.scrollY };
         scrollTo(x, y);
       } catch (error) {
         console.error(error);
-        historyCurrentIndex.current = historyCurrentIndex.current + 1;
+        historyCurrentIndexRef.current = historyCurrentIndexRef.current + 1;
         updateAllIndexedDB(currentTodos);
         setTodos(currentTodos);
       }
@@ -90,32 +90,32 @@ export default function MainItem(props: Props) {
 
   const handleRedoClick = async () => {
     const isLatest =
-      historyCurrentIndex.current + 1 >= todosHistoryRef.current.length;
-    historyCurrentIndex.current = isLatest
-      ? historyCurrentIndex.current
-      : historyCurrentIndex.current + 1;
+      historyCurrentIndexRef.current + 1 >= todosHistoryRef.current.length;
+    historyCurrentIndexRef.current = isLatest
+      ? historyCurrentIndexRef.current
+      : historyCurrentIndexRef.current + 1;
     setCanUndo(
-      historyCurrentIndex.current > 0 && todosHistoryRef.current.length >= 2,
+      historyCurrentIndexRef.current > 0 && todosHistoryRef.current.length >= 2,
     );
     setCanRedo(
-      historyCurrentIndex.current < todosHistoryRef.current.length - 1 &&
+      historyCurrentIndexRef.current < todosHistoryRef.current.length - 1 &&
         todosHistoryRef.current.length >= 2,
     );
     const currentTodos =
-      todosHistoryRef.current[historyCurrentIndex.current - 1];
-    const nextTodos = todosHistoryRef.current[historyCurrentIndex.current];
+      todosHistoryRef.current[historyCurrentIndexRef.current - 1];
+    const nextTodos = todosHistoryRef.current[historyCurrentIndexRef.current];
     if (canRedo) {
       try {
         await clearIndexedDB();
         updateAllIndexedDB(nextTodos);
         setTodos(nextTodos);
         const { x, y } = scrollAmountHistoryRef.current.at(
-          historyCurrentIndex.current,
+          historyCurrentIndexRef.current,
         ) ?? { x: window.scrollX, y: window.scrollY };
         scrollTo(x, y);
       } catch (error) {
         console.error(error);
-        historyCurrentIndex.current = historyCurrentIndex.current - 1;
+        historyCurrentIndexRef.current = historyCurrentIndexRef.current - 1;
         updateAllIndexedDB(currentTodos);
         setTodos(currentTodos);
       }
@@ -176,7 +176,7 @@ export default function MainItem(props: Props) {
               },
             ]);
             const lastIndex = todosHistoryRef.current.length - 1;
-            historyCurrentIndex.current = lastIndex;
+            historyCurrentIndexRef.current = lastIndex;
             await insertIndexedDB(
               insertID,
               prevTodos.length,
@@ -261,7 +261,7 @@ export default function MainItem(props: Props) {
         },
       ]);
       const lastIndex = todosHistoryRef.current.length - 1;
-      historyCurrentIndex.current = lastIndex;
+      historyCurrentIndexRef.current = lastIndex;
     } catch (error) {
       console.error(error);
       setTodos(prevTodos);
@@ -349,7 +349,7 @@ export default function MainItem(props: Props) {
         <TodoList
           deleteIndexedDB={deleteIndexedDB}
           editableRef={editableRef}
-          historyCurrentIndex={historyCurrentIndex}
+          historyCurrentIndexRef={historyCurrentIndexRef}
           scrollAmountHistoryRef={scrollAmountHistoryRef}
           setCanRedo={setCanRedo}
           setCanUndo={setCanUndo}

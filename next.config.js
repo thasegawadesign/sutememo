@@ -11,6 +11,7 @@ const withPWA = require('next-pwa')({
 });
 
 module.exports = withPWA({
+  turbopack: {},
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },

@@ -1,20 +1,16 @@
 'use client';
 
 import {
-  ThemeProvider,
   Button,
   Drawer,
-  DrawerStylesType,
   Accordion,
   AccordionHeader,
   AccordionBody,
   Radio,
   Switch,
-  SwitchButtonStylesType,
 } from '@material-tailwind/react';
 
 export {
-  ThemeProvider,
   Button,
   Drawer,
   Accordion,
@@ -23,4 +19,7 @@ export {
   Radio,
   Switch,
 };
-export type { DrawerStylesType, SwitchButtonStylesType };
+export type {
+  DrawerStylesType,
+  SwitchButtonStylesType,
+} from '@material-tailwind/react';

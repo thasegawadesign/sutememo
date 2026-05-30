@@ -43,10 +43,10 @@ import type { Todo } from '@/types/Todo';
 
 type Props = {
   todos: Todo[];
-  editableRef: RefObject<HTMLSpanElement>;
+  editableRef: RefObject<HTMLSpanElement | null>;
   todosHistoryRef: MutableRefObject<Todo[][]>;
   scrollAmountHistoryRef: MutableRefObject<ScrollAmount[]>;
-  historyCurrentIndex: MutableRefObject<number>;
+  historyCurrentIndexRef: MutableRefObject<number>;
   setCanUndo: Dispatch<SetStateAction<boolean>>;
   setCanRedo: Dispatch<SetStateAction<boolean>>;
   setTodos: Dispatch<SetStateAction<Todo[]>>;
@@ -64,7 +64,7 @@ export default function TodoList(props: Props) {
     todos,
     editableRef,
     todosHistoryRef,
-    historyCurrentIndex,
+    historyCurrentIndexRef,
     scrollAmountHistoryRef,
     setCanUndo,
     setCanRedo,
@@ -114,7 +114,7 @@ export default function TodoList(props: Props) {
         y: window.scrollY,
       });
       todosHistoryRef.current.push(sortedTodos);
-      historyCurrentIndex.current = historyCurrentIndex.current + 1;
+      historyCurrentIndexRef.current = historyCurrentIndexRef.current + 1;
       setCanUndo(true);
       setCanRedo(false);
       try {
@@ -143,7 +143,7 @@ export default function TodoList(props: Props) {
                 deleteIndexedDB={deleteIndexedDB}
                 displayOrder={todo.displayOrder}
                 editableRef={editableRef}
-                historyCurrentIndex={historyCurrentIndex}
+                historyCurrentIndexRef={historyCurrentIndexRef}
                 id={todo.id}
                 name={todo.name}
                 scrollAmountHistoryRef={scrollAmountHistoryRef}
@@ -170,7 +170,7 @@ export default function TodoList(props: Props) {
             deleteIndexedDB={deleteIndexedDB}
             displayOrder={findDisplayOrder(todos, activeId)}
             editableRef={editableRef}
-            historyCurrentIndex={historyCurrentIndex}
+            historyCurrentIndexRef={historyCurrentIndexRef}
             id={activeId}
             name={findName(todos, activeId)}
             scrollAmountHistoryRef={scrollAmountHistoryRef}
