@@ -1,6 +1,6 @@
 {
   "name": "sutememo",
-  "version": "2.1.7",
+  "version": "2.1.9",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -54,7 +54,7 @@
     "tailwindcss": "~3.3.7"
   },
   "engines": {
-    "node": "24.15.0",
+    "node": "24",
     "pnpm": ">=11"
   }
 }
