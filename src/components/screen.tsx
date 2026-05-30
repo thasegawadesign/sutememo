@@ -27,11 +27,6 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   const { baseColor, mainColor, mode, setTheme } = useContext(ThemeContext);
 
   const [isSettingInitialUI, setIsSettingInitialUI] = useState(true);
-  const [isSettings, setIsSettings] = useState({
-    updateHtmlColorScheme: true,
-    updateMetaThemeColor: true,
-    updateBodyBackgroundColor: true,
-  });
 
   const prefersColorScheme = useMediaPrefersColorScheme();
 
@@ -70,34 +65,16 @@ export default function Screen({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     updateHtmlColorScheme(mode);
-    setIsSettings((state) => {
-      return {
-        ...state,
-        updateHtmlColorScheme: false,
-      };
-    });
   }, [mode]);
 
   useEffect(() => {
     updateBodyBackgroundColor(baseColor);
-    setIsSettings((state) => {
-      return {
-        ...state,
-        updateBodyBackgroundColor: false,
-      };
-    });
   }, [baseColor]);
 
   useEffect(() => {
     const themeColorCode = getColorCode(baseColor);
     setCookiesUserTheme(themeColorCode, baseColor, mainColor, mode);
     updateMetaThemeColor(themeColorCode);
-    setIsSettings((state) => {
-      return {
-        ...state,
-        updateMetaThemeColor: false,
-      };
-    });
   }, [baseColor, mainColor, mode]);
 
   useEffect(() => {
@@ -109,14 +86,8 @@ export default function Screen({ children }: { children: React.ReactNode }) {
   }, [isSystemModeSelect]);
 
   useEffect(() => {
-    const isAllDone =
-      !isSettings.updateHtmlColorScheme &&
-      !isSettings.updateMetaThemeColor &&
-      !isSettings.updateMetaThemeColor;
-    if (isAllDone) {
-      setIsSettingInitialUI(false);
-    }
-  }, [isSettings]);
+    queueMicrotask(() => setIsSettingInitialUI(false));
+  }, []);
 
   return (
     <>

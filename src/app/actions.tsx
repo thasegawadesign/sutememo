@@ -13,7 +13,8 @@ export async function setCookiesUserTheme(
   mainColor: SafeColorList,
   mode: Mode,
 ) {
-  cookies().set({
+  const cookieStore = await cookies();
+  cookieStore.set({
     name: 'themeColorCode',
     value: themeColorCode,
     httpOnly: true,
@@ -22,7 +23,7 @@ export async function setCookiesUserTheme(
     maxAge: oneDay * 14,
     path: '/',
   });
-  cookies().set({
+  cookieStore.set({
     name: 'baseColor',
     value: baseColor,
     httpOnly: true,
@@ -31,7 +32,7 @@ export async function setCookiesUserTheme(
     maxAge: oneDay * 14,
     path: '/',
   });
-  cookies().set({
+  cookieStore.set({
     name: 'mainColor',
     value: mainColor,
     httpOnly: true,
@@ -40,7 +41,7 @@ export async function setCookiesUserTheme(
     maxAge: oneDay * 14,
     path: '/',
   });
-  cookies().set({
+  cookieStore.set({
     name: 'mode',
     value: mode,
     httpOnly: true,
@@ -52,7 +53,8 @@ export async function setCookiesUserTheme(
 }
 
 export async function setCookiesIsDarkModeSelect(isDarkModeSelect: boolean) {
-  cookies().set({
+  const cookieStore = await cookies();
+  cookieStore.set({
     name: 'isDarkModeSelect',
     value: JSON.stringify(isDarkModeSelect),
     httpOnly: true,
@@ -66,7 +68,8 @@ export async function setCookiesIsDarkModeSelect(isDarkModeSelect: boolean) {
 export async function setCookiesIsSystemModeSelect(
   isSystemModeSelect: boolean,
 ) {
-  cookies().set({
+  const cookieStore = await cookies();
+  cookieStore.set({
     name: 'isSystemModeSelect',
     value: JSON.stringify(isSystemModeSelect),
     httpOnly: true,

@@ -1,53 +1,14 @@
-'use server';
-
 import { cookies } from 'next/headers';
-import React from 'react';
 
 import IsDarkModeSelectProvider from '@/contexts/is-dark-mode-select-provider';
 import IsSystemModeSelectProvider from '@/contexts/is-system-mode-select-provider';
-import { ThemeProvider as MaterialThemeProvider } from '@/contexts/material-providers';
+import MaterialThemeProvider from '@/contexts/material-theme-provider';
 import SettingsDrawerProvider from '@/contexts/settings-drawer-provider';
 import ShowAppInstallButtonProvider from '@/contexts/show-app-install-button-provider';
 import ThemeProvider from '@/contexts/theme-provider';
 
-import type {
-  DrawerStylesType,
-  SwitchButtonStylesType,
-} from '@/contexts/material-providers';
-
-type CustomTheme = {
-  drawer: DrawerStylesType;
-  switch: SwitchButtonStylesType;
-};
-
-const CustomTheme: CustomTheme = {
-  drawer: {
-    styles: {
-      base: {
-        overlay: {
-          height: 'h-screen',
-          backgroundColor: 'bg-black-9',
-        },
-      },
-    },
-  },
-  switch: {
-    styles: {
-      base: {
-        input: {
-          background: 'bg-radixGray-9',
-        },
-        circle: {
-          bg: 'bg-white-9',
-        },
-      },
-      colors: {},
-    },
-  },
-};
-
 export async function Providers({ children }: { children: React.ReactNode }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const baseColor = cookieStore.get('baseColor')?.value;
   const mainColor = cookieStore.get('mainColor')?.value;
   const mode = cookieStore.get('mode')?.value;
@@ -60,9 +21,7 @@ export async function Providers({ children }: { children: React.ReactNode }) {
         <ThemeProvider baseColor={baseColor} mainColor={mainColor} mode={mode}>
           <ShowAppInstallButtonProvider>
             <SettingsDrawerProvider>
-              <MaterialThemeProvider value={CustomTheme}>
-                {children}
-              </MaterialThemeProvider>
+              <MaterialThemeProvider>{children}</MaterialThemeProvider>
             </SettingsDrawerProvider>
           </ShowAppInstallButtonProvider>
         </ThemeProvider>
