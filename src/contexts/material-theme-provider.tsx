@@ -4,11 +4,16 @@ import { MaterialTailwindTheme } from '@material-tailwind/react';
 import defaultTheme from '@material-tailwind/react/theme';
 import { ReactNode } from 'react';
 
-const customThemeOverrides = {
+const mergedTheme = {
+  ...defaultTheme,
   drawer: {
+    ...defaultTheme.drawer,
     styles: {
+      ...defaultTheme.drawer.styles,
       base: {
+        ...defaultTheme.drawer.styles.base,
         overlay: {
+          ...defaultTheme.drawer.styles.base.overlay,
           height: 'h-screen',
           backgroundColor: 'bg-black-9',
         },
@@ -16,54 +21,26 @@ const customThemeOverrides = {
     },
   },
   switch: {
+    ...defaultTheme.switch,
     styles: {
+      ...defaultTheme.switch.styles,
       base: {
+        ...defaultTheme.switch.styles.base,
         input: {
+          ...defaultTheme.switch.styles.base.input,
           background: 'bg-radixGray-9',
         },
         circle: {
+          ...defaultTheme.switch.styles.base.circle,
           bg: 'bg-white-9',
         },
       },
-      colors: {},
+      colors: {
+        ...defaultTheme.switch.styles.colors,
+      },
     },
   },
 };
-
-function mergeTheme(
-  base: Record<string, unknown>,
-  source: Record<string, unknown>,
-): Record<string, unknown> {
-  const result = { ...base };
-
-  for (const key of Object.keys(source)) {
-    const value = source[key];
-    const existing = result[key];
-
-    if (
-      value &&
-      typeof value === 'object' &&
-      !Array.isArray(value) &&
-      existing &&
-      typeof existing === 'object' &&
-      !Array.isArray(existing)
-    ) {
-      result[key] = mergeTheme(
-        existing as Record<string, unknown>,
-        value as Record<string, unknown>,
-      );
-    } else {
-      result[key] = value;
-    }
-  }
-
-  return result;
-}
-
-const mergedTheme = mergeTheme(
-  defaultTheme as Record<string, unknown>,
-  customThemeOverrides,
-);
 
 export default function MaterialThemeProvider({
   children,
