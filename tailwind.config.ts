@@ -22,10 +22,7 @@ export const SETTINGS_DRAWER_ALPHA = 1;
 export const themeChangeDurationMs = 240;
 
 type CustomSolidColorCode =
-  | typeof WHITE
-  | typeof BLACK
-  | typeof MIDNIGHT
-  | typeof PRIMARY;
+  typeof WHITE | typeof BLACK | typeof MIDNIGHT | typeof PRIMARY;
 
 export const safeColorList = [
   `white-${SOLID_STEP}`,

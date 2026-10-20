@@ -24,10 +24,6 @@ export type ColorScaleList = {
 };
 
 export type TailwindPrefix =
-  | 'bg-'
-  | 'hover:bg-'
-  | 'text-'
-  | 'border-'
-  | 'ring-';
+  'bg-' | 'hover:bg-' | 'text-' | 'border-' | 'ring-';
 
 export type ThemeId = `${SafeColorList}-${SafeColorList}-${Mode}-theme`;
