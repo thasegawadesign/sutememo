@@ -3,8 +3,6 @@ import { ImageResponse } from 'next/og';
 import RawTodoifyIconSvg from '@/components/raw-todoify-icon';
 import { PRIMARY_COLOR_CODE, WHITE_COLOR_CODE } from '@/utils/color';
 
-export const runtime = 'edge';
-
 export async function GET() {
   return new ImageResponse(
     <div
