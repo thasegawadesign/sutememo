@@ -3,6 +3,14 @@ allowBuilds:
   lefthook: true
   sharp: true
   unrs-resolver: true
+# @material-tailwind/react 2.1.10 が使う @floating-ui/react 0.19.0 は @floating-ui/dom を
+# import しているのに依存として宣言していないため、pnpm の厳密な解決（Vercel のビルドなど）で
+# 見つからずに失敗する。足りない依存をここで補う。
+packageExtensions:
+  '@floating-ui/react@0.19.0':
+    dependencies:
+      '@floating-ui/dom': ^1.8.0
+
 overrides:
   baseline-browser-mapping@2: ^2.11.30
   brace-expansion@1: ^1.1.21
