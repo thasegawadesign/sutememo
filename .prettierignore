@@ -11,3 +11,6 @@ dist/
 node_modules/
 target/
 compiled/
+
+# pnpm が書き出すため整形しない
+pnpm-lock.yaml
